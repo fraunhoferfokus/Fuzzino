@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<request:request xmlns:request="http://library.fuzzing.fokus.fraunhofer.de/request">
+  <request:closeRequest id="INVALID_ID"/>
+</request:request>

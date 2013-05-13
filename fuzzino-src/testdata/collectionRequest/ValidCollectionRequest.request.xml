@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<request xmlns="http://fuzzino.fuzzing.fokus.fraunhofer.de/request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
+
+<number name="NumberRequest" maxValues="50">
+	<specification type="integer" bits="32" signed="true" />
+	<noGenerators/>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<collection name="OrderedList" maxValues="50" minMutations="1" maxMutations="3" fuzzCollection="true" fuzzValues="true">
+    <specification ref="NumberRequest" unique="false" ordered="true" minLength="1" maxLength="3"/>
+    <validCollections>
+     	<validCollection name="firstValidCollection">
+     	 	<value>100</value>
+     	 	<value>200</value>    	
+     	</validCollection>   
+    </validCollections>
+</collection>
+
+
+</request>

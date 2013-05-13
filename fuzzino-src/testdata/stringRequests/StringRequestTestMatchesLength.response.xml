@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:string id="1c944361-43bb-493a-8de0-296bc0545e27" moreValues="false" name="StringRequestTestMatchesLength" seed="-7034096983288214641">
+    <response:generatorBased>
+      <response:generator name="SmallGenerator">
+        <response:fuzzedValue>22</response:fuzzedValue>
+        <response:fuzzedValue>333</response:fuzzedValue>
+        <response:fuzzedValue>4444</response:fuzzedValue>
+        <response:fuzzedValue>55555</response:fuzzedValue>
+      </response:generator>
+    </response:generatorBased>
+  </response:string>
+</response:response>

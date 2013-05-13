@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:string id="fc05e17a-435a-4cc3-9898-30029d3f2e66" moreValues="true" name="ResponseExtensionForRequest" seed="6841060862226982845">
+    <response:generatorBased>
+      <response:generator name="BadStrings">
+        <response:fuzzedValue>10</response:fuzzedValue>
+        <response:fuzzedValue>0.0</response:fuzzedValue>
+        <response:fuzzedValue>1.0</response:fuzzedValue>
+        <response:fuzzedValue>0.1</response:fuzzedValue>
+        <response:fuzzedValue>1.1.1</response:fuzzedValue>
+        <response:fuzzedValue>-129</response:fuzzedValue>
+        <response:fuzzedValue>129</response:fuzzedValue>
+        <response:fuzzedValue>255</response:fuzzedValue>
+        <response:fuzzedValue>256</response:fuzzedValue>
+        <response:fuzzedValue>32767</response:fuzzedValue>
+        <response:fuzzedValue>32769</response:fuzzedValue>
+        <response:fuzzedValue>0xFF</response:fuzzedValue>
+        <response:fuzzedValue>Yes</response:fuzzedValue>
+        <response:fuzzedValue>No</response:fuzzedValue>
+        <response:fuzzedValue>%n</response:fuzzedValue>
+        <response:fuzzedValue>%x</response:fuzzedValue>
+        <response:fuzzedValue>&lt;>&quot;/'</response:fuzzedValue>
+        <response:fuzzedValue>\&quot;</response:fuzzedValue>
+        <response:fuzzedValue>\'</response:fuzzedValue>
+        <response:fuzzedValue>%</response:fuzzedValue>
+        <response:fuzzedValue>a%</response:fuzzedValue>
+        <response:fuzzedValue>%a</response:fuzzedValue>
+        <response:fuzzedValue>COM1</response:fuzzedValue>
+        <response:fuzzedValue>COM2</response:fuzzedValue>
+        <response:fuzzedValue>AUX</response:fuzzedValue>
+        <response:fuzzedValue>COM1:</response:fuzzedValue>
+        <response:fuzzedValue>COM2:</response:fuzzedValue>
+        <response:fuzzedValue>AUX:</response:fuzzedValue>
+        <response:fuzzedValue>\\\</response:fuzzedValue>
+        <response:fuzzedValue>../</response:fuzzedValue>
+        <response:fuzzedValue>\x00</response:fuzzedValue>
+        <response:fuzzedValue>\x01</response:fuzzedValue>
+        <response:fuzzedValue>\x02</response:fuzzedValue>
+        <response:fuzzedValue>\x03</response:fuzzedValue>
+        <response:fuzzedValue>\x04</response:fuzzedValue>
+        <response:fuzzedValue>\x05</response:fuzzedValue>
+        <response:fuzzedValue>\x06</response:fuzzedValue>
+        <response:fuzzedValue>\x07</response:fuzzedValue>
+        <response:fuzzedValue>\x08</response:fuzzedValue>
+        <response:fuzzedValue>\x09</response:fuzzedValue>
+        <response:fuzzedValue>\xa</response:fuzzedValue>
+        <response:fuzzedValue>\xb</response:fuzzedValue>
+        <response:fuzzedValue>\xc</response:fuzzedValue>
+        <response:fuzzedValue>\xd</response:fuzzedValue>
+        <response:fuzzedValue>\xe</response:fuzzedValue>
+        <response:fuzzedValue>\xf</response:fuzzedValue>
+        <response:fuzzedValue>\x10</response:fuzzedValue>
+      </response:generator>
+    </response:generatorBased>
+    <response:operatorBased>
+      <response:operator basedOn="ABC" name="StringCase">
+        <response:fuzzedValue>ABC</response:fuzzedValue>
+        <response:fuzzedValue>abc</response:fuzzedValue>
+        <response:fuzzedValue>Abc</response:fuzzedValue>
+      </response:operator>
+    </response:operatorBased>
+  </response:string>
+</response:response>

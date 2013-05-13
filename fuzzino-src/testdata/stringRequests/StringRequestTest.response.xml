@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://library.fuzzing.fokus.fraunhofer.de/response">
+  <response:error>C:\Users\scb\Documents\repo\impl\FuzzingLibrary\.\testdata\stringRequests\StringRequestTest.request.xml (The system cannot find the file specified)</response:error>
+</response:response>

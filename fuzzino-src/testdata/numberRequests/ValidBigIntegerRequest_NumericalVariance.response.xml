@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:number id="bc717ef4-8684-447b-a024-6fb431f02e63" moreValues="false" name="NumericalVarianceTest" seed="-6121299954073596148">
+    <response:operatorBased>
+      <response:operator basedOn="92233720368547758097897668966" name="NumericalVariance">
+        <response:fuzzedValue>92233720368547758097897668956</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668957</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668958</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668959</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668960</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668961</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668962</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668963</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668964</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668965</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668967</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668968</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668969</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668970</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668971</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668972</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668973</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668974</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668975</response:fuzzedValue>
+        <response:fuzzedValue>92233720368547758097897668976</response:fuzzedValue>
+      </response:operator>
+    </response:operatorBased>
+  </response:number>
+</response:response>

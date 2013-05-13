@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:number id="02ee825b-b95e-43b5-a22a-648a2343502b" moreValues="false" name="NumberRequestTest" seed="8147833896923621062">
+    <response:warnings>
+      <response:noMoreValuesAvailable/>
+    </response:warnings>
+  </response:number>
+</response:response>

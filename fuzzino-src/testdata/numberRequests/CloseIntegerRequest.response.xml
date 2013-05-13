@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:closeRequestDone id="076e10d4-e51a-49e9-8aad-79dc7df1ae7c" name="NumberRequestTest"/>
+</response:response>

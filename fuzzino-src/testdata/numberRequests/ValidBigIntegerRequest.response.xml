@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:number id="38292d13-0358-4e53-9a34-d8ba5db5a837" moreValues="false" name="NumberRequestTest" seed="-3584249018805960580">
+    <response:generatorBased>
+      <response:generator name="BoundaryNumbers">
+        <response:fuzzedValue>0</response:fuzzedValue>
+        <response:fuzzedValue>4611686018427387902</response:fuzzedValue>
+        <response:fuzzedValue>-9223372036854775807</response:fuzzedValue>
+        <response:fuzzedValue>2305843009213693951</response:fuzzedValue>
+        <response:fuzzedValue>-4611686018427387903</response:fuzzedValue>
+        <response:fuzzedValue>1537228672809129300</response:fuzzedValue>
+        <response:fuzzedValue>-3074457345618258602</response:fuzzedValue>
+        <response:fuzzedValue>1152921504606846975</response:fuzzedValue>
+        <response:fuzzedValue>-2305843009213693951</response:fuzzedValue>
+        <response:fuzzedValue>576460752303423487</response:fuzzedValue>
+        <response:fuzzedValue>-1152921504606846975</response:fuzzedValue>
+        <response:fuzzedValue>288230376151711743</response:fuzzedValue>
+        <response:fuzzedValue>-576460752303423487</response:fuzzedValue>
+        <response:fuzzedValue>144115188075855871</response:fuzzedValue>
+        <response:fuzzedValue>-288230376151711743</response:fuzzedValue>
+        <response:fuzzedValue>-9223372036854775806</response:fuzzedValue>
+        <response:fuzzedValue>4611686018427387901</response:fuzzedValue>
+      </response:generator>
+    </response:generatorBased>
+    <response:operatorBased>
+      <response:operator basedOn="4711" name="NumericalVariance">
+        <response:fuzzedValue>4701</response:fuzzedValue>
+        <response:fuzzedValue>4702</response:fuzzedValue>
+        <response:fuzzedValue>4703</response:fuzzedValue>
+        <response:fuzzedValue>4704</response:fuzzedValue>
+        <response:fuzzedValue>4705</response:fuzzedValue>
+        <response:fuzzedValue>4706</response:fuzzedValue>
+        <response:fuzzedValue>4707</response:fuzzedValue>
+        <response:fuzzedValue>4708</response:fuzzedValue>
+        <response:fuzzedValue>4709</response:fuzzedValue>
+        <response:fuzzedValue>4710</response:fuzzedValue>
+        <response:fuzzedValue>4712</response:fuzzedValue>
+        <response:fuzzedValue>4713</response:fuzzedValue>
+        <response:fuzzedValue>4714</response:fuzzedValue>
+        <response:fuzzedValue>4715</response:fuzzedValue>
+        <response:fuzzedValue>4716</response:fuzzedValue>
+        <response:fuzzedValue>4717</response:fuzzedValue>
+        <response:fuzzedValue>4718</response:fuzzedValue>
+        <response:fuzzedValue>4719</response:fuzzedValue>
+        <response:fuzzedValue>4720</response:fuzzedValue>
+        <response:fuzzedValue>4721</response:fuzzedValue>
+      </response:operator>
+    </response:operatorBased>
+  </response:number>
+</response:response>

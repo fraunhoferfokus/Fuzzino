@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://library.fuzzing.fokus.fraunhofer.de/response">
+  <response:string id="e3d9a52a-1fd8-467b-a0f9-a134b7bc4da7" moreValues="false" name="ValidRequestWithSeed" seed="500000">
+    <response:generatorBased>
+      <response:generator name="SmallGenerator">
+        <response:fuzzedValue>1</response:fuzzedValue>
+        <response:fuzzedValue>22</response:fuzzedValue>
+        <response:fuzzedValue>333</response:fuzzedValue>
+        <response:fuzzedValue>4444</response:fuzzedValue>
+        <response:fuzzedValue>55555</response:fuzzedValue>
+      </response:generator>
+    </response:generatorBased>
+    <response:operatorBased>
+      <response:operator basedOn="ABCDEFGHIJKLMNOPQRST" name="StringCase">
+        <response:fuzzedValue>ABCDEFGHIJKLMNOPQRST</response:fuzzedValue>
+        <response:fuzzedValue>abcdefghijklmnopqrst</response:fuzzedValue>
+        <response:fuzzedValue>ABCdEfghiJKLmNOpqRST</response:fuzzedValue>
+      </response:operator>
+    </response:operatorBased>
+  </response:string>
+</response:response>

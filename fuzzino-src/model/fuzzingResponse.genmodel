@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/Fuzzino/src" modelPluginID="Fuzzino" modelName="FuzzingResponse"
+    importerID="org.eclipse.xsd.ecore.importer" complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>fuzzingResponse.xsd</foreignModel>
+  <genPackages prefix="Response" basePackage="de.fraunhofer.fokus.fuzzing.fuzzino"
+      resource="XML" disposableProviderFactory="true" ecorePackage="response.ecore#/">
+    <genClasses ecoreClass="response.ecore#//AllGeneratorsBasedPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//AllGeneratorsBasedPart/generatorParts"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//AllOperatorsBasedPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//AllOperatorsBasedPart/operatorParts"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//CloseRequestConfirmation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//CloseRequestConfirmation/warnings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//CloseRequestConfirmation/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//CloseRequestConfirmation/name"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//CollectionResponse">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//CollectionResponse/fuzzedCollections"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//CollectionResponse/warnings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//CollectionResponse/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//CollectionResponse/moreValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//CollectionResponse/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//CollectionResponse/seed"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//ErrorResponse">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//ErrorResponse/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//ErrorResponse/column"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//ErrorResponse/line"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//Field/fuzz"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//Field/ref"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//FuzzedCollection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//FuzzedCollection/values"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//FuzzedCollection/basedOn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//FuzzedCollection/mutations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//FuzzedCollection/operators"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//FuzzedStructure">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//FuzzedStructure/fields"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//FuzzedStructure/mutations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//FuzzedStructure/operators"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//GeneratorPart">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//GeneratorPart/fuzzedValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//GeneratorPart/name"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//IllegalGenerator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//IllegalGenerator/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//IllegalGenerator/reason"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//IllegalOperator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//IllegalOperator/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//IllegalOperator/reason"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//IllegalRequestFormat">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//IllegalRequestFormat/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//IllegalRequestFormat/element"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//IllegalRequestFormat/missingAttribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//IllegalRequestFormat/missingElement"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//NoMoreValuesIndicator"/>
+    <genClasses ecoreClass="response.ecore#//NumberResponse">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//NumberResponse/generatorBasedPart"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//NumberResponse/operatorBasedPart"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//NumberResponse/warnings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//NumberResponse/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//NumberResponse/moreValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//NumberResponse/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//NumberResponse/seed"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//OperatorPart">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//OperatorPart/fuzzedValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//OperatorPart/basedOn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//OperatorPart/name"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//Response">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//Response/stringResponses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//Response/numberResponses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//Response/structureResponses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//Response/collectionResponses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//Response/closeRequestConfirmations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//Response/errorResponse"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//StringResponse">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//StringResponse/generatorBasedPart"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//StringResponse/operatorBasedPart"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//StringResponse/warnings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//StringResponse/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//StringResponse/moreValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//StringResponse/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//StringResponse/seed"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//StructureResponse">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//StructureResponse/fuzzedStructures"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//StructureResponse/warnings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//StructureResponse/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//StructureResponse/moreValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//StructureResponse/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//StructureResponse/seed"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//Value">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//Value/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//Value/basedOn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//Value/generator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//Value/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//WarningsPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//WarningsPart/illegalGenerators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//WarningsPart/illegalOperators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//WarningsPart/illegalRequestFormats"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//WarningsPart/flagNoMoreValues"/>
+    </genClasses>
+    <genClasses ecoreClass="response.ecore#//XmlResponseDocument">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute response.ecore#//XmlResponseDocument/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference response.ecore#//XmlResponseDocument/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference response.ecore#//XmlResponseDocument/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference response.ecore#//XmlResponseDocument/response"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

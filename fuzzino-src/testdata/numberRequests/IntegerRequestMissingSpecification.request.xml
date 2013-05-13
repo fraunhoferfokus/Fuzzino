@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<request xmlns="http://fuzzino.fuzzing.fokus.fraunhofer.de/request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
+
+<number name="NumberRequestTest" maxValues="50">
+    <generator>BadNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator param="1">NumericalVariance</operator>
+    </validValues>
+</number>
+
+</request>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://fuzzino.fuzzing.fokus.fraunhofer.de/response" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response"
+           xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" ecore:documentRoot="XmlResponseDocument">
+    <xs:element name="response">
+        <xs:complexType ecore:name="Response">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:string" ecore:name="stringResponses"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:number" ecore:name="numberResponses"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:structure" ecore:name="structureResponses"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:collection" ecore:name="collectionResponses"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:closeRequestDone" ecore:name="closeRequestConfirmations"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="response:error" ecore:name="errorResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="string" ecore:ignore="true">
+        <xs:complexType ecore:name="StringResponse">
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="response:generatorBased" ecore:name="generatorBasedPart"/>
+                <xs:element minOccurs="0" ref="response:operatorBased" ecore:name="operatorBasedPart"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="response:warnings" ecore:name="warnings"/>
+            </xs:sequence>
+            <xs:attribute name="id" use="required" type="xs:ID"/>
+            <xs:attribute name="moreValues" use="required" type="xs:boolean"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="seed" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="number" ecore:ignore="true">
+        <xs:complexType ecore:name="NumberResponse">
+            <xs:choice>
+                <xs:element minOccurs="0" ref="response:generatorBased" ecore:name="generatorBasedPart"/>
+                <xs:element minOccurs="0" ref="response:operatorBased" ecore:name="operatorBasedPart"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="response:warnings" ecore:name="warnings"/>
+            </xs:choice>
+            <xs:attribute name="id" use="required" type="xs:ID"/>
+            <xs:attribute name="moreValues" use="required" type="xs:boolean"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="seed" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="structure" ecore:ignore="true">
+        <xs:complexType ecore:name="StructureResponse">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="response:fuzzedStructure" ecore:name="fuzzedStructures"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="response:warnings" ecore:name="warnings"/>
+            </xs:sequence>
+            <xs:attribute name="id" use="required" type="xs:ID"/>
+            <xs:attribute name="moreValues" use="required" type="xs:boolean"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="seed" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fuzzedStructure" ecore:ignore="true">
+        <xs:complexType ecore:name="FuzzedStructure">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:field" ecore:name="fields"/>
+            </xs:sequence>
+            <xs:attribute name="mutations" use="required" type="xs:int"/>
+            <xs:attribute name="operators" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="field" ecore:ignore="true">
+        <xs:complexType ecore:name="Field">
+            <xs:attribute name="fuzz" type="xs:boolean"/>
+            <xs:attribute name="ref" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="collection" ecore:ignore="true">
+        <xs:complexType ecore:name="CollectionResponse">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="response:fuzzedCollection" ecore:name="fuzzedCollections"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="response:warnings" ecore:name="warnings"/>
+            </xs:sequence>
+            <xs:attribute name="id" use="required" type="xs:ID"/>
+            <xs:attribute name="moreValues" use="required" type="xs:boolean"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="seed" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fuzzedCollection" ecore:ignore="true">
+        <xs:complexType ecore:name="FuzzedCollection">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:value" ecore:name="values"/>
+            </xs:sequence>
+            <xs:attribute name="basedOn" use="required" type="xs:string"/>
+            <xs:attribute name="mutations" use="required" type="xs:int"/>
+            <xs:attribute name="operators" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="value" ecore:ignore="true">
+        <xs:complexType ecore:name="Value">
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="basedOn" type="xs:NCName"/>
+                    <xs:attribute name="generator" type="xs:NCName"/>
+                    <xs:attribute name="operator" type="xs:NCName"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="warnings" ecore:ignore="true">
+        <xs:complexType ecore:name="WarningsPart">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:illegalGenerator" ecore:name="illegalGenerators"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:illegalOperator" ecore:name="illegalOperators"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="response:illegalRequestFormat" ecore:name="illegalRequestFormats"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="response:noMoreValuesAvailable" ecore:name="flagNoMoreValues"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="illegalGenerator" ecore:ignore="true">
+        <xs:complexType ecore:name="IllegalGenerator">
+            <xs:simpleContent>
+                <xs:extension base="xs:NCName">
+                    <xs:attribute name="reason" use="required" type="xs:NCName"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="illegalOperator" ecore:ignore="true">
+        <xs:complexType ecore:name="IllegalOperator">
+            <xs:simpleContent>
+                <xs:extension base="xs:NCName">
+                    <xs:attribute name="reason" use="required" type="xs:NCName"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="illegalRequestFormat" ecore:ignore="true">
+        <xs:complexType ecore:name="IllegalRequestFormat">
+            <xs:attribute name="attribute" type="xs:NCName"/>
+            <xs:attribute name="element" type="xs:NCName"/>
+            <xs:attribute name="missingAttribute" type="xs:NCName"/>
+            <xs:attribute name="missingElement" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="noMoreValuesAvailable" ecore:ignore="true">
+        <xs:complexType ecore:name="NoMoreValuesIndicator"/>
+    </xs:element>
+    
+    <xs:element name="error" ecore:ignore="true">
+        <xs:complexType ecore:name="ErrorResponse">
+    	    <xs:simpleContent>
+	            <xs:extension base="xs:string">
+            		<xs:attribute name="column" use="required" type="xs:int"/>
+			        <xs:attribute name="line" use="required" type="xs:int"/>
+    	        </xs:extension>
+	        </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="closeRequestDone" ecore:ignore="true">
+        <xs:complexType ecore:name="CloseRequestConfirmation">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" ref="response:warnings" ecore:name="warnings"/>
+            </xs:sequence>
+                    <xs:attribute name="id" use="required" type="xs:NCName"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="generatorBased" ecore:ignore="true">
+        <xs:complexType ecore:name="AllGeneratorsBasedPart">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="response:generator" ecore:name="generatorParts"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="generator" ecore:ignore="true">
+        <xs:complexType ecore:name="GeneratorPart">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="response:fuzzedValue" ecore:name="fuzzedValues"/>
+            </xs:sequence>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="operatorBased" ecore:ignore="true">
+        <xs:complexType ecore:name="AllOperatorsBasedPart">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="response:operator" ecore:name="operatorParts"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="operator" ecore:ignore="true">
+        <xs:complexType ecore:name="OperatorPart">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="response:fuzzedValue" ecore:name="fuzzedValues"/>
+            </xs:sequence>
+            <xs:attribute name="basedOn" type="xs:NCName"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fuzzedValue" type="xs:string" ecore:ignore="true"/>
+</xs:schema>

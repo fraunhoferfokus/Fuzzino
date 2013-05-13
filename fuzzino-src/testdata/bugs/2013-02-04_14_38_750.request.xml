@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<request xmlns="http://fuzzino.fuzzing.fokus.fraunhofer.de/request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
+  <string name="SimpleStringRequest" maxValues="750">
+    <specification minLength="0" maxLength="255" nullTerminated="true" encoding="UTF8" />
+    <generator>AllBadStrings</generator>
+  </string>
+</request>

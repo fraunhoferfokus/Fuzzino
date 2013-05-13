@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:string id="08bf5b89-4f45-4448-b7ab-2906455b6e8a" moreValues="false" name="ValidRequestWithSeed" seed="500000">
+    <response:generatorBased>
+      <response:generator name="SmallGenerator">
+        <response:fuzzedValue>1</response:fuzzedValue>
+        <response:fuzzedValue>22</response:fuzzedValue>
+        <response:fuzzedValue>333</response:fuzzedValue>
+        <response:fuzzedValue>4444</response:fuzzedValue>
+        <response:fuzzedValue>55555</response:fuzzedValue>
+        <response:fuzzedValue>666666</response:fuzzedValue>
+        <response:fuzzedValue>7777777</response:fuzzedValue>
+        <response:fuzzedValue>88888888</response:fuzzedValue>
+        <response:fuzzedValue>999999999</response:fuzzedValue>
+        <response:fuzzedValue>10101010101010101010</response:fuzzedValue>
+      </response:generator>
+    </response:generatorBased>
+    <response:operatorBased>
+      <response:operator basedOn="ABCDEFGHIJKLMNOPQRST" name="StringCase">
+        <response:fuzzedValue>ABCDEFGHIJKLMNOPQRST</response:fuzzedValue>
+        <response:fuzzedValue>abcdefghijklmnopqrst</response:fuzzedValue>
+        <response:fuzzedValue>aBcDEFGHijkLmNopqrST</response:fuzzedValue>
+      </response:operator>
+    </response:operatorBased>
+  </response:string>
+</response:response>

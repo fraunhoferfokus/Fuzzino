@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:number id="6fbe086c-79a2-4843-94b3-84d09aa73507" moreValues="false" name="NumberRequestTest" seed="-7845159882523034095">
+    <response:generatorBased>
+      <response:generator name="BoundaryNumbers">
+        <response:fuzzedValue>-134217728</response:fuzzedValue>
+        <response:fuzzedValue>67108863</response:fuzzedValue>
+        <response:fuzzedValue>-67108864</response:fuzzedValue>
+        <response:fuzzedValue>-2147483649</response:fuzzedValue>
+        <response:fuzzedValue>2147483648</response:fuzzedValue>
+      </response:generator>
+    </response:generatorBased>
+  </response:number>
+</response:response>

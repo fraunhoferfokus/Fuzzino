@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://fuzzino.fuzzing.fokus.fraunhofer.de/request" xmlns:request="http://fuzzino.fuzzing.fokus.fraunhofer.de/request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xs:element name="request">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:string"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:number"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:structure"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:collection"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:closeRequest"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="string">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="request:specification"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:generator"/>
+                <xs:element minOccurs="0" ref="request:validValues"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:NCName"/>
+            <xs:attribute name="maxValues" use="required" type="xs:int"/>
+            <xs:attribute name="name" use="required" type="xs:ID"/>
+            <xs:attribute name="seed" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="number">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="request:specification"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:generator"/>
+                <xs:element minOccurs="0" ref="request:validValues"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:NCName"/>
+            <xs:attribute name="maxValues" use="required" type="xs:int"/>
+            <xs:attribute name="name" use="required" type="xs:ID"/>
+            <xs:attribute name="seed" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="structure">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="request:specification" minOccurs="0"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:operator"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:NCName"/>
+            <xs:attribute name="fuzzStructure" type="xs:boolean"/>
+            <xs:attribute name="fuzzValues" type="xs:boolean"/>
+            <xs:attribute name="maxMutations" type="xs:int"/>
+            <xs:attribute name="minMutations" type="xs:int" default="1"/>
+            <xs:attribute name="name" use="required" type="xs:ID"/>
+            <xs:attribute name="maxValues" use="required" type="xs:int"/>
+            <xs:attribute name="seed" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="collection">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="request:specification"/>
+                <xs:element minOccurs="0" ref="request:validCollections"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:NCName"/>
+            <xs:attribute name="fuzzStructure" use="required" type="xs:boolean"/>
+            <xs:attribute name="fuzzValues" use="required" type="xs:boolean"/>
+            <xs:attribute name="maxMutations" use="required" type="xs:int"/>
+            <xs:attribute name="maxValues" use="required" type="xs:int"/>
+            <xs:attribute name="minMutations" type="xs:int" default="1"/>
+            <xs:attribute name="name" use="required" type="xs:ID"/>
+            <xs:attribute name="seed" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="validCollections">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="request:validCollection"/>
+                <xs:element ref="request:operator"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="validCollection">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:value"/>
+            </xs:sequence>
+            <xs:attribute name="name" use="required" type="xs:ID"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="closeRequest">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="specification">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:field"/>
+            </xs:sequence>
+            <xs:attribute name="bits" type="xs:int" default="32"/>
+            <xs:attribute name="encoding" type="xs:NCName" default="ASCII"/>
+            <xs:attribute name="maxLength" type="xs:int"/>
+            <xs:attribute name="maxValue" type="xs:int"/>
+            <xs:attribute name="minLength" type="xs:int"/>
+            <xs:attribute name="minValue" type="xs:int"/>
+            <xs:attribute name="nullTerminated" type="xs:boolean" default="false"/>
+            <xs:attribute name="ordered" type="xs:boolean"/>
+            <xs:attribute name="ref" type="xs:IDREF"/>
+            <xs:attribute name="signed" type="xs:boolean" default="true"/>
+            <xs:attribute name="type" type="xs:NCName" default="String"/>
+            <xs:attribute name="unique" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="field">
+        <xs:complexType>
+            <xs:attribute name="fuzz" type="xs:boolean" default="true"/>
+            <xs:attribute name="ref" use="required" type="xs:IDREF"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="generator" type="xs:NCName"/>
+    <xs:element name="validValues">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="request:value"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="request:operator"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="operator" type="xs:NCName"/>
+    <xs:element name="value" type="xs:string"/>
+</xs:schema>

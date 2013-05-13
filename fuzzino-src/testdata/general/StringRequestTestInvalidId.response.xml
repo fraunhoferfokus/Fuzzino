@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:string id="e394cd5a-ef8b-43ea-9209-e0a030414876" moreValues="false" name="StringRequestTestInvalidId" seed="0">
+    <response:warnings>
+      <response:illegalRequestFormat attribute="id" element="string"/>
+    </response:warnings>
+  </response:string>
+</response:response>

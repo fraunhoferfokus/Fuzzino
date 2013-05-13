@@ -1,4 +1,4 @@
-<img src="https://github.com/fraunhoferfokus/Fuzzino/blob/master/fuzzino.jpg?raw=true">
+<img src="https://github.com/fraunhoferfokus/Fuzzino/blob/master/fuzzino.jpg?raw=true" alt="Fuzzino">
 
 Fuzzino
 =======
@@ -39,10 +39,10 @@ Usage
 You can obtain fuzz test data from Fuzzino in two ways:
 
 * XML: This is the most generic way for obtaining fuzz test data from the library. It works from any programming language that is able to generate and process XML documents. You run Fuzzino via the console using `java -jar <filename.request.xml>`.
-* Java: You can directly interact with Fuzzino by either submitting XML String instead of XML files in order to avoid time-consuming serialization and deserialization. It is also possible to instantiate Java classes that carry the information taken from the XML. A third way is to directly instantiate specific fuzzing heuristics by the correspondng
-It is also possible to generate specific fuzzing heuristics via its 
+* Java: You can directly interact with Fuzzino by submitting XML String instead of XML files in order to avoid time-consuming serialization and deserialization. It is also possible to instantiate Java classes that carry the information taken from the XML instead of using XML. A third way is to directly instantiate specific fuzzing heuristics by the corresponding heuristics factory. 
 
-Examples
-========
 
-In the folder "examples"
+Documentation & Examples
+========================
+
+A documentation for the XML format as well as some general information can be found in the folder doc. Java and XML examples can be found in the folder doc/examples. More documentation will follow soon.

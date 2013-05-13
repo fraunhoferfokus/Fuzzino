@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<request xmlns="http://fuzzino.fuzzing.fokus.fraunhofer.de/request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
+
+<number name="NumberSpec_integer" maxValues="2">
+	<specification type="integer"/>
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_differentCases" maxValues="2">
+	<specification type=" iNtEgEr "/>
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<!--
+<number name="NumberSpec_float" maxValues="2">
+	<specification type="float"/>
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_float_differentCases" maxValues="2">
+	<specification type=" fLoAT "/>
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+-->
+
+<number name="NumberSpec_INVALIDTYPE" maxValues="2">
+	<specification type="INVALIDTYPE"/>
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_minValueGTmaxValue" maxValues="2">
+	<specification type="integer" minValue="10" maxValue="5" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_minValueEQmaxValue" maxValues="2">
+	<specification type="integer" minValue="10" maxValue="10" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_minValueSTmaxValue" maxValues="2">
+	<specification type="integer" minValue="5" maxValue="10" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_isSigned" maxValues="2">
+	<specification type="integer" signed="true" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_isNotSigned" maxValues="2">
+	<specification type="integer" signed="false" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bitsMinus1" maxValues="2">
+	<specification type="integer" bits="-1" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits0" maxValues="2">
+	<specification type="integer" bits="0" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits1" maxValues="2">
+	<specification type="integer" bits="1" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits7" maxValues="2">
+	<specification type="integer" bits="7" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits8" maxValues="2">
+	<specification type="integer" bits="8" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits9" maxValues="2">
+	<specification type="integer" bits="9" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits15" maxValues="2">
+	<specification type="integer" bits="15" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits16" maxValues="2">
+	<specification type="integer" bits="16" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits17" maxValues="2">
+	<specification type="integer" bits="17" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits31" maxValues="2">
+	<specification type="integer" bits="31" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits32" maxValues="2">
+	<specification type="integer" bits="32" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits33" maxValues="2">
+	<specification type="integer" bits="33" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits63" maxValues="2">
+	<specification type="integer" bits="63" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits64" maxValues="2">
+	<specification type="integer" bits="64" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits65" maxValues="2">
+	<specification type="integer" bits="65" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits127" maxValues="2">
+	<specification type="integer" bits="127" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits128" maxValues="2">
+	<specification type="integer" bits="128" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+<number name="NumberSpec_integer_bits129" maxValues="2">
+	<specification type="integer" bits="129" />
+    <generator>BoundaryNumbers</generator>
+    <validValues>
+        <value>10</value>
+        <operator>NumericalVariance</operator>
+    </validValues>
+</number>
+
+</request>

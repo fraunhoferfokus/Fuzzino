@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/Fuzzino/src" modelPluginID="Fuzzino" modelName="FuzzingRequest"
+    modelPluginClass="" importerID="org.eclipse.xsd.ecore.importer" complianceLevel="6.0"
+    copyrightFields="false">
+  <foreignModel>fuzzingRequest.xsd</foreignModel>
+  <genPackages prefix="Request" basePackage="de.fraunhofer.fokus.fuzzing.fuzzino"
+      resource="XML" disposableProviderFactory="true" ecorePackage="request.ecore#/">
+    <genClasses ecoreClass="request.ecore#//CloseRequest">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CloseRequest/id"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//CollectionRequest">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//CollectionRequest/specification"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//CollectionRequest/validCollections"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CollectionRequest/fuzzStructure"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CollectionRequest/fuzzValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CollectionRequest/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CollectionRequest/maxMutations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CollectionRequest/maxValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CollectionRequest/minMutations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CollectionRequest/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//CollectionRequest/seed"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//Field/fuzz"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//Field/ref"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//Generator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//Generator/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//Generator/param"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//NoGenerators"/>
+    <genClasses ecoreClass="request.ecore#//NumberRequest">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//NumberRequest/specification"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//NumberRequest/noGenerators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//NumberRequest/generators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//NumberRequest/validValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//NumberRequest/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//NumberRequest/maxValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//NumberRequest/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//NumberRequest/seed"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//Operator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//Operator/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//Operator/param"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//Request">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//Request/stringRequests"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//Request/numberRequests"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//Request/structureRequests"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//Request/collectionRequests"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//Request/closeRequests"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//RequestSpecification">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference request.ecore#//RequestSpecification/field"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/bits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/encoding"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/maxLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/maxValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/minLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/minValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/nullTerminated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/ordered"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/ref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/signed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//RequestSpecification/unique"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//StringRequest">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//StringRequest/specification"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//StringRequest/noGenerators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//StringRequest/generators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//StringRequest/validValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StringRequest/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StringRequest/maxValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StringRequest/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StringRequest/seed"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//StructureRequest">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//StructureRequest/specification"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//StructureRequest/operators"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StructureRequest/fuzzStructure"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StructureRequest/fuzzValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StructureRequest/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StructureRequest/maxMutations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StructureRequest/maxValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StructureRequest/minMutations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StructureRequest/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//StructureRequest/seed"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//ValidCollection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//ValidCollection/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//ValidCollection/name"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//ValidCollections">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//ValidCollections/values"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//ValidCollections/operators"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//ValidValues">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//ValidValues/values"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//ValidValues/operators"/>
+    </genClasses>
+    <genClasses ecoreClass="request.ecore#//XmlRequestDocument">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute request.ecore#//XmlRequestDocument/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference request.ecore#//XmlRequestDocument/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference request.ecore#//XmlRequestDocument/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference request.ecore#//XmlRequestDocument/request"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

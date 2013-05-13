@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+  <response:error column="7" line="11">The element type &quot;validValues&quot; must be terminated by the matching end-tag &quot;&lt;/validValues>&quot;.</response:error>
+</response:response>
