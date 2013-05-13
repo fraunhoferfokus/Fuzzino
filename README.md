@@ -1,4 +1,4 @@
-<img src="https://github.com/fraunhoferfokus/Fuzzino/blob/master/fuzzino.png">
+<img src="https://github.com/fraunhoferfokus/Fuzzino/blob/master/fuzzino.jpg?raw=true">
 
 Fuzzino
 =======
