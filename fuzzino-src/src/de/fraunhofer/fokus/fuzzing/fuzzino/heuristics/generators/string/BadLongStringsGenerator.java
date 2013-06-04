@@ -55,17 +55,17 @@ public class BadLongStringsGenerator extends ComposedStringGenerator {
 		modifyStringSpecToMaximalLengths();
 
 		StringRepeater repeaterOf10_A_00_ = new StringRepeater(stringSpec, owner, seed,
-				                                new StringRepeater.Builder().string(StringUtil.repeat("A\\x00;", 10))
+				                                new StringRepeater.Builder().string(StringUtil.repeat("A\\x00", 10))
 				                                                            .size(1000)
 				                                                            .offset(1));
 
 		StringRepeater repeaterOf127_A_00_ = new StringRepeater(stringSpec, owner, seed,
-				                                 new StringRepeater.Builder().string(StringUtil.repeat("A\\x00;", 127))
+				                                 new StringRepeater.Builder().string(StringUtil.repeat("A\\x00", 127))
 				                                                             .size(100)
 				                                                             .offset(1));
 		
 		StringRepeater repeaterOf1024_A_00_ = new StringRepeater(stringSpec, owner, seed,
-				                                  new StringRepeater.Builder().string(StringUtil.repeat("A\\x00;", 1024))
+				                                  new StringRepeater.Builder().string(StringUtil.repeat("A\\x00", 1024))
                                                                               .size(10)
                                                                               .offset(1));
 
@@ -99,7 +99,7 @@ public class BadLongStringsGenerator extends ComposedStringGenerator {
 		heuristics.add(longRanges);
 		heuristics.add(bigIntRanges);
 		heuristics.add(new ConcreteValuesGenerator(stringSpec, seed, owner, 
-				                                          "\\x00;\\x00;" + StringUtil.repeat("A", 7000), 
+				                                          "\\x00\\x00" + StringUtil.repeat("A", 7000), 
 				                                          "%00%00" + StringUtil.repeat("A", 7000), 
 				                                          "10"));
 	}

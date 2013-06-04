@@ -36,7 +36,7 @@ public class LongStrings2Generator extends ComputableListImpl<FuzzedValue<String
 	static {
 		characters = StringUtil.asList("A", "B", "1", "2", "3", "<", ">", "'", "\"", "/", "\\", "?", "=", "a=", 
 				"&", ".", ",", "(", ")", "]", "[", "%", "*", "-", "+", "{", "}", 
-				"\\x14;", "\\xFE;", "\\xFF;");
+				"\\x14", "\\xFE", "\\xFF");
 		repetitions = IntegerUtil.asList(128, 255, 256, 257, 511, 512, 513, 1023, 1024, 2048, 2049, 4095, 4096, 
 				4097, 5000, 10000, 20000,32762, 32763, 32764, 32765, 32766, 32767,
 				32768, 32769, 0xFFFF-2, 0xFFFF-1, 0xFFFF, 0xFFFF+1, 0xFFFF+2, 99999, 
@@ -97,7 +97,7 @@ public class LongStrings2Generator extends ComputableListImpl<FuzzedValue<String
 			int repetitions = nullInsideRepetitions.get(index);
 			String surrounding = StringUtil.repeat("B", repetitions/2);
 		
-			String fuzzedValueItself = surrounding + "\\x00;" + surrounding;
+			String fuzzedValueItself = surrounding + "\\x00" + surrounding;
 			FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owner);
 			
 			return fuzzedValue;

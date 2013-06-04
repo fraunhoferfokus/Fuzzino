@@ -48,15 +48,15 @@ public class BadLongStringsGeneratorTest extends ComposedFuzzingHeuristicTest<St
 		expectedValues = new ArrayList<>();
 		
 		for (int i=1; i<=1000; i++) {
-			expectedValues.add(StringUtil.repeat("A&#x00;", 10 * i));
+			expectedValues.add(StringUtil.repeat("A\\x00", 10 * i));
 		}
 
 		for (int i=1; i<=100; i++) {
-			expectedValues.add(StringUtil.repeat("A&#x00;", 127 * i));
+			expectedValues.add(StringUtil.repeat("A\\x00", 127 * i));
 		}
 
 		for (int i=1; i<=10; i++) {
-			expectedValues.add(StringUtil.repeat("A&#x00;", 1024 * i));
+			expectedValues.add(StringUtil.repeat("A\\x00", 1024 * i));
 		}
 		
 		for (int i=-50; i<=49; i++) {
@@ -119,7 +119,7 @@ public class BadLongStringsGeneratorTest extends ComposedFuzzingHeuristicTest<St
 			bi = bi.add(BigInteger.ONE);
 		} while (bi.compareTo(biEnd) <= 0);
 		
-		expectedValues.add("&#x00;&#x00;" + StringUtil.repeat("A", 7000));
+		expectedValues.add("\\x00\\x00" + StringUtil.repeat("A", 7000));
 		expectedValues.add("%00%00" + StringUtil.repeat("A", 7000));
 		expectedValues.add("10");
 	}
