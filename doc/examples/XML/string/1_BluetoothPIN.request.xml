@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<request xmlns="http://library.fuzzing.fokus.fraunhofer.de/request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://library.fuzzing.fokus.fraunhofer.de/request">
+<request xmlns="http://fuzzino.fuzzing.fokus.fraunhofer.de/request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
 
 <string name="BluetoothPIN" maxValues="10">
     <specification type="String" nullTerminated="true" encoding="ASCII" />

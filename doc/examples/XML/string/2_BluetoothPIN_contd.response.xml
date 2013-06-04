@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<response:response xmlns:response="http://library.fuzzing.fokus.fraunhofer.de/response">
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
   <response:string id="cc9f5ef1-41df-41b9-80a7-c2dd4daf0efa" moreValues="true" name="BluetoothPIN" seed="4189210356335478523">
     <response:generatorBased>
       <response:generator name="LongStrings">

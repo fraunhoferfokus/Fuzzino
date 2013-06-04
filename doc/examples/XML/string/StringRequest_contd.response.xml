@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<response:response xmlns:response="http://library.fuzzing.fokus.fraunhofer.de/response">
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
   <response:string id="9c4f5af0-4868-4fe4-a8a8-34fc8aef90f5" moreValues="true" name="StringRequestTest" seed="-8887316049808978713">
     <response:generatorBased>
       <response:generator name="BadStrings">

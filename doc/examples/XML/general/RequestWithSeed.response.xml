@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<response:response xmlns:response="http://library.fuzzing.fokus.fraunhofer.de/response">
+<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
   <response:string id="e3d9a52a-1fd8-467b-a0f9-a134b7bc4da7" moreValues="false" name="ValidRequestWithSeed" seed="500000">
     <response:generatorBased>
       <response:generator name="SmallGenerator">
