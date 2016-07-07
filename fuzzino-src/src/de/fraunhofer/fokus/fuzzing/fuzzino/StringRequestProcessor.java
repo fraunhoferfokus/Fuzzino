@@ -15,16 +15,13 @@ package de.fraunhofer.fokus.fuzzing.fuzzino;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.DeleteRequestProcessorFailedException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
@@ -52,35 +49,22 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  */
 public class StringRequestProcessor extends RequestProcessor<String> {
+	private transient StringResponse response;
 	
 	private StringRequest request;
-	private transient StringResponse response;
 	private boolean encodeAllCharacters = false;
 	private static final String FILE_EXTENSION = ".stringProcessor";
 
 	private static final long serialVersionUID = 2873792884268319134L;
 
 	public static StringRequestProcessor loadFromFile(String filename) throws IOException, ClassNotFoundException {
-		FileInputStream inFileStream = new FileInputStream(filename + FILE_EXTENSION);
+		FileInputStream inFileStream = new FileInputStream(dir + File.separator + filename + FILE_EXTENSION);
 		ObjectInputStream inObjectStream = new ObjectInputStream(inFileStream);
 		Object readObject = inObjectStream.readObject();
 		StringRequestProcessor stringRequestProcessor = (StringRequestProcessor) readObject;
 		inObjectStream.close();
 		inFileStream.close();
 		return stringRequestProcessor;
-	}
-	
-	@Override
-	public void delete() throws DeleteRequestProcessorFailedException {
-		File serializedRequestProcessor = new File(getRequest().getId() + FILE_EXTENSION);
-		boolean serializedProcessorExists = serializedRequestProcessor.exists();
-		boolean deletionSuccessful = false;
-		if (serializedProcessorExists) {
-			deletionSuccessful = serializedRequestProcessor.delete();
-		}
-		if (!serializedProcessorExists || !deletionSuccessful) {
-			throw new DeleteRequestProcessorFailedException();
-		}
 	}
 
 	/**
@@ -105,31 +89,8 @@ public class StringRequestProcessor extends RequestProcessor<String> {
 		this.encodeAllCharacters = encodeAllCharacters;
 	}
 
-	/**
-	 * Continues a previously created request in order to obtain further values.
-	 * 
-	 * @param continuedRequest The continued request referring to an initial request using {@code continuedRequest.getId()}.
-	 */
-	public void continueRequest(StringRequest continuedRequest) {
-		if (!continuedRequest.getName().equals(request.getName()) ||
-				!(continuedRequest.getId().equals(id.toString()))) {
-			throw new IllegalArgumentException("The continued request is not a continuation of the stored one.");
-		}
-
-		maxValues = continuedRequest.getMaxValues();
-	}
-
 	@Override
-	protected void buildResponseContents() {
-		collectFuzzedValues();
-
-		response.setMoreValuesAvailable(iterator.hasNext());
-		if (warningsPart != null) {
-			response.setWarningsSection(getWarningsPart());
-		}
-	}
-
-	protected void collectFuzzedValues() {
+	protected boolean collectFuzzedValues() {
 		HashMap<FuzzedValue<String>, GeneratorSpecificFuzzedValues<String>> generatorParts = new HashMap<>();
 		HashMap<FuzzedValue<String>, OperatorSpecificFuzzedValues<String>> operatorParts = new HashMap<>();
 		int i=0;
@@ -165,26 +126,23 @@ public class StringRequestProcessor extends RequestProcessor<String> {
 		if (!operatorParts.values().isEmpty()) {
 			addAllOperatorsBasedPart(response, operatorParts.values());
 		}
+		return iterator.hasNext();
 	}
 
-	protected void addFuzzedValueToGeneratorParts(FuzzedValue<String> fuzzedValue, 
-			HashMap<FuzzedValue<String>, GeneratorSpecificFuzzedValues<String>> generatorParts) {
-		StringGenerator stringGenerator = (StringGenerator) fuzzedValue.getHeuristic();
-
+	protected void addFuzzedValueToGeneratorParts(FuzzedValue<String> fuzzedValue, HashMap<FuzzedValue<String>, GeneratorSpecificFuzzedValues<String>> generatorParts) {
+		FuzzingHeuristic stringGenerator = fuzzedValue.getHeuristic();
 		// check if a generator part for this generator already exists
 		if (!generatorParts.containsKey(fuzzedValue)) {
 			GeneratorSpecificFuzzedValues<String> generatorPart = ResponseFactory.INSTANCE.createGeneratorPart();
 			generatorPart.setName(stringGenerator.getName());
 			generatorParts.put(fuzzedValue, generatorPart);
 		}
-
 		GeneratorSpecificFuzzedValues<String> generatorPart = generatorParts.get(fuzzedValue);
 		generatorPart.addFuzzedValue(fuzzedValue);
 	}
 
-	protected void addFuzzedValueToOperatorParts(FuzzedValue<String> fuzzedValue,
-			HashMap<FuzzedValue<String>, OperatorSpecificFuzzedValues<String>> operatorParts) {
-		FuzzingHeuristic<String> fuzzingHeuristic = (FuzzingHeuristic<String>) fuzzedValue.getHeuristic();
+	protected void addFuzzedValueToOperatorParts(FuzzedValue<String> fuzzedValue,HashMap<FuzzedValue<String>, OperatorSpecificFuzzedValues<String>> operatorParts) {
+		FuzzingHeuristic fuzzingHeuristic = fuzzedValue.getHeuristic();
 
 		// check if a part for this operator and the value it is based on already exists
 		if (operatorParts.get(fuzzedValue) == null) {
@@ -304,19 +262,12 @@ public class StringRequestProcessor extends RequestProcessor<String> {
 	}
 
 	@Override
-	public void serialize() {
-		try
-		{
-			FileOutputStream fos = new FileOutputStream(getId().toString() + FILE_EXTENSION);
-			ObjectOutputStream out = new ObjectOutputStream(fos);
-			out.writeObject(this);
-			out.close();
-			fos.close();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+	protected String getFileExtension() {
+		return FILE_EXTENSION;
 	}
-	
+
+	@Override
+	protected void deleteResponse() {
+		response = null;
+	}
 }

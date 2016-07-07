@@ -1,4 +1,4 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
+//   Copyright 2012-2014 Fraunhofer FOKUS
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -18,8 +18,28 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.*;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.AllBadStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadDateGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadFilenamesGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadHostnamesGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadIpAddressesGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadLongStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadLongUnicodeStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadNumbersAsStringGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadPathsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadTimeGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadUnicodeUtf8StringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.CommandInjectionsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.DelimitersGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.FormatStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.LongStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.Popular4DigitPinsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SQLInjectionsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.UnicodeBomStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XMLInjectionsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
 /**
@@ -45,7 +65,7 @@ public class StringGeneratorFactory {
 	 * Creates a string generator identified by its name.
 	 * 
 	 * @param name The name of the string generator that is not the class name but the name used
-	 *             in a request (see {@link FuzzingHeuristic#getName()} or documentation for a
+	 *             in a request (see {@link ComputableFuzzingHeuristic#getName()} or documentation for a
 	 *             list of string generators and its names).
 	 * @param param A parameter for the requested string generator. May be {@code null} if the requested
 	 *              generator does not have a parameter or a default value shall be used.
@@ -115,7 +135,11 @@ public class StringGeneratorFactory {
 		} else
 		if (canonicalName.equals("UnicodeBomStrings".toUpperCase())) {
 			return createUnicodeBomStringsGenerator(stringSpec, seed);
-		} else {
+		} 
+		if (canonicalName.equals("XMLInjections".toUpperCase())) {
+			return createXmlInjections(stringSpec, seed);
+		}
+		else {
 			throw new UnknownFuzzingHeuristicException(name);
 		}
 	}
@@ -143,6 +167,7 @@ public class StringGeneratorFactory {
 		allStringGenerators.add(createPopular4DigitPinsGenerator(stringSpec, seed));
 		allStringGenerators.add(createSqlInjections(stringSpec, seed));
 		allStringGenerators.add(createUnicodeBomStringsGenerator(stringSpec, seed));
+		allStringGenerators.add(createXmlInjections(stringSpec, seed));
 
 		List<StringGenerator> applicableGenerators = new LinkedList<>();
 		for (StringGenerator stringGenerator : allStringGenerators) {
@@ -265,6 +290,17 @@ public class StringGeneratorFactory {
 	}
 	
 	/**
+	 * Returns an instance of {@link BadTimeGenerator}.
+	 * 
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link BadTimeGenerator}.
+	 */
+	public BadTimeGenerator createBadTimeGenerator(StringSpecification stringSpec, long seed) {
+		return new BadTimeGenerator(stringSpec, seed);
+	}
+	
+	/**
 	 * Returns an instance of {@link BadUnicodeUtf8StringsGenerator}.
 	 * 
 	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
@@ -361,6 +397,17 @@ public class StringGeneratorFactory {
 	 */
 	public UnicodeBomStringsGenerator createUnicodeBomStringsGenerator(StringSpecification stringSpec, long seed) {
 		return new UnicodeBomStringsGenerator(stringSpec, seed);
+	}
+	
+	/**
+	 * Returns an instance of {@link XMLInjectionsGenerator}.
+	 * 
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link XMLInjectionsGenerator}
+	 */
+	public XMLInjectionsGenerator createXmlInjections(StringSpecification stringSpec, long seed) {
+		return new XMLInjectionsGenerator(stringSpec, seed);
 	}
 	
 }

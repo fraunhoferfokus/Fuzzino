@@ -18,13 +18,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BoundaryNumbersGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 /**
  * A factory that creates all kinds of integer generators. A single integer generator
- * can be requested by its name ({@link #create(String, String, NumberSpecification, long)} or
+ * can be requested by its name ({@link #create(String, String, IntegerSpecification, long)} or
  * by calling the corresponding create method.
  * The factory is a singleton.
  * 
@@ -45,7 +45,7 @@ public class IntegerGeneratorFactory {
 	 * Creates an integer generator identified by its name.
 	 * 
 	 * @param name The name of the integer generator that is not the class name but the name used
-	 *             in a request (see {@link FuzzingHeuristic#getName()} or documentation for a
+	 *             in a request (see {@link ComputableFuzzingHeuristic#getName()} or documentation for a
 	 *             list of string generators and its names).
 	 * @param param A parameter for the requested integer generator. May be {@code null} if the requested
 	 *              generator does not have a parameter or a default value shall be used.
@@ -53,7 +53,7 @@ public class IntegerGeneratorFactory {
 	 * @param seed The seed to be used for random-based fuzzing heuristics.
 	 * @return the requested instance of integer generator.
 	 * @throws UnknownFuzzingHeuristicException if no generator with {@code name} is known. 
-	 */	public IntegerGenerator create(String name, String param, NumberSpecification numberSpec, long seed) throws UnknownFuzzingHeuristicException {
+	 */	public IntegerGenerator create(String name, String param, IntegerSpecification numberSpec, long seed) throws UnknownFuzzingHeuristicException {
 		if (name == null) {
 			throw new UnknownFuzzingHeuristicException(name);
 		}
@@ -72,7 +72,7 @@ public class IntegerGeneratorFactory {
 	  * @param seed The seed to be used for random-based fuzzing heuristics.
 	  * @return a list of all integer generators that can create values for {@code numberSpec}.
 	  */
-	public List<IntegerGenerator> createAll(NumberSpecification numberSpec, long seed) {
+	public List<IntegerGenerator> createAll(IntegerSpecification numberSpec, long seed) {
 		List<IntegerGenerator> allNumberGenerators = new ArrayList<>();
 		allNumberGenerators.add(createBoundaryNumbersGenerator(numberSpec, seed));
 
@@ -93,7 +93,7 @@ public class IntegerGeneratorFactory {
 	 * @param seed The seed to be used for random-based fuzzing heuristics.
 	 * @return an instance of {@link BoundaryNumbersGenerator}.
 	 */
-	public BoundaryNumbersGenerator createBoundaryNumbersGenerator(NumberSpecification numberSpec, long seed) {
+	public BoundaryNumbersGenerator createBoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed) {
 		return new BoundaryNumbersGenerator(numberSpec, seed);
 	}
 	

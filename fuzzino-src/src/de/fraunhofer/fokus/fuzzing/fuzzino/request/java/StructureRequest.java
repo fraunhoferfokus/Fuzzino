@@ -71,19 +71,6 @@ public interface StructureRequest extends CommonRequest {
 	void setFuzzStructure(boolean value);
 	
 	/**
-	 * @return {@code true} if the values of the collections shall be fuzzed.
-	 */
-	boolean fuzzValues();
-	
-	/**
-	 * Specifies whether the values of the structure shall be fuzzed.
-	 * Must be true if {@code fuzzStructure() == false}.
-	 * 
-	 * @param value Set to {@code true} if the values of the collection shall be fuzzed.
-	 */
-	void setFuzzValues(boolean value);
-	
-	/**
 	 * @return The maximum number of mutations applied to each fuzzed structure.
 	 */
 	int getMaxMutations();

@@ -13,18 +13,16 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.IntegerFromRanges;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerFromRangesBuilder;
@@ -34,8 +32,8 @@ public class IntegerFromRangesTests {
 	
 	private static final long SEED = 4711;
 	private static final StringSpecification STRING_SPEC = RequestFactory.INSTANCE.createStringSpecification();
-	private static final FuzzingHeuristic<?> OWNER = new SmallGenerator(STRING_SPEC, SEED);
-	private static final NumberSpecification NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
+	private static final ComputableFuzzingHeuristic<?> OWNER = new SmallGenerator(STRING_SPEC, SEED);
+	private static final IntegerSpecification NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification();
 	IntegerFromRanges intFromRanges;
 	
 	@Before

@@ -13,6 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.LibraryType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
@@ -243,6 +244,11 @@ public class CollectionRequestImpl implements CollectionRequest {
 	@Override
 	public String toString() {
 		return "[CollectionRequest name:" + name +" id:" + id + "]";
+	}
+
+	@Override
+	public LibraryType getLibraryType() {
+		return LibraryType.COLLECTION;
 	}
 	
 }

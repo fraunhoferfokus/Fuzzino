@@ -13,14 +13,10 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.DeleteRequestProcessorFailedException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperatorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.collection.CollectionOperatorChain;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionRequest;
@@ -67,12 +63,6 @@ public class CollectionRequestProcessor extends RequestProcessor<FuzzedCollectio
 			collectionResponse = ResponseFactory.INSTANCE.createCollectionResponse();
 		}
 		return collectionResponse;
-	}
-
-	@Override
-	protected void buildResponseContents() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -148,24 +138,18 @@ public class CollectionRequestProcessor extends RequestProcessor<FuzzedCollectio
 	}
 
 	@Override
-	public void serialize() {
-		try
-		{
-			FileOutputStream fos = new FileOutputStream(getId().toString() + COLLECTION_EXTENSION);
-			ObjectOutputStream out = new ObjectOutputStream(fos);
-			out.writeObject(this);
-			out.close();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+	protected String getFileExtension() {
+		return COLLECTION_EXTENSION;
 	}
 
 	@Override
-	public void delete() throws DeleteRequestProcessorFailedException {
+	protected boolean collectFuzzedValues() {
+		return false;
+	}
+
+	@Override
+	protected void deleteResponse() {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

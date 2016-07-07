@@ -22,24 +22,29 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedStructure;
 
+/***
+ * @deprecated
+ * @author Leon Bornemann (leon.bornemann@fokus.fraunhofer.de) 
+ *
+ */
 public class FuzzedStructureImpl implements FuzzedStructure {
 
-	protected List<Field> fields;
+	protected List<Field<? extends Object>> fields;
 	protected int mutations;
 	protected Object operators;
 	
 	@Override
-	public List<Field> getFields() {
+	public List<Field<? extends Object>> getFields() {
 		return Collections.unmodifiableList(fields);
 	}
 
 	@Override
-	public void setFields(List<Field> value) {
+	public void setFields(List<Field<? extends Object>> value) {
 		fields = value;
 	}
 
 	@Override
-	public void addField(Field value) {
+	public void addField(Field<? extends Object> value) {
 		if (fields == null) {
 			fields = new ArrayList<>();
 		}
@@ -71,7 +76,7 @@ public class FuzzedStructureImpl implements FuzzedStructure {
 		de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedStructure
 		  emfFuzzedStructure = ResponseFactory.eINSTANCE.createFuzzedStructure();
 		
-		for (Field field : fields) {
+		for (Field<? extends Object> field : fields) {
 			emfFuzzedStructure.getFields().add(field.getEMFRepresentation());
 		}
 		emfFuzzedStructure.setMutations(getMutations());
@@ -86,7 +91,7 @@ public class FuzzedStructureImpl implements FuzzedStructure {
 	}
 
 	@Override
-	public Iterator<Field> iterator() {
+	public Iterator<Field<? extends Object>> iterator() {
 		return fields.iterator();
 	}
 

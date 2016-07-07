@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -25,17 +25,16 @@ import org.junit.Test;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGeneratorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 
 public class BigBoundaryNumbersGeneratorTest {
 
 	private BigIntegerGenerator generator;
 	private static final long SEED = 4711;
-	private static final NumberSpecification NUMBER_SPEC;
+	private static final IntegerSpecification NUMBER_SPEC;
 	static {
-		NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
+		NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification();
 		NUMBER_SPEC.setBits(128);
 		NUMBER_SPEC.setMinValue(BigInteger.valueOf(Long.MIN_VALUE).subtract(BigInteger.ONE));
 		NUMBER_SPEC.setMaxValue(BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE));

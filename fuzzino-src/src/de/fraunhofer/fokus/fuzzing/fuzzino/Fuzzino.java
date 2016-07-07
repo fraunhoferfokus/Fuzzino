@@ -1,4 +1,4 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
+//   Copyright 2012-2014 Fraunhofer FOKUS
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ public final class Fuzzino {
 			                               "  \\U<nnnnnnnn> 32-bit Unicode character\n" +
 			                               "  n is a hexa-dezimal digit\n" +
 			                               "  If this argument is omitted, only characters <= 32 and >=255 will be encoded.";
-	private static final String version = "0.2.4.2";
+	private static final String version = "0.5.0.6";
 	
 	private static boolean encode = false;
 	private static String filename = null;

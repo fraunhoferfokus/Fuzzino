@@ -13,15 +13,16 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.ComposedFuzzingHeuristicTest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.LongStringsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
@@ -68,11 +69,49 @@ public class LongStringsGeneratorTest extends ComposedFuzzingHeuristicTest<Strin
 				expectedValues.add(StringUtil.repeat(str, i));
 		}
 		
+	
 		for (int repetitions : IntegerUtil.asList(128, 256, 1024, 2048, 4096, 32767, 0xFFFF)) {
 			String surrounding = StringUtil.repeat("B", repetitions/2);
 			String expectedString = surrounding + "\\x00" + surrounding;
 			expectedValues.add(expectedString);
 		}
+		
+		List<String> characters = StringUtil.asList("A", "B", "1", "2", "3", "<", ">", "'", "\"", "/", "\\", "?", "=", "a=", 
+				"&", ".", ",", "(", ")", "]", "[", "%", "*", "-", "+", "{", "}", 
+				"\\x14", "\\xFE", "\\xFF");
+		List<Integer>repetitions = IntegerUtil.asList(128, 255, 256, 257, 511, 512, 513, 1023, 1024, 2048, 2049, 4095, 4096, 
+				4097, 5000, 10000, 20000,32762, 32763, 32764, 32765, 32766, 32767,
+				32768, 32769, 0xFFFF-2, 0xFFFF-1, 0xFFFF, 0xFFFF+1, 0xFFFF+2, 99999, 
+				100000, 500000, 1000000);
+
+		List<Integer> nullInsideRepetitions = IntegerUtil.asList(128, 256, 1024, 2048, 4096, 32767, 0xFFFF);
+		
+		
+		final int SIZE_FIRST_PART = characters.size() * repetitions.size();
+		for (int index=0; index<0; index++) {
+			String fuzzedValueItself;
+			if (index < SIZE_FIRST_PART) {
+				int charIndex = index / repetitions.size();
+				int repetitionIndex = index % repetitions.size();
+				
+				String character = characters.get(charIndex);
+				int repetition = repetitions.get(repetitionIndex);
+				fuzzedValueItself = StringUtil.repeat(character, repetition);
+			} else {
+				// the following values are taken from Sulley 1.5.7, sulley/primitives.py
+				// class strings, lines 523-525
+				index -= SIZE_FIRST_PART;
+				int repetition = nullInsideRepetitions.get(index);
+				String surrounding = StringUtil.repeat("B", repetition/2);
+			
+				fuzzedValueItself = surrounding + "\\x00" + surrounding;
+			}
+			
+			expectedValues.add(fuzzedValueItself);
+
+		}
+		
+		
 	}
 	
 	@Test

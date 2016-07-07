@@ -13,17 +13,15 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
 
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingBigIntList;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingBigIntList.Builder;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
@@ -31,8 +29,8 @@ public class AscendingBigIntListTest {
 
 	@Test
 	public void test_makeBuilderMatchingSpecification_TestCase_1() throws NoMatchingValuesException {
-		NumberSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
-		numberSpec.setMinValue(0);
+		IntegerSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		numberSpec.setMin(0L);
 		Builder builder = new Builder(BigInteger.valueOf(-100), 200).stepSize(1);
 		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, null, 0, builder);
 		
@@ -42,9 +40,9 @@ public class AscendingBigIntListTest {
 	
 	@Test
 	public void test_makeBuilderMatchingSpecification_TestCase_2() throws NoMatchingValuesException {
-		NumberSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
-		numberSpec.setMinValue(10);
-		numberSpec.setMaxValue(999);
+		IntegerSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		numberSpec.setMin(10L);
+		numberSpec.setMax(999L);
 		Builder builder = new Builder(BigInteger.ONE, 100).stepSize(3);
 		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, null, 0, builder);
 		
@@ -55,7 +53,7 @@ public class AscendingBigIntListTest {
 	@Test(expected=NoMatchingValuesException.class)
 	public void test_makeBuilderMatchingSpecification_TestCase_3() throws NoMatchingValuesException {
 		StringSpecification stringSpec = RequestFactory.INSTANCE.createStringSpecification();
-		NumberSpecification numberSpec = stringSpec.createPositiveNumberSpec();
+		IntegerSpecification numberSpec = stringSpec.createPositiveNumberSpec();
 		Builder builder = new Builder(new BigInteger("-9223372036854775858"), 100).stepSize(1);
 		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, null, 0, builder);
 		
@@ -63,21 +61,21 @@ public class AscendingBigIntListTest {
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);
 	}
 	
-	public void testMatchingBuilderAgainstBuilder(Builder matchingBuilder, Builder builder, NumberSpecification numberSpec) {
-		BigInteger bigMinValue = BigInteger.valueOf(numberSpec.getMinValue());
-		BigInteger bigMaxValue = BigInteger.valueOf(numberSpec.getMaxValue());
+	public void testMatchingBuilderAgainstBuilder(Builder matchingBuilder, Builder builder, IntegerSpecification numberSpec) {
+		BigInteger bigMinValue = BigInteger.valueOf(numberSpec.getMin());
+		BigInteger bigMaxValue = BigInteger.valueOf(numberSpec.getMax());
 		
 		BigInteger actualStartInt = matchingBuilder.startInt;
 		assertTrue("startInt is smaller than original startInt: " + actualStartInt + " < " + builder.startInt,
 				   actualStartInt.compareTo(builder.startInt) >= 0);
-		assertTrue("StartInt is smaller than numberSpec.minValue: " + actualStartInt + " < " + numberSpec.getMinValue(),
+		assertTrue("StartInt is smaller than numberSpec.minValue: " + actualStartInt + " < " + numberSpec.getMin(),
 				   actualStartInt.compareTo(bigMinValue) >= 0);
 		
 		BigInteger originalLargestValue = builder.startInt.add(BigInteger.valueOf(builder.size * builder.stepSize));
 		BigInteger actualLargestValue = matchingBuilder.startInt.add(BigInteger.valueOf(matchingBuilder.size * matchingBuilder.stepSize));
 		assertTrue("largest value is bigger than original largest value: " + actualLargestValue + " > " + originalLargestValue,
 				   actualLargestValue.compareTo(originalLargestValue) <= 0);
-		assertTrue("largest value is bigger than numberSpec.maxValue: " + actualLargestValue + " > " + numberSpec.getMaxValue(),
+		assertTrue("largest value is bigger than numberSpec.maxValue: " + actualLargestValue + " > " + numberSpec.getMax(),
 				   actualLargestValue.compareTo(bigMaxValue) <= 0);
 	}
 

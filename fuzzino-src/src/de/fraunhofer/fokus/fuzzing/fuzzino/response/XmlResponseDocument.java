@@ -14,9 +14,7 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.response;
 
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.util.FeatureMap;
 
 /**

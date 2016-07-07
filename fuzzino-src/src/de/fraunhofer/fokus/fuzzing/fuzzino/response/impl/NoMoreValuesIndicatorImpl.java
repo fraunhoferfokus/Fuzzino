@@ -13,12 +13,11 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.impl;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.NoMoreValuesIndicator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponsePackage;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->

@@ -13,6 +13,16 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
@@ -20,20 +30,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->

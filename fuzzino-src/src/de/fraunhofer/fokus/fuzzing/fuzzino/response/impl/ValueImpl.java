@@ -13,15 +13,13 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponsePackage;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.Value;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponsePackage;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Value;
 
 /**
  * <!-- begin-user-doc -->

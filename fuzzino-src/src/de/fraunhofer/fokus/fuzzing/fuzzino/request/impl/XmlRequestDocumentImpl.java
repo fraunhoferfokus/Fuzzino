@@ -13,26 +13,22 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
-
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
 
 /**
  * <!-- begin-user-doc -->

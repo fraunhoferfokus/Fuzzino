@@ -14,8 +14,8 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
@@ -31,7 +31,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 public class StringRepeater extends ComputableListImpl<FuzzedValue<String>> implements StringGenerator {
 	
 	private static final long serialVersionUID = -6632206431310168223L;
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	protected long seed;
 	protected StringSpecification stringSpec;
 	
@@ -165,7 +165,7 @@ public class StringRepeater extends ComputableListImpl<FuzzedValue<String>> impl
 	 * 
 	 * @param builder the builder holding the parameters for the StringRepeater to be constructed.
 	 */
-	public StringRepeater(StringSpecification stringSpec, FuzzingHeuristic<?> owner, long seed, Builder builder) {
+	public StringRepeater(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, Builder builder) {
 		this.stringSpec = stringSpec;
 		this.owner = owner;
 		this.seed = seed;

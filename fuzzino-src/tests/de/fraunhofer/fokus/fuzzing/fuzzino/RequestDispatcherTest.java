@@ -13,11 +13,38 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.*;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.assertTrueWithPrefix;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkCloseRequestConfirmationForId;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkCloseRequestConfirmationForName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkGeneratorPartForNumFuzzedValues;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkIllegalRequestFormatForElementAndId;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkIllegalRequestFormatForMissingElement;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkOperatorPartForNumFuzzedValues;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorMessage;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorResponse;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumCollectionResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumNumberResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumStringResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumStructureResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumGeneratorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumIllegalRequestFormats;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumOperatorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForWarningsPart;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createCloseRequestFileFromResponse;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getCloseRequestConfirmationFromResponseDoc;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getGeneratorPartFromResponseByName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getIllegalRequestFormatFromCloseRequestConfirmation;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getIllegalRequestFormatFromResponse;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getNumberResponseFromResponseDoc;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromNumberResponseByName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromResponseByName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequestString;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getStringResponseFromResponseDoc;
 
 import java.io.IOException;
 
-import org.junit.*;
+import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;

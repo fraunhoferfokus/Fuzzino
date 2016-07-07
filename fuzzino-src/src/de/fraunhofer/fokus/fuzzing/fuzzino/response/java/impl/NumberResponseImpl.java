@@ -17,17 +17,11 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
 
-public class NumberResponseImpl<T> implements NumberResponse<T> {
+public class NumberResponseImpl<T> extends AbstractResponse implements NumberResponse<T> {
 	
 	protected FuzzedValuesByGenerators<T> allGeneratorsBasedPart;
 	protected FuzzedValuesByOperators<T> allOperatorsBasedPart;
-	protected WarningsSection warningsPart;
-	protected String id;
-	protected boolean moreValues;
-	protected String name;
-	protected long seed;
 
 	@Override
 	public FuzzedValuesByGenerators<T> getGeneratorBasedSection() {
@@ -47,56 +41,6 @@ public class NumberResponseImpl<T> implements NumberResponse<T> {
 	@Override
 	public void setOperatorBasedSection(FuzzedValuesByOperators<T> value) {
 		allOperatorsBasedPart = value;
-	}
-
-	@Override
-	public WarningsSection getWarningsSection() {
-		return warningsPart;
-	}
-
-	@Override
-	public void setWarningsSection(WarningsSection value) {
-		warningsPart = value;
-	}
-
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(String value) {
-		id = value;
-	}
-
-	@Override
-	public boolean moreValuesAvailable() {
-		return moreValues;
-	}
-
-	@Override
-	public void setMoreValuesAvailable(boolean value) {
-		moreValues = value;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(String value) {
-		name = value;
-	}
-
-	@Override
-	public long getSeed() {
-		return seed;
-	}
-
-	@Override
-	public void setSeed(long value) {
-		seed = value;
 	}
 
 	@Override
@@ -123,10 +67,10 @@ public class NumberResponseImpl<T> implements NumberResponse<T> {
 	
 	@Override
 	public String toString() {
-		return "[NumberResponse name:" + name + " id:" + id + " seed:" + seed + " moreValues:" + moreValues +
+		return "[NumberResponse name:" + getName() + " id:" + getId() + " seed:" + getSeed() + " moreValues:" + moreValuesAvailable() +
 			   " allGeneratorsBasedPart: " + (allGeneratorsBasedPart != null) +
 			   " allOperatorsBasedPart:" + (allOperatorsBasedPart != null) +
-			   " warningsPart:" + (warningsPart != null) + "]";
+			   " warningsPart:" + (getWarningsSection() != null) + "]";
 	}
 
 }

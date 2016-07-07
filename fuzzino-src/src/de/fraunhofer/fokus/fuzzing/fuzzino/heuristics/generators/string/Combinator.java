@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
 /**
@@ -38,10 +38,10 @@ public class Combinator extends ComposedStringGenerator {
 	 * @param theLists all the lists whose elements shall be combined.
 	 */
 	@SafeVarargs
-	public Combinator(StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner, FuzzingHeuristic<String> ...theLists) {
+	public Combinator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner, ComputableFuzzingHeuristic<String> ...theLists) {
 		super(stringSpec, seed, owner);
 		heuristics = new ArrayList<>(theLists.length);
-		for (FuzzingHeuristic<String> list : theLists) {
+		for (ComputableFuzzingHeuristic<String> list : theLists) {
 			heuristics.add(list);
 		}
 	}
@@ -52,10 +52,10 @@ public class Combinator extends ComposedStringGenerator {
 			throw new IndexOutOfBoundsException();
 		}
 		String result = "";
-		ListIterator<FuzzingHeuristic<String>> i = heuristics.listIterator();
+		ListIterator<ComputableFuzzingHeuristic<String>> i = heuristics.listIterator();
 		while (i.hasNext()) {
 			int currentIndex = i.nextIndex();
-			FuzzingHeuristic<String> currentList = i.next();
+			ComputableFuzzingHeuristic<String> currentList = i.next();
 			int indexForCurrentList = getIndex(currentIndex, index);
 			result += currentList.get(indexForCurrentList).getValue();
 		}
@@ -68,7 +68,7 @@ public class Combinator extends ComposedStringGenerator {
 	@Override
 	public int size() {
 		int result = 1;
-		for (FuzzingHeuristic<String> list : heuristics) {
+		for (ComputableFuzzingHeuristic<String> list : heuristics) {
 			result *= list.size();
 		}
 		return result;
@@ -96,7 +96,7 @@ public class Combinator extends ComposedStringGenerator {
 	 */
 	protected int listLengthProduct(int lastListNo) {
 		int result = 1;
-		ListIterator<FuzzingHeuristic<String>> i = heuristics.listIterator(); 
+		ListIterator<ComputableFuzzingHeuristic<String>> i = heuristics.listIterator(); 
 		while (i.nextIndex() <= lastListNo) {
 			result *= i.next().size();
 		}

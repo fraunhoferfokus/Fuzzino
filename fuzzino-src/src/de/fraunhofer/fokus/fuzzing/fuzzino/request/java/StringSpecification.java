@@ -100,18 +100,18 @@ public interface StringSpecification extends TypeSpecification {
 	void setRegEx(String value);
 	
 	/**
-	 * @return A {@link NumberSpecification} whose {@link NumberSpecification#getMinValue()} and 
-	 *         {@link NumberSpecification#getMaxValue()} matches {@link #getMinLength()} and 
+	 * @return A {@link IntegerSpecification} whose {@link IntegerSpecification#getMinValue()} and 
+	 *         {@link IntegerSpecification#getMaxValue()} matches {@link #getMinLength()} and 
 	 *         {@link #getMaxLength()} providing the values >= 0.
 	 */
-	NumberSpecification createPositiveNumberSpec();
+	IntegerSpecification createPositiveNumberSpec();
 
 	/**
-	 * @return A {@link NumberSpecification} whose {@link NumberSpecification#getMinValue()} and 
-	 *         {@link NumberSpecification#getMaxValue()} matches {@link #getMinLength()} and 
+	 * @return A {@link IntegerSpecification} whose {@link IntegerSpecification#getMinValue()} and 
+	 *         {@link IntegerSpecification#getMaxValue()} matches {@link #getMinLength()} and 
 	 *         {@link #getMaxLength()} providing the values < 0.
 	 */
-	NumberSpecification createNegativeNumberSpec();
+	IntegerSpecification createNegativeNumberSpec();
 	
 	/**
 	 * Set this value in order to specify if the length shall be ignored. // TODO why?

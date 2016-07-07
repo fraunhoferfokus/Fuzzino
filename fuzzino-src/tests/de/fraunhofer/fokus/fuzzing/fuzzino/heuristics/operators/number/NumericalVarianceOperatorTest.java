@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,18 +22,15 @@ import java.util.List;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperatorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.NumericalVarianceOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 
 public class NumericalVarianceOperatorTest {
 
 	private static final long SEED = 4711;
 	private static final String NO_PARAM = null;
-	private static final NumberSpecification NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification();
+	private static final IntegerSpecification NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification();
 	static {
-		NUMBER_SPEC.setType(NumberType.INTEGER);
 		NUMBER_SPEC.setBits(32);
 		NUMBER_SPEC.setIsSigned(true);
 	}

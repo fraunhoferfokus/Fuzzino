@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.BadDates;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
@@ -29,7 +29,7 @@ public class BadDateGenerator extends SimpleStringGenerator {
 		super(stringSpec, seed);
 	}
 
-	public BadDateGenerator(StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public BadDateGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(stringSpec, seed, owner);
 	}
 

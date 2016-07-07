@@ -34,7 +34,7 @@ import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getNumberResponseFrom
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromNumberResponseByName;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.loadRequestFile;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -43,17 +43,15 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.BigIntegerRequestProcessor;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperatorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
@@ -64,9 +62,8 @@ public class BigIntegerRequestProcessorTest {
 
 	private static final long SEED = 4711;
 	private static final String NO_PARAM = null;
-	private static final NumberSpecification NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification();
+	private static final IntegerSpecification NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification();
 	static {
-		NUMBER_SPEC.setType(NumberType.INTEGER);
 		NUMBER_SPEC.setBits(128);
 		NUMBER_SPEC.setIsSigned(true);
 	}
@@ -93,7 +90,7 @@ public class BigIntegerRequestProcessorTest {
 				actualNumOfHeuristics == expectedNumOfHeuristics);
 		
 		String expectedGeneratorName = "BoundaryNumbers";
-		FuzzingHeuristic<?> heuristic = reqProc.getAllFuzzingHeuristics().get(0);
+		ComputableFuzzingHeuristic<?> heuristic = reqProc.getAllFuzzingHeuristics().get(0);
 		String actualGeneratorName = heuristic.getName();
 		assertTrue("Invalid generator: was " + actualGeneratorName + " instead of " + expectedGeneratorName,
 				actualGeneratorName.equals(expectedGeneratorName));
@@ -107,7 +104,7 @@ public class BigIntegerRequestProcessorTest {
 				actualNumOfHeuristics == expectedNumOfHeuristics);
 		
 		String expectedOperatorName = "NumericalVariance";
-		FuzzingHeuristic<?> heuristic = reqProc.getAllFuzzingHeuristics().get(1);
+		ComputableFuzzingHeuristic<?> heuristic = reqProc.getAllFuzzingHeuristics().get(1);
 		String actualOperatorName = heuristic.getName();
 		assertTrue("Invalid operator: was " + actualOperatorName + " instead of " + expectedOperatorName,
 				expectedOperatorName.equals(actualOperatorName));

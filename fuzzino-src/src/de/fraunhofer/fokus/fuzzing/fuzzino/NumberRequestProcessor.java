@@ -37,6 +37,8 @@ public abstract class NumberRequestProcessor<T extends Number> extends RequestPr
 		super(numberRequest, uuid);
 	}
 	
+	public abstract NumberResponse<T> getResponse();
+	
 	@Override
 	public CommonRequest getRequest() {
 		return request;
@@ -52,16 +54,7 @@ public abstract class NumberRequestProcessor<T extends Number> extends RequestPr
 	}
 
 	@Override
-	protected void buildResponseContents() {
-		collectFuzzedValues();
-
-		response.setMoreValuesAvailable(iterator.hasNext());
-		if (warningsPart != null) {
-			response.setWarningsSection(warningsPart);
-		}
-	}
-
-	protected void collectFuzzedValues() {
+	protected boolean collectFuzzedValues() {
 		HashMap<FuzzedValue<T>, GeneratorSpecificFuzzedValues<T>> generatorParts = 
 				new HashMap<>();
 		HashMap<FuzzedValue<T>, OperatorSpecificFuzzedValues<T>> operatorParts = 
@@ -94,11 +87,11 @@ public abstract class NumberRequestProcessor<T extends Number> extends RequestPr
 		if (!operatorParts.values().isEmpty()) {
 			addAllOperatorsBasedPart(response, operatorParts.values());
 		}
+		return iterator.hasNext();
 	}
 
-	protected void addFuzzedValueToGeneratorParts(FuzzedValue<T> fuzzedValue, 
-			HashMap<FuzzedValue<T>, GeneratorSpecificFuzzedValues<T>> generatorParts) {
-		FuzzingHeuristic<?> fuzzingHeuristic = fuzzedValue.getHeuristic();
+	protected void addFuzzedValueToGeneratorParts(FuzzedValue<T> fuzzedValue, HashMap<FuzzedValue<T>, GeneratorSpecificFuzzedValues<T>> generatorParts) {
+		FuzzingHeuristic fuzzingHeuristic = fuzzedValue.getHeuristic();
 
 		// check if a generator part for this generator already exists
 		if (!generatorParts.containsKey(fuzzedValue)) {
@@ -111,9 +104,8 @@ public abstract class NumberRequestProcessor<T extends Number> extends RequestPr
 		generatorPart.addFuzzedValue(fuzzedValue);
 	}
 
-	protected void addFuzzedValueToOperatorParts(FuzzedValue<T> fuzzedValue,
-			HashMap<FuzzedValue<T>, OperatorSpecificFuzzedValues<T>> operatorParts) {
-		FuzzingHeuristic<T> fuzzingHeuristic = (FuzzingHeuristic<T>) fuzzedValue.getHeuristic();
+	protected void addFuzzedValueToOperatorParts(FuzzedValue<T> fuzzedValue,HashMap<FuzzedValue<T>, OperatorSpecificFuzzedValues<T>> operatorParts) {
+		FuzzingHeuristic fuzzingHeuristic =  fuzzedValue.getHeuristic();
 
 		// check if a part for this operator and the value it is based on already exists
 		if (operatorParts.get(fuzzedValue) == null) {

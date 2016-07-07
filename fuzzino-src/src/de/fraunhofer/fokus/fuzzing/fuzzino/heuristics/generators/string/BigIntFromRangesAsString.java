@@ -16,11 +16,11 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 import java.math.BigInteger;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BigIntFromRanges;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntRange;
@@ -34,7 +34,7 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 
 	private static final long serialVersionUID = 3185452668513139695L;
 	protected StringSpecification stringSpec;
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	protected long seed;
 	private BigIntFromRanges bigIntFromRanges;
 	
@@ -57,7 +57,7 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 		initHeuristics(builder);
 	}
 
-	public BigIntFromRangesAsString(StringSpecification stringSpec, FuzzingHeuristic<?> owner, long seed, BigIntFromRangesBuilder builder) {
+	public BigIntFromRangesAsString(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, BigIntFromRangesBuilder builder) {
 		this.stringSpec = stringSpec;
 		this.owner = owner;
 		this.seed = seed;
@@ -66,7 +66,7 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 	}
 	
 	private void initHeuristics(BigIntFromRangesBuilder builder) {
-		NumberSpecification numberSpec = stringSpec.createNegativeNumberSpec();
+		IntegerSpecification numberSpec = stringSpec.createNegativeNumberSpec();
 		numberSpec.setIgnoreMinMaxValues(true);
 		bigIntFromRanges = new BigIntFromRanges(numberSpec, owner, seed, builder);
 	}

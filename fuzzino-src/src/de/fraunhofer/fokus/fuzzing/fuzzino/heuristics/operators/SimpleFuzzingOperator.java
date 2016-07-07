@@ -16,8 +16,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators;
 import java.util.Random;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 
 /**
  * A fuzzing operator that fuzzes a single value.
@@ -28,11 +28,11 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
  * @author Martin Schneider
  */
 public abstract class SimpleFuzzingOperator<T> extends ComputableListImpl<FuzzedValue<T>> 
-                                               implements FuzzingHeuristic<T> {
+                                               implements ComputableFuzzingHeuristic<T> {
 	
 	private static final long serialVersionUID = -1331806699416808551L;
 	protected T inputValue;
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	protected long seed;
 	protected Random random;
 
@@ -62,7 +62,7 @@ public abstract class SimpleFuzzingOperator<T> extends ComputableListImpl<Fuzzed
 	 *              fuzzed Value will return {@code owner} instead of {@code this} when calling
 	 *              {@link FuzzedValue#getHeuristic()}.
 	 */
-	protected SimpleFuzzingOperator(T inputValue, long seed, FuzzingHeuristic<?> owner) {
+	protected SimpleFuzzingOperator(T inputValue, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super();
 		if (inputValue == null) {
 			throw new IllegalArgumentException("inputValue must not be null");

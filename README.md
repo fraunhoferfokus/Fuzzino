@@ -26,10 +26,32 @@ Requirements
 For compiling the Fuzzino sources, you need [Eclipse EMF](http://www.eclipse.org/modeling/emf/) 2.7, more precisely the following JAR files:
 
 * org.eclipse.emf.common, e.g. org.eclipse.emf.common_2.7.0.v20120127-1122.jar
-* org.eclipse.emf.compare, e.g. org.eclipse.emf.compare_1.2.2.v20120214-0915.jar
 * org.eclipse.emf.ecore, e.g. org.eclipse.emf.ecore_2.7.0.v20120127-1122.jar
 * org.eclipse.emf.ecore.xmi, e.g. org.eclipse.emf.ecore.xmi_2.7.0.v20120127-1122.jar
 
+Alternatively you can use the following maven dependencies:
+
+```
+<dependencies>
+  	<dependency>
+    	<groupId>org.eclipse.emf</groupId>
+    	<artifactId>org.eclipse.emf.ecore</artifactId>
+    	<version>2.10.1</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.eclipse.emf</groupId>
+    	<artifactId>org.eclipse.emf.common</artifactId>
+    	<version>2.11.0-v20150805-0538</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.eclipse.emf</groupId>
+    	<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
+    	<version>2.11.1-v20150805-0538</version>
+	</dependency>
+</dependencies>
+```
+  
+Other versions may work as well, but Fuzzino was developed with the versions mentioned above, thus versions 2.7, 2.10 and 2.11 are known to work.
 For compiling and executing the tests, you additionally need [JUnit 4](http://junit.org/).
 
 
@@ -38,7 +60,7 @@ Usage
 
 You can obtain fuzz test data from Fuzzino in two ways:
 
-* XML: This is the most generic way for obtaining fuzz test data from the library. It works from any programming language that is able to generate and process XML documents. You run Fuzzino via the console using `java -jar <filename.request.xml>`.
+* XML (Deprecated): This is the most generic way for obtaining fuzz test data from the library. It works from any programming language that is able to generate and process XML documents. You run Fuzzino via the console using `java -jar <filename.request.xml>`. The usage of XML is no longer recommended but will still work for all Requests except for StructureRequests. In order to fuzz structures you will need to use the StructureRequestProcessor from within java.
 * Java: You can directly interact with Fuzzino by submitting XML String instead of XML files in order to avoid time-consuming serialization and deserialization. It is also possible to instantiate Java classes that carry the information taken from the XML instead of using XML. A third way is to directly instantiate specific fuzzing heuristics by the corresponding heuristics factory. 
 
 

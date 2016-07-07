@@ -15,8 +15,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingIntegerList;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
@@ -32,7 +32,7 @@ public class AscendingIntegerAsStringList extends ComputableListImpl<FuzzedValue
 
 	private static final long serialVersionUID = -1618516165078304269L;
 	protected StringSpecification stringSpec;
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	protected long seed;
 	private AscendingIntegerList ascIntegerList;
 
@@ -78,7 +78,7 @@ public class AscendingIntegerAsStringList extends ComputableListImpl<FuzzedValue
 	}
 	
 	public AscendingIntegerAsStringList(StringSpecification stringSpec, 
-			                            FuzzingHeuristic<?> owner, 
+			                            ComputableFuzzingHeuristic<?> owner, 
 			                            long seed, 
 			                            Builder builder) throws NoMatchingValuesException {
 		this.stringSpec = stringSpec;

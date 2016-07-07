@@ -13,11 +13,11 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
@@ -43,60 +43,60 @@ public class StringSpecificationImplTest {
 
 	@Test
 	public void test_createNegativeNumberSpec_2_3() {
-		NumberSpecification numberSpec = STRING_SPEC_2_3.createNegativeNumberSpec();
+		IntegerSpecification numberSpec = STRING_SPEC_2_3.createNegativeNumberSpec();
 		
 		long expectedMinValue = -99;
-		long actualMinValue = numberSpec.getMinValue();
+		long actualMinValue = numberSpec.getMin();
 		assertTrue("Wrong minValue: was " + actualMinValue + " instead of " + expectedMinValue,
 				   actualMinValue == expectedMinValue);
 		
 		long expectedMaxValue = -1;
-		long actualMaxValue = numberSpec.getMaxValue();
+		long actualMaxValue = numberSpec.getMax();
 		assertTrue("Wrong maxValue: was " + actualMaxValue + " instead of " + expectedMaxValue,
 				   actualMaxValue == expectedMaxValue);
 	}
 	
 	@Test
 	public void test_createPositiveNumberSpec_2_3() {
-		NumberSpecification numberSpec = STRING_SPEC_2_3.createPositiveNumberSpec();
+		IntegerSpecification numberSpec = STRING_SPEC_2_3.createPositiveNumberSpec();
 		
 		long expectedMinValue = 10;
-		long actualMinValue = numberSpec.getMinValue();
+		long actualMinValue = numberSpec.getMin();
 		assertTrue("Wrong minValue: was " + actualMinValue + " instead of " + expectedMinValue, 
 				   actualMinValue == expectedMinValue);
 		
 		long expectedMaxValue = 999;
-		long actualMaxValue = numberSpec.getMaxValue();
+		long actualMaxValue = numberSpec.getMax();
 		assertTrue("Wrong maxValue: was " + actualMaxValue + " instead of " + expectedMaxValue,
 				   actualMaxValue == expectedMaxValue);
 	}
 
 	@Test
 	public void test_createNegativeNumberSpec_3_4() {
-		NumberSpecification numberSpec = STRING_SPEC_3_4.createNegativeNumberSpec();
+		IntegerSpecification numberSpec = STRING_SPEC_3_4.createNegativeNumberSpec();
 		
 		long expectedMinValue = -999;
-		long actualMinValue = numberSpec.getMinValue();
+		long actualMinValue = numberSpec.getMin();
 		assertTrue("Wrong minValue: was " + actualMinValue + " instead of " + expectedMinValue,
 				   actualMinValue == expectedMinValue);
 		
 		long expectedMaxValue = -10;
-		long actualMaxValue = numberSpec.getMaxValue();
+		long actualMaxValue = numberSpec.getMax();
 		assertTrue("Wrong maxValue: was " + actualMaxValue + " instead of " + expectedMaxValue,
 				   actualMaxValue == expectedMaxValue);
 	}
 	
 	@Test
 	public void test_createPositiveNumberSpec_3_4() {
-		NumberSpecification numberSpec = STRING_SPEC_3_4.createPositiveNumberSpec();
+		IntegerSpecification numberSpec = STRING_SPEC_3_4.createPositiveNumberSpec();
 		
 		long expectedMinValue = 100;
-		long actualMinValue = numberSpec.getMinValue();
+		long actualMinValue = numberSpec.getMin();
 		assertTrue("Wrong minValue: was " + actualMinValue + " instead of " + expectedMinValue, 
 				   actualMinValue == expectedMinValue);
 		
 		long expectedMaxValue = 9999;
-		long actualMaxValue = numberSpec.getMaxValue();
+		long actualMaxValue = numberSpec.getMax();
 		assertTrue("Wrong maxValue: was " + actualMaxValue + " instead of " + expectedMaxValue,
 				   actualMaxValue == expectedMaxValue);
 	}

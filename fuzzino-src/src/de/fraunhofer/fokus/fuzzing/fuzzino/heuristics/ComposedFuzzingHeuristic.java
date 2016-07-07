@@ -30,17 +30,17 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
  *
  * @param <T> the type of the fuzzing heuristics to be incorporated.
  */
-public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<FuzzedValue<T>> implements FuzzingHeuristic<T> {
+public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<FuzzedValue<T>> implements ComputableFuzzingHeuristic<T> {
 
 	private static final long serialVersionUID = 3890064549270092598L;
 	/**
 	 * The owner of the heuristic. This value is used as generator or operator for {@link FuzzedValue}.
 	 */
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	/**
 	 * The fuzzing heuristics incorporated by this one.
 	 */
-	protected List<FuzzingHeuristic<T>> heuristics = new ArrayList<>();
+	protected List<ComputableFuzzingHeuristic<T>> heuristics = new ArrayList<>();
 	/**
 	 * The number of values of each fuzzing heuristics. It is used for improving performance.
 	 */
@@ -66,6 +66,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	 * @param seed The seed that is used by random-based fuzzing heuristics.
 	 */
 	protected ComposedFuzzingHeuristic(long seed) {
+		//FIXME: If the user specifies 0 he will be surprised....
 		if (seed != 0) {
 			this.seed = seed;
 		} else {
@@ -85,7 +86,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	 *              fuzzed Value will return {@code owner} instead of {@code this} when calling
 	 *              {@link FuzzedValue#getHeuristic()}.
 	 */
-	protected ComposedFuzzingHeuristic(long seed, FuzzingHeuristic<?> owner) {
+	protected ComposedFuzzingHeuristic(long seed, ComputableFuzzingHeuristic<?> owner) {
 		this.seed = seed;
 		random = new Random(seed);
 		if (owner == null) {
@@ -102,7 +103,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 		int heuristicIndex = composedIndex.getIndexForHeuristic();
 		int elementIndex = composedIndex.getIndexForElement();
 		
-		FuzzingHeuristic<T> currentHeuristic = heuristics.get(heuristicIndex);
+		ComputableFuzzingHeuristic<T> currentHeuristic = heuristics.get(heuristicIndex);
 		FuzzedValue<T> currentElement = currentHeuristic.get(elementIndex);
 		
 		return currentElement;
@@ -207,7 +208,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 			if (hasMoreElements.get(idxHeuristic) == false) {
 				return false;
 			}
-			FuzzingHeuristic<T> heuristic = heuristics.get(idxHeuristic);
+			ComputableFuzzingHeuristic<T> heuristic = heuristics.get(idxHeuristic);
 			boolean hasElementWithIndex = heuristic.hasElementWithIndex(idxElement);
 			if (!hasElementWithIndex) {
 				hasMoreElements.set(idxHeuristic, false);
@@ -229,10 +230,10 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	@Override
 	public int size() {
 		if (size == 0) {
-			for (FuzzingHeuristic<T> list : heuristics) {
+			for (ComputableFuzzingHeuristic<T> list : heuristics) {
 				size += list.size();
 			}
-			for (FuzzingHeuristic<?> heuristic : heuristics) {
+			for (ComputableFuzzingHeuristic<?> heuristic : heuristics) {
 				heuristicSizes.add(heuristic.size());
 			}
 		}
@@ -249,7 +250,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	/**
 	 * @return A list of all incorporated fuzzing heuristics.
 	 */
-	public List<FuzzingHeuristic<T>> getAllFuzzingHeuristics() {
+	public List<ComputableFuzzingHeuristic<T>> getAllFuzzingHeuristics() {
 		return Collections.unmodifiableList(heuristics);
 	}
 	

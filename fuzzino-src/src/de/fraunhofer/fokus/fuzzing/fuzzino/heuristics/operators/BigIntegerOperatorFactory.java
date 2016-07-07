@@ -19,7 +19,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.BigNumericalVarianceOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 public class BigIntegerOperatorFactory {
 
@@ -31,7 +31,7 @@ public class BigIntegerOperatorFactory {
 	public BigIntegerOperator create(String name, 
 			                         List<BigInteger> validValues, 
 			                         String param, 
-			                         NumberSpecification numberSpec, 
+			                         IntegerSpecification numberSpec, 
 			                         long seed) throws UnknownFuzzingHeuristicException {
 		if (name.equals("NumericalVariance")) {
 			return createBigNumericalVarianceOperator(validValues, param, numberSpec, seed);
@@ -41,7 +41,7 @@ public class BigIntegerOperatorFactory {
 	}
 	
 	public List<BigIntegerOperator> createAll(List<BigInteger> validValues, 
-			                               NumberSpecification numberSpec, 
+			                               IntegerSpecification numberSpec, 
 			                               long seed) {
 		List<BigIntegerOperator> allIntegerOperators = new LinkedList<>();
 		allIntegerOperators.add(createBigNumericalVarianceOperator(validValues, null, numberSpec, seed));
@@ -57,7 +57,7 @@ public class BigIntegerOperatorFactory {
 	}
 	
 	public BigNumericalVarianceOperator createBigNumericalVarianceOperator(List<BigInteger> validValues, String param,
-			              NumberSpecification numberSpec, long seed) {
+			              IntegerSpecification numberSpec, long seed) {
 		return new BigNumericalVarianceOperator(validValues, param, numberSpec, seed);
 	}
 

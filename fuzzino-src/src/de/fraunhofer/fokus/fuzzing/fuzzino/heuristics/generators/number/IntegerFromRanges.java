@@ -15,9 +15,9 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.Range;
 
@@ -30,7 +30,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.Range;
 public class IntegerFromRanges extends ComposedFuzzingHeuristic<Integer> implements NumberGenerator<Integer> {
 
 	private static final long serialVersionUID = 6647804440422006646L;
-	protected NumberSpecification numberSpec;
+	protected IntegerSpecification numberSpec;
 
 	public static class Builder extends IntegerFromRangesBuilder {
 
@@ -43,7 +43,7 @@ public class IntegerFromRanges extends ComposedFuzzingHeuristic<Integer> impleme
 		}
 	}
 	
-	public IntegerFromRanges(NumberSpecification numberSpec, FuzzingHeuristic<?> owner, long seed, IntegerFromRangesBuilder builder) {
+	public IntegerFromRanges(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, IntegerFromRangesBuilder builder) {
 		super(seed, owner);
 		this.numberSpec = numberSpec;
 		for (Range range : builder.allRanges()) {
@@ -63,7 +63,7 @@ public class IntegerFromRanges extends ComposedFuzzingHeuristic<Integer> impleme
 	}
 
 	@Override
-	public boolean canCreateValuesFor(NumberSpecification numberSpec) {
+	public boolean canCreateValuesFor(IntegerSpecification numberSpec) {
 		return true;
 	}
 

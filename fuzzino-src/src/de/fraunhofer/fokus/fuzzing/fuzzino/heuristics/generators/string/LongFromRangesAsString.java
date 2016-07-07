@@ -14,8 +14,8 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.LongFromRanges;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
@@ -31,7 +31,7 @@ public class LongFromRangesAsString extends ComputableListImpl<FuzzedValue<Strin
 
 	private static final long serialVersionUID = -5335433153804940901L;
 	protected StringSpecification stringSpec;
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	protected long seed;
 	private LongFromRanges longFromRanges;
 	
@@ -54,7 +54,7 @@ public class LongFromRangesAsString extends ComputableListImpl<FuzzedValue<Strin
 		initHeuristics(builder);
 	}
 
-	public LongFromRangesAsString(StringSpecification stringSpec, FuzzingHeuristic<?> owner, long seed, LongFromRangesBuilder builder) {
+	public LongFromRangesAsString(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, LongFromRangesBuilder builder) {
 		this.stringSpec = stringSpec;
 		this.owner = owner;
 		this.seed = seed;

@@ -15,6 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.request.java;
 
 import java.io.Serializable;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.LibraryType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
 
 /**
@@ -25,6 +26,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
  */
 public interface CommonRequest extends Serializable {
 
+	LibraryType getLibraryType();
+	
 	/**
 	 * @return The ID that was set in order to receive more values from an initial request.
 	 */

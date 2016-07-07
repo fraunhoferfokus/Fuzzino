@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
@@ -27,7 +27,7 @@ public class BadTimeGenerator extends ComposedStringGenerator {
 		initHeuristics();
 	}
 
-	public BadTimeGenerator(StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public BadTimeGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(stringSpec, seed, owner);
 		initHeuristics();
 	}

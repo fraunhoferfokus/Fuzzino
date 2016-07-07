@@ -13,20 +13,18 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.AllGeneratorsBasedPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.AllOperatorsBasedPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponsePackage;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsPart;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->

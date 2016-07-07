@@ -15,6 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
 import org.eclipse.emf.ecore.EFactory;
 
+
 /**
  * <!-- begin-user-doc -->
  * The <b>Factory</b> for the model.
@@ -31,6 +32,15 @@ public interface RequestFactory extends EFactory {
 	 * @generated
 	 */
 	RequestFactory eINSTANCE = de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestFactoryImpl.init();
+
+	/**
+	 * Returns a new object of class '<em>Attribute</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Attribute</em>'.
+	 * @generated
+	 */
+	Attribute createAttribute();
 
 	/**
 	 * Returns a new object of class '<em>Close Request</em>'.

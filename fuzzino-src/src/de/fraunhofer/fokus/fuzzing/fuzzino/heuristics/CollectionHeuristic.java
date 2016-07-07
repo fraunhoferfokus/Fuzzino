@@ -22,7 +22,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
-public interface CollectionHeuristic extends FuzzingHeuristic<FuzzedCollection> {
+public interface CollectionHeuristic extends ComputableFuzzingHeuristic<FuzzedCollection> {
 	
 	/**
 	 * Determines if this collection heuristic can create values for a certain type.

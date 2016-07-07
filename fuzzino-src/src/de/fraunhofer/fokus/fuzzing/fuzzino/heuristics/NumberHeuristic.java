@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 /**
  * A fuzzing heuristic that creates number values.
@@ -22,7 +22,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
  *
  * @param <T> a subclass of {@link Number} that specifies the kind of the numbers.
  */
-public interface NumberHeuristic<T extends Number> extends FuzzingHeuristic<T> {
+public interface NumberHeuristic<T extends Number> extends ComputableFuzzingHeuristic<T> {
 	
 	/**
 	 * Determines if this number heuristic can create values for a certain type.
@@ -30,6 +30,6 @@ public interface NumberHeuristic<T extends Number> extends FuzzingHeuristic<T> {
 	 * @param numberSpec A specification of a number type.
 	 * @return {@code true} if this fuzzing heuristic can create values for {@code numberSpec}.
 	 */
-	boolean canCreateValuesFor(NumberSpecification numberSpec);
+	boolean canCreateValuesFor(IntegerSpecification numberSpec);
 
 }

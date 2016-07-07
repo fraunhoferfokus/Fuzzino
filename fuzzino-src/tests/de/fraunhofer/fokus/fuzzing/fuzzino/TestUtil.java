@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.xml.sax.SAXParseException;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.RequestDispatcher;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
@@ -55,6 +54,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.util.ResponseResourceFactoryImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.Helpers;
 
 public class TestUtil {
 	
@@ -144,13 +144,11 @@ public class TestUtil {
 		ResourceSet resSet = new ResourceSetImpl();
 		
 		try {
-			EObject model = org.eclipse.emf.compare.util.ModelUtils.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);	
+			EObject model = Helpers.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);	
 			requestDoc = (XmlRequestDocument) model;
 		} catch (WrappedException e) {
 			SAXParseException cause = (SAXParseException) e.getCause();
 			System.out.println("line " + cause.getLineNumber() + ", column " + cause.getColumnNumber() + " : " + cause.getMessage());
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return requestDoc;
 	}
@@ -1123,13 +1121,11 @@ public class TestUtil {
 		ResourceSet resSet = new ResourceSetImpl();
 		
 		try {
-			EObject model = org.eclipse.emf.compare.util.ModelUtils.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);	
+			EObject model = Helpers.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);	
 			responseDoc = (XmlResponseDocument) model;
 		} catch (WrappedException e) {
 			SAXParseException cause = (SAXParseException) e.getCause();
 			System.out.println("line " + cause.getLineNumber() + ", column " + cause.getColumnNumber() + " : " + cause.getMessage());
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return responseDoc;
 	}

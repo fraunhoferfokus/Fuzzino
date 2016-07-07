@@ -19,9 +19,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Field;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
@@ -243,36 +242,29 @@ public class RequestFactoryImpl implements RequestFactory {
 	}
 	
 	@Override
-	public NumberSpecification createNumberSpecification() {
-		return new NumberSpecificationImpl();
+	public IntegerSpecification createNumberSpecification() {
+		return new IntegerSpecificationImpl();
 	}
 	
 	@Override
-	public NumberSpecification createNumberSpecification(NumberType numberType) {
-		NumberSpecification numberSpec = createNumberSpecification();
-		numberSpec.setType(numberType);
-		return numberSpec;
-	}
-	
-	@Override
-	public NumberSpecification createNumberSpecification(de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestSpecification emfRequestSpecification) {
+	public IntegerSpecification createNumberSpecification(de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestSpecification emfRequestSpecification) {
 		if (emfRequestSpecification == null) {
 			return null;
 		} else {
-			NumberSpecification numberSpecification = createNumberSpecification();
+			IntegerSpecification numberSpecification = createNumberSpecification();
 			numberSpecification.setWithEMFObject(emfRequestSpecification);
 			return numberSpecification;
 		}
 	}
 
 	@Override
-	public NumberSpecification createNumberSpecification(NumberSpecification template) {
-		NumberSpecification numberSpec = createNumberSpecification(template.getType());
+	public IntegerSpecification createNumberSpecification(IntegerSpecification template) {
+		IntegerSpecification numberSpec = createNumberSpecification();
 		numberSpec.setBits(template.getBits());
 		numberSpec.setIgnoreMinMaxValues(template.ignoreMinMaxValues());
 		numberSpec.setIsSigned(template.isSigned());
-		numberSpec.setMaxValue(template.getMaxValue());
-		numberSpec.setMinValue(template.getMinValue());
+		numberSpec.setMax(template.getMax());
+		numberSpec.setMin(template.getMin());
 		
 		return numberSpec;
 	}

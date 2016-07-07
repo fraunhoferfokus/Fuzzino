@@ -20,8 +20,20 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
-public interface Field {
-
+public interface Field<T> {
+	
+	/**
+	 * 
+	 * @return the value stored in this field
+	 */
+	T getValue();
+	
+	/**
+	 * 
+	 * @param value the new value to be stored in this Field
+	 */
+	void setValue(T value);
+	
 	/**
 	 * @return {@code true} if the value of this field is fuzzed.
 	 */
@@ -34,29 +46,9 @@ public interface Field {
 	 */
 	void setValueIsFuzzed(boolean value);
 	
-	/**
-	 * @return The name of a response for fuzzed values.
-	 */
-	String getRef();
+	public String getName();
 	
-	/**
-	 * Sets the name of a response for fuzzed value.
-	 * 
-	 * @param value
-	 */
-	void setRef(String value);
-	
-	/**
-	 * @return The response containing fuzzed values of this response.
-	 */
-	CommonResponse getValuesResponse();
-	
-	/**
-	 * Sets the response for the values.
-	 * 
-	 * @param value A response for the fuzzed values of this field.
-	 */
-	void setValuesResponse(CommonResponse value);
+	public void setName(String name);
 	
 	/**
 	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.Field}

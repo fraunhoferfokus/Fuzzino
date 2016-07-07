@@ -14,14 +14,13 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
 
-public class FieldImpl implements Field {
+public class FieldImpl<T> implements Field<T> {
 	
+	protected T value;
 	protected boolean fuzz;
-	protected String ref;
-	protected CommonResponse valuesResponse;
+	private String name;
 
 	@Override
 	public boolean isValueFuzzed() {
@@ -34,38 +33,38 @@ public class FieldImpl implements Field {
 	}
 
 	@Override
-	public String getRef() {
-		return ref;
-	}
-
-	@Override
-	public void setRef(String value) {
-		ref = value;
-	}
-
-	@Override
-	public CommonResponse getValuesResponse() {
-		return valuesResponse;
-	}
-
-	@Override
-	public void setValuesResponse(CommonResponse value) {
-		valuesResponse = value;
-	}
-
-	@Override
 	public de.fraunhofer.fokus.fuzzing.fuzzino.response.Field getEMFRepresentation() {
 		de.fraunhofer.fokus.fuzzing.fuzzino.response.Field emfField = ResponseFactory.eINSTANCE.createField();
 		
 		emfField.setFuzz(isValueFuzzed());
-		emfField.setRef(getRef());
 		
 		return emfField;
 	}
 	
 	@Override
 	public String toString() {
-		return "{Field ref:" + ref + " fuzz:" + fuzz + "]";
+		return "[Field value:" + value + " fuzz:" + fuzz + "]";
+	}
+
+	@Override
+	public T getValue() {
+		return value;
+	}
+
+	@Override
+	public void setValue(T value) {
+		this.value = value;
+		
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name=name;
 	}
 
 }

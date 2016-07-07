@@ -35,8 +35,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CloseRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
@@ -55,6 +57,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.util.ResponseResourceFactoryImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.Helpers;
 
 /**
  * This class dispatches a request from an XML file (compliant to fuzzingRequest.xsd) to type specific request processors. 
@@ -148,7 +151,7 @@ public class RequestDispatcher {
 		
 		try {
 			ResourceSet resSet = new ResourceSetImpl();
-			EObject root = org.eclipse.emf.compare.util.ModelUtils.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);
+			EObject root = Helpers.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);
 			
 			XmlRequestDocument requestDoc = (XmlRequestDocument) root;
 			request = RequestFactory.INSTANCE.createRequest(requestDoc.getRequest());
@@ -160,7 +163,7 @@ public class RequestDispatcher {
 			createErrorResponse();
 		}
 	}
-
+	
 	/**
 	 * Loads an XML document containing requests using EMF.
 	 */
@@ -246,6 +249,7 @@ public class RequestDispatcher {
 			} else {
 				// store StringRequest in the map using a fresh UUID
 				UUID id = UUID.randomUUID();
+				RequestRegistry.INSTANCE.add(stringRequest);
 				StringRequestProcessor stringRequestProcessor = new StringRequestProcessor(stringRequest, id, encodeAllCharacters);
 				stringRequestProcessors.put(id, stringRequestProcessor);
 			}
@@ -296,14 +300,22 @@ public class RequestDispatcher {
 			} else {
 				// store NumberRequest in the map using a fresh UUID
 				UUID id = UUID.randomUUID();
-				NumberSpecification numberSpec = numberRequest.getSpecification();
-				if (numberSpec.isLongCompatible()) {
-					IntegerRequestProcessor integerRequestProcessor = new IntegerRequestProcessor(numberRequest, id);
-					integerRequestProcessors.put(id, integerRequestProcessor);
-				}
-				if (numberSpec.isBigIntegerCompatible()) {
-					BigIntegerRequestProcessor bigIntegerRequestProcessor = new BigIntegerRequestProcessor(numberRequest, id);
-					bigIntegerRequestProcessors.put(id, bigIntegerRequestProcessor);
+				RequestRegistry.INSTANCE.add(numberRequest);
+				NumberSpecification<? extends Number> numberSpec = numberRequest.getNumberSpecification();
+				if(numberSpec.getType()==NumberType.INTEGER){
+					IntegerSpecification integerSpec = (IntegerSpecification) numberSpec;
+					if (integerSpec.isLongCompatible()) {
+						IntegerRequestProcessor integerRequestProcessor = new IntegerRequestProcessor(numberRequest, id);
+						integerRequestProcessors.put(id, integerRequestProcessor);
+					}
+					if (integerSpec.isBigIntegerCompatible()) {
+						BigIntegerRequestProcessor bigIntegerRequestProcessor = new BigIntegerRequestProcessor(numberRequest, id);
+						bigIntegerRequestProcessors.put(id, bigIntegerRequestProcessor);
+					}
+				} else{
+					//TODO: more to do with this map?
+					FloatRequestProcessor reqProc = new FloatRequestProcessor(numberRequest, id);
+					//floatRequestProcessors.put(id,reqProc);
 				}
 			}
 		}
@@ -322,11 +334,11 @@ public class RequestDispatcher {
 				String name = requestProcessor.getName();
 
 				// ...delete it...
+				RequestRegistry.INSTANCE.remove(requestProcessor.getRequest());
 				requestProcessor.delete();
 
 				// ...and confirm the deletion
-				CloseRequestConfirmation closeRequestConfirmation = 
-						ResponseFactory.INSTANCE.createCloseRequestConfirmation(requestId, name);
+				CloseRequestConfirmation closeRequestConfirmation = ResponseFactory.INSTANCE.createCloseRequestConfirmation(requestId, name);
 				
 				response.getCloseRequestConfirmations().add(closeRequestConfirmation);
 			} catch (Exception e) {

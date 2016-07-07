@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.CommandInjections;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
@@ -30,7 +30,7 @@ public class CommandInjectionsGenerator extends SimpleStringGenerator implements
 		super(stringSpec, seed);
 	}
 	
-	public CommandInjectionsGenerator(FuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+	public CommandInjectionsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 	}
 	

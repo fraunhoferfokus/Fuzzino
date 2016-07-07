@@ -16,8 +16,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
@@ -26,7 +26,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 public class LongStrings2Generator extends ComputableListImpl<FuzzedValue<String>> implements StringGenerator {
 
 	private static final long serialVersionUID = 4305075477520228717L;
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	protected long seed;
 	protected StringSpecification stringSpec;
 	protected int size;
@@ -52,7 +52,7 @@ public class LongStrings2Generator extends ComputableListImpl<FuzzedValue<String
 		this.stringSpec = stringSpec;
 	}
 	
-	public LongStrings2Generator(FuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+	public LongStrings2Generator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		this.seed = seed;
 		this.owner = owner;
 		this.stringSpec = stringSpec;

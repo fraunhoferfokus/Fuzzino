@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
@@ -29,7 +29,7 @@ public class BadPathsGenerator extends ComposedStringGenerator {
 		initHeuristics();
 	}
 	
-	public BadPathsGenerator(FuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+	public BadPathsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 		initHeuristics();
 	}

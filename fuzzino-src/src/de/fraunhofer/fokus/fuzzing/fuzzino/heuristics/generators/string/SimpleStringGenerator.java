@@ -16,7 +16,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.SimpleFuzzingGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
@@ -36,7 +36,7 @@ public abstract class SimpleStringGenerator extends SimpleFuzzingGenerator<Strin
 		findMatchingValues();
 	}
 	
-	public SimpleStringGenerator(StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public SimpleStringGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed, owner);
 		if (stringSpec == null) {
 			throw new IllegalArgumentException("stringSpec must not be null");
@@ -46,6 +46,7 @@ public abstract class SimpleStringGenerator extends SimpleFuzzingGenerator<Strin
 	}
 	
 	protected void findMatchingValues() {
+		matchingValues.clear();
 		List<Integer> lengths = getFuzzValueLengths();
 		if (lengths == null) {
 			return;

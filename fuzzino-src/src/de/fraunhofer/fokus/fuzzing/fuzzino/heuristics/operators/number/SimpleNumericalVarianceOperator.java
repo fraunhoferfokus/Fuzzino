@@ -16,14 +16,14 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number;
 import java.math.BigInteger;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuzzingOperator<T> {
 	
 	private static final long serialVersionUID = -2230636085971265105L;
-	protected NumberSpecification numberSpec;
+	protected IntegerSpecification numberSpec;
 	protected int varianceRange = 10;
 
 	public SimpleNumericalVarianceOperator(T validValue, long seed) {
@@ -38,7 +38,7 @@ public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuz
 	 */
 	public SimpleNumericalVarianceOperator(T validValue, 
 			                               long seed, 
-			                               FuzzingHeuristic<?> owner) {
+			                               ComputableFuzzingHeuristic<?> owner) {
 		super(validValue, seed, owner);
 	}
 
@@ -61,9 +61,9 @@ public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuz
 	 */
 	public SimpleNumericalVarianceOperator(T validValue,
 			                               int varianceRange,
-			                               NumberSpecification numberSpec,
+			                               IntegerSpecification numberSpec,
 			                               long seed,
-			                               FuzzingHeuristic<?> owner) {
+			                               ComputableFuzzingHeuristic<?> owner) {
 		super(validValue, seed, owner);
 		if (varianceRange != 0) {
 			this.varianceRange = Math.abs(varianceRange);

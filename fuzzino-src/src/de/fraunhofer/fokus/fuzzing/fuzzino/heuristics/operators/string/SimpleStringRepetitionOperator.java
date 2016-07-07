@@ -14,7 +14,7 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
@@ -30,7 +30,7 @@ public class SimpleStringRepetitionOperator extends SimpleFuzzingOperator<String
 		this.stringSpec = stringSpec;
 	}
 	
-	public SimpleStringRepetitionOperator(String validValue, StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public SimpleStringRepetitionOperator(String validValue, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(validValue, seed, owner);
 		this.stringSpec = stringSpec;
 	}

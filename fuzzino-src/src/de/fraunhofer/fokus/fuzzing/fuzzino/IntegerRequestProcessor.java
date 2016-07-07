@@ -15,22 +15,20 @@ package de.fraunhofer.fokus.fuzzing.fuzzino;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.DeleteRequestProcessorFailedException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperatorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidValuesSection;
@@ -65,14 +63,14 @@ public class IntegerRequestProcessor extends NumberRequestProcessor<Long> {
 	protected void addRequestedGenerators() {
 		List<Generator> allRequestedGenerators = request.getRequestedGenerators(); 
 		if (allRequestedGenerators.isEmpty() && !request.useNoGenerators()) {
-			List<IntegerGenerator> allIntegerGenerators = IntegerGeneratorFactory.INSTANCE.createAll(request.getSpecification(), seed);
+			List<IntegerGenerator> allIntegerGenerators = IntegerGeneratorFactory.INSTANCE.createAll((IntegerSpecification) request.getNumberSpecification(), seed);
 			heuristics.addAll(allIntegerGenerators);
 		} else {
 			for (Generator requestedGenerator : allRequestedGenerators) {
 				try {
 					IntegerGenerator generator = IntegerGeneratorFactory.INSTANCE.create(requestedGenerator.getGeneratorName(), 
 							                                                             requestedGenerator.getParameter(), 
-							                                                             request.getSpecification(), 
+							                                                             (IntegerSpecification) request.getNumberSpecification(), 
 							                                                             seed);
 					heuristics.add(generator);
 				} catch (UnknownFuzzingHeuristicException e) {
@@ -89,7 +87,7 @@ public class IntegerRequestProcessor extends NumberRequestProcessor<Long> {
 		List<Long> validValues = parseValidValues();
 		List<Operator> allRequestedOperators = (validValuesPart == null ?  Collections.<Operator>emptyList() : validValuesPart.getRequestedOperators());
 		if (allRequestedOperators.isEmpty() && !validValues.isEmpty()) {
-			List<IntegerOperator> allOperators = IntegerOperatorFactory.INSTANCE.createAll(validValues, request.getSpecification(), seed);
+			List<IntegerOperator> allOperators = IntegerOperatorFactory.INSTANCE.createAll(validValues, (IntegerSpecification) request.getNumberSpecification(), seed);
 			heuristics.addAll(allOperators);
 			return;
 		}
@@ -100,7 +98,7 @@ public class IntegerRequestProcessor extends NumberRequestProcessor<Long> {
 				IntegerOperator operator = IntegerOperatorFactory.INSTANCE.create(requestedOperatorName, 
 						validValues, 
 						requestedOperator.getParameter(), 
-						request.getSpecification(), 
+						(IntegerSpecification) request.getNumberSpecification(), 
 						seed);
 				heuristics.add(operator);
 			} catch (UnknownFuzzingHeuristicException e) {
@@ -129,7 +127,7 @@ public class IntegerRequestProcessor extends NumberRequestProcessor<Long> {
 	}
 	
 	public static IntegerRequestProcessor loadFromFile(String filename) throws IOException, ClassNotFoundException {
-		FileInputStream file = new FileInputStream(filename + INTEGER_EXTENSION);
+		FileInputStream file = new FileInputStream(dir + File.separator + filename + INTEGER_EXTENSION);
 		ObjectInputStream in = new ObjectInputStream(file);
 		IntegerRequestProcessor integerRequestProcessor = (IntegerRequestProcessor) in.readObject();
 		in.close();
@@ -138,31 +136,13 @@ public class IntegerRequestProcessor extends NumberRequestProcessor<Long> {
 	}	
 
 	@Override
-	public void delete() throws DeleteRequestProcessorFailedException {
-		File serializedProcessor = new File(getRequest().getId() + INTEGER_EXTENSION);
-		boolean serializedProcessorExists = serializedProcessor.exists();
-		boolean deletionSuccessful = false;
-		if (serializedProcessorExists) {
-			deletionSuccessful = serializedProcessor.delete();
-		}
-		if (!serializedProcessorExists || !deletionSuccessful) {
-			throw new DeleteRequestProcessorFailedException();
-		}
+	protected String getFileExtension() {
+		return INTEGER_EXTENSION;
 	}
 
 	@Override
-	public void serialize() {
-		try
-		{
-			FileOutputStream fos = new FileOutputStream(getId().toString() + INTEGER_EXTENSION);
-			ObjectOutputStream out = new ObjectOutputStream(fos);
-			out.writeObject(this);
-			out.close();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+	protected void deleteResponse() {
+		response = null;
 	}
 	
 }

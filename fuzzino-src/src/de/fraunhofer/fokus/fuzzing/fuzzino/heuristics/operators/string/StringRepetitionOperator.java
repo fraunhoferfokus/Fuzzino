@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
@@ -39,7 +39,7 @@ public class StringRepetitionOperator extends ComposedFuzzingHeuristic<String> i
 		initHeuristics(stringSpec, validValues);
 	}
 
-	public StringRepetitionOperator(List<String> validValues, StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public StringRepetitionOperator(List<String> validValues, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed);
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");
@@ -68,7 +68,7 @@ public class StringRepetitionOperator extends ComposedFuzzingHeuristic<String> i
 	@Override
 	public List<String> getValidValues() {
 		List<String> validValues = new ArrayList<>(heuristics.size()); 
-		for (FuzzingHeuristic<String> fuzzingHeuristic : heuristics) {
+		for (ComputableFuzzingHeuristic<String> fuzzingHeuristic : heuristics) {
 			SimpleFuzzingOperator<String> simpleOperator = (SimpleFuzzingOperator<String>)fuzzingHeuristic;
 			validValues.add(simpleOperator.getInputValue());
 		}

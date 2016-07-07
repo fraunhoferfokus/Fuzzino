@@ -14,7 +14,7 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
 
@@ -27,7 +27,7 @@ public class BadFilenamesGenerator extends ComposedStringGenerator {
 		initHeuristics();
 	}
 	
-	public BadFilenamesGenerator(FuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+	public BadFilenamesGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 		initHeuristics();
 	}

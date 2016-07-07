@@ -13,14 +13,22 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl;
 
+import static de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil.normalize;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil.*;
 
 public class OperatorImpl implements Operator {
 
 	private static final long serialVersionUID = 1599135300363968257L;
 	protected String value;
 	protected String parameter;
+
+	public OperatorImpl(String operatorName){
+		setOperatorName(operatorName);
+	}
+	
+	public OperatorImpl() {
+	}
 
 	@Override
 	public String getOperatorName() {

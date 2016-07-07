@@ -13,12 +13,32 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.util;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.*;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.AllGeneratorsBasedPart;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.AllOperatorsBasedPart;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ErrorResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedStructure;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NoMoreValuesIndicator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponsePackage;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Value;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsPart;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
 
 /**
  * <!-- begin-user-doc -->

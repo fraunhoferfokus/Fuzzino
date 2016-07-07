@@ -13,9 +13,15 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import org.junit.Test;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createCloseRequestCommandFromResponse;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createCloseRequestFileFromResponse;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createContdRequest;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getNumberResponseFromResponseDoc;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getStringResponseFromResponseDoc;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.saveRequest;
 
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.*;
+import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;

@@ -13,15 +13,13 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 
 /**
  * <!-- begin-user-doc -->

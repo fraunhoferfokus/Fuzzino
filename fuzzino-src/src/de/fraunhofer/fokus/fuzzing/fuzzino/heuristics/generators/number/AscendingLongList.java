@@ -15,10 +15,10 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 /**
  * * Computes a list of ascending numbers of the type Long.
@@ -29,9 +29,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
 public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> implements NumberGenerator<Long> {
 
 	private static final long serialVersionUID = 7478158087438890519L;
-	protected NumberSpecification numberSpec;
+	protected IntegerSpecification numberSpec;
 	protected long seed;
-	protected FuzzingHeuristic<?> owner = this;
+	protected ComputableFuzzingHeuristic<?> owner = this;
 	/**
 	 * The first integer.
 	 */
@@ -89,7 +89,7 @@ public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> imp
 	 * @param builder the builder holding the parameters for the AscendingIntegerList to be constructed.
 	 * @throws NoMatchingValuesException 
 	 */
-	public AscendingLongList(NumberSpecification numberSpec, FuzzingHeuristic<?> owner, long seed, Builder builder) throws NoMatchingValuesException {
+	public AscendingLongList(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, Builder builder) throws NoMatchingValuesException {
 		this.numberSpec = numberSpec;
 		this.owner = owner;
 		this.seed = seed;
@@ -109,10 +109,10 @@ public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> imp
 		int stepSize = builder.stepSize;
 		
 		long largestValue = matchingStartInt + stepSize * matchingSize;
-		long largestValidValue = Math.min(largestValue, numberSpec.getMaxValue());
+		long largestValidValue = Math.min(largestValue, numberSpec.getMax());
 		
-		if (matchingStartInt < numberSpec.getMinValue()) {
-			long minValue = numberSpec.getMinValue();
+		if (matchingStartInt < numberSpec.getMin()) {
+			long minValue = numberSpec.getMin();
 			double diff = minValue - matchingStartInt;
 			matchingStartInt += Math.ceil(diff/stepSize) * stepSize;
 			
@@ -162,7 +162,7 @@ public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> imp
 	}
 
 	@Override
-	public boolean canCreateValuesFor(NumberSpecification numberSpec) {
+	public boolean canCreateValuesFor(IntegerSpecification numberSpec) {
 		return true;
 	}
 

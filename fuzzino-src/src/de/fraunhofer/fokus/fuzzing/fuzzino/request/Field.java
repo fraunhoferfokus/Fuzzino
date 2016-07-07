@@ -13,6 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -23,16 +24,34 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#isFuzz <em>Fuzz</em>}</li>
  *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#getRef <em>Ref</em>}</li>
  * </ul>
  * </p>
  *
  * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getField()
- * @model extendedMetaData="name='field_._type' kind='empty'"
+ * @model extendedMetaData="name='field_._type' kind='elementOnly'"
  * @generated
  */
 public interface Field extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
+	 * The list contents are of type {@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Attributes</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Attributes</em>' containment reference list.
+	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getField_Attributes()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='attribute' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	EList<Attribute> getAttributes();
+
 	/**
 	 * Returns the value of the '<em><b>Fuzz</b></em>' attribute.
 	 * The default value is <code>"true"</code>.

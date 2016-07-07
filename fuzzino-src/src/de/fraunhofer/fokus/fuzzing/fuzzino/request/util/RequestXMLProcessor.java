@@ -13,15 +13,13 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.util;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
-
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.resource.Resource;
-
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 
 /**
  * This class contains helper methods to serialize and deserialize XML documents

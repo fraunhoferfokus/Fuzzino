@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.SpecialUnicodeBomStrings;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
@@ -29,7 +29,7 @@ public class SpecialUnicodeBomStringsGenerator extends SimpleStringGenerator {
 		super(stringSpec, seed);
 	}
 	
-	public SpecialUnicodeBomStringsGenerator(FuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+	public SpecialUnicodeBomStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 	}
 	

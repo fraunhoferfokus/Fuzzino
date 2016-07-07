@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.BadStrings;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
@@ -28,7 +28,7 @@ public class BadStringsGenerator extends SimpleStringGenerator {
 		super(stringSpec, seed);
 	}
 	
-	public BadStringsGenerator(StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public BadStringsGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(stringSpec, seed, owner);
 	}
 

@@ -14,22 +14,22 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.SimpleFuzzingGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 public abstract class SimpleIntegerGenerator extends SimpleFuzzingGenerator<Long> implements IntegerGenerator {
 
 	private static final long serialVersionUID = 5027532426844708457L;
-	protected NumberSpecification numberSpec;
+	protected IntegerSpecification numberSpec;
 	
-	public SimpleIntegerGenerator(NumberSpecification numberSpec, long seed) {
+	public SimpleIntegerGenerator(IntegerSpecification numberSpec, long seed) {
 		super(seed);
 		this.numberSpec = numberSpec;
 	}
 	
-	public SimpleIntegerGenerator(NumberSpecification numberSpec, long seed, FuzzingHeuristic<?> owner) {
+	public SimpleIntegerGenerator(IntegerSpecification numberSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed, owner);
 		this.numberSpec = numberSpec;
 	}
@@ -41,7 +41,7 @@ public abstract class SimpleIntegerGenerator extends SimpleFuzzingGenerator<Long
 		}
 		long value = fuzzedValue.getValue();
 		
-		return value >= numberSpec.getMinValue() && value <= numberSpec.getMaxValue();
+		return value >= numberSpec.getMin() && value <= numberSpec.getMax();
 	}
 
 }

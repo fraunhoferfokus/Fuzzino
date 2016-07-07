@@ -67,6 +67,43 @@ public interface RequestPackage extends EPackage {
 	RequestPackage eINSTANCE = de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.AttributeImpl <em>Attribute</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.AttributeImpl
+	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getAttribute()
+	 * @generated
+	 */
+	int ATTRIBUTE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Ref</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE__REF = 1;
+
+	/**
+	 * The number of structural features of the '<em>Attribute</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.CloseRequestImpl <em>Close Request</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -74,7 +111,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getCloseRequest()
 	 * @generated
 	 */
-	int CLOSE_REQUEST = 0;
+	int CLOSE_REQUEST = 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -102,7 +139,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getCollectionRequest()
 	 * @generated
 	 */
-	int COLLECTION_REQUEST = 1;
+	int COLLECTION_REQUEST = 2;
 
 	/**
 	 * The feature id for the '<em><b>Specification</b></em>' containment reference.
@@ -211,7 +248,16 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getField()
 	 * @generated
 	 */
-	int FIELD = 2;
+	int FIELD = 3;
+
+	/**
+	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__ATTRIBUTES = 0;
 
 	/**
 	 * The feature id for the '<em><b>Fuzz</b></em>' attribute.
@@ -220,7 +266,7 @@ public interface RequestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD__FUZZ = 0;
+	int FIELD__FUZZ = 1;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -229,7 +275,7 @@ public interface RequestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD__REF = 1;
+	int FIELD__REF = 2;
 
 	/**
 	 * The number of structural features of the '<em>Field</em>' class.
@@ -238,7 +284,7 @@ public interface RequestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_FEATURE_COUNT = 2;
+	int FIELD_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.GeneratorImpl <em>Generator</em>}' class.
@@ -248,7 +294,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getGenerator()
 	 * @generated
 	 */
-	int GENERATOR = 3;
+	int GENERATOR = 4;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -285,7 +331,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getNoGenerators()
 	 * @generated
 	 */
-	int NO_GENERATORS = 4;
+	int NO_GENERATORS = 5;
 
 	/**
 	 * The number of structural features of the '<em>No Generators</em>' class.
@@ -304,7 +350,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getNumberRequest()
 	 * @generated
 	 */
-	int NUMBER_REQUEST = 5;
+	int NUMBER_REQUEST = 6;
 
 	/**
 	 * The feature id for the '<em><b>Specification</b></em>' containment reference.
@@ -395,7 +441,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getOperator()
 	 * @generated
 	 */
-	int OPERATOR = 6;
+	int OPERATOR = 7;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -432,7 +478,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getRequest()
 	 * @generated
 	 */
-	int REQUEST = 7;
+	int REQUEST = 8;
 
 	/**
 	 * The feature id for the '<em><b>String Requests</b></em>' containment reference list.
@@ -496,7 +542,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getRequestSpecification()
 	 * @generated
 	 */
-	int REQUEST_SPECIFICATION = 8;
+	int REQUEST_SPECIFICATION = 9;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -641,7 +687,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getStringRequest()
 	 * @generated
 	 */
-	int STRING_REQUEST = 9;
+	int STRING_REQUEST = 10;
 
 	/**
 	 * The feature id for the '<em><b>Specification</b></em>' containment reference.
@@ -732,7 +778,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getStructureRequest()
 	 * @generated
 	 */
-	int STRUCTURE_REQUEST = 10;
+	int STRUCTURE_REQUEST = 11;
 
 	/**
 	 * The feature id for the '<em><b>Specification</b></em>' containment reference.
@@ -841,7 +887,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getValidCollection()
 	 * @generated
 	 */
-	int VALID_COLLECTION = 11;
+	int VALID_COLLECTION = 12;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute list.
@@ -878,7 +924,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getValidCollections()
 	 * @generated
 	 */
-	int VALID_COLLECTIONS = 12;
+	int VALID_COLLECTIONS = 13;
 
 	/**
 	 * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -915,7 +961,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getValidValues()
 	 * @generated
 	 */
-	int VALID_VALUES = 13;
+	int VALID_VALUES = 14;
 
 	/**
 	 * The feature id for the '<em><b>Values</b></em>' attribute list.
@@ -952,7 +998,7 @@ public interface RequestPackage extends EPackage {
 	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getXmlRequestDocument()
 	 * @generated
 	 */
-	int XML_REQUEST_DOCUMENT = 14;
+	int XML_REQUEST_DOCUMENT = 15;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -999,6 +1045,38 @@ public interface RequestPackage extends EPackage {
 	 */
 	int XML_REQUEST_DOCUMENT_FEATURE_COUNT = 4;
 
+
+	/**
+	 * Returns the meta object for class '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute <em>Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute</em>'.
+	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute
+	 * @generated
+	 */
+	EClass getAttribute();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute#getName()
+	 * @see #getAttribute()
+	 * @generated
+	 */
+	EAttribute getAttribute_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute#getRef <em>Ref</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Ref</em>'.
+	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute#getRef()
+	 * @see #getAttribute()
+	 * @generated
+	 */
+	EAttribute getAttribute_Ref();
 
 	/**
 	 * Returns the meta object for class '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest <em>Close Request</em>}'.
@@ -1150,6 +1228,17 @@ public interface RequestPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getField();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#getAttributes <em>Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Attributes</em>'.
+	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#getAttributes()
+	 * @see #getField()
+	 * @generated
+	 */
+	EReference getField_Attributes();
 
 	/**
 	 * Returns the meta object for the attribute '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#isFuzz <em>Fuzz</em>}'.
@@ -1965,6 +2054,32 @@ public interface RequestPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
+		 * The meta object literal for the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.AttributeImpl <em>Attribute</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.AttributeImpl
+		 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestPackageImpl#getAttribute()
+		 * @generated
+		 */
+		EClass ATTRIBUTE = eINSTANCE.getAttribute();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE__NAME = eINSTANCE.getAttribute_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Ref</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE__REF = eINSTANCE.getAttribute_Ref();
+
+		/**
 		 * The meta object literal for the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.CloseRequestImpl <em>Close Request</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2081,6 +2196,14 @@ public interface RequestPackage extends EPackage {
 		 * @generated
 		 */
 		EClass FIELD = eINSTANCE.getField();
+
+		/**
+		 * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIELD__ATTRIBUTES = eINSTANCE.getField_Attributes();
 
 		/**
 		 * The meta object literal for the '<em><b>Fuzz</b></em>' attribute feature.

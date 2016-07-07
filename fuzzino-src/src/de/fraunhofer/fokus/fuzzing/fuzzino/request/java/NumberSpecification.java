@@ -13,128 +13,15 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.java;
 
-import java.math.BigInteger;
+public interface NumberSpecification<T extends Number> extends TypeSpecification{
 
-/**
- * A NumberSpecification is a description of a type of a request. It gives hints to the fuzzing 
- * library that reduces the set of fuzz testing values in a reasonable way by omitting values
- * that are not appropriate to this specification.
- * 
- * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
- *
- */
-public interface NumberSpecification extends TypeSpecification {
+	public T getMin();
 	
-	/**
-	 * @return The type of the number. The possible types are specified by {@link NumberType}.
-	 */
-	NumberType getType();
+	public T getMax();
 	
-	/**
-	 * Specifies whether the number is an integer or a decimal number.
-	 * The possible types are specified by {@link NumberType}.
-	 * 
-	 * @param value The type of the number.
-	 */
-	void setType(NumberType value);
+	public void setMin(T min);
 	
-	/**
-	 * @return The smallest valid number. Might loose information if {@link #isMinValueBig()}{@code == true}.
-	 */
-	long getMinValue();
+	public void setMax(T max);
 	
-	/**
-	 * @return {@code true} if {@link #getMinValueBig()}{@code < {@link Long#MIN_VALUE} {@code || }{@link #getMinValueBig()}{@code > {@link Long#MAX_VALUE}. 
-	 */
-	boolean isMinValueBig();
-	
-	/**
-	 * @return The smallest valid number.
-	 */
-	BigInteger getMinValueBig();
-	
-	/**
-	 * Specifies the smallest valid number.
-	 * 
-	 * @param value The smallest valid number.
-	 */
-	void setMinValue(long value);
-	
-	/**
-	 * Specifiest the smallest valid number as a BigInteger.
-	 * 
-	 * @param value
-	 */
-	void setMinValue(BigInteger value);
-	
-	/**
-	 * @return The biggest valid number. Might loose information if {@link #isMaxValueBig()}{@code == true}.
-	 */
-	long getMaxValue();
-	
-	/**
-	 * @return {@code true} if {@link #getMaxValueBig()}{@code < {@link Long#MIN_VALUE} {@code || }{@link #getMaxValueBig()}{@code > {@link Long#MAX_VALUE}. 
-	 */
-	boolean isMaxValueBig();
-	
-	/**
-	 * @return The biggest valid number.
-	 */
-	BigInteger getMaxValueBig();
-	
-	/**
-	 * @param value
-	 */
-	void setMaxValue(long value);
-	
-	void setMaxValue(BigInteger value);
-	
-	/**
-	 * @return The number of bits that is used for the representation of the number.
-	 */
-	int getBits();
-	
-	/**
-	 * Specifies the number of bits that is used for the representation of the number.
-	 * If this attribute is not set, it has the default value 32.
-	 * 
-	 * @param value The number of bits that is used for the representation of the number.
-	 */
-	void setBits(int value);
-	
-	/**
-	 * @return {@code true} if the specified value is signed.
-	 */
-	boolean isSigned();
-	
-	/**
-	 * Specifies whether the number is signed.
-	 * If this attribute is not set, is has the default value {@code true}.
-	 * 
-	 * @param value Set to {@code true} if the number is a a signed value.
-	 */
-	void setIsSigned(boolean value);
-	
-	/**
-	 * Specifies whether {@link #getMinValue()} and {@link #getMaxValue()} shall be ignored.
-	 * 
-	 * @param value Set to {@code true} to let the library ignore {@link #getMinValue()} and {@link #getMaxValue()}.
-	 */
-	void setIgnoreMinMaxValues(boolean value);
-	
-	/**
-	 * @return {@code true} if {@link #getMinValue()} and {@link #getMaxValue()} shall be ignored.
-	 */
-	boolean ignoreMinMaxValues();
-	
-	/**
-	 * @return {@code true} if {@link #getType()} {@code ==} {@link NumberType#INTEGER} and {@link #getBits()} {@code <= 64}.
-	 */
-	boolean isLongCompatible();
-	
-	/**
-	 * @return {@code true} if {@link #getType()} {@code ==} {@link NumberType#INTEGER} and {@link #getBits()} {@code > 64}.
-	 */
-	boolean isBigIntegerCompatible();
-
+	public NumberType getType();
 }

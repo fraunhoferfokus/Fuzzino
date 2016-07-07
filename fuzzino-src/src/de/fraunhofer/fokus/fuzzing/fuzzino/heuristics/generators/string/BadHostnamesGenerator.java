@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
@@ -27,7 +27,7 @@ public class BadHostnamesGenerator extends ComposedStringGenerator {
 		initHeuristics();
 	}
 	
-	public BadHostnamesGenerator(FuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+	public BadHostnamesGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 		initHeuristics();
 	}

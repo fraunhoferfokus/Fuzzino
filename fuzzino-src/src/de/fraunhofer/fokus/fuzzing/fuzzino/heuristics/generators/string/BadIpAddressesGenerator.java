@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
 
@@ -26,7 +26,7 @@ public class BadIpAddressesGenerator extends ComposedStringGenerator {
 		initHeuristics();
 	}
 
-	public BadIpAddressesGenerator(StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public BadIpAddressesGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(stringSpec, seed, owner);
 		initHeuristics();
 	}

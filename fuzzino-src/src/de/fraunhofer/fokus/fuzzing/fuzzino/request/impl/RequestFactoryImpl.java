@@ -13,15 +13,30 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NoGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollections;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,6 +82,7 @@ public class RequestFactoryImpl extends EFactoryImpl implements RequestFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case RequestPackage.ATTRIBUTE: return createAttribute();
 			case RequestPackage.CLOSE_REQUEST: return createCloseRequest();
 			case RequestPackage.COLLECTION_REQUEST: return createCollectionRequest();
 			case RequestPackage.FIELD: return createField();
@@ -85,6 +101,16 @@ public class RequestFactoryImpl extends EFactoryImpl implements RequestFactory {
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Attribute createAttribute() {
+		AttributeImpl attribute = new AttributeImpl();
+		return attribute;
 	}
 
 	/**

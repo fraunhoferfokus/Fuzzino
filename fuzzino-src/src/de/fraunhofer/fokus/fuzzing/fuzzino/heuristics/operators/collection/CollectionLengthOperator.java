@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
@@ -44,7 +44,7 @@ public class CollectionLengthOperator extends CollectionOperatorImpl implements 
 			                        FuzzedCollection collection, 
 			                        CollectionSpecification collectionSpec,
 			                        long seed,
-			                        FuzzingHeuristic<?> owner) {
+			                        ComputableFuzzingHeuristic<?> owner) {
 		super(validCollection, collection, collectionSpec, seed, owner);
 		determineLengths();
 	}
@@ -66,7 +66,7 @@ public class CollectionLengthOperator extends CollectionOperatorImpl implements 
 		                            String param,
 		                            CollectionSpecification collectionSpec,
 		                            long seed,
-		                            FuzzingHeuristic<?> owner) {
+		                            ComputableFuzzingHeuristic<?> owner) {
 		super(validCollection, collection, collectionSpec, seed, owner);
 		try {
 			varianceRange = Integer.parseInt(param);

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
@@ -39,7 +39,7 @@ public class SimpleDelimiterOperator extends SimpleStringOperator {
 		super(validValue, stringSpec, seed);
 	}
 
-	public SimpleDelimiterOperator(String validValue, StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public SimpleDelimiterOperator(String validValue, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(validValue, stringSpec, seed, owner);
 	}
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.NumericalVarianceOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 /**
  * A factory for all kinds of NumberOperators.
@@ -39,12 +39,9 @@ public class IntegerOperatorFactory {
 	private IntegerOperatorFactory() {
 	}
 	
-	public IntegerOperator create(String name, 
-			                      List<Long> validValues, 
-			                      String param, 
-			                      NumberSpecification numberSpec, 
-			                      long seed) throws UnknownFuzzingHeuristicException {
-		if (name.equals("NumericalVariance")) {
+	public IntegerOperator create(String name, List<Long> validValues, String param, IntegerSpecification numberSpec, long seed) throws UnknownFuzzingHeuristicException {
+		String canonicalName = name.trim().toUpperCase();
+		if (canonicalName.equals("NumericalVariance".toUpperCase())) {
 			return createNumericalVarianceOperator(validValues, param, numberSpec, seed);
 		} else {
 			throw new UnknownFuzzingHeuristicException();
@@ -52,7 +49,7 @@ public class IntegerOperatorFactory {
 	}
 	
 	public List<IntegerOperator> createAll(List<Long> validValues, 
-			                               NumberSpecification numberSpec, 
+			                               IntegerSpecification numberSpec, 
 			                               long seed) {
 		List<IntegerOperator> allIntegerOperators = new LinkedList<>();
 		allIntegerOperators.add(createNumericalVarianceOperator(validValues, null, numberSpec, seed));
@@ -69,7 +66,7 @@ public class IntegerOperatorFactory {
 	
 	public NumericalVarianceOperator createNumericalVarianceOperator(List<Long> validValues, 
 			                                                         String param, 
-			                                                         NumberSpecification numberSpec, 
+			                                                         IntegerSpecification numberSpec, 
 			                                                         long seed) {
 		return new NumericalVarianceOperator(validValues, param, numberSpec, seed);
 	}

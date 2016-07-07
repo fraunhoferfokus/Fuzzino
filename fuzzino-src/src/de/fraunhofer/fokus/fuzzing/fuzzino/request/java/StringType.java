@@ -1,4 +1,4 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
+//   Copyright 2012-2014 Fraunhofer FOKUS
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -39,7 +39,9 @@ public enum StringType {
 	DATE,
 	TIME,
 	IP_ADDRESS,
-	PIN4DIGIT;
+	PIN4DIGIT,
+	XML,
+	XSS;
 	
 	private static final Map<String, StringType> mapping = new HashMap<>();
 	static {
@@ -58,6 +60,8 @@ public enum StringType {
 		mapping.put("Time".toUpperCase(), TIME);
 		mapping.put("IPAddress".toUpperCase(), IP_ADDRESS);
 		mapping.put("PIN4Digit".toUpperCase(), PIN4DIGIT);
+		mapping.put("XML".toUpperCase(), XML);
+		mapping.put("XSS".toUpperCase(), XSS);
 	}
 	
 	/**

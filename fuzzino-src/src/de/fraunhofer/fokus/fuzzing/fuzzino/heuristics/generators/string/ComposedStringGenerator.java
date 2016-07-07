@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
@@ -33,7 +33,7 @@ public abstract class ComposedStringGenerator extends ComposedFuzzingHeuristic<S
 		this.stringSpec = stringSpec;
 	}
 	
-	public ComposedStringGenerator(StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public ComposedStringGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed, owner);
 		if (stringSpec == null) {
 			throw new IllegalArgumentException("stringSpec must not be null");

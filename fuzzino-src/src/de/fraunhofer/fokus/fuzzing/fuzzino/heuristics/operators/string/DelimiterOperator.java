@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
@@ -35,7 +35,7 @@ public class DelimiterOperator extends ComposedFuzzingHeuristic<String> implemen
 		initHeuristics(stringSpec, validValues);
 	}
 
-	public DelimiterOperator(List<String> validValues, StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public DelimiterOperator(List<String> validValues, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed);
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");

@@ -14,21 +14,21 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 public abstract class ComposedIntegerGenerator extends ComposedFuzzingHeuristic<Long> implements IntegerGenerator {
 
 	private static final long serialVersionUID = 9200185621686463628L;
-	protected NumberSpecification numberSpec;
+	protected IntegerSpecification numberSpec;
 	
-	public ComposedIntegerGenerator(long seed, NumberSpecification numberSpec) {
+	public ComposedIntegerGenerator(long seed, IntegerSpecification numberSpec) {
 		super(seed);
 		this.numberSpec = numberSpec;
 	}
 	
-	public ComposedIntegerGenerator(FuzzingHeuristic<?> owner, long seed, NumberSpecification numberSpec) {
+	public ComposedIntegerGenerator(ComputableFuzzingHeuristic<?> owner, long seed, IntegerSpecification numberSpec) {
 		super(seed, owner);
 		this.numberSpec = numberSpec;
 	}

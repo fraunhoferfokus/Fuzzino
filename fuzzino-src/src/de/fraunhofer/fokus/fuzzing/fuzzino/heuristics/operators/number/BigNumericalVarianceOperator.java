@@ -19,7 +19,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.BigIntegerOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 public class BigNumericalVarianceOperator extends ComposedFuzzingHeuristic<BigInteger> implements BigIntegerOperator {
 
@@ -28,7 +28,7 @@ public class BigNumericalVarianceOperator extends ComposedFuzzingHeuristic<BigIn
 
 	public BigNumericalVarianceOperator(List<BigInteger> validValues, 
 			                         String param,
-			                         NumberSpecification numberSpec,
+			                         IntegerSpecification numberSpec,
 			                         long seed) {
 		super(seed);
 		if (validValues == null) {
@@ -49,7 +49,7 @@ public class BigNumericalVarianceOperator extends ComposedFuzzingHeuristic<BigIn
 	}
 	
 	@Override
-	public boolean canCreateValuesFor(NumberSpecification numberSpec) {
+	public boolean canCreateValuesFor(IntegerSpecification numberSpec) {
 		return true;
 	}
 

@@ -16,6 +16,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.LibraryType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.AbstractRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Generator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
@@ -26,29 +28,14 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
 
-public class NumberRequestImpl implements NumberRequest {
+public class NumberRequestImpl extends AbstractRequest implements NumberRequest {
 	
 	private static final long serialVersionUID = -2012616743761270542L;
-	protected NumberSpecification specification;
 	protected List<Generator> generators;
 	protected ValidValuesSection validValues;
-	protected String id = null;
-	protected int maxValues = 0;
-	protected String name = null;
-	protected long seed = -1;
 	protected boolean useNoGenerators;
-	protected boolean isEMFBased = false;
 	protected transient ValidationResult validationResult = null;
-	
-	@Override
-	public NumberSpecification getSpecification() {
-		return specification;
-	}
-	
-	@Override
-	public void setSpecification(NumberSpecification value) {
-		specification = value;
-	}
+	private NumberSpecification<? extends Number> numSpec;
 	
 	@Override
 	public List<Generator> getRequestedGenerators() {
@@ -82,46 +69,6 @@ public class NumberRequestImpl implements NumberRequest {
 	}
 	
 	@Override
-	public String getId() {
-		return id;
-	}
-	
-	@Override
-	public void setId(String value) {
-		id = value;
-	}
-	
-	@Override
-	public int getMaxValues() {
-		return maxValues;
-	}
-	
-	@Override
-	public void setMaxValues(int value) {
-		maxValues = value;
-	}
-	
-	@Override
-	public String getName() {
-		return name;
-	}
-	
-	@Override
-	public void setName(String value) {
-		name = value;
-	}
-	
-	@Override
-	public long getSeed() {
-		return seed;
-	}
-	
-	@Override
-	public void setSeed(long value) {
-		seed = value;
-	}
-	
-	@Override
 	public void setWithEMFObject(de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest emfNumberRequest) {
 		for (de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator emfGenerator : emfNumberRequest.getGenerators()) {
 			addRequestedGenerator(RequestFactory.INSTANCE.createGenerator(emfGenerator));
@@ -134,22 +81,11 @@ public class NumberRequestImpl implements NumberRequest {
 		setUseNoGenerators(emfNumberRequest.getNoGenerators() != null);
 
 		if (!isContinued()) {
-			setSpecification(RequestFactory.INSTANCE.createNumberSpecification(emfNumberRequest.getSpecification()));
+			setNumberSpecification(RequestFactory.INSTANCE.createNumberSpecification(emfNumberRequest.getSpecification()));
 			setValidValuesSection(RequestFactory.INSTANCE.createValidValues(emfNumberRequest.getValidValues()));
 		}
 		
 		isEMFBased = true;
-	}
-	
-
-	@Override
-	public boolean isContinued() {
-		return getId() != null;
-	}
-
-	@Override
-	public boolean isEMFBased() {
-		return isEMFBased;
 	}
 	
 	@Override
@@ -157,8 +93,8 @@ public class NumberRequestImpl implements NumberRequest {
 		if (validationResult == null) {
 			ValidationResult validMaxValues = validateMaxValues();
 			ValidationResult validSpecification = ValidationResult.VALID;
-			if (getSpecification() != null) {
-				validSpecification = getSpecification().validate();
+			if (getNumberSpecification() != null) {
+				validSpecification = getNumberSpecification().validate();
 			} else {
 				if (!isContinued()) {
 					IllegalRequestFormat missingSpec =
@@ -214,6 +150,21 @@ public class NumberRequestImpl implements NumberRequest {
 	@Override
 	public void setUseNoGenerators(boolean value) {
 		useNoGenerators = value;
+	}
+
+	@Override
+	public LibraryType getLibraryType() {
+		return LibraryType.NUMBER;
+	}
+
+	@Override
+	public NumberSpecification<? extends Number> getNumberSpecification() {
+		return numSpec;
+	}
+
+	@Override
+	public void setNumberSpecification(NumberSpecification<? extends Number> numSpec) {
+		this.numSpec = numSpec;
 	}
 
 }

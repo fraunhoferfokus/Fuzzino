@@ -17,9 +17,9 @@ import java.math.BigInteger;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntRange;
 
@@ -32,7 +32,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntRange;
 public class BigIntFromRanges extends ComposedFuzzingHeuristic<BigInteger> implements NumberGenerator<BigInteger> {
 	
 	private static final long serialVersionUID = -8447711782470137056L;
-	protected NumberSpecification numberSpec;
+	protected IntegerSpecification numberSpec;
 
 	public static class Builder extends BigIntFromRangesBuilder {
 
@@ -45,7 +45,7 @@ public class BigIntFromRanges extends ComposedFuzzingHeuristic<BigInteger> imple
 		}
 	}
 	
-	public BigIntFromRanges(NumberSpecification numberSpec, FuzzingHeuristic<?> owner, long seed, BigIntFromRangesBuilder builder) {
+	public BigIntFromRanges(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, BigIntFromRangesBuilder builder) {
 		super(seed, owner);
 		this.numberSpec = numberSpec;
 		for (BigIntRange range : builder.allRanges()) {
@@ -64,7 +64,7 @@ public class BigIntFromRanges extends ComposedFuzzingHeuristic<BigInteger> imple
 	}
 
 	@Override
-	public boolean canCreateValuesFor(NumberSpecification numberSpec) {
+	public boolean canCreateValuesFor(IntegerSpecification numberSpec) {
 		return true;
 	}
 }

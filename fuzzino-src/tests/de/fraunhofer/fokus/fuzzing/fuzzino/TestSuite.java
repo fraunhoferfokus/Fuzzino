@@ -16,7 +16,6 @@ package de.fraunhofer.fokus.fuzzing.fuzzino;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.StringRequestProcessorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristicTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImplTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGeneratorFactoryTest;

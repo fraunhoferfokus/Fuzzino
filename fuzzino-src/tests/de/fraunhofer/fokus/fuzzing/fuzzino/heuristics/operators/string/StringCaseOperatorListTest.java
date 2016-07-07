@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringCaseOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 public class StringCaseOperatorListTest {

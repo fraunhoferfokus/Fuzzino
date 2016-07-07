@@ -19,7 +19,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BigBoundaryNumbersGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 public class BigIntegerGeneratorFactory {
 
@@ -28,7 +28,7 @@ public class BigIntegerGeneratorFactory {
 	private BigIntegerGeneratorFactory() {
 	}
 	
-	public BigIntegerGenerator create(String name, String param, NumberSpecification numberSpec, long seed) throws UnknownFuzzingHeuristicException {
+	public BigIntegerGenerator create(String name, String param, IntegerSpecification numberSpec, long seed) throws UnknownFuzzingHeuristicException {
 		if (name == null) {
 			throw new UnknownFuzzingHeuristicException(name);
 		}
@@ -40,7 +40,7 @@ public class BigIntegerGeneratorFactory {
 		}
 	}
 
-	public List<BigIntegerGenerator> createAll(NumberSpecification numberSpec, long seed) {
+	public List<BigIntegerGenerator> createAll(IntegerSpecification numberSpec, long seed) {
 		List<BigIntegerGenerator> allNumberGenerators = new ArrayList<>();
 		allNumberGenerators.add(createBoundaryNumbersGenerator(numberSpec, seed));
 
@@ -54,7 +54,7 @@ public class BigIntegerGeneratorFactory {
 		return applicableGenerators;
 	}
 	
-	public BigIntegerGenerator createBoundaryNumbersGenerator(NumberSpecification numberSpec, long seed) {
+	public BigIntegerGenerator createBoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed) {
 		return new BigBoundaryNumbersGenerator(numberSpec, seed);
 	}
 	

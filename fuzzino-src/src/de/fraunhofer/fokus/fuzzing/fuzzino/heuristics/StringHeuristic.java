@@ -21,7 +21,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
-public interface StringHeuristic extends FuzzingHeuristic<String> {
+public interface StringHeuristic extends ComputableFuzzingHeuristic<String> {
 
 	/**
 	 * Determines if this string heuristic can create values for a certain type.

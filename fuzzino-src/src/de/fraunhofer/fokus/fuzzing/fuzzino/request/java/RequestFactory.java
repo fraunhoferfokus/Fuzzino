@@ -22,9 +22,8 @@ public interface RequestFactory {
 	Field createField();
 	Generator createGenerator();
 	NumberRequest createNumberRequest();
-	NumberSpecification createNumberSpecification();
-	NumberSpecification createNumberSpecification(NumberType numberType);
-	NumberSpecification createNumberSpecification(NumberSpecification numberSpec);
+	IntegerSpecification createNumberSpecification();
+	IntegerSpecification createNumberSpecification(IntegerSpecification numberSpec);
 	Operator createOperator();
 	Operator createOperator(String name);
 	Request createRequest();
@@ -43,7 +42,7 @@ public interface RequestFactory {
 	Field createField(de.fraunhofer.fokus.fuzzing.fuzzino.request.Field emfField);
 	Generator createGenerator(de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator emfGenerator);
 	NumberRequest createNumberRequest(de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest emfNumberRequest);
-	NumberSpecification createNumberSpecification(de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestSpecification emfRequestSpecification);
+	IntegerSpecification createNumberSpecification(de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestSpecification emfRequestSpecification);
 	Operator createOperator(de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator emfOperator);
 	Request createRequest(de.fraunhofer.fokus.fuzzing.fuzzino.request.Request remfRquest);
 	StringRequest createStringRequest(de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest emfStringRequest);

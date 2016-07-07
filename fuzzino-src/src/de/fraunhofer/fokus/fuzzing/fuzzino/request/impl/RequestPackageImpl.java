@@ -13,6 +13,14 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Field;
@@ -31,15 +39,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollections;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
 
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
@@ -47,6 +46,13 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
  * @generated
  */
 public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeEClass = null;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -221,6 +227,33 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getAttribute() {
+		return attributeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttribute_Name() {
+		return (EAttribute)attributeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttribute_Ref() {
+		return (EAttribute)attributeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCloseRequest() {
 		return closeRequestEClass;
 	}
@@ -347,8 +380,17 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getField_Attributes() {
+		return (EReference)fieldEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getField_Fuzz() {
-		return (EAttribute)fieldEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)fieldEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -357,7 +399,7 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 	 * @generated
 	 */
 	public EAttribute getField_Ref() {
-		return (EAttribute)fieldEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)fieldEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1027,6 +1069,10 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 		isCreated = true;
 
 		// Create classes and their features
+		attributeEClass = createEClass(ATTRIBUTE);
+		createEAttribute(attributeEClass, ATTRIBUTE__NAME);
+		createEAttribute(attributeEClass, ATTRIBUTE__REF);
+
 		closeRequestEClass = createEClass(CLOSE_REQUEST);
 		createEAttribute(closeRequestEClass, CLOSE_REQUEST__ID);
 
@@ -1043,6 +1089,7 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 		createEAttribute(collectionRequestEClass, COLLECTION_REQUEST__SEED);
 
 		fieldEClass = createEClass(FIELD);
+		createEReference(fieldEClass, FIELD__ATTRIBUTES);
 		createEAttribute(fieldEClass, FIELD__FUZZ);
 		createEAttribute(fieldEClass, FIELD__REF);
 
@@ -1163,6 +1210,10 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAttribute_Name(), theXMLTypePackage.getNCName(), "name", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAttribute_Ref(), theXMLTypePackage.getNCName(), "ref", null, 1, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(closeRequestEClass, CloseRequest.class, "CloseRequest", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCloseRequest_Id(), theXMLTypePackage.getNCName(), "id", null, 1, 1, CloseRequest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1179,6 +1230,7 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 		initEAttribute(getCollectionRequest_Seed(), theXMLTypePackage.getLong(), "seed", null, 0, 1, CollectionRequest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getField_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getField_Fuzz(), theXMLTypePackage.getBoolean(), "fuzz", "true", 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getField_Ref(), theXMLTypePackage.getIDREF(), "ref", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1282,6 +1334,27 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 	protected void createExtendedMetaDataAnnotations() {
 		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";		
 		addAnnotation
+		  (attributeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "attribute_._type",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getAttribute_Name(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "name"
+		   });			
+		addAnnotation
+		  (getAttribute_Ref(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "ref"
+		   });			
+		addAnnotation
 		  (closeRequestEClass, 
 		   source, 
 		   new String[] {
@@ -1379,7 +1452,15 @@ public class RequestPackageImpl extends EPackageImpl implements RequestPackage {
 		   source, 
 		   new String[] {
 			 "name", "field_._type",
-			 "kind", "empty"
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getField_Attributes(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "attribute",
+			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
 		  (getField_Fuzz(), 

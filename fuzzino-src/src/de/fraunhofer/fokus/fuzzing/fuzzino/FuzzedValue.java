@@ -14,6 +14,8 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 
@@ -36,7 +38,7 @@ public class FuzzedValue<T> implements Serializable {
 	
 	protected T value = null;
 	protected T basedOnValue = null;
-	protected FuzzingHeuristic<?> heuristic = null;
+	protected final List<FuzzingHeuristic> heuristics = new LinkedList<>();
 	protected Kind kind;
 	
 	/**
@@ -58,12 +60,12 @@ public class FuzzedValue<T> implements Serializable {
 	 * @param fuzzedValue The value created by {@code generator}.
 	 * @param generator The fuzzing generator that created {@code fuzzedValue}.
 	 */
-	public FuzzedValue(T fuzzedValue, FuzzingHeuristic<?> generator) {
+	public FuzzedValue(T fuzzedValue, FuzzingHeuristic generator) {
 		if (generator == null) {
 			throw new IllegalArgumentException("generator must not be null.");
 		}
 		value = fuzzedValue;
-		heuristic = generator;
+		heuristics.add(generator);
 		kind = Kind.GENERATED;
 	}
 	
@@ -74,13 +76,30 @@ public class FuzzedValue<T> implements Serializable {
 	 * @param basedOnValue The valid value that was fuzzed by {@code operator}.
 	 * @param operator The fuzzing operator that mutated {@code basedOnValue}.
 	 */
-	public FuzzedValue(T fuzzedValue, T basedOnValue, FuzzingHeuristic<?> operator) {
+	public FuzzedValue(T fuzzedValue, T basedOnValue, FuzzingHeuristic operator) {
 		if (operator == null) {
 			throw new IllegalArgumentException("operator must not be null.");
 		}
 		value = fuzzedValue;
 		this.basedOnValue = basedOnValue;
-		heuristic = operator;
+		heuristics.add(operator);
+		kind = Kind.MUTATED;
+	}
+	
+	/**
+	 * Creates a new instance that stores a fuzzed value created by applying a fuzzing operator to a valid value.
+	 * 
+	 * @param fuzzedValue The value that is created by applying {@code operator} to {@code basedOnValue}.
+	 * @param basedOnValue The valid value that was fuzzed by {@code operator}.
+	 * @param operators The fuzzing operators that mutated {@code basedOnValue}.
+	 */
+	public FuzzedValue(T fuzzedValue, T basedOnValue, List<FuzzingHeuristic> operators) {
+		if (operators == null) {
+			throw new IllegalArgumentException("operators must not be null.");
+		}
+		value = fuzzedValue;
+		this.basedOnValue = basedOnValue;
+		heuristics.addAll(operators);
 		kind = Kind.MUTATED;
 	}
 	
@@ -111,9 +130,9 @@ public class FuzzedValue<T> implements Serializable {
 			return 0;
 		}
 		if (isGenerated()) {
-			return heuristic.hashCode();
+			return heuristics.hashCode();
 		} else {
-			return heuristic.hashCode() + getBasedOnValue().hashCode();
+			return heuristics.hashCode() + getBasedOnValue().hashCode();
 		}
 	}
 	
@@ -159,19 +178,33 @@ public class FuzzedValue<T> implements Serializable {
 	}
 
 	/**
-	 * @return The fuzzing heuristic the created the fuzzed value {@link #getValue()}.
+	 * @return The first fuzzing heuristic that was used while creating the fuzzed value {@link #getValue()}.
+	 * In a lot of cases there is only one fuzzing heuristic involved in the creation of one FuzzedValue
 	 * @throws UnsupportedOperationException if {@link #isGenerated()} returns {@code false}.
 	 */
-	public FuzzingHeuristic<?> getHeuristic() {
+	public FuzzingHeuristic getHeuristic() {
 		if (isNone()) {
 			throw new UnsupportedOperationException("This is not fuzzed value, neither generated nor mutated.");
 		}
-		return heuristic;
+		return heuristics.get(0);
 	}
 	
 	@Override
 	public String toString() {
-		return "[FuzzedValue value:" + value + " kind:" + kind + " heuristic:" + heuristic.getName() + 
+		return "[FuzzedValue value:" + value + " kind:" + kind + " heuristics:" + getAllHeuristicNames() + 
 				(basedOnValue == null ? "" : basedOnValue) + "]";
 	}
+
+	private String getAllHeuristicNames() {
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0;i<heuristics.size();i++){
+			FuzzingHeuristic heuristic = heuristics.get(i);
+			sb.append(heuristic.getName());
+			if(i!=heuristics.size()){
+				sb.append(",");
+			}
+		}
+		return sb.toString();
+	}
+
 }

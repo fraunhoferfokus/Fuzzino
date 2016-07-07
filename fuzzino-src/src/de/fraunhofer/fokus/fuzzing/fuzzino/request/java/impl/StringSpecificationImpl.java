@@ -16,8 +16,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.IllegalStringEncodingException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.IllegalStringTypeException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
@@ -169,13 +168,13 @@ public class StringSpecificationImpl implements StringSpecification {
 		return "[StringSpecification type:" + type + " minLength:" + minLength + " maxLength:" + maxLength + 
 			   " nullTerminated:" + nullTerminated + " encoding:" + encoding + "]";
 	}
-
+	
 	@Override
-	public NumberSpecification createPositiveNumberSpec() {
+	public IntegerSpecification createPositiveNumberSpec() {
 		if (getMaxLength() == 0) {
 			throw new UnsupportedOperationException("Cannot create positive NumberSpecification: maxLength is 0.");
 		}
-		NumberSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
+		IntegerSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		
 		if (ignoreLengths()) {
 			numberSpec.setIgnoreMinMaxValues(true);
@@ -184,21 +183,21 @@ public class StringSpecificationImpl implements StringSpecification {
 			if (getMinLength() > 0) {
 				minValue = (long) Math.pow(10, getMinLength()-1);
 			} 
-			numberSpec.setMinValue(minValue);
+			numberSpec.setMin(minValue);
 
 			long maxValue = (long) Math.pow(10, getMaxLength())-1;
-			numberSpec.setMaxValue(maxValue);
+			numberSpec.setMax(maxValue);
 		}
 
 		return numberSpec;
 	}
 
 	@Override
-	public NumberSpecification createNegativeNumberSpec() {
+	public IntegerSpecification createNegativeNumberSpec() {
 		if (getMaxLength() <= 1) {
 			throw new UnsupportedOperationException("Cannot create negative NumberSpecification: maxLength is <= 1.");
 		}
-		NumberSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
+		IntegerSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		
 		if (ignoreLengths()) {
 			numberSpec.setIgnoreMinMaxValues(true);
@@ -207,10 +206,10 @@ public class StringSpecificationImpl implements StringSpecification {
 			if (getMinLength() > 2) {
 				maxValue = (long) -Math.pow(10, getMinLength()-2);
 			} 
-			numberSpec.setMaxValue(maxValue);
+			numberSpec.setMax(maxValue);
 
 			long minValue = (long) -Math.pow(10, getMaxLength()-1) + 1;
-			numberSpec.setMinValue(minValue);
+			numberSpec.setMin(minValue);
 		}
 
 		return numberSpec;

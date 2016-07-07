@@ -18,8 +18,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
-
 public class StringEncoderTest {
 	
 	@Test

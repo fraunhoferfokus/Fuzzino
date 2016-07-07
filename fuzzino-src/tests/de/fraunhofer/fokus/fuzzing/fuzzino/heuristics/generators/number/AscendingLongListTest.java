@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -23,11 +23,9 @@ import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingLongList;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingLongList.Builder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
@@ -36,7 +34,7 @@ public class AscendingLongListTest {
 	private static final long SEED = 4711;
 	private static final StringSpecification STRING_SPEC= RequestFactory.INSTANCE.createStringSpecification();
 	private static final SmallGenerator OWNER = new SmallGenerator(STRING_SPEC, SEED);
-	private static final NumberSpecification NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
+	private static final IntegerSpecification NUMBER_SPEC = RequestFactory.INSTANCE.createNumberSpecification();
 	private AscendingLongList ascLongList;
 	
 	@Before
@@ -100,8 +98,8 @@ public class AscendingLongListTest {
 
 	@Test
 	public void test_makeBuilderMatchingSpecification() throws NoMatchingValuesException {
-		NumberSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
-		numberSpec.setMinValue(0);
+		IntegerSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		numberSpec.setMin(0L);
 		Builder builder = new Builder(-100, 200).stepSize(1);
 		AscendingLongList all = new AscendingLongList(numberSpec, null, 0, builder);
 		
@@ -109,9 +107,9 @@ public class AscendingLongListTest {
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);
 		
 		
-		numberSpec = RequestFactory.INSTANCE.createNumberSpecification(NumberType.INTEGER);
-		numberSpec.setMinValue(10);
-		numberSpec.setMaxValue(999);
+		numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		numberSpec.setMin(10L);
+		numberSpec.setMax(999L);
 		builder = new Builder(1, 100).stepSize(3);
 		all = new AscendingLongList(numberSpec, null, 0, builder);
 		
@@ -119,19 +117,19 @@ public class AscendingLongListTest {
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);
 	}
 	
-	public void testMatchingBuilderAgainstBuilder(Builder matchingBuilder, Builder builder, NumberSpecification numberSpec) {
+	public void testMatchingBuilderAgainstBuilder(Builder matchingBuilder, Builder builder, IntegerSpecification numberSpec) {
 		long actualStartInt = matchingBuilder.startInt;
 		assertTrue("startInt is smaller than original startInt: " + actualStartInt + " < " + builder.startInt,
 				   actualStartInt >= builder.startInt);
-		assertTrue("StartInt is smaller than numberSpec.minValue: " + actualStartInt + " < " + numberSpec.getMinValue(),
-				   actualStartInt >= numberSpec.getMinValue());
+		assertTrue("StartInt is smaller than numberSpec.minValue: " + actualStartInt + " < " + numberSpec.getMin(),
+				   actualStartInt >= numberSpec.getMin());
 		
 		long originalLargestValue = builder.startInt + builder.size * builder.stepSize;
 		long actualLargestValue = matchingBuilder.startInt + matchingBuilder.size * matchingBuilder.stepSize;
 		assertTrue("largest value is bigger than original largest value: " + actualLargestValue + " > " + originalLargestValue,
 				   actualLargestValue <= originalLargestValue);
-		assertTrue("largest value is bigger than numberSpec.maxValue: " + actualLargestValue + " > " + numberSpec.getMaxValue(),
-				   actualLargestValue <= numberSpec.getMaxValue());
+		assertTrue("largest value is bigger than numberSpec.maxValue: " + actualLargestValue + " > " + numberSpec.getMax(),
+				   actualLargestValue <= numberSpec.getMax());
 	}
 
 }

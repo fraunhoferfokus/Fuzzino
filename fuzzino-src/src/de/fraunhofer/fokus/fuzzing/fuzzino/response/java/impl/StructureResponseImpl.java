@@ -18,32 +18,26 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedStructure;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructureResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 
-public class StructureResponseImpl implements StructureResponse {
+public class StructureResponseImpl extends AbstractResponse implements StructureResponse {
 
-	protected List<FuzzedStructure> fuzzedStructures;
-	protected WarningsSection warningsPart;
-	protected String id;
-	protected boolean moreValues;
-	protected String name;
-	protected long seed;
+	protected List<FuzzedValue<Structure>> fuzzedStructures;
 	
 	@Override
-	public List<FuzzedStructure> getFuzzedStructures() {
+	public List<FuzzedValue<Structure>> getFuzzedStructures() {
 		return Collections.unmodifiableList(fuzzedStructures);
 	}
 
 	@Override
-	public void setFuzzedStructures(List<FuzzedStructure> value) {
+	public void setFuzzedStructures(List<FuzzedValue<Structure>> value) {
 		fuzzedStructures = value;
 	}
 
 	@Override
-	public void addFuzzedStructure(FuzzedStructure value) {
+	public void addFuzzedStructure(FuzzedValue<Structure> value) {
 		if (fuzzedStructures == null) {
 			fuzzedStructures = new LinkedList<>();
 		}
@@ -51,58 +45,9 @@ public class StructureResponseImpl implements StructureResponse {
 	}
 
 	@Override
-	public WarningsSection getWarningsSection() {
-		return warningsPart;
-	}
-
-	@Override
-	public void setWarningsSection(WarningsSection value) {
-		warningsPart = value;
-	}
-
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(String value) {
-		id = value;
-	}
-
-	@Override
-	public boolean moreValuesAvailable() {
-		return moreValues;
-	}
-
-	@Override
-	public void setMoreValuesAvailable(boolean value) {
-		moreValues = value;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(String value) {
-		name = value;
-	}
-
-	@Override
-	public long getSeed() {
-		return seed;
-	}
-
-	@Override
-	public void setSeed(long value) {
-		seed = value;
-	}
-
-	@Override
 	public de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse
+		//TODO: This is a problem, It can't work yet unless we adapt the emf model, which is not up to date with the reimplemented version inside the 'java' packages
+		/*de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse
 		  emfStructureResponse = ResponseFactory.eINSTANCE.createStructureResponse();
 		
 		for (FuzzedStructure fuzzedStructure : fuzzedStructures) {
@@ -114,17 +59,18 @@ public class StructureResponseImpl implements StructureResponse {
 		emfStructureResponse.setName(getName());
 		emfStructureResponse.setSeed(String.valueOf(getSeed()));
 		
-		return emfStructureResponse;
+		return emfStructureResponse;*/
+		throw new AssertionError("EMF Representation not supported!");
 	}
 	
 	@Override
 	public String toString() {
-		return "[StructureResponse name:" + name + " id:" + id + " seed:" + seed + " moreValues:" + moreValues +
-			   " warningsPart:" + (warningsPart != null) + " fuzzedStructures:" + fuzzedStructures.size() + "]";
+		return "[StructureResponse name:" + getName() + " id:" + getId() + " seed:" + getSeed() + " moreValues:" + moreValuesAvailable() +
+			   " warningsPart:" + (getWarningsSection() != null) + " fuzzedStructures:" + fuzzedStructures.size() + "]";
 	}
 
 	@Override
-	public Iterator<FuzzedStructure> iterator() {
+	public Iterator<FuzzedValue<Structure>> iterator() {
 		return fuzzedStructures.iterator();
 	}
 

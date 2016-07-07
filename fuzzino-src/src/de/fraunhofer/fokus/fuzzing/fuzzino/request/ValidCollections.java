@@ -14,7 +14,6 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

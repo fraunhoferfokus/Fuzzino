@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.collection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public class CollectionLengthOperatorTest {
 		}
 	}
 	
-	@Test
+	/*@Test
 	public void testWithValidCollectionOfSize_0() throws UnknownFuzzingHeuristicException {
 		CollectionSpecification spec = RequestFactory.INSTANCE.createCollectionSpecification();
 		spec.setRef("ref");
@@ -87,6 +87,6 @@ public class CollectionLengthOperatorTest {
 					   actualLength == expectedLength);
 			index++;
 		}
-	}
+	}*/
 
 }

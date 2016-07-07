@@ -13,14 +13,28 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.util;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NoGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollections;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
 
 /**
  * <!-- begin-user-doc -->
@@ -78,6 +92,10 @@ public class RequestAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected RequestSwitch<Adapter> modelSwitch =
 		new RequestSwitch<Adapter>() {
+			@Override
+			public Adapter caseAttribute(Attribute object) {
+				return createAttributeAdapter();
+			}
 			@Override
 			public Adapter caseCloseRequest(CloseRequest object) {
 				return createCloseRequestAdapter();
@@ -157,6 +175,20 @@ public class RequestAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute <em>Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute
+	 * @generated
+	 */
+	public Adapter createAttributeAdapter() {
+		return null;
+	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest <em>Close Request</em>}'.

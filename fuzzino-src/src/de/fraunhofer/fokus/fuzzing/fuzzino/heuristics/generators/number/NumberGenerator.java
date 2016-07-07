@@ -14,12 +14,12 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListOfLists;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 public abstract class NumberGenerator<E> extends ComputableListOfLists<E> {
 
 	private static final long serialVersionUID = 3521362186525683748L;
 
-	public abstract boolean isApplicableTo(NumberSpecification spec);
+	public abstract boolean isApplicableTo(IntegerSpecification spec);
 	
 }

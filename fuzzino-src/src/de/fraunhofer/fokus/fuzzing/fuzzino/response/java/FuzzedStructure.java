@@ -17,16 +17,16 @@ import java.util.List;
 
 /**
  * This class contains one fuzzed structure.
- * 
+ * @deprecated
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
-public interface FuzzedStructure extends Iterable<Field> {
+public interface FuzzedStructure extends Iterable<Field<? extends Object>> {
 
 	/**
 	 * @return The list of fields representing the fuzzed structure.
 	 */
-	List<Field> getFields();
+	List<Field<? extends Object>> getFields();
 	
 	/**
 	 * Sets the list of fields representing the fuzzed structure. If fields are already contained
@@ -34,14 +34,14 @@ public interface FuzzedStructure extends Iterable<Field> {
 	 * 
 	 * @param value The list of fields.
 	 */
-	void setFields(List<Field> value);
+	void setFields(List<Field<? extends Object>> value);
 	
 	/**
 	 * Adds a single field to the fuzzed structure
 	 * 
 	 * @param value The field to be added.
 	 */
-	void addField(Field value);
+	void addField(Field<? extends Object> value);
 	
 	/**
 	 * @return The number of mutations thar are made in order to create this fuzzed structure.
@@ -49,7 +49,7 @@ public interface FuzzedStructure extends Iterable<Field> {
 	int getMutations();
 	
 	/**
-	 * Sets the number of mutations that creates this fuzzed structure.
+	 * Sets the number of mutations that created this fuzzed structure.
 	 * 
 	 * @param value The number of mutations.
 	 */

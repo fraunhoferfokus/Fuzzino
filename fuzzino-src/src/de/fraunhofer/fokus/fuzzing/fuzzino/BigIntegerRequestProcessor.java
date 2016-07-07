@@ -15,23 +15,21 @@ package de.fraunhofer.fokus.fuzzing.fuzzino;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.DeleteRequestProcessorFailedException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.BigIntegerOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.BigIntegerOperatorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidValuesSection;
@@ -66,7 +64,7 @@ public class BigIntegerRequestProcessor extends NumberRequestProcessor<BigIntege
 	protected void addRequestedGenerators() {
 		List<Generator> allRequestedGenerators = request.getRequestedGenerators(); 
 		if (allRequestedGenerators.isEmpty() && !request.useNoGenerators()) {
-			List<BigIntegerGenerator> allIntegerGenerators = BigIntegerGeneratorFactory.INSTANCE.createAll(request.getSpecification(), seed);
+			List<BigIntegerGenerator> allIntegerGenerators = BigIntegerGeneratorFactory.INSTANCE.createAll((IntegerSpecification) request.getNumberSpecification(), seed);
 			heuristics.addAll(allIntegerGenerators);
 		} else {
 			for (Generator requestedGenerator : allRequestedGenerators) {
@@ -74,7 +72,7 @@ public class BigIntegerRequestProcessor extends NumberRequestProcessor<BigIntege
 					BigIntegerGenerator generator = 
 							BigIntegerGeneratorFactory.INSTANCE.create(requestedGenerator.getGeneratorName(), 
 							                                           requestedGenerator.getParameter(), 
-							                                           request.getSpecification(), 
+							                                           (IntegerSpecification) request.getNumberSpecification(), 
 							                                           seed);
 					heuristics.add(generator);
 				} catch (UnknownFuzzingHeuristicException e) {
@@ -91,7 +89,7 @@ public class BigIntegerRequestProcessor extends NumberRequestProcessor<BigIntege
 		List<BigInteger> validValues = parseValidValues();
 		List<Operator> allRequestedOperators = (validValuesPart == null ?  Collections.<Operator>emptyList() : validValuesPart.getRequestedOperators());
 		if (allRequestedOperators.isEmpty() && !validValues.isEmpty()) {
-			List<BigIntegerOperator> allOperators = BigIntegerOperatorFactory.INSTANCE.createAll(validValues, request.getSpecification(), seed);
+			List<BigIntegerOperator> allOperators = BigIntegerOperatorFactory.INSTANCE.createAll(validValues, (IntegerSpecification) request.getNumberSpecification(), seed);
 			heuristics.addAll(allOperators);
 			return;
 		}
@@ -102,7 +100,7 @@ public class BigIntegerRequestProcessor extends NumberRequestProcessor<BigIntege
 				BigIntegerOperator operator = BigIntegerOperatorFactory.INSTANCE.create(requestedOperatorName, 
 						validValues, 
 						requestedOperator.getParameter(), 
-						request.getSpecification(), 
+						(IntegerSpecification) request.getNumberSpecification(), 
 						seed);
 				heuristics.add(operator);
 			} catch (UnknownFuzzingHeuristicException e) {
@@ -131,7 +129,7 @@ public class BigIntegerRequestProcessor extends NumberRequestProcessor<BigIntege
 	}
 	
 	public static BigIntegerRequestProcessor loadFromFile(String filename) throws IOException, ClassNotFoundException {
-		FileInputStream file = new FileInputStream(filename + BIGINTEGER_EXTENSION);
+		FileInputStream file = new FileInputStream(dir + File.separator + filename + BIGINTEGER_EXTENSION);
 		ObjectInputStream in = new ObjectInputStream(file);
 		BigIntegerRequestProcessor bigIntegerRequestProcessor = (BigIntegerRequestProcessor) in.readObject();
 		in.close();
@@ -140,31 +138,12 @@ public class BigIntegerRequestProcessor extends NumberRequestProcessor<BigIntege
 	}	
 
 	@Override
-	public void delete() throws DeleteRequestProcessorFailedException {
-		File serializedProcessor = new File(getRequest().getId() + BIGINTEGER_EXTENSION);
-		boolean serializedProcessorExists = serializedProcessor.exists();
-		boolean deletionSuccessful = false;
-		if (serializedProcessorExists) {
-			deletionSuccessful = serializedProcessor.delete();
-		}
-		if (!serializedProcessorExists || !deletionSuccessful) {
-			throw new DeleteRequestProcessorFailedException();
-		}
+	protected String getFileExtension() {
+		return BIGINTEGER_EXTENSION;
 	}
 
 	@Override
-	public void serialize() {
-		try
-		{
-			FileOutputStream fos = new FileOutputStream(getId().toString() + BIGINTEGER_EXTENSION);
-			ObjectOutputStream out = new ObjectOutputStream(fos);
-			out.writeObject(this);
-			out.close();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+	protected void deleteResponse() {
+		response = null;
 	}
-
 }

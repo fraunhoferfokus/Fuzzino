@@ -13,6 +13,13 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.AllGeneratorsBasedPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.AllOperatorsBasedPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
@@ -36,15 +43,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.Value;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
-
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 
 /**
  * <!-- begin-user-doc -->

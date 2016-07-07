@@ -25,34 +25,6 @@ import java.io.Serializable;
 public interface Field extends Serializable {
 	
 	/**
-	 * @return {@code true} if this field shall be fuzzed.
-	 */
-	boolean fuzz();
-	
-	/**
-	 * Specifies if the value of this field shall be fuzzed.
-	 * If this attribute is not set, it has the default value true.
-	 * 
-	 * @param value
-	 */
-	void setFuzz(boolean value);
-	
-	/**
-	 * @return A value of the name attribute of another request that serves as
-	 *         a specification for the value of this field. 
-	 */
-	String getRef();
-	
-	/**
-	 * References another request as a specification for the value of this field.
-	 * The value of this attribute must match the name attribute of another request.
-	 * It may not reference the enclosing request.
-	 * 
-	 * @param value The value of the name attribute of another request.
-	 */
-	void setRef(String value);
-	
-	/**
 	 * @return A {@link CommonRequest} that serves as a specification for the value of 
 	 *         this field.
 	 */
@@ -65,6 +37,22 @@ public interface Field extends Serializable {
 	 * @param value Another request serving as a specification for this field.
 	 */
 	void setValueRequest(CommonRequest value);
+	
+	/***
+	 * Set whether this field should be fuzzed (fuzzField=true) or filled with valid data (fuzzField=false)
+	 * @param fuzzField
+	 */
+	void setFuzz(boolean fuzzField);
+	
+	/***
+	 * Get whether this field should be fuzzed (fuzzField=true) or filled with valid data (fuzzField=false)
+	 * @param fuzzField
+	 */
+	boolean fuzz();
+	
+	String getName();
+	
+	void setName(String name);
 	
 	/**
 	 * Initializes this field with the values of the corresponding object of the EMF class

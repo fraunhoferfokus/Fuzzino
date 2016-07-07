@@ -13,8 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl;
 
+import static de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil.normalize;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Generator;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil.*;
 
 public class GeneratorImpl implements Generator {
 	
@@ -22,6 +23,13 @@ public class GeneratorImpl implements Generator {
 	protected String value;
 	protected String parameter;
 
+	public GeneratorImpl(){
+	}
+	
+	public GeneratorImpl(String name){
+		this.value = name;
+	}
+	
 	@Override
 	public String getGeneratorName() {
 		return value;

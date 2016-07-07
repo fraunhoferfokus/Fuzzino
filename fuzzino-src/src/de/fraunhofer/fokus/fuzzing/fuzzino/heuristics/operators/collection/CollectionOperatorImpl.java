@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.collection;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
@@ -39,7 +39,7 @@ public abstract class CollectionOperatorImpl extends SimpleFuzzingOperator<Fuzze
 			                      FuzzedCollection collection, 
 			                      CollectionSpecification collectionSpec, 
 			                      long seed, 
-			                      FuzzingHeuristic<?> owner) {
+			                      ComputableFuzzingHeuristic<?> owner) {
 		super(collection, seed, owner);
 		this.validCollection = ResponseFactory.INSTANCE.createFuzzedCollection(validCollection);
 		this.collectionSpec = collectionSpec;

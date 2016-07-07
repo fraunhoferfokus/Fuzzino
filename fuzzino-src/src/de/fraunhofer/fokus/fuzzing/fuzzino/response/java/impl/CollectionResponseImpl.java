@@ -20,16 +20,10 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CollectionResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
 
-public class CollectionResponseImpl implements CollectionResponse {
+public class CollectionResponseImpl extends AbstractResponse implements CollectionResponse {
 
 	protected List<FuzzedCollection> fuzzedCollections;
-	protected WarningsSection warningsPart;
-	protected String id;
-	protected boolean moreValues;
-	protected String name;
-	protected long seed;
 	
 	@Override
 	public List<FuzzedCollection> getFuzzedCollections() {
@@ -47,56 +41,6 @@ public class CollectionResponseImpl implements CollectionResponse {
 			fuzzedCollections = new ArrayList<>();
 		}
 		fuzzedCollections.add(value);
-	}
-
-	@Override
-	public WarningsSection getWarningsSection() {
-		return warningsPart;
-	}
-
-	@Override
-	public void setWarningsSection(WarningsSection value) {
-		warningsPart = value;
-	}
-
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(String value) {
-		id = value;
-	}
-
-	@Override
-	public boolean moreValuesAvailable() {
-		return moreValues;
-	}
-
-	@Override
-	public void setMoreValuesAvailable(boolean value) {
-		moreValues = value;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(String value) {
-		name = value;
-	}
-
-	@Override
-	public long getSeed() {
-		return seed;
-	}
-
-	@Override
-	public void setSeed(long value) {
-		seed = value;
 	}
 
 	@Override
@@ -119,7 +63,7 @@ public class CollectionResponseImpl implements CollectionResponse {
 	
 	@Override
 	public String toString() {
-		return "[CollectionResponse name:" + name + " id:" + id + " seed:" + seed + " moreValues:" + moreValues +
+		return "[CollectionResponse name:" + getName() + " id:" + getId() + " seed:" + getSeed() + " moreValues:" + moreValuesAvailable() +
 			   " fuzzedCollections: " + (fuzzedCollections == null ? "0" : fuzzedCollections.size()) + "]";
 	}
 

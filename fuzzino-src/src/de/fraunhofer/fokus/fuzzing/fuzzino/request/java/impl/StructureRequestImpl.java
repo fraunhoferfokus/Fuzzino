@@ -16,6 +16,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.LibraryType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.AbstractRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureRequest;
@@ -23,20 +25,14 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
 
-public class StructureRequestImpl implements StructureRequest {
+public class StructureRequestImpl extends AbstractRequest implements StructureRequest {
 	
 	private static final long serialVersionUID = -1041640725148717179L;
 	protected StructureSpecification specification;
 	protected List<Operator> operators;
 	protected boolean fuzzStructure = false;
-	protected boolean fuzzValues = false;
-	protected String id = null;
 	protected int maxMutations = 0;
-	protected int maxValues = 0;
 	protected int minMutations = 1;
-	protected String name = null;
-	protected long seed = -1;
-	protected boolean isEMFBased = false;
 	protected transient ValidationResult validationResult = null;
 	
 	@Override
@@ -66,26 +62,6 @@ public class StructureRequestImpl implements StructureRequest {
 	}
 	
 	@Override
-	public boolean fuzzValues() {
-		return fuzzValues;
-	}
-	
-	@Override
-	public void setFuzzValues(boolean value) {
-		fuzzValues = value;
-	}
-	
-	@Override
-	public String getId() {
-		return id;
-	}
-	
-	@Override
-	public void setId(String value) {
-		id = value;
-	}
-	
-	@Override
 	public int getMaxMutations() {
 		return maxMutations;
 	}
@@ -96,16 +72,6 @@ public class StructureRequestImpl implements StructureRequest {
 	}
 	
 	@Override
-	public int getMaxValues() {
-		return maxValues;
-	}
-	
-	@Override
-	public void setMaxValues(int value) {
-		maxValues = value;
-	}
-	
-	@Override
 	public int getMinMutations() {
 		return minMutations;
 	}
@@ -113,26 +79,6 @@ public class StructureRequestImpl implements StructureRequest {
 	@Override
 	public void setMinMutations(int value) {
 		minMutations = value;
-	}
-	
-	@Override
-	public String getName() {
-		return name;
-	}
-	
-	@Override
-	public void setName(String value) {
-		name = value;
-	}
-	
-	@Override
-	public long getSeed() {
-		return seed;
-	}
-	
-	@Override
-	public void setSeed(long value) {
-		seed = value;
 	}
 	
 	@Override
@@ -151,7 +97,6 @@ public class StructureRequestImpl implements StructureRequest {
 		}
 
 		setFuzzStructure(emfStructureRequest.isFuzzStructure());
-		setFuzzValues(emfStructureRequest.isFuzzValues());
 		setId(emfStructureRequest.getId());
 		setMaxMutations(emfStructureRequest.getMaxMutations());
 		setMaxValues(emfStructureRequest.getMaxValues());
@@ -160,16 +105,6 @@ public class StructureRequestImpl implements StructureRequest {
 		setSeed(emfStructureRequest.getSeed());
 		setSpecification(RequestFactory.INSTANCE.createStructureSpecification(emfStructureRequest.getSpecification()));
 		isEMFBased = true;
-	}
-	
-	@Override
-	public boolean isContinued() {
-		return getId() != null;
-	}
-
-	@Override
-	public boolean isEMFBased() {
-		return isEMFBased;
 	}
 	
 	@Override
@@ -192,5 +127,11 @@ public class StructureRequestImpl implements StructureRequest {
 	public String toString() {
 		return "[StructureRequest name:" + name + " id:" + id + "]";
 	}
+	
+	@Override
+	public LibraryType getLibraryType() {
+		return LibraryType.STRUCTURE;
+	}
+	
 	
 }

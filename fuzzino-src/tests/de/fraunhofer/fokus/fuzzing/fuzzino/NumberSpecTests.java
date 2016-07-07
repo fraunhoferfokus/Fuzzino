@@ -13,7 +13,18 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.*;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.assertTrueWithPrefix;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkIllegalRequestFormatForElementAndId;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumGeneratorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumIllegalGenerators;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumIllegalOperators;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumIllegalRequestFormats;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumOperatorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForWarningsPart;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getIllegalRequestFormatFromResponse;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getNumberResponseFromResponseDocByName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.setPrefix;
 
 import java.util.List;
 
@@ -30,9 +41,7 @@ public class NumberSpecTests {
 	public void testValidNumberRequest() {
 		String requestFilename = "./testdata/numberRequests/NumberSpec_Tests.request.xml";
 		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
-		
 		checkResponsesForExistence(responseDoc);
-		checkResponsesWithInvalidTypes(responseDoc);
 		checkResponsesWithInvalidBits(responseDoc);
 		checkResponsesToValidRequests(responseDoc);
 	}
@@ -73,14 +82,6 @@ public class NumberSpecTests {
 		
 		assertTrueWithPrefix(expectedResponses.size() + " missing responses: " + expectedResponses,
 				   expectedResponses.isEmpty());
-	}
-	
-	public void checkResponsesWithInvalidTypes(XmlResponseDocument responseDoc) {
-		NumberResponse numberResponse = 
-				getNumberResponseFromResponseDocByName(responseDoc, "NumberSpec_INVALIDTYPE");
-		
-		IllegalRequestFormat illegalRequestFormat = getIllegalRequestFormatFromResponse(numberResponse, 0);
-		checkIllegalRequestFormatForElementAndId(illegalRequestFormat, "specification", "type");
 	}
 
 	public void checkResponsesWithInvalidMaxValues(XmlResponseDocument responseDoc) {

@@ -15,7 +15,9 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 
 import java.util.List;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 
 /**
  * This class contains the response to a {@link StructureRequest}.
@@ -23,12 +25,12 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureRequest;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
-public interface StructureResponse extends CommonResponse, Iterable<FuzzedStructure> {
+public interface StructureResponse extends CommonResponse, Iterable<FuzzedValue<Structure>> {
 
 	/**
 	 * @return A list of all fuzzed structures created by the library.
 	 */
-	List<FuzzedStructure> getFuzzedStructures();
+	List<FuzzedValue<Structure>> getFuzzedStructures();
 	
 	/**
 	 * Sets the list of fuzzed structures to be contained in this response.
@@ -36,14 +38,14 @@ public interface StructureResponse extends CommonResponse, Iterable<FuzzedStruct
 	 * 
 	 * @param value The list of fuzzed structures to be contained in this response.
 	 */
-	void setFuzzedStructures(List<FuzzedStructure> value);
+	void setFuzzedStructures(List<FuzzedValue<Structure>> value);
 	
 	/**
 	 * Adds a single fuzzed structure to the response.
 	 * 
 	 * @param value The fuzzed structure to be added.
 	 */
-	void addFuzzedStructure(FuzzedStructure value);
+	void addFuzzedStructure(FuzzedValue<Structure> value);
 	
 	/**
 	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse}

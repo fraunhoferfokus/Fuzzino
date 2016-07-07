@@ -27,7 +27,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
-public interface TypeSpecification  extends Serializable {
+public interface TypeSpecification extends Serializable {
 	
 	/**
 	 * @return A validation result containing the information whether this specification is valid

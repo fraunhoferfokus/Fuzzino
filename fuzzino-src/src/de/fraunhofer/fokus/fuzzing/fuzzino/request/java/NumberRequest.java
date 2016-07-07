@@ -25,17 +25,9 @@ import java.util.List;
  */
 public interface NumberRequest extends CommonRequest {
 	
-	/**
-	 * @return The {@link NumberSpecification} of this number request.
-	 */
-	NumberSpecification getSpecification();
+	NumberSpecification<? extends Number> getNumberSpecification(); 
 	
-	/**
-	 * Sets the {@link NumberSpecification} of this number request.
-	 * 
-	 * @param value the {@link NumberSpecification} to be set.
-	 */
-	void setSpecification(NumberSpecification value);
+	void setNumberSpecification(NumberSpecification<? extends Number> numSpec);
 	
 	/**
 	 * @return A list of {@link Generator}s to be used by the fuzzing library.
@@ -76,7 +68,7 @@ public interface NumberRequest extends CommonRequest {
 	 */
 	ValidValuesSection getValidValuesSection();
 
-	/**
+	/** 
 	 * Replaces the {@link ValidValuesSection}.
 	 * 
 	 * @param value The {@link ValidValuesSection} replacing the existing one.

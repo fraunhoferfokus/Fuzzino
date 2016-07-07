@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
 
@@ -28,12 +28,12 @@ public class BigBoundaryNumbersGenerator extends SimpleBigIntegerGenerator {
 	private static final long serialVersionUID = 1781058301031766759L;
 	protected List<BigInteger> fuzzValues = new ArrayList<>();
 
-	public BigBoundaryNumbersGenerator(NumberSpecification numberSpec, long seed) {
+	public BigBoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed) {
 		super(numberSpec, seed);
 		initFuzzValues();
 	}
 
-	public BigBoundaryNumbersGenerator(NumberSpecification numberSpec, long seed, FuzzingHeuristic<?> owner) {
+	public BigBoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(numberSpec, seed, owner);
 		initFuzzValues();
 	}
@@ -67,7 +67,7 @@ public class BigBoundaryNumbersGenerator extends SimpleBigIntegerGenerator {
 	}
 	
 	protected void modifyNumberSpec() {
-		NumberSpecification modifiedNumberSpec = RequestFactory.INSTANCE.createNumberSpecification(numberSpec);
+		IntegerSpecification modifiedNumberSpec = RequestFactory.INSTANCE.createNumberSpecification(numberSpec);
 		modifiedNumberSpec.setIgnoreMinMaxValues(true);
 		numberSpec = modifiedNumberSpec;
 	}
@@ -75,7 +75,7 @@ public class BigBoundaryNumbersGenerator extends SimpleBigIntegerGenerator {
 
 
 	@Override
-	public boolean canCreateValuesFor(NumberSpecification numberSpec) {
+	public boolean canCreateValuesFor(IntegerSpecification numberSpec) {
 		return false;
 	}
 

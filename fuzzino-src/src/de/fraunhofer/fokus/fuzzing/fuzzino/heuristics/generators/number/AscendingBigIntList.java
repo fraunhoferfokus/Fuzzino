@@ -17,10 +17,10 @@ import java.math.BigInteger;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 /**
  * Computes a list of ascending numbers of the type BigInteger.
@@ -31,9 +31,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
 public class AscendingBigIntList extends ComputableListImpl<FuzzedValue<BigInteger>> implements NumberGenerator<BigInteger> {
 
 	private static final long serialVersionUID = 2624736600645787331L;
-	protected NumberSpecification numberSpec;
+	protected IntegerSpecification numberSpec;
 	protected long seed;
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	/**
 	 * The first integer.
 	 */
@@ -100,7 +100,7 @@ public class AscendingBigIntList extends ComputableListImpl<FuzzedValue<BigInteg
 	 * @param builder the builder holding the parameters for the AscendingIntegerList to be constructed.
 	 * @throws NoMatchingValuesException 
 	 */
-	public AscendingBigIntList(NumberSpecification numberSpec, FuzzingHeuristic<?> owner, long seed, Builder builder) throws NoMatchingValuesException {
+	public AscendingBigIntList(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, Builder builder) throws NoMatchingValuesException {
 		this.numberSpec = numberSpec;
 		this.owner = owner;
 		this.seed = seed;
@@ -119,8 +119,8 @@ public class AscendingBigIntList extends ComputableListImpl<FuzzedValue<BigInteg
 		int matchingSize = builder.size;
 		int stepSize = builder.stepSize;
 		
-		BigInteger bigMinValue = BigInteger.valueOf(numberSpec.getMinValue());
-		BigInteger bigMaxValue = BigInteger.valueOf(numberSpec.getMaxValue());
+		BigInteger bigMinValue = BigInteger.valueOf(numberSpec.getMin());
+		BigInteger bigMaxValue = BigInteger.valueOf(numberSpec.getMax());
 		
 		BigInteger bigStepSize = BigInteger.valueOf(stepSize);
 		BigInteger bigMatchingSize = BigInteger.valueOf(matchingSize);
@@ -187,7 +187,7 @@ public class AscendingBigIntList extends ComputableListImpl<FuzzedValue<BigInteg
 	}
 
 	@Override
-	public boolean canCreateValuesFor(NumberSpecification numberSpec) {
+	public boolean canCreateValuesFor(IntegerSpecification numberSpec) {
 		return true;
 	}
 

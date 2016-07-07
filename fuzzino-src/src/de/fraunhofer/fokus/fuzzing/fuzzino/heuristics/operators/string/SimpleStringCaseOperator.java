@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
 public class SimpleStringCaseOperator extends SimpleStringOperator {
@@ -28,7 +28,7 @@ public class SimpleStringCaseOperator extends SimpleStringOperator {
 		super(validValue, stringSpec, seed);
 	}
 
-	public SimpleStringCaseOperator(String validValue, StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public SimpleStringCaseOperator(String validValue, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(validValue, stringSpec, seed, owner);
 	}
 

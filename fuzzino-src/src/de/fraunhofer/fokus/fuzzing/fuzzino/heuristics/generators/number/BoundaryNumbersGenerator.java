@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
@@ -28,12 +28,12 @@ public class BoundaryNumbersGenerator extends SimpleIntegerGenerator {
 	private static final long serialVersionUID = 4659420102670769833L;
 	protected List<Long> fuzzValues = new ArrayList<>();
 	
-	public BoundaryNumbersGenerator(NumberSpecification numberSpec, long seed) {
+	public BoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed) {
 		super(numberSpec, seed);
 		initFuzzValues();
 	}
 
-	public BoundaryNumbersGenerator(NumberSpecification numberSpec, long seed, FuzzingHeuristic<?> owner) {
+	public BoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(numberSpec, seed, owner);
 		initFuzzValues();
 	}
@@ -46,8 +46,8 @@ public class BoundaryNumbersGenerator extends SimpleIntegerGenerator {
 		}
 		
 		List<Integer> divisors = IntegerUtil.asList(1, 2, 3, 4, 8, 16, 32);
-		long maxValue = numberSpec.getMaxValue();
-		long minValue = numberSpec.getMinValue();
+		long maxValue = numberSpec.getMax();
+		long minValue = numberSpec.getMin();
 		for (Integer divisor : divisors) {
 			long maxValueDivided = maxValue / divisor;
 			FuzzedValue<Long> fuzzedValue = new FuzzedValue<>(maxValueDivided, owner);
@@ -67,13 +67,13 @@ public class BoundaryNumbersGenerator extends SimpleIntegerGenerator {
 	}
 
 	protected void modifyNumberSpec() {
-		NumberSpecification modifiedNumberSpec = RequestFactory.INSTANCE.createNumberSpecification(numberSpec);
+		IntegerSpecification modifiedNumberSpec = RequestFactory.INSTANCE.createNumberSpecification(numberSpec);
 		modifiedNumberSpec.setIgnoreMinMaxValues(true);
 		numberSpec = modifiedNumberSpec;
 	}
 
 	@Override
-	public boolean canCreateValuesFor(NumberSpecification numberSpec) {
+	public boolean canCreateValuesFor(IntegerSpecification numberSpec) {
 		boolean validType = numberSpec.getType() == NumberType.INTEGER;
 		boolean validBits = numberSpec.getBits() <= 64;
 		

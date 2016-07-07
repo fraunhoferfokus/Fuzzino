@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
@@ -27,7 +27,7 @@ public class BadUnicodeUtf8StringsGenerator extends ComposedStringGenerator {
 		initHeuristics();
 	}
 	
-	public BadUnicodeUtf8StringsGenerator(FuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+	public BadUnicodeUtf8StringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 		initHeuristics();
 	}

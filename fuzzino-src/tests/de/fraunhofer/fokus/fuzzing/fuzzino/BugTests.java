@@ -13,18 +13,37 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.*;
-import static org.junit.Assert.*;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.assertTrueWithPrefix;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkGeneratorPartForNumFuzzedValues;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorResponse;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumCollectionResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumNumberResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumStringResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumStructureResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumGeneratorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumOperatorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForWarningsPart;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getGeneratorPartFromResponseByName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getStringResponseFromResponseDoc;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.util.Iterator;
 
 import org.junit.Test;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.Fuzzino;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.AllBadStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadDateGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XSSBasicInputGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StringSpecificationImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
@@ -108,7 +127,7 @@ public class BugTests {
 	@Test
 	public void testBug_2012_10_10_19_08_processXmlString() {
 		String xmlRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
-                            "<request xmlns=\"http://library.fuzzing.fokus.fraunhofer.de/request\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://library.fuzzing.fokus.fraunhofer.de/request ./fuzzingRequest.xsd\">" +
+                            "<request xmlns=\"http://fuzzino.fuzzing.fokus.fraunhofer.de/request\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://library.fuzzing.fokus.fraunhofer.de/request ./fuzzingRequest.xsd\">" +
 				            "<string name=\"SimpleStringRequest\" maxValues=\"40\">\n" +
                             "<specification minLength=\"1\" maxLength=\"5\" nullTerminated=\"true\" encoding=\"UTF8\" />\n" +
 				            "<generator>BadStrings</generator>\n" + 
@@ -137,7 +156,7 @@ public class BugTests {
 	
 	@Test
 	public void testBug_2013_02_04_14_38_manyValuesRequested_5000() {
-		String requestFilename = "./2013-02-04_14_38_5000.request.xml";
+		String requestFilename = "./testdata/bugs/2013-02-04_14_38_5000.request.xml";
 		
 		try {
 			Fuzzino.main(new String[]{requestFilename});
@@ -148,7 +167,7 @@ public class BugTests {
 	
 	@Test
 	public void testBug_2013_02_04_14_38_manyValuesRequested_750() {
-		String requestFilename = "./2013-02-04_14_38_750.request.xml";
+		String requestFilename = "./testdata/bugs/2013-02-04_14_38_750.request.xml";
 		
 		try {
 			Fuzzino.main(new String[]{requestFilename});
@@ -157,4 +176,42 @@ public class BugTests {
 		}
 	}
 	
+	@Test
+	public void testBug_2014_08_25_11_05_ExceptionWhenCallingAddAll(){
+		StringSpecification sP = new StringSpecificationImpl();
+		sP.setType(StringType.get("XSS"));
+		sP.setMinLength(1);
+		sP.setMaxLength(1000);
+		sP.setIsNullTerminated(true);
+		sP.setEncoding(StringEncoding.get("ASCII"));
+		sP.setIgnoreLengths(true);
+		XSSBasicInputGenerator gen = new XSSBasicInputGenerator(sP, 0,"www.example.com");
+		Iterator<FuzzedValue<String>> it = gen.iterator();
+		while(it.hasNext()){
+			System.out.println(it.next());
+		}
+	}
+	
+	@Test
+	public void testBug_2014_08_25_13_07_EmptyGenerators(){
+		StringSpecification sP = new StringSpecificationImpl();
+		sP.setType(StringType.get("XSS"));
+		sP.setMinLength(1);
+		sP.setMaxLength(2);
+		sP.setIsNullTerminated(true);
+		sP.setEncoding(StringEncoding.get("ASCII"));
+		sP.setIgnoreLengths(false);
+		
+		XSSBasicInputGenerator gen = new XSSBasicInputGenerator(sP, 0,"www.example.com");
+		Iterator<FuzzedValue<String>> it = gen.iterator();
+		while(it.hasNext()){
+			System.out.println(it.next());
+		}
+		System.out.println("-----------------------------------------------------------------------------------------------------------");
+		BadDateGenerator gen2 = new BadDateGenerator(sP,0);
+		it = gen2.iterator();
+		while(it.hasNext()){
+			System.out.println(it.next());
+		}
+	}
 }

@@ -13,8 +13,29 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import static org.junit.Assert.*;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.*;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.assertTrueWithPrefix;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkGeneratorPartForNumFuzzedValues;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkOperatorPartForNumFuzzedValues;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorResponse;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumCollectionResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumNumberResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumStringResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumStructureResponses;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForMinNumGeneratorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForMoreValuesAttribute;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNoMoreValuesWarning;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumGeneratorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumOperatorParts;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForSeedValue;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForWarningsPart;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.compareTwoSequences;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createContdRequest;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getGeneratorPartFromResponseByName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromResponseByName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getStringResponseFromResponseDoc;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.loadRequestFile;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,10 +43,8 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.StringRequestProcessor;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperatorFactory;
@@ -69,7 +88,7 @@ public class StringRequestProcessorTest {
 		assertTrue("Invalid number of generators: was "+ actualNumOfHeuristics + " instead of " + expectedNumOfHeuristics,
 				actualNumOfHeuristics == expectedNumOfHeuristics);
 		String expectedGeneratorName = "BadStrings";
-		FuzzingHeuristic<?> heuristic = reqProc.getAllFuzzingHeuristics().get(0);
+		ComputableFuzzingHeuristic<?> heuristic = reqProc.getAllFuzzingHeuristics().get(0);
 		String actualGeneratorName = heuristic.getName();
 		assertTrue("Invalid generator: was " + actualGeneratorName + " instead of " + expectedGeneratorName,
 				actualGeneratorName.equals(expectedGeneratorName));
@@ -82,7 +101,7 @@ public class StringRequestProcessorTest {
 		assertTrue("Invalid number of operators: was " + actualNumOfOps + " instead of " + expectedNumOfOps,
 				actualNumOfOps == expectedNumOfOps);
 		String expectedOperatorName = "StringCase";
-		FuzzingHeuristic<String> heuristic = (FuzzingHeuristic<String>) reqProc.getAllFuzzingHeuristics().get(1);
+		ComputableFuzzingHeuristic<String> heuristic = (ComputableFuzzingHeuristic<String>) reqProc.getAllFuzzingHeuristics().get(1);
 		String actualOperatorName = heuristic.getName();
 		assertTrue("Invalid operator: was " + actualOperatorName + " instead of " + expectedOperatorName,
 				expectedOperatorName.equals(actualOperatorName));

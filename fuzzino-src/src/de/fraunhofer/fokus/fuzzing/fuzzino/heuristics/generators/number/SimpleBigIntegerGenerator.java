@@ -16,22 +16,22 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 import java.math.BigInteger;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.SimpleFuzzingGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 
 public abstract class SimpleBigIntegerGenerator extends SimpleFuzzingGenerator<BigInteger> implements BigIntegerGenerator {
 
 	private static final long serialVersionUID = -4161576419721257125L;
-	protected NumberSpecification numberSpec;
+	protected IntegerSpecification numberSpec;
 
-	protected SimpleBigIntegerGenerator(NumberSpecification numberSpec, long seed) {
+	protected SimpleBigIntegerGenerator(IntegerSpecification numberSpec, long seed) {
 		super(seed);
 		this.numberSpec = numberSpec;
 	}
 
-	protected SimpleBigIntegerGenerator(NumberSpecification numberSpec, long seed, FuzzingHeuristic<?> owner) {
+	protected SimpleBigIntegerGenerator(IntegerSpecification numberSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed, owner);
 		this.numberSpec = numberSpec;
 	}
@@ -43,8 +43,8 @@ public abstract class SimpleBigIntegerGenerator extends SimpleFuzzingGenerator<B
 		}
 		BigInteger value = fuzzedValue.getValue();
 		
-		return value.compareTo(BigInteger.valueOf(numberSpec.getMinValue())) >= 0 && 
-			   value.compareTo(BigInteger.valueOf(numberSpec.getMaxValue())) <= 0;
+		return value.compareTo(BigInteger.valueOf(numberSpec.getMin())) >= 0 && 
+			   value.compareTo(BigInteger.valueOf(numberSpec.getMax())) <= 0;
 		
 	}
 

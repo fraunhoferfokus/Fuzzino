@@ -202,7 +202,11 @@ public abstract class ComputableListImpl<E> extends AbstractSequentialList<E> im
 		private E nextElement;
 		
 		ComputingItr(int index) {
+			if(isEmpty()){
+				return;		
+			} 
 			if (index < 0 || index >= size()) {
+				//TODO Auf noSuchElementException ändern?
 				throw new IndexOutOfBoundsException();
 			}
 			nextIndex = index;

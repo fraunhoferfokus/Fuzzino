@@ -13,12 +13,27 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.util;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.*;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NoGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollections;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
 
 /**
  * <!-- begin-user-doc -->
@@ -77,6 +92,12 @@ public class RequestSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case RequestPackage.ATTRIBUTE: {
+				Attribute attribute = (Attribute)theEObject;
+				T result = caseAttribute(attribute);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case RequestPackage.CLOSE_REQUEST: {
 				CloseRequest closeRequest = (CloseRequest)theEObject;
 				T result = caseCloseRequest(closeRequest);
@@ -169,6 +190,21 @@ public class RequestSwitch<T> extends Switch<T> {
 			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Attribute</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Attribute</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAttribute(Attribute object) {
+		return null;
 	}
 
 	/**

@@ -13,27 +13,10 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-
-/**
- * Either a fuzzing generator or a fuzzing operator for a specific type.
- * This interface specifies getters for the name and the seed of the
- * fuzzing heuristic. The seed is used for random-based heuristics.
- * 
- * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
- *
- * @param <T> the type of the fuzzed value the fuzzing heuristic creates.
- */
-public interface FuzzingHeuristic<T> extends ComputableList<FuzzedValue<T>> {
+public interface FuzzingHeuristic{
 
 	/**
 	 * @return The name of the fuzzing heuristic.
 	 */
 	String getName();
-	
-	/**
-	 * @return The seed that is used by random-based fuzzing heuristics.
-	 */
-	long getSeed();
-	
 }

@@ -14,8 +14,8 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BoundaryNumbersGenerator;
@@ -27,7 +27,7 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 	private static final long serialVersionUID = 5566745227758128426L;
 	protected StringSpecification stringSpec;
 	protected long seed;
-	protected FuzzingHeuristic<?> owner;
+	protected ComputableFuzzingHeuristic<?> owner;
 	protected BoundaryNumbersGenerator boundaryNumbersGenerator;
 
 	public BadNumbersAsStringGenerator(StringSpecification stringSpec, long seed) {
@@ -37,7 +37,7 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 		initHeuristic();
 	}
 
-	public BadNumbersAsStringGenerator(StringSpecification stringSpec, long seed, FuzzingHeuristic<?> owner) {
+	public BadNumbersAsStringGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		this.stringSpec = stringSpec;
 		this.seed = seed;
 		this.owner = owner;
