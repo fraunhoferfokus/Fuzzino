@@ -20,6 +20,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.IntegerFromRanges;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
@@ -28,7 +29,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
 
-public class IntegerFromRangesTests {
+public class IntegerFromRangesTests extends FuzzinoTest {
 	
 	private static final long SEED = 4711;
 	private static final StringSpecification STRING_SPEC = RequestFactory.INSTANCE.createStringSpecification();

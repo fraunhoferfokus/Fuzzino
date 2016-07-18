@@ -19,11 +19,12 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class StringGeneratorFactoryTest {
+public class StringGeneratorFactoryTest extends FuzzinoTest {
 	
 	private static final long SEED = 4711;
 	private static final String NO_PARAM = null;

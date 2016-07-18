@@ -79,8 +79,16 @@ public abstract class RequestProcessor<T> extends ComposedFuzzingHeuristic<T> im
 	 */
 	public abstract CommonResponse getResponse();
 	
-	protected static String dir = "temp";
+	protected static File dir = new File(System.getProperty("user.home") + File.separator + "FuzzinoFiles");
 
+	public static void setSerializationDir(File newDir) {
+		dir = newDir;
+	}
+	
+	public static File getSerializationDir() {
+		return dir;
+	}
+	
 	/**
 	 * Deletes a serialized request processor when a request was closed by {@link CloseRequest}.
 	 * 
@@ -238,7 +246,8 @@ public abstract class RequestProcessor<T> extends ComposedFuzzingHeuristic<T> im
 	public void serialize(){
 		try
 		{
-			FileOutputStream fos = new FileOutputStream(dir + File.separator + getId().toString() + getFileExtension());
+			dir.mkdir();
+			FileOutputStream fos = new FileOutputStream(dir.toString() + File.separator + getId().toString() + getFileExtension());
 			ObjectOutputStream out = new ObjectOutputStream(fos);
 			out.writeObject(this);
 			out.close();

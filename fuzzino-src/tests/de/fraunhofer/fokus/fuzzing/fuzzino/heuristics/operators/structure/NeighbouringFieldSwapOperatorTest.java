@@ -20,13 +20,14 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.FieldImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.StructureImpl;
 
-public class NeighbouringFieldSwapOperatorTest {
+public class NeighbouringFieldSwapOperatorTest extends FuzzinoTest {
 
 	private static final long SEED = 10;
 

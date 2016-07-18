@@ -20,11 +20,12 @@ import java.util.ListIterator;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
-public class StringOperatorFactoryTest {
+public class StringOperatorFactoryTest extends FuzzinoTest {
 	
 	private static final long SEED = 4711;
 	private static final String NO_PARAM = null;

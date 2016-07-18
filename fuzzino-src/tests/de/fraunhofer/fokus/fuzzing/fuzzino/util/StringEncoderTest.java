@@ -18,7 +18,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class StringEncoderTest {
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
+
+public class StringEncoderTest extends FuzzinoTest {
 	
 	@Test
 	public void testWithNull() {

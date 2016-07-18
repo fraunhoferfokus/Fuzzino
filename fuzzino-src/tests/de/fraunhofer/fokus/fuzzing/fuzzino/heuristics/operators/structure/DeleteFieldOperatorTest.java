@@ -20,6 +20,7 @@ import java.util.UUID;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.StructureRequestProcessor;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureSpecification;
@@ -28,7 +29,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure_tests.StructureRequestProcessorFuzzAllFieldsTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure_tests.StructureTestUtil;
 
-public class DeleteFieldOperatorTest {
+public class DeleteFieldOperatorTest extends FuzzinoTest {
 
 	@Test
 	public void fuzzStructureOnly() {

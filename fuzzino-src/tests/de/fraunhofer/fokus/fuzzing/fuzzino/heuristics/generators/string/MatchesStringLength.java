@@ -19,10 +19,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class MatchesStringLength {
+public class MatchesStringLength extends FuzzinoTest {
 	
 	public static final long SEED = 4711;
 	public static SmallGenerator smallGenerator;

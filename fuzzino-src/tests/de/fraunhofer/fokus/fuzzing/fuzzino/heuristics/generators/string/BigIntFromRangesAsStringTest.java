@@ -23,10 +23,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class BigIntFromRangesAsStringTest {
+public class BigIntFromRangesAsStringTest extends FuzzinoTest {
 
 	protected static final long SEED = 4711;
 	protected static final int MIN_LENGTH = 2;

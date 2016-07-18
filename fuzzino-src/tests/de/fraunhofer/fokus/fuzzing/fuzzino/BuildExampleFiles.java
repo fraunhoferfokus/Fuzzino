@@ -30,7 +30,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
 
-public class BuildExampleFiles {
+public class BuildExampleFiles extends FuzzinoTest {
 
 	@Test
 	public void buildGeneralExampleFilesForString() {

@@ -31,7 +31,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.GeneratorImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.NumberRequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
 
-public class FloatRequestProcessorTest {
+public class FloatRequestProcessorTest extends FuzzinoTest {
 
 	@Test
 	public void oneGen() {

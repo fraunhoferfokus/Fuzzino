@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Field;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
@@ -30,7 +31,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StructureSpecificat
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.StructureImpl;
-public class TypeDependentFieldSwapOperatorTest {
+public class TypeDependentFieldSwapOperatorTest extends FuzzinoTest {
 
 	/**
 	 * The tests are executed with exactly the following structure:

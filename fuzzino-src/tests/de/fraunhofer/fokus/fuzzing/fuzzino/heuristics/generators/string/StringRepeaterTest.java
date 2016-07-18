@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
@@ -29,7 +30,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 /**
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  */
-public class StringRepeaterTest {
+public class StringRepeaterTest extends FuzzinoTest {
 	
 	public static final long SEED = 4711;
 	public static final StringSpecification STRING_SPEC = RequestFactory.INSTANCE.createStringSpecification();

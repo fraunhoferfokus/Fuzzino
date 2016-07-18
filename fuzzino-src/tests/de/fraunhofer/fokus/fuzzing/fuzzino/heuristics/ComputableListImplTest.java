@@ -21,11 +21,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class ComputableListImplTest {
+public class ComputableListImplTest extends FuzzinoTest {
 
 	public static final StringSpecification STRING_SPEC;
 	public static final int MIN_LENGTH = 2;

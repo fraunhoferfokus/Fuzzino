@@ -22,6 +22,7 @@ import java.util.UUID;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.StringRequestProcessor;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadIpAddressesGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
@@ -29,7 +30,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
 
-public class ContinuedRequestTest {
+public class ContinuedRequestTest extends FuzzinoTest {
 
 	private long seed =10;
 	private StringSpecification stringSpec = StructureTestUtil.createExampleStringSpec();

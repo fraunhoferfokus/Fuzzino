@@ -54,7 +54,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
 
-public class RequestDispatcherTest {
+public class RequestDispatcherTest extends FuzzinoTest {
 	
 	@Test
 	public void testNonExistingRequestFile() throws IOException {

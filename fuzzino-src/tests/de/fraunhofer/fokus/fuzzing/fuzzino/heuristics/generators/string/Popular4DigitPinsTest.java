@@ -22,11 +22,12 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
 
-public class Popular4DigitPinsTest {
+public class Popular4DigitPinsTest extends FuzzinoTest {
 	
 	protected static final List<String> expectedValues;
 	

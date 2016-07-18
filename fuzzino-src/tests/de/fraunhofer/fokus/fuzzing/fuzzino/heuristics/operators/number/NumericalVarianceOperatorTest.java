@@ -21,11 +21,12 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperatorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 
-public class NumericalVarianceOperatorTest {
+public class NumericalVarianceOperatorTest extends FuzzinoTest {
 
 	private static final long SEED = 4711;
 	private static final String NO_PARAM = null;

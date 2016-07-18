@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingLongList.Builder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
@@ -29,7 +30,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class AscendingLongListTest {
+public class AscendingLongListTest extends FuzzinoTest {
 
 	private static final long SEED = 4711;
 	private static final StringSpecification STRING_SPEC= RequestFactory.INSTANCE.createStringSpecification();

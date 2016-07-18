@@ -24,6 +24,7 @@ import java.util.UUID;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.IntegerRequestProcessor;
 import de.fraunhofer.fokus.fuzzing.fuzzino.StringRequestProcessor;
 import de.fraunhofer.fokus.fuzzing.fuzzino.StructureRequestProcessor;
@@ -51,7 +52,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
  * This includes specification and operator requests, StructureRequest, processing of the request and checking the response
  * This test class focuses on tests where all fields of the structure are fuzzed.
  */
-public class StructureRequestProcessorFuzzAllFieldsTest {
+public class StructureRequestProcessorFuzzAllFieldsTest extends FuzzinoTest {
 
 	/*These are a few constants that are necessary, since in order to test the StructureRequestProcessor a few string/number generators are needed,
 	 * as well as a structure-operator to ensure that operators are executed properly. 

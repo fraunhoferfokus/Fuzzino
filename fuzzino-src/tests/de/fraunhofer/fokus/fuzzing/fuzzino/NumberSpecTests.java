@@ -35,7 +35,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
-public class NumberSpecTests {
+public class NumberSpecTests extends FuzzinoTest {
 
 	@Test
 	public void testValidNumberRequest() {

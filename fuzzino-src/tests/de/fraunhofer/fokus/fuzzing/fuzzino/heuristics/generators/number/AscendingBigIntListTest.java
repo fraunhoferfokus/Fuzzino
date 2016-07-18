@@ -19,13 +19,14 @@ import java.math.BigInteger;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingBigIntList.Builder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class AscendingBigIntListTest {
+public class AscendingBigIntListTest extends FuzzinoTest {
 
 	@Test
 	public void test_makeBuilderMatchingSpecification_TestCase_1() throws NoMatchingValuesException {

@@ -21,11 +21,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic.ComposedIndexIterator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
-public class ComposedFuzzingHeuristicTest {
+public class ComposedFuzzingHeuristicTest extends FuzzinoTest {
 
 	public static final List<String> EXPECTED_VALUES = 
 			StringUtil.asList("1A", "2B", "3C", "4A", "5B", "6C", "7A", "8C", "9C", "10C");

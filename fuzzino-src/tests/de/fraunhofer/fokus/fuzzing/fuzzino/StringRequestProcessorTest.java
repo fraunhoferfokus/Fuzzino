@@ -58,7 +58,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
-public class StringRequestProcessorTest {
+public class StringRequestProcessorTest extends FuzzinoTest {
 
 	private static final long SEED = 4711;
 	private static final String NO_PARAM = null;

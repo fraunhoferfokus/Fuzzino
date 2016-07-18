@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.IntegerRequestProcessor;
 import de.fraunhofer.fokus.fuzzing.fuzzino.StringRequestProcessor;
 import de.fraunhofer.fokus.fuzzing.fuzzino.StructureRequestProcessor;
@@ -48,7 +49,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
  * This includes specification and operator requests, StructureRequest, processing of the request and checking the response
  * This test class focuses on tests where all fields of the structure are fuzzed.
  */
-public class StructureRequestProcessorValidValuesTest {
+public class StructureRequestProcessorValidValuesTest extends FuzzinoTest {
 
 	private static final List<String> validStrings = Arrays.asList("this is a valid string","this as well","and we allow this one too");
 	private static final List<String> validNumbers = Arrays.asList("42","1337","pi because pi is a number :)");

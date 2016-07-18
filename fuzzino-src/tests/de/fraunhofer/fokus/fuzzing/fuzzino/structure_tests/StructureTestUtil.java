@@ -16,6 +16,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.structure_tests;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
@@ -33,7 +34,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StringSpecification
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StructureRequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.ValidValuesSectionImpl;
 
-public class StructureTestUtil {
+public class StructureTestUtil extends FuzzinoTest {
 
 
 	

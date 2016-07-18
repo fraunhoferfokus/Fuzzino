@@ -22,11 +22,12 @@ import java.util.List;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BadFloatGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.FloatSpecificationImpl;
 
-public class BadFloatGeneratorTest {
+public class BadFloatGeneratorTest extends FuzzinoTest {
 
 	@Test
 	public void test() {

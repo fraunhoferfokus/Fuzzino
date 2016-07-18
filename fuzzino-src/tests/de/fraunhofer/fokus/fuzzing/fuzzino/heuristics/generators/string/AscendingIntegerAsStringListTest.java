@@ -17,11 +17,12 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class AscendingIntegerAsStringListTest {
+public class AscendingIntegerAsStringListTest extends FuzzinoTest {
 
 	private static final int START_INT = 1;
 	private static final int STEP_SIZE = 3;

@@ -19,9 +19,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
-public class StringCaseOperatorListTest {
+public class StringCaseOperatorListTest extends FuzzinoTest {
 	
 	public static final long SEED = 4711;
 	private List<String> listOfStrings;

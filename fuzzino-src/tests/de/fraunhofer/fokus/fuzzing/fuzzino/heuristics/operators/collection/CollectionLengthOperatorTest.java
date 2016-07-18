@@ -21,6 +21,7 @@ import java.util.List;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperatorFactory;
@@ -30,7 +31,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
 
-public class CollectionLengthOperatorTest {
+public class CollectionLengthOperatorTest extends FuzzinoTest {
 	
 	private static final long SEED = 4711;
 

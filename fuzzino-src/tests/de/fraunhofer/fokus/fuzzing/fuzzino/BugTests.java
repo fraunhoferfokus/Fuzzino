@@ -48,7 +48,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
 
-public class BugTests {
+public class BugTests extends FuzzinoTest {
 
 	@Test
 	public void testBug_2012_06_11_16_47() {

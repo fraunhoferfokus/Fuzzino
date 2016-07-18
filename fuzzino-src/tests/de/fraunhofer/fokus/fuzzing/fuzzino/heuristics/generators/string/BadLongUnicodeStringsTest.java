@@ -18,10 +18,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class BadLongUnicodeStringsTest {
+public class BadLongUnicodeStringsTest extends FuzzinoTest {
 	
 	public static final long SEED = 4711;
 	public static final StringSpecification STRING_SPEC;

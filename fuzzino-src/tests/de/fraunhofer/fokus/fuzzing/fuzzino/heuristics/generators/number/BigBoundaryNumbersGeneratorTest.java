@@ -23,12 +23,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 
-public class BigBoundaryNumbersGeneratorTest {
+public class BigBoundaryNumbersGeneratorTest extends FuzzinoTest {
 
 	private BigIntegerGenerator generator;
 	private static final long SEED = 4711;

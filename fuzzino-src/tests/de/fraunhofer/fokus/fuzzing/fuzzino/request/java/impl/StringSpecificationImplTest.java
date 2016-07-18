@@ -17,11 +17,12 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 
-public class StringSpecificationImplTest {
+public class StringSpecificationImplTest extends FuzzinoTest {
 	
 	public static final int MIN_LENGTH_2 = 2;
 	public static final int MAX_LENGTH_3 = 3;

@@ -19,13 +19,14 @@ import java.util.List;
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StringSpecificationImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
-public class ConcreteValuesGeneratorTest {
+public class ConcreteValuesGeneratorTest extends FuzzinoTest {
 
 	@Test
 	public void testBug_dublicateValuesInConreteGenerator(){
