@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
-  <response:error>D:\Daten\Projects\DIAMONDS\SVN\diamonds\impl\Fuzzing\DataFuzzing\FuzzingLibrary\.\testdata\general\THAT_FILE_MUST_NOT_EXIST (The system cannot find the file specified)</response:error>
-</response:response>

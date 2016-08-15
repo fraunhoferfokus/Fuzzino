@@ -13,88 +13,57 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ErrorResponse;
 
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
 public class ErrorResponseImpl implements ErrorResponse {
 
-	protected String value;
-	protected int column;
-	protected boolean columnIsSet = false;
-	protected int line;
-	protected boolean lineIsSet = false;
+	@XmlAttribute
+	protected String reason;
+	@XmlAttribute
+	private String message;
+	@XmlAttribute
+	private String stackTrace;
 	
 	@Override
 	public String getReason() {
-		return value;
+		return reason;
 	}
 
 	@Override
-	public void setReason(String value) {
-		this.value = value;
-	}
-
-	@Override
-	public int getColumn() {
-		return column;
-	}
-
-	@Override
-	public void setColumn(int value) {
-		column = value;
-		columnIsSet = true;
-	}
-
-	@Override
-	public void unsetColumn() {
-		columnIsSet = false;
-	}
-
-	@Override
-	public boolean isSetColumn() {
-		return columnIsSet;
-	}
-
-	@Override
-	public int getLine() {
-		return line;
-	}
-
-	@Override
-	public void setLine(int value) {
-		line = value;
-		lineIsSet = true;
-	}
-
-	@Override
-	public void unsetLine() {
-		lineIsSet = false;
-	}
-
-	@Override
-	public boolean isSetLine() {
-		return lineIsSet;
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.ErrorResponse getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.ErrorResponse
-		  emfErrorResponse = ResponseFactory.eINSTANCE.createErrorResponse();
-		
-		if (isSetColumn()) {
-			emfErrorResponse.setColumn(getColumn());
-		}
-		if (isSetLine()) {
-			emfErrorResponse.setLine(getLine());
-		}
-		emfErrorResponse.setValue(getReason());
-		
-		return emfErrorResponse;
-	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}	
 	
 	@Override
 	public String toString() {
-		return "[ErrorResponse reason:" + value + (lineIsSet ? " line:" + line : "") + (columnIsSet ? " column: " + column : "") + "]";
+		return "[ErrorResponse reason:" + reason + " message:" + message + " stackTrace: " + stackTrace +"]";
+	}
+
+	@Override
+	public String getMessage() {
+		return message;
+	}
+
+	@Override
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	@Override
+	public String getStackTrace() {
+		return stackTrace;
+	}
+
+	@Override
+	public void setStackTrace(String stackTrace) {
+		this.stackTrace = stackTrace;
 	}
 
 }

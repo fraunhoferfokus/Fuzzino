@@ -13,14 +13,24 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CloseRequestConfirmation;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class CloseRequestConfirmationImpl implements CloseRequestConfirmation {
 
+	@XmlAttribute
 	protected String id;
+	@XmlAttribute
 	protected String name;
+	@XmlElement(type = WarningsSectionImpl.class)
 	protected WarningsSection warnings;
 	
 	@Override
@@ -51,20 +61,6 @@ public class CloseRequestConfirmationImpl implements CloseRequestConfirmation {
 	@Override
 	public void setWarningsPart(WarningsSection warnings) {
 		this.warnings = warnings;	
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation 
-		  emfCloseRequestConfirmation = ResponseFactory.eINSTANCE.createCloseRequestConfirmation();
-		
-		emfCloseRequestConfirmation.setId(getId());
-		emfCloseRequestConfirmation.setName(getName());
-		if (getWarnings() != null) {
-			emfCloseRequestConfirmation.setWarnings(getWarnings().getEMFRepresentation());
-		}
-		
-		return emfCloseRequestConfirmation;
 	}
 	
 	@Override

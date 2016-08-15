@@ -22,6 +22,4 @@ public interface CloseRequestConfirmation {
 	WarningsSection getWarnings();
 	void setWarningsPart(WarningsSection warnings);
 	
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation getEMFRepresentation();
-
 }

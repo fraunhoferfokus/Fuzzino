@@ -19,12 +19,19 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
 
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
 public class FuzzedValuesByOperatorsImpl<T> implements FuzzedValuesByOperators<T> {
 
+	@XmlElement(name = "operator",type = OperatorSpecificFuzzedValuesImpl.class)
 	protected List<OperatorSpecificFuzzedValues<T>> operatorSections;
 	
 	@Override
@@ -43,18 +50,6 @@ public class FuzzedValuesByOperatorsImpl<T> implements FuzzedValuesByOperators<T
 			operatorSections = new ArrayList<>();
 		}
 		operatorSections.add(value);
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.AllOperatorsBasedPart getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.AllOperatorsBasedPart 
-		  emfAllOperatorsBasedPart = ResponseFactory.eINSTANCE.createAllOperatorsBasedPart();
-		
-		for (OperatorSpecificFuzzedValues<T> operatorPart : operatorSections) {
-			emfAllOperatorsBasedPart.getOperatorParts().add(operatorPart.getEMFRepresentation());
-		}
-		
-		return emfAllOperatorsBasedPart;
 	}
 	
 	@Override

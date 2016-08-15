@@ -17,7 +17,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
 
 public abstract class ComposedStringGenerator extends ComposedFuzzingHeuristic<String> implements StringGenerator {

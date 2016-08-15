@@ -19,7 +19,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.BigNumericalVarianceOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
 public class BigIntegerOperatorFactory {
 
@@ -33,7 +33,7 @@ public class BigIntegerOperatorFactory {
 			                         String param, 
 			                         IntegerSpecification numberSpec, 
 			                         long seed) throws UnknownFuzzingHeuristicException {
-		if (name.equals("NumericalVariance")) {
+		if (name.equals("NumericalVariance".toUpperCase())) {
 			return createBigNumericalVarianceOperator(validValues, param, numberSpec, seed);
 		} else {
 			throw new UnknownFuzzingHeuristicException();

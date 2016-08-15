@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<response>
+    <number id="fed57dbb-27cb-4677-beea-3e0d6407154c" moreValues="false" name="NumberRequestTest" seed="-1">
+        <generatorBased>
+            <generator name="BoundaryNumbers">
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:long">-134217728</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:long">67108863</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:long">-67108864</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:long">-2147483649</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:long">2147483648</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+            </generator>
+        </generatorBased>
+    </number>
+</response>

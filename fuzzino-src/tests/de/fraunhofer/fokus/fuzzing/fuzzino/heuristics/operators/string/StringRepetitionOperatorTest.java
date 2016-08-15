@@ -21,9 +21,9 @@ import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 

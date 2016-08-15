@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+    <string maxValues="10" name="StringRequestTestMatchesLength" seed="-1">
+        <noGenerators>false</noGenerators>
+        <generator value="SMALLGENERATOR"/>
+        <specification type="STRING" minLength="2" maxLength="5" nullTerminated="true" encoding="UTF8" ignoreLengths="false"/>
+    </string>
+</ns2:request>

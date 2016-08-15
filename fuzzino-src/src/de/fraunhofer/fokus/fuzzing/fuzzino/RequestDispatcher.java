@@ -13,8 +13,8 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -22,30 +22,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.xml.sax.SAXParseException;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.UnmarshalException;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.IllegalRequestIdException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CloseRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberType;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Request;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.util.RequestResourceFactoryImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponsePackage;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.BigIntegerResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CloseRequestConfirmation;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ErrorResponse;
@@ -56,8 +48,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.util.ResponseResourceFactoryImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.util.Helpers;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.ResponseImpl;
 
 /**
  * This class dispatches a request from an XML file (compliant to fuzzingRequest.xsd) to type specific request processors. 
@@ -141,74 +132,55 @@ public class RequestDispatcher {
 	}
 	
 	/**
-	 * Loads an XML document containing requests from a string using EMF.
+	 * Loads an XML document containing requests from a string using JAXB.
 	 * 
 	 * @param xmlString The string containing an XML document.
 	 */
 	protected void loadRequestFromString(String xmlString) {
 		prepareEmptyResponse();
-		prepareEMFForLoading();
-		
 		try {
-			ResourceSet resSet = new ResourceSetImpl();
-			EObject root = Helpers.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);
-			
-			XmlRequestDocument requestDoc = (XmlRequestDocument) root;
-			request = RequestFactory.INSTANCE.createRequest(requestDoc.getRequest());
-		} catch (WrappedException e) {
-			SAXParseException cause = (SAXParseException) e.getCause();
-			System.out.println("line " + cause.getLineNumber() + ", column " + cause.getColumnNumber() + " : " + cause.getMessage());
+			request = RequestImpl.unmarshall(xmlString);
 		} catch (Exception e) {
-			xmlParsingError = e;
+			xmlParsingError = e.getCause();
 			createErrorResponse();
 		}
 	}
 	
 	/**
-	 * Loads an XML document containing requests using EMF.
+	 * Loads an XML document containing requests using JAXB.
 	 */
 	protected void loadRequestFromFile() {
 		prepareEmptyResponse();
-		prepareEMFForLoading();
-		
 		try {
-			ResourceSet resSet = new ResourceSetImpl();
-			Resource resource = resSet.getResource(URI.createURI(requestFilename), true);
-
-			XmlRequestDocument xmlRequestDoc = (XmlRequestDocument) resource.getContents().get(0);
-			request = RequestFactory.INSTANCE.createRequest(xmlRequestDoc.getRequest());
-		} catch (WrappedException e) {
-			xmlParsingError = e.getCause();
+			JAXBContext jaxbContext = JAXBContext.newInstance(RequestImpl.class);
+			request = RequestImpl.unmarshall(new File(requestFilename));
+		} catch (UnmarshalException e) {
+			xmlParsingError = e;//.getCause();
 			createErrorResponse();
 		} catch (Exception e) {
 			xmlParsingError = e;
 			createErrorResponse();
-		}
+		} 
 	}
 	
 	protected void prepareEmptyResponse() {
 		response = ResponseFactory.INSTANCE.createResponse();
 	}
-	
-	protected void prepareEMFForLoading() {
-		RequestPackage.eINSTANCE.eClass();
-		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		Map<String, Object> extensionMap = reg.getExtensionToFactoryMap();
-		extensionMap.put("*", new RequestResourceFactoryImpl());
-	}
 
 	protected void createErrorResponse() {
-		if (xmlParsingError == null) {
-			return;
-		}
 		ErrorResponse errorResponse = ResponseFactory.INSTANCE.createErrorResponse();
-		errorResponse.setReason(xmlParsingError.getMessage());
-
-		if (xmlParsingError instanceof SAXParseException) {
-			// if XML document is not well-formed
-			SAXParseException parseException = (SAXParseException)xmlParsingError;
-			errorResponse.setLine(parseException.getLineNumber());
-			errorResponse.setColumn(parseException.getColumnNumber());
+		if (xmlParsingError == null) {
+			errorResponse.setMessage("failed due to unknown reason");
+		} else{
+			if(xmlParsingError.getCause()!=null && xmlParsingError.getCause().getMessage()!=null){
+				errorResponse.setReason(xmlParsingError.getCause().getMessage());
+			} 
+			if(xmlParsingError.getMessage()!=null){
+				errorResponse.setMessage(xmlParsingError.getMessage());
+			} 
+			if(xmlParsingError.getStackTrace()!=null){
+				errorResponse.setStackTrace(xmlParsingError.getStackTrace().toString());
+			}
 		}
 		response.setErrorResponse(errorResponse);
 	}
@@ -502,37 +474,26 @@ public class RequestDispatcher {
 		// save only the response if
 		// - a request file exists and
 		// - either the request file does not exists or it is EMF based that originates from an XML file
-		if (response != null && ( (request == null) || (request != null && request.isEMFBased())) ) {
-
-			ResourceSet resourceSet = new ResourceSetImpl();
-
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-					Resource.Factory.Registry.DEFAULT_EXTENSION, new ResponseResourceFactoryImpl());
-
-			resourceSet.getPackageRegistry().put(ResponsePackage.eNS_URI, ResponsePackage.eINSTANCE);
-
+		if (response != null) {
 			try {
-				Resource resource = resourceSet.createResource(URI.createURI("http://library.fuzzing.fokus.fraunhofer.de/response"));
-				XmlResponseDocument documentRoot = de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory.eINSTANCE.createXmlResponseDocument();
-				documentRoot.setResponse(response.getEMFRepresentation());
-				resource.getContents().add(documentRoot);
-
+				JAXBContext jaxbContext = JAXBContext.newInstance(ResponseImpl.class);
+				Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+				// output pretty printed
+				jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 				OutputStream out;
 				if (responseFileName == null) {
 					out = new ByteArrayOutputStream();
 				} else {
 					out = new FileOutputStream(responseFileName.replace("file://", ""));
 				}
-				resource.save(out, null);
-				
+				jaxbMarshaller.marshal(response, out);			
 				if (responseFileName == null) {
 					xmlResponseString = out.toString();
 				}
-				
 				out.close();
-			}
-			catch (IOException exception) {
-				exception.printStackTrace();
+			} catch (IOException | JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}

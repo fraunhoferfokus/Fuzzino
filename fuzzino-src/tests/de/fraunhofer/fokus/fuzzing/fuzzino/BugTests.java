@@ -13,7 +13,6 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.assertTrueWithPrefix;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkGeneratorPartForNumFuzzedValues;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorResponse;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumCollectionResponses;
@@ -25,89 +24,102 @@ import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumOp
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForWarningsPart;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getGeneratorPartFromResponseByName;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getStringResponseFromResponseDoc;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.util.Iterator;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGeneratorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.AllBadStringsGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadDateGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XSSBasicInputGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StringSpecificationImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
 
-public class BugTests extends FuzzinoTest {
+public class BugTests extends FuzzinoTest{
 
+	private static String bugDir = "testdata/reworked/bugs/";
+	
+	/*@Test
+	public void init() throws JAXBException{
+		String baseFilename = "2013-02-04_14_38_750";
+		String reqFilename = bugDir + baseFilename +".request.xml";
+		String respFilename = bugDir + baseFilename +".response.xml";
+		StringRequest stringReq = new StringRequestImpl();
+		stringReq.setName("SimpleStringRequest");
+		stringReq.setMaxValues(750);
+		StringSpecification spec = new StringSpecificationImpl();
+		spec.setEncoding(StringEncoding.UTF8);
+		spec.setMinLength(0);
+		spec.setMaxLength(255);
+		spec.setIsNullTerminated(true);
+		stringReq.setSpecification(spec);
+		stringReq.addRequestedGenerator(new GeneratorImpl("AllBadStrings"));		
+		Request req = new RequestImpl();
+		req.getStringRequests().add(stringReq);
+		req.marshall(new File(reqFilename));
+		StringRequestProcessor proc = new StringRequestProcessor(stringReq, UUID.randomUUID());
+		de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse a = proc.getResponse();
+		Response resp = new ResponseImpl();
+		resp.getStringResponses().add(a);
+		resp.marshall(new File(respFilename));
+	}*/
+	
 	@Test
-	public void testBug_2012_06_11_16_47() {
-		String requestFilename = "./testdata/bugs/2012-06-11_16-47.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testBug_2012_06_11_16_47() throws JAXBException, SAXException {
+		String requestFilename = bugDir + "2012-06-11_16-47.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
 		
-		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
-
-		assertTrueWithPrefix("No seed in response.",
-				   stringResponse.getSeed() != null);
-
+		checkResponseDocForNumStringResponses(response, 1);
+		StringResponse stringResponse = response.getStringResponses().get(0);
 		checkResponseForNumGeneratorParts(stringResponse, 1);
 		
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadNumbersAsString");
+		GeneratorSpecificFuzzedValues<String> generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadNumbersAsString");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, 10);
 		
 		checkResponseForNumOperatorParts(stringResponse, 0);
 
 		checkResponseForWarningsPart(stringResponse, false);
 		
-		checkResponseDocForErrorResponse(responseDoc, false);
-		checkResponseDocForNumNumberResponses(responseDoc, 0);
-		checkResponseDocForNumCollectionResponses(responseDoc, 0);
-		checkResponseDocForNumStructureResponses(responseDoc, 0);
+		checkResponseDocForErrorResponse(response, false);
+		checkResponseDocForNumNumberResponses(response, 0);
+		checkResponseDocForNumCollectionResponses(response, 0);
+		checkResponseDocForNumStructureResponses(response, 0);
 	}
 	
 	@Test
-	public void testBug_2012_10_10_19_08() {
-		String requestFilename = "./testdata/bugs/2012-10-10_19-08.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testBug_2012_10_10_19_08() throws JAXBException, SAXException {
+		String requestFilename = bugDir + "2012-10-10_19-08.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
 		
-		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
-
-		assertTrueWithPrefix("No seed in response.",
-				   stringResponse.getSeed() != null);
+		checkResponseDocForNumStringResponses(response, 1);
+		StringResponse stringResponse = response.getStringResponses().get(0);
 
 		checkResponseForNumGeneratorParts(stringResponse, 1);
 		
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadStrings");
+		GeneratorSpecificFuzzedValues<String> generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadStrings");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, 40);
 		
 		checkResponseForNumOperatorParts(stringResponse, 0);
 
 		checkResponseForWarningsPart(stringResponse, false);
 		
-		checkResponseDocForErrorResponse(responseDoc, false);
-		checkResponseDocForNumNumberResponses(responseDoc, 0);
-		checkResponseDocForNumCollectionResponses(responseDoc, 0);
-		checkResponseDocForNumStructureResponses(responseDoc, 0);
+		checkResponseDocForErrorResponse(response, false);
+		checkResponseDocForNumNumberResponses(response, 0);
+		checkResponseDocForNumCollectionResponses(response, 0);
+		checkResponseDocForNumStructureResponses(response, 0);
 	}
 	
 	@Test
 	public void testBug_2012_10_10_19_08_delete() {
-		String requestFilename = "./testdata/bugs/2012-10-10_19-08.request.xml";
+
+		String requestFilename = bugDir + "2012-10-10_19-08.request.xml";
+
 		Fuzzino.main(new String[]{requestFilename});
 		
-		String responseFilename = "./testdata/bugs/2012-10-10_19-08.response.xml";
+		String responseFilename = bugDir + "2012-10-10_19-08.response.xml";
 		
 		File response = new File(responseFilename);
 		if (response.exists()) {
@@ -118,8 +130,8 @@ public class BugTests extends FuzzinoTest {
 	
 	@Test
 	public void testBug_2012_10_10_19_08_callLibraryTwice() {
-		String requestFilename1 = "./testdata/bugs/2012-10-10_19-08.request.xml";
-		String reqeustFilename2 = "./testdata/bugs/2012-06-11_16-47.request.xml";
+		String requestFilename1 = bugDir + "2012-10-10_19-08.request.xml";
+		String reqeustFilename2 = bugDir + "2012-06-11_16-47.request.xml";
 		Fuzzino.main(new String[]{requestFilename1});
 		Fuzzino.main(new String[]{reqeustFilename2});
 	}
@@ -127,10 +139,10 @@ public class BugTests extends FuzzinoTest {
 	@Test
 	public void testBug_2012_10_10_19_08_processXmlString() {
 		String xmlRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
-                            "<request xmlns=\"http://fuzzino.fuzzing.fokus.fraunhofer.de/request\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://library.fuzzing.fokus.fraunhofer.de/request ./fuzzingRequest.xsd\">" +
+                            "<request>" +
 				            "<string name=\"SimpleStringRequest\" maxValues=\"40\">\n" +
-                            "<specification minLength=\"1\" maxLength=\"5\" nullTerminated=\"true\" encoding=\"UTF8\" />\n" +
-				            "<generator>BadStrings</generator>\n" + 
+                            "<specification type=\"STRING\" minLength=\"1\" maxLength=\"5\" nullTerminated=\"true\" encoding=\"UTF8\" />\n" +
+				            "<generator value =\"BadStrings\" />\n" + 
                             "</string>\n" +
 				            "</request>";
 		
@@ -139,24 +151,9 @@ public class BugTests extends FuzzinoTest {
 		assertTrue("xmlResponse is null", xmlResponse != null);
 	}
 	
-	/**
-	 * Bug where output of AllBadStrings contains \x1 instead of \x01.
-	 */
-	@Test
-	public void testBug_IllegalEncodingFormat() {
-		AllBadStringsGenerator allBadStringsGenerator = StringGeneratorFactory.INSTANCE.createAllBadStrings(RequestFactory.INSTANCE.createStringSpecification(), 0);
-		int i=0;
-		for (FuzzedValue<String> fuzzedValue : allBadStringsGenerator) {
-			String str = fuzzedValue.getValue();
-			assertFalse(i + ": Wrong encoding, ends with \\x1 instead of \\x01. '" + fuzzedValue + "'", 
-					str.endsWith("\\x1"));
-			i++;
-		}
-	}
-	
 	@Test
 	public void testBug_2013_02_04_14_38_manyValuesRequested_5000() {
-		String requestFilename = "./testdata/bugs/2013-02-04_14_38_5000.request.xml";
+		String requestFilename = bugDir + "2013-02-04_14_38_5000.request.xml";
 		
 		try {
 			Fuzzino.main(new String[]{requestFilename});
@@ -167,7 +164,7 @@ public class BugTests extends FuzzinoTest {
 	
 	@Test
 	public void testBug_2013_02_04_14_38_manyValuesRequested_750() {
-		String requestFilename = "./testdata/bugs/2013-02-04_14_38_750.request.xml";
+		String requestFilename = bugDir + "2013-02-04_14_38_750.request.xml";
 		
 		try {
 			Fuzzino.main(new String[]{requestFilename});
@@ -176,42 +173,4 @@ public class BugTests extends FuzzinoTest {
 		}
 	}
 	
-	@Test
-	public void testBug_2014_08_25_11_05_ExceptionWhenCallingAddAll(){
-		StringSpecification sP = new StringSpecificationImpl();
-		sP.setType(StringType.get("XSS"));
-		sP.setMinLength(1);
-		sP.setMaxLength(1000);
-		sP.setIsNullTerminated(true);
-		sP.setEncoding(StringEncoding.get("ASCII"));
-		sP.setIgnoreLengths(true);
-		XSSBasicInputGenerator gen = new XSSBasicInputGenerator(sP, 0,"www.example.com");
-		Iterator<FuzzedValue<String>> it = gen.iterator();
-		while(it.hasNext()){
-			System.out.println(it.next());
-		}
-	}
-	
-	@Test
-	public void testBug_2014_08_25_13_07_EmptyGenerators(){
-		StringSpecification sP = new StringSpecificationImpl();
-		sP.setType(StringType.get("XSS"));
-		sP.setMinLength(1);
-		sP.setMaxLength(2);
-		sP.setIsNullTerminated(true);
-		sP.setEncoding(StringEncoding.get("ASCII"));
-		sP.setIgnoreLengths(false);
-		
-		XSSBasicInputGenerator gen = new XSSBasicInputGenerator(sP, 0,"www.example.com");
-		Iterator<FuzzedValue<String>> it = gen.iterator();
-		while(it.hasNext()){
-			System.out.println(it.next());
-		}
-		System.out.println("-----------------------------------------------------------------------------------------------------------");
-		BadDateGenerator gen2 = new BadDateGenerator(sP,0);
-		it = gen2.iterator();
-		while(it.hasNext()){
-			System.out.println(it.next());
-		}
-	}
 }

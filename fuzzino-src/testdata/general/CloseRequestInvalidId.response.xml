@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
-  <response:closeRequestDone id="INVALID_ID">
-    <response:warnings>
-      <response:illegalRequestFormat attribute="id" element="closeRequest"/>
-    </response:warnings>
-  </response:closeRequestDone>
-</response:response>

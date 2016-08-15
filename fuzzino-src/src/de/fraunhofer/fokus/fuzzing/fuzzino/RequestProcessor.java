@@ -23,8 +23,8 @@ import java.util.UUID;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.DeleteRequestProcessorFailedException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CloseRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CommonRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
@@ -81,12 +81,8 @@ public abstract class RequestProcessor<T> extends ComposedFuzzingHeuristic<T> im
 	
 	protected static File dir = new File(System.getProperty("user.home") + File.separator + "FuzzinoFiles");
 
-	public static void setSerializationDir(File newDir) {
+	public static void setSerializationDir(File newDir){
 		dir = newDir;
-	}
-	
-	public static File getSerializationDir() {
-		return dir;
 	}
 	
 	/**
@@ -262,6 +258,10 @@ public abstract class RequestProcessor<T> extends ComposedFuzzingHeuristic<T> im
 	@Override
 	public String toString() {
 		return "[RequestProcessor name:" + getName() + " request:" + getRequest() + "]";
+	}
+
+	public static File getSerializationDir() {
+		return dir;
 	}
 
 }

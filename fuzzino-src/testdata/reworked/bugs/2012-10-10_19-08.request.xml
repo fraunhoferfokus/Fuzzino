@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+    <string maxValues="40" name="SimpleStringRequest" seed="-1">
+        <noGenerators>false</noGenerators>
+        <generator value="BADSTRINGS"/>
+        <specification type="STRING" minLength="1" maxLength="5" nullTerminated="true" encoding="UTF8" ignoreLengths="false"/>
+    </string>
+</ns2:request>

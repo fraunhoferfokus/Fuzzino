@@ -18,8 +18,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CommonRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;

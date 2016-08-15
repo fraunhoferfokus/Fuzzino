@@ -1,41 +1,27 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.structure_tests;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidValuesSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.GeneratorImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.IntegerSpecificationImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.NumberRequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.OperatorImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StringRequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StringSpecificationImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.StructureRequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.impl.ValidValuesSectionImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValuesSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.GeneratorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.IntegerSpecificationImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.NumberRequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.OperatorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StructureRequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.ValidValuesSectionImpl;
 
 public class StructureTestUtil extends FuzzinoTest {
-
 
 	
 	public static StructureRequest createExampleRequest(StructureSpecification strucSpec, boolean fuzzStructure, String requestName, String structureOperatorName) {

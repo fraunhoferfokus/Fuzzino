@@ -1,16 +1,3 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.structure;
 
 import java.util.ArrayList;
@@ -19,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CommonRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Field;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.LibraryType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.RequestProcessorRegistry;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 
 /***
@@ -53,19 +42,22 @@ public class TypeHandler {
 		List<Integer> numberTypeIndexGroup = new ArrayList<>();
 		Map<StringType,List<Integer>> stringTypeIndexGropus = new HashMap<>();
 		//the following map contains all types which are only ever equal if the corresponding request is the same object
-		Map<CommonRequest,List<Integer>> strongEqualityIndexGroups = new HashMap<>();
+		Map<String,List<Integer>> strongEqualityIndexGroups = new HashMap<>();
 		for(int i=0;i<structure.getSpecification().getFields().size();i++){
-			Field a = structure.getSpecification().getFields().get(i);
-			switch(a.getValueRequest().getLibraryType()){
+			Field field = structure.getSpecification().getFields().get(i);
+			CommonRequest correspondingRequest = RequestProcessorRegistry.INSTANCE.get(field.getCorrespondingRequestId()).getRequest();
+			LibraryType fieldType = correspondingRequest.getLibraryType();
+			switch(fieldType){
 			case COLLECTION:
 			case STRUCTURE:
-				//these requests are only then of the same type if they are the same object
-				if(strongEqualityIndexGroups.containsKey(a.getValueRequest())){
-					strongEqualityIndexGroups.get(a.getValueRequest()).add(i);
+			case GRAMMAR:
+				//these requests are only then of the same type if they are the same object (identified by ID)
+				if(strongEqualityIndexGroups.containsKey(field.getCorrespondingRequestId())){
+					strongEqualityIndexGroups.get(field.getCorrespondingRequestId()).add(i);
 				} else{
 					List<Integer> newGrammarTypeIndexGroup = new ArrayList<>();
 					newGrammarTypeIndexGroup.add(i);
-					strongEqualityIndexGroups.put(a.getValueRequest(), newGrammarTypeIndexGroup);
+					strongEqualityIndexGroups.put(field.getCorrespondingRequestId(), newGrammarTypeIndexGroup);
 				}
 				break;
 			case NUMBER:
@@ -73,7 +65,7 @@ public class TypeHandler {
 				numberTypeIndexGroup.add(i);
 				break;
 			case STRING:
-				StringType type = ((StringRequest) a.getValueRequest()).getSpecification().getType();
+				StringType type = ((StringRequest) correspondingRequest).getSpecification().getType();
 				if(stringTypeIndexGropus.containsKey(type)){
 					stringTypeIndexGropus.get(type).add(i);
 				} else{

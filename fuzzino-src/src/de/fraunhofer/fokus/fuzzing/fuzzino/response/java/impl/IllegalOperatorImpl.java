@@ -13,48 +13,27 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalOperator;
 
-public class IllegalOperatorImpl implements IllegalOperator {
-
-	protected String value;
-	protected String reason;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+public class IllegalOperatorImpl extends IllegalHeuristic implements IllegalOperator {
 	
-	@Override
-	public String getName() {
-		return value;
-	}
-
-	@Override
-	public void setName(String value) {
-		this.value = value;
-	}
-
-	@Override
-	public String getReason() {
-		return reason;
-	}
-
-	@Override
-	public void setReason(String value) {
-		reason = value;
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator
-		  emfIllegalOperator = ResponseFactory.eINSTANCE.createIllegalOperator();
-		
-		emfIllegalOperator.setReason(getReason());
-		emfIllegalOperator.setValue(getName());
-		
-		return emfIllegalOperator;
+	public IllegalOperatorImpl(){
+		super();
 	}
 	
+	public IllegalOperatorImpl(String name, String reason) {
+		super(name,reason);
+	}
+
 	@Override
 	public String toString() {
-		return "[IllegalOperator name:" + value + " reason:" + reason + "]";
+		return "[IllegalOperator name:" + name + " reason:" + reason + "]";
 	}
 
 }

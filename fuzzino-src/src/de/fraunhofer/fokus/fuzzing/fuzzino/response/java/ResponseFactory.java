@@ -13,9 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.ResponseFactoryImpl;
 
 public interface ResponseFactory {
@@ -34,7 +34,6 @@ public interface ResponseFactory {
 	FuzzedCollection createFuzzedCollection();
 	FuzzedCollection createFuzzedCollection(ValidCollection validCollection);
 	
-	FuzzedStructure createFuzzedStructure();
 	<T> GeneratorSpecificFuzzedValues<T> createGeneratorPart();
 	
 	IllegalGenerator createIllegalGenerator();

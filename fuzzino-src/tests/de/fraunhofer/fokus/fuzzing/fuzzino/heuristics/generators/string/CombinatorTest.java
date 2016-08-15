@@ -22,8 +22,8 @@ import org.junit.Test;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 public class CombinatorTest extends FuzzinoTest {

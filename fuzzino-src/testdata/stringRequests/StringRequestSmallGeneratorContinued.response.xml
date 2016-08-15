@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
-  <response:string id="07ed3f3d-fe92-493c-b407-2dc3547d2164" moreValues="false" name="StringRequestSmallGenerator" seed="6102724491599873342">
-    <response:warnings>
-      <response:noMoreValuesAvailable/>
-    </response:warnings>
-  </response:string>
-</response:response>

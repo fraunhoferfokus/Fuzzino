@@ -16,7 +16,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 
 /**
@@ -46,11 +46,5 @@ public interface StructureResponse extends CommonResponse, Iterable<FuzzedValue<
 	 * @param value The fuzzed structure to be added.
 	 */
 	void addFuzzedStructure(FuzzedValue<Structure> value);
-	
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse getEMFRepresentation();
 	
 }

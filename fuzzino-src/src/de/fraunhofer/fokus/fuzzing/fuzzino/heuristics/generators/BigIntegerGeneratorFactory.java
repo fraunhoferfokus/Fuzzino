@@ -19,7 +19,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BigBoundaryNumbersGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
 public class BigIntegerGeneratorFactory {
 

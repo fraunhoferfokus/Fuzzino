@@ -20,7 +20,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
 /**
  * Computes a list of ascending numbers of the type BigInteger.

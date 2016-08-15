@@ -18,8 +18,8 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.CommandInjections;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
 public class CommandInjectionsGenerator extends SimpleStringGenerator implements StringGenerator {
 

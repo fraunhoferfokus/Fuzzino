@@ -19,8 +19,8 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
 public class DelimiterOperator extends ComposedFuzzingHeuristic<String> implements StringOperator {
 

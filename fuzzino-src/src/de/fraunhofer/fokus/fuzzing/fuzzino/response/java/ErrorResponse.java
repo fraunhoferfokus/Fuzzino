@@ -16,15 +16,11 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 public interface ErrorResponse {
 
 	String getReason();
-	void setReason(String value);
-	int getColumn();
-	void setColumn(int value);
-	void unsetColumn();
-	boolean isSetColumn();
-	int getLine();
-	void setLine(int value);
-	void unsetLine();
-	boolean isSetLine();
+	void setReason(String reason);
 	
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.ErrorResponse getEMFRepresentation();
+	String getMessage();
+	void setMessage(String message);
+	
+	String getStackTrace();
+	void setStackTrace(String stackTrace);
 }

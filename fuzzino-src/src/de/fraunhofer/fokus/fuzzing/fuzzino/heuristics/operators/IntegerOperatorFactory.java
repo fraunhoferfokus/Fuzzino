@@ -18,7 +18,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.NumericalVarianceOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
 /**
  * A factory for all kinds of NumberOperators.

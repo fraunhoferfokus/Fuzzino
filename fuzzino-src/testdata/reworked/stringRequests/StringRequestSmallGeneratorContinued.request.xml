@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+    <string id="918af91c-3d3b-47d7-a705-37bd8fa74f09" maxValues="5" name="StringRequestSmallGenerator" seed="-1">
+        <noGenerators>false</noGenerators>
+    </string>
+</ns2:request>

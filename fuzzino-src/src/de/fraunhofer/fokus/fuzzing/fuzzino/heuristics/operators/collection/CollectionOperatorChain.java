@@ -23,9 +23,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicExc
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperatorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
 

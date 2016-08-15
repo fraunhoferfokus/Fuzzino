@@ -13,201 +13,67 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 
-/**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Valid Collection</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.ValidCollectionImpl#getValue <em>Value</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.ValidCollectionImpl#getName <em>Name</em>}</li>
- * </ul>
- * </p>
- *
- * @generated
- */
-public class ValidCollectionImpl extends EObjectImpl implements ValidCollection {
-	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> value;
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
+public class ValidCollectionImpl implements ValidCollection {
 
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ValidCollectionImpl() {
-		super();
+	private static final long serialVersionUID = 836742306845945843L;
+	protected List<String> values;
+	@XmlAttribute
+	protected String name = null;
+	
+	public ValidCollectionImpl(){
+	}
+	
+	public ValidCollectionImpl(String name, String... values) {
+		this.name = name;
+		this.values = Arrays.asList(values);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
-	protected EClass eStaticClass() {
-		return RequestPackage.Literals.VALID_COLLECTION;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<String> getValue() {
-		if (value == null) {
-			value = new EDataTypeEList<String>(String.class, this, RequestPackage.VALID_COLLECTION__VALUE);
+	@XmlElement(name = "value")
+	public List<String> getValues() {
+		if (values == null) {
+			values = new ArrayList<>();
 		}
-		return value;
+		return values;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
+	@Override
+	public void setValues(List<String> value) {
+		getValues().addAll(value);
+	}
+	
+	@Override
+	public void addValue(String value) {
+		getValues().add(value);
+	}
+	
+	@Override
 	public String getName() {
 		return name;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RequestPackage.VALID_COLLECTION__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case RequestPackage.VALID_COLLECTION__VALUE:
-				return getValue();
-			case RequestPackage.VALID_COLLECTION__NAME:
-				return getName();
-		}
-		return super.eGet(featureID, resolve, coreType);
+	public void setName(String value) {
+		name = value;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case RequestPackage.VALID_COLLECTION__VALUE:
-				getValue().clear();
-				getValue().addAll((Collection<? extends String>)newValue);
-				return;
-			case RequestPackage.VALID_COLLECTION__NAME:
-				setName((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case RequestPackage.VALID_COLLECTION__VALUE:
-				getValue().clear();
-				return;
-			case RequestPackage.VALID_COLLECTION__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case RequestPackage.VALID_COLLECTION__VALUE:
-				return value != null && !value.isEmpty();
-			case RequestPackage.VALID_COLLECTION__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-		}
-		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
-		result.append(value);
-		result.append(", name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
+		return "[ValidCollection name:" + name + " values:" + values.size() + "]";
 	}
 
-} //ValidCollectionImpl
+}

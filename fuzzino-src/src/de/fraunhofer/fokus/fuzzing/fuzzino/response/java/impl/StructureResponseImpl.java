@@ -18,12 +18,20 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructureResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class StructureResponseImpl extends AbstractResponse implements StructureResponse {
 
+	@XmlElement(name = "fuzzedValue" ,type = FuzzedValue.class)
 	protected List<FuzzedValue<Structure>> fuzzedStructures;
 	
 	@Override
@@ -42,25 +50,6 @@ public class StructureResponseImpl extends AbstractResponse implements Structure
 			fuzzedStructures = new LinkedList<>();
 		}
 		fuzzedStructures.add(value);
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse getEMFRepresentation() {
-		//TODO: This is a problem, It can't work yet unless we adapt the emf model, which is not up to date with the reimplemented version inside the 'java' packages
-		/*de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse
-		  emfStructureResponse = ResponseFactory.eINSTANCE.createStructureResponse();
-		
-		for (FuzzedStructure fuzzedStructure : fuzzedStructures) {
-			emfStructureResponse.getFuzzedStructures().add(fuzzedStructure.getEMFRepresentation());
-		}
-		emfStructureResponse.setWarnings(getWarningsSection().getEMFRepresentation());
-		emfStructureResponse.setId(getId());
-		emfStructureResponse.setMoreValues(moreValuesAvailable());
-		emfStructureResponse.setName(getName());
-		emfStructureResponse.setSeed(String.valueOf(getSeed()));
-		
-		return emfStructureResponse;*/
-		throw new AssertionError("EMF Representation not supported!");
 	}
 	
 	@Override

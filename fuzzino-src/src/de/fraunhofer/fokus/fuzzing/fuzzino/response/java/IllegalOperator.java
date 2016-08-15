@@ -20,6 +20,4 @@ public interface IllegalOperator {
 	String getReason();
 	void setReason(String value);
 	
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator getEMFRepresentation();
-	
 }

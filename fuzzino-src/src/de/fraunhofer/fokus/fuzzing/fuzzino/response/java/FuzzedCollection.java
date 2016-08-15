@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 
 /**
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
@@ -37,7 +37,6 @@ public interface FuzzedCollection extends Iterable<Value> {
 	
 	void setOperators(String value);
 	
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection getEMFRepresentation();
 	void initWithValidCollection(ValidCollection validCollection);
 
 	Value get(int index);

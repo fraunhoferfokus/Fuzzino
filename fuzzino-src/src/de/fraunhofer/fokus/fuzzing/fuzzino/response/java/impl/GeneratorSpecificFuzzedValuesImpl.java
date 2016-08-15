@@ -18,13 +18,23 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
 
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
 public class GeneratorSpecificFuzzedValuesImpl<T> implements GeneratorSpecificFuzzedValues<T> {
 	
+
+	@XmlElement(name = "fuzzedValue", type = FuzzedValue.class)
 	protected List<FuzzedValue<T>> fuzzedValues;
+	@XmlAttribute
 	protected String name;
 
 	@Override
@@ -53,20 +63,6 @@ public class GeneratorSpecificFuzzedValuesImpl<T> implements GeneratorSpecificFu
 	@Override
 	public void setName(String value) {
 		name = value;
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart emfGeneratorPart = 
-				ResponseFactory.eINSTANCE.createGeneratorPart();
-		
-		for (FuzzedValue<T> fuzzedValue : fuzzedValues) {
-			String fuzzedValueItSelf = fuzzedValue.getValue().toString();
-			emfGeneratorPart.getFuzzedValues().add(fuzzedValueItSelf);
-		}
-		emfGeneratorPart.setName(getName());
-		
-		return emfGeneratorPart;
 	}
 	
 	@Override

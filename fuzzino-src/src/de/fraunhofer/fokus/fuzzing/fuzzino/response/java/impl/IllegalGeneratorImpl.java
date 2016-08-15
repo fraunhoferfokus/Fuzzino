@@ -13,48 +13,28 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalGenerator;
 
-public class IllegalGeneratorImpl implements IllegalGenerator {
-
-	protected String value;
-	protected String reason;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+public class IllegalGeneratorImpl extends IllegalHeuristic implements IllegalGenerator {
 	
-	@Override
-	public String getName() {
-		return value;
+	public IllegalGeneratorImpl(){
+		super();
 	}
-
-	@Override
-	public void setName(String value) {
-		this.value = value;
+	
+	public IllegalGeneratorImpl(String name, String reason){
+		super(name,reason);
 	}
-
-	@Override
-	public String getReason() {
-		return reason;
-	}
-
-	@Override
-	public void setReason(String value) {
-		reason = value;
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator
-		  emfIllegalGenerator = ResponseFactory.eINSTANCE.createIllegalGenerator();
-		
-		emfIllegalGenerator.setReason(getReason());
-		emfIllegalGenerator.setValue(getName());
-		
-		return emfIllegalGenerator;
-	}
+	
 	
 	@Override
 	public String toString() {
-		return "[IllegalGenerator name:" + value + " reason:" + reason + "]";
+		return "[IllegalGenerator name:" + name + " reason:" + reason + "]";
 	}
 
 }

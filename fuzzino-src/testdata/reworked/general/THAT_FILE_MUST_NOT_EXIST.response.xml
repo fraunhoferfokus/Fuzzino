@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<response>
+    <errorResponse reason="C:\Leon Files Work\workspace\Fuzzino_Alt_Update\testdata\reworked\general\THAT_FILE_MUST_NOT_EXIST (The system cannot find the file specified)" stackTrace="[Ljava.lang.StackTraceElement;@27d6267e"/>
+</response>

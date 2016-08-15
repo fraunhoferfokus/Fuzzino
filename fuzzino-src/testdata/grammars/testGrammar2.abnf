@@ -1,0 +1,1 @@
+startRule = ("hi" / "hey" / "hello") "yourName"

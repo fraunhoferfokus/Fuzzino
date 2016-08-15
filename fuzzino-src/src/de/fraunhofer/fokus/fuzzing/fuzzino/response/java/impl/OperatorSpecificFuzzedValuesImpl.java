@@ -18,14 +18,24 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
 
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
 public class OperatorSpecificFuzzedValuesImpl<T> implements OperatorSpecificFuzzedValues<T> {
 	
+	@XmlElement(name = "fuzzedValue", type = FuzzedValue.class)
 	protected List<FuzzedValue<T>> fuzzedValues;
+	@XmlAttribute
 	protected String basedOn;
+	@XmlAttribute
 	protected String name;
 
 	@Override
@@ -64,21 +74,6 @@ public class OperatorSpecificFuzzedValuesImpl<T> implements OperatorSpecificFuzz
 	@Override
 	public void setName(String value) {
 		name = value;
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart
-		  emfOperatorPart = ResponseFactory.eINSTANCE.createOperatorPart();
-		
-		for (FuzzedValue<T> fuzzedValue : fuzzedValues) {
-			String fuzzedValueItself = fuzzedValue.getValue().toString();
-			emfOperatorPart.getFuzzedValues().add(fuzzedValueItself);
-		}
-		emfOperatorPart.setBasedOn(getBasedOn());
-		emfOperatorPart.setName(getName());
-		
-		return emfOperatorPart;
 	}
 	
 	@Override

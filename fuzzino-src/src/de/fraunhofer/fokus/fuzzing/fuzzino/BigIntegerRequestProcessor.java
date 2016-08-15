@@ -28,11 +28,11 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGener
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.BigIntegerOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.BigIntegerOperatorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Generator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidValuesSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValuesSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.BigIntegerResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalOperator;

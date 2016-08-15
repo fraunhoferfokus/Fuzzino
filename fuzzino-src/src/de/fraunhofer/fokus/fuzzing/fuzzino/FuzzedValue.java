@@ -17,7 +17,16 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.FuzzedCollectionImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.structure.StructureImpl;
 
 /**
  * This class contains all information related to a fuzzed value including
@@ -26,6 +35,13 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlSeeAlso({
+    StructureImpl.class, //TODO: add every possible value of T here! (this is ugly but it works and should be ok for our case
+    FuzzedCollectionImpl.class
+})
 public class FuzzedValue<T> implements Serializable {
 	
 	private static final long serialVersionUID = 5673943690714774557L;
@@ -36,10 +52,22 @@ public class FuzzedValue<T> implements Serializable {
 		NONE
 	}
 	
+	@XmlElement
 	protected T value = null;
+	@XmlElement
 	protected T basedOnValue = null;
+	
+	
+	//TODO: what do we do here - for now we don't serialize it
+	/*@XmlElements({ 
+	    @XmlElement(name="FuzzingHeuristic", type=FuzzingHeuristicImpl.class)
+	})
+	@XmlElementWrapper */
 	protected final List<FuzzingHeuristic> heuristics = new LinkedList<>();
+	@XmlElement
 	protected Kind kind;
+	@XmlElementWrapper
+	private List<String> usedGrammarOperatorNames;
 	
 	/**
 	 * This variable is used instead of <code>null</code>.
@@ -155,7 +183,7 @@ public class FuzzedValue<T> implements Serializable {
 		if (isGenerated() && other.isGenerated()) {
 			return getHeuristic() == other.getHeuristic();
 		}
-		
+				
 		return (getHeuristic() == other.getHeuristic() && getBasedOnValue().equals(other.getBasedOnValue()));
 	}
 	
@@ -185,6 +213,9 @@ public class FuzzedValue<T> implements Serializable {
 	public FuzzingHeuristic getHeuristic() {
 		if (isNone()) {
 			throw new UnsupportedOperationException("This is not fuzzed value, neither generated nor mutated.");
+		}
+		if(heuristics.size()==0){
+			return null;
 		}
 		return heuristics.get(0);
 	}

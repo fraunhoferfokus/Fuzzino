@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 
 /**
  * This class contains the response to a {@link StringRequest}.
@@ -21,36 +21,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
-public interface StringResponse extends CommonResponse {
+public interface StringResponse extends StructuredValueResponse<String> {
 	
-	/**
-	 * @return The section containing all fuzzed values that are created by fuzzing generators.
-	 */
-	FuzzedValuesByGenerators<String> getGeneratorBasedSection();
-	
-	/**
-	 * Sets the section that contains all fuzzed values that are created by fuzzing generators.
-	 * 
-	 * @param value The section of fuzzed values that are created by fuzzing generators.
-	 */
-	void setGeneratorBasedSection(FuzzedValuesByGenerators<String> value);
-	
-	/**
-	 * @return The section containing all fuzzed values that are created by fuzzing operators.
-	 */
-	FuzzedValuesByOperators<String> getOperatorBasedSection();
-	
-	/**
-	 * Sets the section that contains all fuzzed values that are created by fuzzing operators.
-	 * 
-	 * @param value The section of fuzzed values that are created by fuzzing operators.
-	 */
-	void setOperatorBasedSection(FuzzedValuesByOperators<String> value);
-	
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse getEMFRepresentation();
 
 }

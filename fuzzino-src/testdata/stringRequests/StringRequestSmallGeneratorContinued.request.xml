@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<request:request xmlns:request="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
-  <request:string id="07ed3f3d-fe92-493c-b407-2dc3547d2164" maxValues="5" name="StringRequestSmallGenerator"/>
-</request:request>

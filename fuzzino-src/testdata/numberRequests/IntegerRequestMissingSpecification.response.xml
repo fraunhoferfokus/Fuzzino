@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
-  <response:number moreValues="false" name="NumberRequestTest" seed="0">
-    <response:warnings>
-      <response:illegalRequestFormat missingElement="specification"/>
-    </response:warnings>
-  </response:number>
-</response:response>

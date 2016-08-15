@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+	<string name="Not supposed to be here earliest"/>
+    <string maxValues="50" name="NotWellFormed" seed="-1">
+        <noGenerators>false</noGenerators>
+        <generator value="BADSTRINGS"/>
+        <specification type="STRING" minLength="1" maxLength="5" nullTerminated="true" encoding="UTF8" ignoreLengths="false"/>
+        <something name="Not supposed to be here earlier"/>
+        <validValues>
+            <something name="Not supposed to be here"/>
+            <operator name="STRINGCASE"/>
+            <value>ABC</value>
+        </validValues>
+    </string>
+</ns2:request>

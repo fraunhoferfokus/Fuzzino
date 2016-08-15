@@ -24,8 +24,6 @@ public interface WarningsSection extends Serializable {
 	boolean hasMoreValues();
 	void setMoreValues(boolean value);
 	
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsPart getEMFRepresentation();
-	
 	WarningsSection merge(WarningsSection other);
 	void add(WarningsSection other);
 }

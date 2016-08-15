@@ -20,8 +20,8 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.collection.CollectionLengthOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 

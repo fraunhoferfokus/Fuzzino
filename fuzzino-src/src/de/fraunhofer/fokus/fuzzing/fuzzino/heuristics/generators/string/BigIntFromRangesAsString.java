@@ -20,8 +20,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BigIntFromRanges;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntRange;
 

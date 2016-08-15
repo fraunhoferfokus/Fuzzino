@@ -13,295 +13,183 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
-import java.util.Collection;
+import java.io.File;
+import java.io.PrintStream;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
+import org.xml.sax.SAXException;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
 
-/**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Request</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl#getStringRequests <em>String Requests</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl#getNumberRequests <em>Number Requests</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl#getStructureRequests <em>Structure Requests</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl#getCollectionRequests <em>Collection Requests</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl#getCloseRequests <em>Close Requests</em>}</li>
- * </ul>
- * </p>
- *
- * @generated
- */
-public class RequestImpl extends EObjectImpl implements Request {
-	/**
-	 * The cached value of the '{@link #getStringRequests() <em>String Requests</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStringRequests()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<StringRequest> stringRequests;
-
-	/**
-	 * The cached value of the '{@link #getNumberRequests() <em>Number Requests</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getNumberRequests()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<NumberRequest> numberRequests;
-
-	/**
-	 * The cached value of the '{@link #getStructureRequests() <em>Structure Requests</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStructureRequests()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<StructureRequest> structureRequests;
-
-	/**
-	 * The cached value of the '{@link #getCollectionRequests() <em>Collection Requests</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCollectionRequests()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<CollectionRequest> collectionRequests;
-
-	/**
-	 * The cached value of the '{@link #getCloseRequests() <em>Close Requests</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCloseRequests()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<CloseRequest> closeRequests;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected RequestImpl() {
-		super();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+@XmlRootElement(namespace = "request",name = "request")
+@XmlAccessorType(XmlAccessType.NONE)
+public class RequestImpl implements Request {
+	
+	private static final File schemaLocation = new File("schemas/request/schema2.xsd");
+	private static final long serialVersionUID = 1915856810760232417L;
+	protected List<StringRequest> stringRequests;
+	protected List<NumberRequest> numberRequests;
+	protected List<StructureRequest> structureRequests;
+	protected List<CollectionRequest> collectionRequests;
+	protected List<CloseRequest> closeRequests;
+	
 	@Override
-	protected EClass eStaticClass() {
-		return RequestPackage.Literals.REQUEST;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<StringRequest> getStringRequests() {
+	@XmlElement(name="string", type=StringRequestImpl.class)
+	public List<StringRequest> getStringRequests() {
 		if (stringRequests == null) {
-			stringRequests = new EObjectContainmentEList<StringRequest>(StringRequest.class, this, RequestPackage.REQUEST__STRING_REQUESTS);
+			stringRequests = new ArrayList<>();
 		}
 		return stringRequests;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<NumberRequest> getNumberRequests() {
+	
+	@Override
+	public void setStringRequests(List<StringRequest> value) {
+		getStringRequests().addAll(value);
+	}
+	
+	@Override
+	@XmlElement(name="number", type=NumberRequestImpl.class)
+	public List<NumberRequest> getNumberRequests() {
 		if (numberRequests == null) {
-			numberRequests = new EObjectContainmentEList<NumberRequest>(NumberRequest.class, this, RequestPackage.REQUEST__NUMBER_REQUESTS);
+			numberRequests = new ArrayList<>();
 		}
 		return numberRequests;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<StructureRequest> getStructureRequests() {
+	
+	@Override
+	public void setNumberRequests(List<NumberRequest> value) {
+		getNumberRequests().addAll(value);
+	}
+	
+	@Override
+	@XmlElement(name="structure", type=StructureRequestImpl.class)
+	public List<StructureRequest> getStructureRequests() {
 		if (structureRequests == null) {
-			structureRequests = new EObjectContainmentEList<StructureRequest>(StructureRequest.class, this, RequestPackage.REQUEST__STRUCTURE_REQUESTS);
+			structureRequests = new ArrayList<>();
 		}
 		return structureRequests;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<CollectionRequest> getCollectionRequests() {
+	
+	@Override
+	public void setStructureRequests(List<StructureRequest> value) {
+		getStructureRequests().addAll(value);
+	}
+	
+	@Override
+	@XmlElement(name="CollectionRequest", type=CollectionRequestImpl.class)
+	public List<CollectionRequest> getCollectionRequests() {
 		if (collectionRequests == null) {
-			collectionRequests = new EObjectContainmentEList<CollectionRequest>(CollectionRequest.class, this, RequestPackage.REQUEST__COLLECTION_REQUESTS);
+			collectionRequests = new ArrayList<>();
 		}
 		return collectionRequests;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<CloseRequest> getCloseRequests() {
+	
+	@Override
+	public void setCollectionRequests(List<CollectionRequest> value) {
+		getCollectionRequests().addAll(value);
+	}
+	
+	@Override
+	@XmlElement(name="closeRequest", type=CloseRequestImpl.class)
+	public List<CloseRequest> getCloseRequests() {
 		if (closeRequests == null) {
-			closeRequests = new EObjectContainmentEList<CloseRequest>(CloseRequest.class, this, RequestPackage.REQUEST__CLOSE_REQUESTS);
+			closeRequests = new ArrayList<>();
 		}
 		return closeRequests;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case RequestPackage.REQUEST__STRING_REQUESTS:
-				return ((InternalEList<?>)getStringRequests()).basicRemove(otherEnd, msgs);
-			case RequestPackage.REQUEST__NUMBER_REQUESTS:
-				return ((InternalEList<?>)getNumberRequests()).basicRemove(otherEnd, msgs);
-			case RequestPackage.REQUEST__STRUCTURE_REQUESTS:
-				return ((InternalEList<?>)getStructureRequests()).basicRemove(otherEnd, msgs);
-			case RequestPackage.REQUEST__COLLECTION_REQUESTS:
-				return ((InternalEList<?>)getCollectionRequests()).basicRemove(otherEnd, msgs);
-			case RequestPackage.REQUEST__CLOSE_REQUESTS:
-				return ((InternalEList<?>)getCloseRequests()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+	public void setCloseRequests(List<CloseRequest> value) {
+		getCloseRequests().addAll(value);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case RequestPackage.REQUEST__STRING_REQUESTS:
-				return getStringRequests();
-			case RequestPackage.REQUEST__NUMBER_REQUESTS:
-				return getNumberRequests();
-			case RequestPackage.REQUEST__STRUCTURE_REQUESTS:
-				return getStructureRequests();
-			case RequestPackage.REQUEST__COLLECTION_REQUESTS:
-				return getCollectionRequests();
-			case RequestPackage.REQUEST__CLOSE_REQUESTS:
-				return getCloseRequests();
-		}
-		return super.eGet(featureID, resolve, coreType);
+	public void addStringRequest(StringRequest value) {
+		getStringRequests().add(value);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case RequestPackage.REQUEST__STRING_REQUESTS:
-				getStringRequests().clear();
-				getStringRequests().addAll((Collection<? extends StringRequest>)newValue);
-				return;
-			case RequestPackage.REQUEST__NUMBER_REQUESTS:
-				getNumberRequests().clear();
-				getNumberRequests().addAll((Collection<? extends NumberRequest>)newValue);
-				return;
-			case RequestPackage.REQUEST__STRUCTURE_REQUESTS:
-				getStructureRequests().clear();
-				getStructureRequests().addAll((Collection<? extends StructureRequest>)newValue);
-				return;
-			case RequestPackage.REQUEST__COLLECTION_REQUESTS:
-				getCollectionRequests().clear();
-				getCollectionRequests().addAll((Collection<? extends CollectionRequest>)newValue);
-				return;
-			case RequestPackage.REQUEST__CLOSE_REQUESTS:
-				getCloseRequests().clear();
-				getCloseRequests().addAll((Collection<? extends CloseRequest>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
+	public void addNumberRequest(NumberRequest value) {
+		getNumberRequests().add(value);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case RequestPackage.REQUEST__STRING_REQUESTS:
-				getStringRequests().clear();
-				return;
-			case RequestPackage.REQUEST__NUMBER_REQUESTS:
-				getNumberRequests().clear();
-				return;
-			case RequestPackage.REQUEST__STRUCTURE_REQUESTS:
-				getStructureRequests().clear();
-				return;
-			case RequestPackage.REQUEST__COLLECTION_REQUESTS:
-				getCollectionRequests().clear();
-				return;
-			case RequestPackage.REQUEST__CLOSE_REQUESTS:
-				getCloseRequests().clear();
-				return;
-		}
-		super.eUnset(featureID);
+	public void addStructureRequest(StructureRequest value) {
+		getStructureRequests().add(value);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case RequestPackage.REQUEST__STRING_REQUESTS:
-				return stringRequests != null && !stringRequests.isEmpty();
-			case RequestPackage.REQUEST__NUMBER_REQUESTS:
-				return numberRequests != null && !numberRequests.isEmpty();
-			case RequestPackage.REQUEST__STRUCTURE_REQUESTS:
-				return structureRequests != null && !structureRequests.isEmpty();
-			case RequestPackage.REQUEST__COLLECTION_REQUESTS:
-				return collectionRequests != null && !collectionRequests.isEmpty();
-			case RequestPackage.REQUEST__CLOSE_REQUESTS:
-				return closeRequests != null && !closeRequests.isEmpty();
-		}
-		return super.eIsSet(featureID);
+	public void addCollectionRequest(CollectionRequest value) {
+		getCollectionRequests().add(value);
 	}
 
-} //RequestImpl
+	@Override
+	public void addCloseRequest(CloseRequest value) {
+		getCloseRequests().add(value);
+	}
+	
+	@Override
+	public String toString() {
+		return "[Request stringRequests:" + (stringRequests == null ? "0" : stringRequests.size()) + 
+			 "\n         numberRequests:" + (numberRequests == null ? "0" : numberRequests.size()) +
+			 "\n         structureRequests:" + (structureRequests == null ? "0" : structureRequests.size()) +
+			 "\n         collectionRequets:" + (collectionRequests == null ? "0" : collectionRequests.size()) +
+			 "\n         closeRequests:" + (closeRequests == null ? "0" : closeRequests.size()) + "]";
+		}
+
+	@Override
+	public void marshall(File file) throws JAXBException {
+		JAXBContext jaxbContext = JAXBContext.newInstance(RequestImpl.class);
+		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		jaxbMarshaller.marshal(this, file);
+	}
+
+	@Override
+	public void marshall(PrintStream out) throws JAXBException {
+		JAXBContext jaxbContext = JAXBContext.newInstance(RequestImpl.class);
+		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		jaxbMarshaller.marshal(this, out);
+	}
+	
+	public static Request unmarshall(File requestFile) throws JAXBException, SAXException {
+		JAXBContext jaxbContext = JAXBContext.newInstance(RequestImpl.class);
+		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		Schema schema = schemaFactory.newSchema(schemaLocation); 
+		jaxbUnmarshaller.setSchema(schema);
+		return (Request) jaxbUnmarshaller.unmarshal( requestFile );
+	}
+
+	public static Request unmarshall(String xmlString) throws JAXBException, SAXException {
+		JAXBContext jaxbContext = JAXBContext.newInstance(RequestImpl.class);
+		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		Schema schema = schemaFactory.newSchema(schemaLocation); 
+		jaxbUnmarshaller.setSchema(schema);
+		StringReader reader = new StringReader(xmlString);
+		return (Request) jaxbUnmarshaller.unmarshal(reader);
+		
+	}
+	
+}

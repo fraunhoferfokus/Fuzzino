@@ -28,11 +28,11 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperatorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CommonRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Generator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidValuesSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValuesSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;

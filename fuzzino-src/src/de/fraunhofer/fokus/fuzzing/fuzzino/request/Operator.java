@@ -13,78 +13,40 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
-import org.eclipse.emf.ecore.EObject;
+import java.io.Serializable;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Operator</b></em>'.
- * <!-- end-user-doc -->
+ * An Operator requests that a specific fuzzing operator shall be applied to the valid values given in the request.
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator#getValue <em>Value</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator#getParam <em>Param</em>}</li>
- * </ul>
- * </p>
- *
- * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getOperator()
- * @model extendedMetaData="name='operator_._type' kind='simple'"
- * @generated
  */
-public interface Operator extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getOperator_Value()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.NCName"
-	 *        extendedMetaData="name=':0' kind='simple'"
-	 * @generated
-	 */
-	String getValue();
+public interface Operator extends Serializable {
 
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator#getValue <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Value</em>' attribute.
-	 * @see #getValue()
-	 * @generated
+	 * @return The name of the requested operator.
 	 */
-	void setValue(String value);
-
+	String getOperatorName();
+	
 	/**
-	 * Returns the value of the '<em><b>Param</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Param</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Param</em>' attribute.
-	 * @see #setParam(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getOperator_Param()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='param'"
-	 * @generated
+	 * Sets the name of the operator to be used by the fuzzing library.
+	 *
+	 * @param value The name of the operator. 
 	 */
-	String getParam();
-
+	void setOperatorName(String value);
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator#getParam <em>Param</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Param</em>' attribute.
-	 * @see #getParam()
-	 * @generated
+	 * @return The value of a parameter for this operator.
 	 */
-	void setParam(String value);
-
-} // Operator
+	String getParameter();
+	
+	/**
+	 * Some operators may have a parameter that can be used in order to specify how the operator should work.
+	 * If no parameter is set for an operator that may have one, its default value for the parameter is used.
+	 * 
+	 * @param value
+	 */
+	void setParameter(String value);
+	
+	
+}

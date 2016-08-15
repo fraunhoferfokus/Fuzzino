@@ -13,12 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.assertTrueWithPrefix;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkCloseRequestConfirmationForId;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkCloseRequestConfirmationForName;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkGeneratorPartForNumFuzzedValues;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkIllegalRequestFormatForElementAndId;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkIllegalRequestFormatForMissingElement;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkOperatorPartForNumFuzzedValues;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorMessage;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorResponse;
@@ -26,41 +23,50 @@ import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNu
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumNumberResponses;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumStringResponses;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumStructureResponses;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumGeneratorParts;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumIllegalRequestFormats;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumOperatorParts;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForWarningsPart;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createCloseRequestFileFromResponse;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getCloseRequestConfirmationFromResponseDoc;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getGeneratorPartFromResponseByName;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getIllegalRequestFormatFromCloseRequestConfirmation;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getIllegalRequestFormatFromResponse;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getNumberResponseFromResponseDoc;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromNumberResponseByName;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromResponseByName;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequestString;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getStringResponseFromResponseDoc;
+import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
 
-import org.junit.Test;
+import javax.xml.bind.JAXBException;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
+import org.junit.Test;
+import org.xml.sax.SAXException;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.GeneratorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.OperatorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CloseRequestConfirmation;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalRequestFormat;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
 
 public class RequestDispatcherTest extends FuzzinoTest {
 	
+	private static String generalRequestRoot = "testdata/reworked/general/";
+	private static String stringRequestRoot = "testdata/reworked/stringRequests/";
+	private static String integerRequestRoot = "testdata/reworked/integerRequests/";
+	
 	@Test
-	public void testNonExistingRequestFile() throws IOException {
-		String requestFilename = "./testdata/general/THAT_FILE_MUST_NOT_EXIST";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
-		
+	public void testNonExistingRequestFile() throws IOException, JAXBException, SAXException {
+		String requestFilename = generalRequestRoot +"THAT_FILE_MUST_NOT_EXIST";
+		RequestDispatcher dispatcher = new RequestDispatcher(requestFilename);
+		dispatcher.dispatch();
+		Response responseDoc = getResponseDocForRequest(requestFilename);
 		String expectedErrorMessage = "The system cannot find the file specified";
 		checkResponseDocForErrorMessage(responseDoc, expectedErrorMessage);
 	
@@ -71,33 +77,27 @@ public class RequestDispatcherTest extends FuzzinoTest {
 	}
 
 	@Test
-	public void testInvalidXmlDocument() {
-		String requestFilename = "./testdata/general/NotWellFormedXmlFile.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
-		
+	public void testInvalidXmlDocument() throws JAXBException, SAXException {
+		String requestFilename = generalRequestRoot +"NotWellFormedXmlFile.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
 		String expectedErrorMessage = "The element type \"validValues\" must be terminated by the matching end-tag \"</validValues>\".";
-		checkResponseDocForErrorMessage(responseDoc, expectedErrorMessage);
+		checkResponseDocForErrorMessage(response, expectedErrorMessage);
 
-		checkResponseDocForNumStringResponses(responseDoc, 0);
-		checkResponseDocForNumNumberResponses(responseDoc, 0);
-		checkResponseDocForNumCollectionResponses(responseDoc, 0);
-		checkResponseDocForNumStructureResponses(responseDoc, 0);
-	}
-
-	@Test
-	public void testWithFilenameEqualToUsualResponseFilename() {
-		// try to load request file that would have the same name as the response file to be created
-		String requestFilename = "./testdata/general/ResponseExtensionForRequest.response.xml";
-		// check if response file exists having the filename ".response.xml" appended to the request filename
-		getResponseDocForRequest(requestFilename);
+		checkResponseDocForNumStringResponses(response, 0);
+		checkResponseDocForNumNumberResponses(response, 0);
+		checkResponseDocForNumCollectionResponses(response, 0);
+		checkResponseDocForNumStructureResponses(response, 0);
 	}
 	
 	@Test
-	public void testWithRequestNotConformToXmlSchema() {
-		String requestFilename = "./testdata/general/IllegalRequestFormat.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testWithRequestNotConformToXmlSchema() throws JAXBException, SAXException {
+		//fail("Schemas do not yet work - for some reason...");
+		String requestFilename = generalRequestRoot +"IllegalRequestFormat.request.xml";
+		RequestDispatcher dispatcher = new RequestDispatcher(requestFilename);
+		dispatcher.dispatch();
+		Response responseDoc = getResponseDocForRequest(requestFilename);
 		
-		String expectedErrorMessage = "Feature 'generator' not found.";
+		String expectedErrorMessage = "cvc-complex-type.4: Attribute 'maxValues' must appear on element 'string'.";
 		checkResponseDocForErrorMessage(responseDoc, expectedErrorMessage);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 0);
@@ -107,24 +107,20 @@ public class RequestDispatcherTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testCloseStringRequest() {
+	public void testCloseStringRequest() throws JAXBException, SAXException {
 		// load initial request
-		String requestFilename = "./testdata/stringRequests/ValidStringRequest.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
-
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
+		String requestFilename = stringRequestRoot + "ValidStringRequest.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename);
+		
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 		
 		// create second request with close request
-		String closeRequestFilename = "./testdata/stringRequests/CloseStringRequest.request.xml";
+		String closeRequestFilename = stringRequestRoot + "CloseStringRequest.request.xml";
 		createCloseRequestFileFromResponse(closeRequestFilename, stringResponse);
-		
 		// check response to close request
-		XmlResponseDocument closeRequestResponseDoc = getResponseDocForRequest(closeRequestFilename);
+		Response closeRequestResponseDoc = getResponseDocForRequest(closeRequestFilename);
 		
-		CloseRequestConfirmation closeRequestConfirmation = getCloseRequestConfirmationFromResponseDoc(closeRequestResponseDoc, 0);
-		
-		String requestName = stringResponse.getName();
-		checkCloseRequestConfirmationForName(closeRequestConfirmation, requestName);
+		CloseRequestConfirmation closeRequestConfirmation = closeRequestResponseDoc.getCloseRequestConfirmations().get(0);
 
 		String requestId = stringResponse.getId();
 		checkCloseRequestConfirmationForId(closeRequestConfirmation, requestId);
@@ -137,21 +133,21 @@ public class RequestDispatcherTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testCloseIntegerRequest() {
+	public void testCloseIntegerRequest() throws JAXBException, SAXException {
 		// load initial request
-		String requestFilename = "./testdata/numberRequests/ValidIntegerRequest.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+		String requestFilename = integerRequestRoot+"ValidIntegerRequest.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename);
 
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
+		NumberResponse<?> numberResponse = responseDoc.getNumberResponses().get(0);
 		
 		// create second request with close request
-		String closeRequestFilename = "./testdata/numberRequests/CloseIntegerRequest.request.xml";
+		String closeRequestFilename = integerRequestRoot+"CloseIntegerRequest.request.xml";
 		createCloseRequestFileFromResponse(closeRequestFilename, numberResponse);
 		
 		// check response to close request
-		XmlResponseDocument closeRequestResponseDoc = getResponseDocForRequest(closeRequestFilename);
+		Response closeRequestResponseDoc = getResponseDocForRequest(closeRequestFilename);
 		
-		CloseRequestConfirmation closeRequestConfirmation = getCloseRequestConfirmationFromResponseDoc(closeRequestResponseDoc, 0);
+		CloseRequestConfirmation closeRequestConfirmation = closeRequestResponseDoc.getCloseRequestConfirmations().get(0);
 		
 		String requestName = numberResponse.getName();
 		checkCloseRequestConfirmationForName(closeRequestConfirmation, requestName);
@@ -167,15 +163,15 @@ public class RequestDispatcherTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testCloseRequestWithInvalidId() {
-		String closeRequestFilename = "./testdata/general/CloseRequestInvalidId.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(closeRequestFilename);
+	public void testCloseRequestWithInvalidId() throws JAXBException, SAXException {
+		String closeRequestFilename = generalRequestRoot + "CloseRequestInvalidId.request.xml";
+		Response responseDoc = getResponseDocForRequest(closeRequestFilename);
 		
-		CloseRequestConfirmation closeRequestConfirmation = getCloseRequestConfirmationFromResponseDoc(responseDoc, 0);
+		CloseRequestConfirmation closeRequestConfirmation = responseDoc.getCloseRequestConfirmations().get(0);
 		
 		checkCloseRequestConfirmationForId(closeRequestConfirmation, "INVALID_ID");
 		
-		IllegalRequestFormat illegalRequestFormat = getIllegalRequestFormatFromCloseRequestConfirmation(closeRequestConfirmation, 0);
+		IllegalRequestFormat illegalRequestFormat = responseDoc.getCloseRequestConfirmations().get(0).getWarnings().getIllegalRequestFormats().get(0);
 		checkIllegalRequestFormatForElementAndId(illegalRequestFormat, "closeRequest", "id");
 
 		checkResponseDocForErrorResponse(responseDoc, false);
@@ -186,12 +182,12 @@ public class RequestDispatcherTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testContinuedRequestWithInvalidId() {
-		String requestFileName = "./testdata/general/StringRequestTestInvalidId.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFileName);
+	public void testContinuedRequestWithInvalidId() throws JAXBException, SAXException {
+		String requestFileName = generalRequestRoot + "StringRequestTestInvalidId.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFileName);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 		
 		checkResponseForNumIllegalRequestFormats(stringResponse, 1);
 		IllegalRequestFormat illReqFormat = getIllegalRequestFormatFromResponse(stringResponse, 0);
@@ -203,42 +199,17 @@ public class RequestDispatcherTest extends FuzzinoTest {
 		checkResponseDocForNumCollectionResponses(responseDoc, 0);
 		checkResponseDocForNumStructureResponses(responseDoc, 0);
 	}
-	
-	@Test
-	public void testWithNumberRequestWithMissingSpecification() {
-		String requestFilename = "./testdata/NumberRequests/IntegerRequestMissingSpecification.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
-		
-		checkResponseDocForNumNumberResponses(responseDoc, 1);
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
-		
-		checkResponseForNumIllegalRequestFormats(numberResponse, 1);
-		IllegalRequestFormat illegalRequestFormat = getIllegalRequestFormatFromResponse(numberResponse, 0);
-		checkIllegalRequestFormatForMissingElement(illegalRequestFormat, "specification");
-		
-		checkResponseForNumGeneratorParts(numberResponse, 0);
-		checkResponseForNumOperatorParts(numberResponse, 0);
-		
-		checkResponseDocForErrorResponse(responseDoc, false);
-		checkResponseDocForNumStringResponses(responseDoc, 0);
-		checkResponseDocForNumCollectionResponses(responseDoc, 0);
-		checkResponseDocForNumStructureResponses(responseDoc, 0);
-	}
-	
-	@Test
-	public void testWithNumberRequestWithInvalidParameter() {
-		String requestFilename = "./testdata/NumberRequests/IntegerRequestInvalidParameter.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
-		
-		checkResponseDocForNumNumberResponses(responseDoc, 1);
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
-		
-		assertTrueWithPrefix("No seed in response.",
-				   numberResponse.getSeed() != null);
 
-		checkResponseForNumGeneratorParts(numberResponse, 0);
+	@Test
+	public void testWithNumberRequestWithInvalidParameter() throws JAXBException, SAXException {
+		String requestFilename = integerRequestRoot+ "IntegerRequestInvalidParameter.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename);
+		
+		checkResponseDocForNumNumberResponses(responseDoc, 1);
+		NumberResponse<?> numberResponse = responseDoc.getNumberResponses().get(0);
+
 		checkResponseForNumOperatorParts(numberResponse, 1);
-		OperatorPart operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
+		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
 		checkOperatorPartForNumFuzzedValues(operatorPart, 20);
 		checkResponseForWarningsPart(numberResponse, false);
 
@@ -248,43 +219,5 @@ public class RequestDispatcherTest extends FuzzinoTest {
 		checkResponseDocForNumStructureResponses(responseDoc, 0);
 	}
 	
-	@Test
-	public void testWithValidXmlString() {
-		String xmlRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
-				"<request xmlns=\"http://fuzzino.fuzzing.fokus.fraunhofer.de/request\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\t" +
-				"xsi:schemaLocation=\"http://fuzzino.fuzzing.fokus.fraunhofer.de/request\">\n\n" +
-				"<string name=\"ValidRequest_STRING\" maxValues=\"50\">\n\t" +
-				"<specification minLength=\"1\" maxLength=\"5\" nullTerminated=\"true\" encoding=\"UTF8\">MySpec</specification>\n\t" +
-				"<generator>BadStrings</generator>\n\t" +
-				"<validValues>\n\t\t" +
-				"<value>ABC</value>\n\t\t" +
-				"<operator>StringCase</operator>\n\t" +
-				"</validValues>\n" +
-				"</string>\n\n" +
-				"</request>";
-		XmlResponseDocument responseDoc = getResponseDocForRequestString(xmlRequest);
-		
-		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
-
-		assertTrueWithPrefix("No seed in response.",
-				   stringResponse.getSeed() != null);
-
-		checkResponseForNumGeneratorParts(stringResponse, 1);
-		
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadStrings");
-		checkGeneratorPartForNumFuzzedValues(generatorPart, 47);
-		
-		checkResponseForNumOperatorParts(stringResponse, 1);
-
-		OperatorPart operatorPart = getOperatorPartFromResponseByName(stringResponse, "StringCase", "ABC");
-		checkOperatorPartForNumFuzzedValues(operatorPart, 3);
-		
-		checkResponseForWarningsPart(stringResponse, false);
-		checkResponseDocForErrorResponse(responseDoc, false);
-		checkResponseDocForNumNumberResponses(responseDoc, 0);
-		checkResponseDocForNumCollectionResponses(responseDoc, 0);
-		checkResponseDocForNumStructureResponses(responseDoc, 0);
-	}
 	
 }

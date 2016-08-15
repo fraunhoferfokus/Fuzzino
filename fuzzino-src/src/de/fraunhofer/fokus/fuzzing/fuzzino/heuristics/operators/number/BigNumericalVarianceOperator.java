@@ -19,7 +19,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.BigIntegerOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
 public class BigNumericalVarianceOperator extends ComposedFuzzingHeuristic<BigInteger> implements BigIntegerOperator {
 

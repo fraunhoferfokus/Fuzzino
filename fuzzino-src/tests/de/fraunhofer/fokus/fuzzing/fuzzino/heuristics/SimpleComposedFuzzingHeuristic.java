@@ -15,8 +15,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.ConcreteValuesGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 @SuppressWarnings("serial")
 public class SimpleComposedFuzzingHeuristic extends ComposedFuzzingHeuristic<String> {

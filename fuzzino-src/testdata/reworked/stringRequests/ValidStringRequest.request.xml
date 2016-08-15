@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+    <string maxValues="50" name="StringRequestTest" seed="-1">
+        <noGenerators>false</noGenerators>
+        <generator value="BADSTRINGS"/>
+        <specification type="STRING" nullTerminated="true" minLength="0" maxLength="2147483647" encoding="UTF8" ignoreLengths="false"/>
+        <validValues>
+            <operator name="STRINGCASE"/>
+            <value>ABC</value>
+        </validValues>
+    </string>
+</ns2:request>

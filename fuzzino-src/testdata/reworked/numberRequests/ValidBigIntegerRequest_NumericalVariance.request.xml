@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+    <number maxValues="500" name="NumberRequestTest" seed="-1">
+        <noGenerators>true</noGenerators>
+        <specification minValue="-9223372036854775807" maxValue="4611686018427387902" bits="128" isSigned="true" ignoreMinMaxValues="false"/>
+        <validValues>
+            <operator name="NUMERICALVARIANCE"/>
+            <value>92233720368547758097897668966</value>
+        </validValues>
+    </number>
+</ns2:request>

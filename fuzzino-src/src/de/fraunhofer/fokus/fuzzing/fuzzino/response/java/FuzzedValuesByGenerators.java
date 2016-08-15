@@ -43,11 +43,5 @@ public interface FuzzedValuesByGenerators<T> extends Iterable<GeneratorSpecificF
 	 * @param value The section to be added.
 	 */
 	void addGeneratorSpecificSection(GeneratorSpecificFuzzedValues<T> value);
-	
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.AllGeneratorsBasedPart}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.AllGeneratorsBasedPart getEMFRepresentation();
 
 }

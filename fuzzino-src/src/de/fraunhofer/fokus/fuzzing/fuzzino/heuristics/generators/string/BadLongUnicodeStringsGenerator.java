@@ -18,8 +18,8 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.BadLongUnicodeStrings;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 
 public class BadLongUnicodeStringsGenerator extends SimpleStringGenerator {

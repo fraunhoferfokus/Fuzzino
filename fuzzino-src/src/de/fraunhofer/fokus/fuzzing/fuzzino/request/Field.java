@@ -13,98 +13,44 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
+import java.io.Serializable;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Field</b></em>'.
- * <!-- end-user-doc -->
+ * This element specifies one field of a data structure. It refers to request for collection, 
+ * number, string or structure by their name attribute. 
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#isFuzz <em>Fuzz</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#getRef <em>Ref</em>}</li>
- * </ul>
- * </p>
- *
- * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getField()
- * @model extendedMetaData="name='field_._type' kind='elementOnly'"
- * @generated
  */
-public interface Field extends EObject {
+public interface Field extends Serializable {
+	
 	/**
-	 * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Attributes</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attributes</em>' containment reference list.
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getField_Attributes()
-	 * @model containment="true"
-	 *        extendedMetaData="kind='element' name='attribute' namespace='##targetNamespace'"
-	 * @generated
+	 * @return An Id that corresponds to the id of another request, which serves as a specification for the value of 
+	 *         this field.
 	 */
-	EList<Attribute> getAttributes();
-
+	String getCorrespondingRequestId();
+	
 	/**
-	 * Returns the value of the '<em><b>Fuzz</b></em>' attribute.
-	 * The default value is <code>"true"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Fuzz</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Fuzz</em>' attribute.
-	 * @see #setFuzz(boolean)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getField_Fuzz()
-	 * @model default="true" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='fuzz'"
-	 * @generated
+	 * References another Request via its id as a specification for the value of this field. By referencing other structure requests nested structures can be built.
+	 * 
+	 * @param value Another request serving as a specification for this field.
 	 */
-	boolean isFuzz();
-
-	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#isFuzz <em>Fuzz</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Fuzz</em>' attribute.
-	 * @see #isFuzz()
-	 * @generated
+	void setCorrespondingRequestId(String id);
+	
+	/***
+	 * Set whether this field should be fuzzed (fuzzField=true) or filled with valid data (fuzzField=false)
+	 * @param fuzzField
 	 */
-	void setFuzz(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Ref</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Ref</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Ref</em>' attribute.
-	 * @see #setRef(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getField_Ref()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.IDREF" required="true" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='ref'"
-	 * @generated
+	void setFuzz(boolean fuzzField);
+	
+	/***
+	 * Get whether this field should be fuzzed (fuzzField=true) or filled with valid data (fuzzField=false)
+	 * @param fuzzField
 	 */
-	String getRef();
-
-	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Field#getRef <em>Ref</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Ref</em>' attribute.
-	 * @see #getRef()
-	 * @generated
-	 */
-	void setRef(String value);
-
-} // Field
+	boolean fuzz();
+	
+	String getName();
+	
+	void setName(String name);
+	
+}

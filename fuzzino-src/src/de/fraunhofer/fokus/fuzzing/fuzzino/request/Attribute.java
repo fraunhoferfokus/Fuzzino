@@ -1,4 +1,4 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
+//   Copyright 2012-2014 Fraunhofer FOKUS
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -11,81 +11,40 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
-import org.eclipse.emf.ecore.EObject;
+import java.io.Serializable;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Attribute</b></em>'.
- * <!-- end-user-doc -->
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute#getName <em>Name</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute#getRef <em>Ref</em>}</li>
- * </ul>
- * </p>
- *
- * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getAttribute()
- * @model extendedMetaData="name='attribute_._type' kind='empty'"
- * @generated
  */
-public interface Attribute extends EObject {
+public interface Attribute extends Serializable {
+
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getAttribute_Name()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.NCName" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='name'"
-	 * @generated
+	 * @return The name of the attribute.
 	 */
 	String getName();
-
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
+	 * Sets the name of the attriute
+	 * 
+	 * @param value The name of the attribute.
 	 */
 	void setName(String value);
-
+	
 	/**
-	 * Returns the value of the '<em><b>Ref</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Ref</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Ref</em>' attribute.
-	 * @see #setRef(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getAttribute_Ref()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.NCName" required="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='ref'"
-	 * @generated
+	 * @return The name of request that specifies the type for this attribute.
 	 */
 	String getRef();
-
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute#getRef <em>Ref</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Ref</em>' attribute.
-	 * @see #getRef()
-	 * @generated
+	 * Set the name of the request that specifies
+	 * 
+	 * @param value
 	 */
 	void setRef(String value);
-
-} // Attribute
+	
+	
+	
+}

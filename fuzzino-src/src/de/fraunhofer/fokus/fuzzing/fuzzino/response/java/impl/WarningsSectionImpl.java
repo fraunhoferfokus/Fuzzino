@@ -16,18 +16,33 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalRequestFormat;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class WarningsSectionImpl implements WarningsSection {
 	
 	private static final long serialVersionUID = -683598546259218295L;
+	
+	@XmlElement(name = "illegalGenerator",type = IllegalGeneratorImpl.class)
 	protected List<IllegalGenerator> illegalGenerators;
+	
+	@XmlElement(name = "illegalOperators",type = IllegalOperatorImpl.class)
 	protected List<IllegalOperator> illegalOperators;
+	
+	@XmlElement(name = "illegalRequestFormat",type = IllegalRequestFormatImpl.class)
 	protected List<IllegalRequestFormat> illegalRequestFormats;
+	
+	@XmlAttribute
 	protected boolean hasMoreValues = true;
 
 	@Override
@@ -62,29 +77,6 @@ public class WarningsSectionImpl implements WarningsSection {
 	@Override
 	public void setMoreValues(boolean value) {
 		hasMoreValues = value;
-	}
-	
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsPart getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsPart
-		  emfWarningsPart = ResponseFactory.eINSTANCE.createWarningsPart();
-		
-		for (IllegalGenerator illegalGenerator : getIllegalGenerators()) {
-			emfWarningsPart.getIllegalGenerators().add(illegalGenerator.getEMFRepresentation());
-		}
-		for (IllegalOperator illegalOperator : getIllegalOperators()) {
-			emfWarningsPart.getIllegalOperators().add(illegalOperator.getEMFRepresentation());
-		}
-		for (IllegalRequestFormat illegalRequestFormat : getIllegalRequestFormats()) {
-			emfWarningsPart.getIllegalRequestFormats().add(illegalRequestFormat.getEMFRepresentation());
-		}
-		if (!hasMoreValues()) {
-			de.fraunhofer.fokus.fuzzing.fuzzino.response.NoMoreValuesIndicator indicator =
-					ResponseFactory.eINSTANCE.createNoMoreValuesIndicator();
-			emfWarningsPart.setFlagNoMoreValues(indicator);
-		}
-		
-		return emfWarningsPart;
 	}
 
 	@Override

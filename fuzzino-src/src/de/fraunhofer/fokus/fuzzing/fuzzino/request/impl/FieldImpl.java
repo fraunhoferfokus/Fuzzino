@@ -13,305 +13,72 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
-import java.util.Collection;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.Attribute;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Field;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 
-/**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Field</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.FieldImpl#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.FieldImpl#isFuzz <em>Fuzz</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.FieldImpl#getRef <em>Ref</em>}</li>
- * </ul>
- * </p>
- *
- * @generated
- */
-public class FieldImpl extends EObjectImpl implements Field {
-	/**
-	 * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAttributes()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Attribute> attributes;
-
-	/**
-	 * The default value of the '{@link #isFuzz() <em>Fuzz</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isFuzz()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean FUZZ_EDEFAULT = true;
-
-	/**
-	 * The cached value of the '{@link #isFuzz() <em>Fuzz</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isFuzz()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean fuzz = FUZZ_EDEFAULT;
-
-	/**
-	 * This is true if the Fuzz attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean fuzzESet;
-
-	/**
-	 * The default value of the '{@link #getRef() <em>Ref</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRef()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String REF_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getRef() <em>Ref</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRef()
-	 * @generated
-	 * @ordered
-	 */
-	protected String ref = REF_EDEFAULT;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected FieldImpl() {
-		super();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return RequestPackage.Literals.FIELD;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Attribute> getAttributes() {
-		if (attributes == null) {
-			attributes = new EObjectContainmentEList<Attribute>(Attribute.class, this, RequestPackage.FIELD__ATTRIBUTES);
-		}
-		return attributes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isFuzz() {
-		return fuzz;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFuzz(boolean newFuzz) {
-		boolean oldFuzz = fuzz;
-		fuzz = newFuzz;
-		boolean oldFuzzESet = fuzzESet;
-		fuzzESet = true;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RequestPackage.FIELD__FUZZ, oldFuzz, fuzz, !oldFuzzESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetFuzz() {
-		boolean oldFuzz = fuzz;
-		boolean oldFuzzESet = fuzzESet;
-		fuzz = FUZZ_EDEFAULT;
-		fuzzESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, RequestPackage.FIELD__FUZZ, oldFuzz, FUZZ_EDEFAULT, oldFuzzESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetFuzz() {
-		return fuzzESet;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getRef() {
-		return ref;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setRef(String newRef) {
-		String oldRef = ref;
-		ref = newRef;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RequestPackage.FIELD__REF, oldRef, ref));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case RequestPackage.FIELD__ATTRIBUTES:
-				return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case RequestPackage.FIELD__ATTRIBUTES:
-				return getAttributes();
-			case RequestPackage.FIELD__FUZZ:
-				return isFuzz();
-			case RequestPackage.FIELD__REF:
-				return getRef();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case RequestPackage.FIELD__ATTRIBUTES:
-				getAttributes().clear();
-				getAttributes().addAll((Collection<? extends Attribute>)newValue);
-				return;
-			case RequestPackage.FIELD__FUZZ:
-				setFuzz((Boolean)newValue);
-				return;
-			case RequestPackage.FIELD__REF:
-				setRef((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case RequestPackage.FIELD__ATTRIBUTES:
-				getAttributes().clear();
-				return;
-			case RequestPackage.FIELD__FUZZ:
-				unsetFuzz();
-				return;
-			case RequestPackage.FIELD__REF:
-				setRef(REF_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case RequestPackage.FIELD__ATTRIBUTES:
-				return attributes != null && !attributes.isEmpty();
-			case RequestPackage.FIELD__FUZZ:
-				return isSetFuzz();
-			case RequestPackage.FIELD__REF:
-				return REF_EDEFAULT == null ? ref != null : !REF_EDEFAULT.equals(ref);
-		}
-		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
+@XmlType(namespace = "request")
+public class FieldImpl implements Field {
+	
+	private static final long serialVersionUID = -5645034690559659654L;
+	@XmlAttribute
+	String correspondingId;
+	@XmlAttribute
+	private boolean fuzzField = false;
+	@XmlAttribute
+	private String name;
+	
+	public FieldImpl() {}
+	
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fuzz: ");
-		if (fuzzESet) result.append(fuzz); else result.append("<unset>");
-		result.append(", ref: ");
-		result.append(ref);
-		result.append(')');
-		return result.toString();
+		return "[Referenced Field request id:" + correspondingId + "]";
 	}
 
-} //FieldImpl
+	@Override
+	public void setFuzz(boolean fuzzField) {
+		this.fuzzField = fuzzField;
+	}
+
+	@Override
+	public boolean fuzz() {
+		return fuzzField;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name=name;
+	}
+
+	@Override
+	public String getCorrespondingRequestId() {
+		return correspondingId;
+	}
+
+	@Override
+	public void setCorrespondingRequestId(String correspondingId) {
+		this.correspondingId = correspondingId;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof FieldImpl){
+			FieldImpl other = (FieldImpl) o;
+			return correspondingId.equals(other.getCorrespondingRequestId()) && name.equals(other.getName()) && fuzzField == other.fuzz();			
+		} else{
+			return false;
+		}
+	}
+
+}

@@ -17,19 +17,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Value;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class FuzzedCollectionImpl implements FuzzedCollection {
 
 	protected List<Value> values;
+	@XmlAttribute
 	protected String basedOn;
+	@XmlAttribute
 	protected int mutations;
+	@XmlAttribute
 	protected String operators;
 	
 	@Override
+	@XmlElement(name = "value",type = ValueImpl.class)
 	public List<Value> getValues() {
 		if (values == null) {
 			values = new ArrayList<>();
@@ -65,21 +76,6 @@ public class FuzzedCollectionImpl implements FuzzedCollection {
 	@Override
 	public void setOperators(String value) {
 		operators = value;
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection
-		  emfFuzzedCollection = ResponseFactory.eINSTANCE.createFuzzedCollection();
-		
-		for (Value value : values) {
-			emfFuzzedCollection.getValues().add(value.getEMFRepresentation());
-		}
-		emfFuzzedCollection.setBasedOn(getBasedOn());
-		emfFuzzedCollection.setMutations(getMutations());
-		emfFuzzedCollection.setOperators(getOperators());
-		
-		return emfFuzzedCollection;
 	}
 	
 	@Override

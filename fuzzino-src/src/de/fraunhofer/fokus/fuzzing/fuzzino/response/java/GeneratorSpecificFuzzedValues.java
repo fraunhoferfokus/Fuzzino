@@ -55,11 +55,5 @@ public interface GeneratorSpecificFuzzedValues<T> extends Iterable<FuzzedValue<T
 	 * @param value A name of a fuzzing generator.
 	 */
 	void setName(String value);
-
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart getEMFRepresentation();
 	
 }

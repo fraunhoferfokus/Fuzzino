@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<response:response xmlns:response="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
-  <response:error>Feature 'generator' not found. (file:///D:/Daten/Projects/DIAMONDS/SVN/diamonds/impl/Fuzzing/DataFuzzing/FuzzingLibrary/testdata/general/IllegalRequestFormat.request.xml, 9, 20)</response:error>
-</response:response>

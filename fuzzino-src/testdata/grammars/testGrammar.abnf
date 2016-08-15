@@ -1,0 +1,4 @@
+startRule = ["File"] "," ("a" / "b" / "c") "," rule2 "," rule3 "," rule4
+rule2 = "1" / "2" / "3" / "4"
+rule3 = ("error" / "success" / "unclear")
+rule4 = %d45-88

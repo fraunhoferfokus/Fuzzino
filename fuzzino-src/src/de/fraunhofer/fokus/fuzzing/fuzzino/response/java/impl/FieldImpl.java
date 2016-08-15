@@ -13,13 +13,26 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import java.util.Objects;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
 
-public class FieldImpl<T> implements Field<T> {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(namespace = "response")
+public class FieldImpl implements Field {
 	
-	protected T value;
+	@XmlAttribute
+	private  String correspondingId;
+	@XmlAttribute
 	protected boolean fuzz;
+	@XmlAttribute
 	private String name;
 
 	@Override
@@ -31,30 +44,10 @@ public class FieldImpl<T> implements Field<T> {
 	public void setValueIsFuzzed(boolean value) {
 		fuzz = value;
 	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.Field getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.Field emfField = ResponseFactory.eINSTANCE.createField();
-		
-		emfField.setFuzz(isValueFuzzed());
-		
-		return emfField;
-	}
 	
 	@Override
 	public String toString() {
-		return "[Field value:" + value + " fuzz:" + fuzz + "]";
-	}
-
-	@Override
-	public T getValue() {
-		return value;
-	}
-
-	@Override
-	public void setValue(T value) {
-		this.value = value;
-		
+		return "[Field value:" + correspondingId + " fuzz:" + fuzz + "]";
 	}
 
 	@Override
@@ -65,6 +58,26 @@ public class FieldImpl<T> implements Field<T> {
 	@Override
 	public void setName(String name) {
 		this.name=name;
+	}
+
+	@Override
+	public String getCorrespondingResponseId() {
+		return correspondingId;
+	}
+
+	@Override
+	public void setCorrespondingResponseId(String correspondingId) {
+		this.correspondingId = correspondingId;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof FieldImpl){
+			FieldImpl other = (FieldImpl) o;
+			return Objects.equals(correspondingId, other.getCorrespondingResponseId()) && Objects.equals(name,other.getName()) && fuzz == other.isValueFuzzed();			
+		} else{
+			return false;
+		}
 	}
 
 }

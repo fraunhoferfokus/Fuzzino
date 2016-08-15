@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
 
 /**
  * This class contains the response to a {@link CollectionRequest}.
@@ -45,10 +45,4 @@ public interface CollectionResponse extends CommonResponse {
 	 */
 	void addFuzzedCollection(FuzzedCollection value);
 	
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse getEMFRepresentation();
-
 }

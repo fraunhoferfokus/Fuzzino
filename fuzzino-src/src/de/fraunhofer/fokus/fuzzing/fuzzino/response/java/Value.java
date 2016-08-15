@@ -23,6 +23,4 @@ public interface Value {
 	void setGenerator(String value);
 	String getOperator();
 	void setOperator(String value);
-	
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.Value getEMFRepresentation();
 }

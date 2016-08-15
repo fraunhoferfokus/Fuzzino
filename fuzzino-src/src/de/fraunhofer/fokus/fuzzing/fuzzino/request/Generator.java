@@ -13,78 +13,39 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
-import org.eclipse.emf.ecore.EObject;
+import java.io.Serializable;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Generator</b></em>'.
- * <!-- end-user-doc -->
+ * A Generator requests a specific fuzzing generator to be used by the fuzzing library. 
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator#getValue <em>Value</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator#getParam <em>Param</em>}</li>
- * </ul>
- * </p>
- *
- * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getGenerator()
- * @model extendedMetaData="name='generator_._type' kind='simple'"
- * @generated
  */
-public interface Generator extends EObject {
+public interface Generator extends Serializable {
+	
 	/**
-	 * Returns the value of the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getGenerator_Value()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.NCName"
-	 *        extendedMetaData="name=':0' kind='simple'"
-	 * @generated
+	 * @return The name of the requested generator.
 	 */
-	String getValue();
-
+	String getGeneratorName();
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator#getValue <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Value</em>' attribute.
-	 * @see #getValue()
-	 * @generated
+	 * Sets the name of the generator to be used by the fuzzing library.
+	 *
+	 * @param value The name of the generator. 
 	 */
-	void setValue(String value);
-
+	void setGeneratorName(String value);
+	
 	/**
-	 * Returns the value of the '<em><b>Param</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Param</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Param</em>' attribute.
-	 * @see #setParam(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getGenerator_Param()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='param'"
-	 * @generated
+	 * @return The value of a parameter for this generator.
 	 */
-	String getParam();
-
+	String getParameter();
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator#getParam <em>Param</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Param</em>' attribute.
-	 * @see #getParam()
-	 * @generated
+	 * Some generators may have a parameter that can be used in order to specify how the generator should work.
+	 * If no parameter is set for a generator that may have one, its default value for the parameter is used.
+	 * 
+	 * @param value The value of a parameter for the generator.
 	 */
-	void setParam(String value);
-
-} // Generator
+	void setParameter(String value);
+	
+}

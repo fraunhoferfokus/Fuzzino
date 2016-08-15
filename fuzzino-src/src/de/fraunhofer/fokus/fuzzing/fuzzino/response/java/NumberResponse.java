@@ -13,7 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 
 /**
  * This class contains the response to a {@link NumberRequest}.
@@ -22,36 +22,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
  * @param <T>
  *
  */
-public interface NumberResponse<T> extends CommonResponse {
+public interface NumberResponse<T> extends StructuredValueResponse<T> {
 	
-	/**
-	 * @return The section containing all fuzzed values that are created by fuzzing generators.
-	 */
-	FuzzedValuesByGenerators<T> getGeneratorBasedSection();
 	
-	/**
-	 * Sets the section that contains all fuzzed values that are created by fuzzing generators.
-	 * 
-	 * @param value The section of fuzzed values that are created by fuzzing generators.
-	 */
-	void setGeneratorBasedSection(FuzzedValuesByGenerators<T> value);
-	
-	/**
-	 * @return The section containing all fuzzed values that are created by fuzzing operators.
-	 */
-	FuzzedValuesByOperators<T> getOperatorBasedSection();
-	
-	/**
-	 * Sets the section that contains all fuzzed values that are created by fuzzing operators.
-	 * 
-	 * @param value The section of fuzzed values that are created by fuzzing operators.
-	 */
-	void setOperatorBasedSection(FuzzedValuesByOperators<T> value);
-
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse getEMFRepresentation();
 	
 }

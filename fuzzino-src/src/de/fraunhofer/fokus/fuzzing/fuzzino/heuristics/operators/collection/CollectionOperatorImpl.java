@@ -15,8 +15,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.collection;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
 

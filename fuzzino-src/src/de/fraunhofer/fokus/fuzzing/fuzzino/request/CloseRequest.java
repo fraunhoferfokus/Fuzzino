@@ -13,50 +13,26 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
-import org.eclipse.emf.ecore.EObject;
+import java.io.Serializable;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Close Request</b></em>'.
- * <!-- end-user-doc -->
+ * This class represents tells the fuzzing library that no further values will be requested. After closing a request, 
+ * no further values can be requested for the closed request.
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest#getId <em>Id</em>}</li>
- * </ul>
- * </p>
- *
- * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getCloseRequest()
- * @model extendedMetaData="name='closeRequest_._type' kind='empty'"
- * @generated
  */
-public interface CloseRequest extends EObject {
+public interface CloseRequest extends Serializable {
+	
 	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getCloseRequest_Id()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.NCName" required="true" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='id'"
-	 * @generated
+	 * @return the id of the request to be closed.
 	 */
 	String getId();
-
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
+	 * @param value the id of the request to be closed.
 	 */
 	void setId(String value);
+	
 
-} // CloseRequest
+}

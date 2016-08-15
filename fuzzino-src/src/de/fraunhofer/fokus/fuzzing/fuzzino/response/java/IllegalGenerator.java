@@ -19,6 +19,4 @@ public interface IllegalGenerator {
 	void setName(String value);
 	String getReason();
 	void setReason(String value);
-
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator getEMFRepresentation();
 }

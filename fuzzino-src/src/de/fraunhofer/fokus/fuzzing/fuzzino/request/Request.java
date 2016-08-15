@@ -13,114 +13,125 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
+import java.io.File;
+import java.io.PrintStream;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.xml.bind.JAXBException;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Request</b></em>'.
- * <!-- end-user-doc -->
- *
- * <p>
- * The following features are supported:
+ * This element contains all requests:
  * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Request#getStringRequests <em>String Requests</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Request#getNumberRequests <em>Number Requests</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Request#getStructureRequests <em>Structure Requests</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Request#getCollectionRequests <em>Collection Requests</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Request#getCloseRequests <em>Close Requests</em>}</li>
+ * <li>{@link StringRequest}s</li>
+ * <li>{@link NumberRequest}s</li>
+ * <li>{@link CollectionRequest}s</li>
+ * <li>{@link StructureRequest}s</li>
  * </ul>
- * </p>
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
- * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getRequest()
- * @model extendedMetaData="name='request_._type' kind='elementOnly'"
- * @generated
  */
-public interface Request extends EObject {
-	/**
-	 * Returns the value of the '<em><b>String Requests</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>String Requests</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>String Requests</em>' containment reference list.
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getRequest_StringRequests()
-	 * @model containment="true"
-	 *        extendedMetaData="kind='element' name='string' namespace='##targetNamespace'"
-	 * @generated
-	 */
-	EList<StringRequest> getStringRequests();
+public interface Request extends Serializable {
 
 	/**
-	 * Returns the value of the '<em><b>Number Requests</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Number Requests</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Number Requests</em>' containment reference list.
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getRequest_NumberRequests()
-	 * @model containment="true"
-	 *        extendedMetaData="kind='element' name='number' namespace='##targetNamespace'"
-	 * @generated
+	 * @return A list of all {@link StringRequest}s contained in this request.
 	 */
-	EList<NumberRequest> getNumberRequests();
-
+	List<StringRequest> getStringRequests();
+	
 	/**
-	 * Returns the value of the '<em><b>Structure Requests</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Structure Requests</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Structure Requests</em>' containment reference list.
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getRequest_StructureRequests()
-	 * @model containment="true"
-	 *        extendedMetaData="kind='element' name='structure' namespace='##targetNamespace'"
-	 * @generated
+	 * Replaces the list of {@link StringRequest}s contained in this request.
+	 * 
+	 * @param value The new list of {@link StringRequest}s replacing the existing one.
 	 */
-	EList<StructureRequest> getStructureRequests();
-
+	void setStringRequests(List<StringRequest> value);
+	
 	/**
-	 * Returns the value of the '<em><b>Collection Requests</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Collection Requests</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Collection Requests</em>' containment reference list.
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getRequest_CollectionRequests()
-	 * @model containment="true"
-	 *        extendedMetaData="kind='element' name='collection' namespace='##targetNamespace'"
-	 * @generated
+	 * Adds a {@link StringRequest} to this request.
+	 * 
+	 * @param value The {@link StringRequest} to be added.
 	 */
-	EList<CollectionRequest> getCollectionRequests();
-
+	void addStringRequest(StringRequest value);
+	
 	/**
-	 * Returns the value of the '<em><b>Close Requests</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Close Requests</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Close Requests</em>' containment reference list.
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getRequest_CloseRequests()
-	 * @model containment="true"
-	 *        extendedMetaData="kind='element' name='closeRequest' namespace='##targetNamespace'"
-	 * @generated
+	 * @return A list of all {@link NumberRequest}s contained in this request.
 	 */
-	EList<CloseRequest> getCloseRequests();
+	List<NumberRequest> getNumberRequests();
+	
+	/**
+	 * Replaces the list of {@link NumberRequest}s contained in this request.
+	 * 
+	 * @param value The new list of {@link NumberRequest}s replacing the existing one.
+	 */
+	void setNumberRequests(List<NumberRequest> value);
+	
+	/**
+	 * Adds a {@link NumberRequest} to this request.
+	 * 
+	 * @param value The {@link NumberRequest} to be added.
+	 */
+	void addNumberRequest(NumberRequest value);
+	
+	/**
+	 * @return A list of all {@link StructureRequest}s contained in this request.
+	 */
+	List<StructureRequest> getStructureRequests();
+	
+	/**
+	 * Replaces the list of {@link StructureRequest}s contained in this request.
+	 * 
+	 * @param value The new list of {@link StructureRequest}s replacing the existing one.
+	 */
+	void setStructureRequests(List<StructureRequest> value);
+	
+	/**
+	 * Adds a {@link StructureRequest} to this request.
+	 * 
+	 * @param value The {@link StructureRequest} to be added.
+	 */
+	void addStructureRequest(StructureRequest value);
+	
+	/**
+	 * @return A list of all {@link CollectionRequest}s contained in this request.
+	 */
+	List<CollectionRequest> getCollectionRequests();
+	
+	/**
+	 * Replaces the list of {@link CollectionRequest}s contained in this request.
+	 * 
+	 * @param value The new list of {@link CollectionRequest}s replacing the existing one.
+	 */
+	void setCollectionRequests(List<CollectionRequest> value);
+	
+	/**
+	 * Adds a {@link CollectionRequest} to this request.
+	 * 
+	 * @param value the {@link CollectionRequest} to be added.
+	 */
+	void addCollectionRequest(CollectionRequest value);
+	
+	
+	/**
+	 * @return A list of all {@link CloseRequest} command contained in this request.
+	 */
+	List<CloseRequest> getCloseRequests();
+	
+	/**
+	 * Replaces the list of {@link CloseRequest} commands contained in this request.
+	 * 
+	 * @param value The new list of {@link CloseRequest} commands replacing the existing one.
+	 */
+	void setCloseRequests(List<CloseRequest> value);
+	
+	/**
+	 * Adds a {@link CloseRequest} command to this request.
+	 * 
+	 * @param value the {@link CloseRequest} command to be added.
+	 */
+	void addCloseRequest(CloseRequest value);
 
-} // Request
+	void marshall(File file) throws JAXBException;
+
+	void marshall(PrintStream out) throws JAXBException;
+	
+}

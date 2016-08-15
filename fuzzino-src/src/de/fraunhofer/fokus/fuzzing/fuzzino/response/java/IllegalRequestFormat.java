@@ -23,7 +23,5 @@ public interface IllegalRequestFormat {
 	void setMissingAttribute(String value);
 	String getMissingElement();
 	void setMissingElement(String value);
-
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat getEMFRepresentation();
 	
 }

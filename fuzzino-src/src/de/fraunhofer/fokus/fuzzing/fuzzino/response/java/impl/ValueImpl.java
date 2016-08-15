@@ -13,14 +13,26 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import java.util.Objects;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Value;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class ValueImpl implements Value {
 	
+	@XmlAttribute
 	protected String value;
+	@XmlAttribute
 	protected String basedOn;
+	@XmlAttribute
 	protected String generator;
+	@XmlAttribute
 	protected String operator;
 
 	@Override
@@ -62,24 +74,22 @@ public class ValueImpl implements Value {
 	public void setOperator(String value) {
 		operator = value;
 	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.Value getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.Value emfValue = ResponseFactory.eINSTANCE.createValue();
-		
-		emfValue.setBasedOn(getBasedOn().toString());
-		emfValue.setGenerator(getGenerator());
-		emfValue.setOperator(getOperator());
-		emfValue.setValue(getValue().toString());
-		
-		return emfValue;
-	}
 	
 	@Override
 	public String toString() {
 		return "[Value value:" + value + (generator == null ? "" : " generator:" + generator) + 
 				                         (operator == null ? "" : " operator:" + operator) +
 				                         (basedOn == null ? "" : " basedOn:" + basedOn) + "]";
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof ValueImpl){
+			ValueImpl other = (ValueImpl) o;
+			return Objects.equals(value,other.value) && Objects.equals(basedOn,other.basedOn) && Objects.equals(generator,other.generator) && Objects.equals(operator,other.operator);
+		} else{
+			return false;
+		}
 	}
 
 }

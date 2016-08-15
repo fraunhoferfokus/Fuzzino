@@ -13,16 +13,15 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.BigIntegerResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CloseRequestConfirmation;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CollectionResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ErrorResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedStructure;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
@@ -112,11 +111,6 @@ public class ResponseFactoryImpl implements ResponseFactory {
 		}
 		
 		return fuzzedCollection;
-	}
-
-	@Override
-	public FuzzedStructure createFuzzedStructure() {
-		return new FuzzedStructureImpl();
 	}
 
 	@Override

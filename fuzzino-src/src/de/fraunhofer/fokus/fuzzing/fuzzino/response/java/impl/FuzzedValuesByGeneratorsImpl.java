@@ -19,12 +19,19 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
 
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
 public class FuzzedValuesByGeneratorsImpl<T> implements FuzzedValuesByGenerators<T> {
 
+	@XmlElement(name = "generator",type = GeneratorSpecificFuzzedValuesImpl.class)
 	protected List<GeneratorSpecificFuzzedValues<T>> generatorSections;
 	
 	@Override
@@ -43,18 +50,6 @@ public class FuzzedValuesByGeneratorsImpl<T> implements FuzzedValuesByGenerators
 			generatorSections = new ArrayList<>();
 		}
 		generatorSections.add(value);
-	}
-	
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.AllGeneratorsBasedPart getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.AllGeneratorsBasedPart
-		  emfAllGeneratorsBasedPart = ResponseFactory.eINSTANCE.createAllGeneratorsBasedPart();
-		
-		for (GeneratorSpecificFuzzedValues<T> generatorPart : generatorSections) {
-			emfAllGeneratorsBasedPart.getGeneratorParts().add(generatorPart.getEMFRepresentation());
-		}
-		
-		return emfAllGeneratorsBasedPart;
 	}
 
 	@Override

@@ -13,14 +13,22 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class NumberResponseImpl<T> extends AbstractResponse implements NumberResponse<T> {
 	
+	@XmlElement(name = "generatorBased",type = FuzzedValuesByGeneratorsImpl.class)
 	protected FuzzedValuesByGenerators<T> allGeneratorsBasedPart;
+	@XmlElement(name = "operatorBased",type = FuzzedValuesByOperatorsImpl.class)
 	protected FuzzedValuesByOperators<T> allOperatorsBasedPart;
 
 	@Override
@@ -41,28 +49,6 @@ public class NumberResponseImpl<T> extends AbstractResponse implements NumberRes
 	@Override
 	public void setOperatorBasedSection(FuzzedValuesByOperators<T> value) {
 		allOperatorsBasedPart = value;
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse
-		  emfNumberResponse = ResponseFactory.eINSTANCE.createNumberResponse();
-		
-		if (getGeneratorBasedSection() != null) {
-			emfNumberResponse.setGeneratorBasedPart(getGeneratorBasedSection().getEMFRepresentation());
-		}
-		if (getOperatorBasedSection() != null) {
-			emfNumberResponse.setOperatorBasedPart(getOperatorBasedSection().getEMFRepresentation());
-		}
-		if (getWarningsSection() != null) {
-			emfNumberResponse.setWarnings(getWarningsSection().getEMFRepresentation());
-		}
-		emfNumberResponse.setId(getId());
-		emfNumberResponse.setMoreValues(moreValuesAvailable());
-		emfNumberResponse.setName(getName());
-		emfNumberResponse.setSeed(String.valueOf(getSeed()));
-		
-		return emfNumberResponse;
 	}
 	
 	@Override

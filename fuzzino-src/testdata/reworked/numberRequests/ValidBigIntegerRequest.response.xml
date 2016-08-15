@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<response>
+    <number id="e1af3c9b-c1cc-41ab-b4c0-845dab9a4d18" moreValues="false" name="NumberRequestTest" seed="-1">
+        <generatorBased>
+            <generator name="BoundaryNumbers">
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">0</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4611686018427387902</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">-9223372036854775807</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">2305843009213693951</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">-4611686018427387903</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">1537228672809129300</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">-3074457345618258602</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">1152921504606846975</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">-2305843009213693951</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">576460752303423487</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">-1152921504606846975</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">288230376151711743</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">-576460752303423487</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">144115188075855871</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">-288230376151711743</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">-9223372036854775806</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4611686018427387901</value>
+                    <kind>GENERATED</kind>
+                </fuzzedValue>
+            </generator>
+        </generatorBased>
+        <operatorBased>
+            <operator basedOn="4711" name="NumericalVariance">
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4701</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4702</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4703</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4704</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4705</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4706</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4707</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4708</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4709</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4710</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4712</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4713</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4714</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4715</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4716</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4717</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4718</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4719</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4720</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+                <fuzzedValue>
+                    <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4721</value>
+                    <basedOnValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:integer">4711</basedOnValue>
+                    <kind>MUTATED</kind>
+                </fuzzedValue>
+            </operator>
+        </operatorBased>
+    </number>
+</response>

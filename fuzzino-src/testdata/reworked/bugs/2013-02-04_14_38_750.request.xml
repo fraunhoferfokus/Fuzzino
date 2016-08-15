@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<request>
+    <string maxValues="750" name="SimpleStringRequest" seed="-1">
+        <noGenerators>false</noGenerators>
+        <generator value="ALLBADSTRINGS"/>
+        <specification type="STRING" minLength="0" maxLength="255" nullTerminated="true" encoding="UTF8" ignoreLengths="false"/>
+    </string>
+</request>

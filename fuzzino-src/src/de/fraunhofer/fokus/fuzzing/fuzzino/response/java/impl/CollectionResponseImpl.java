@@ -17,12 +17,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CollectionResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class CollectionResponseImpl extends AbstractResponse implements CollectionResponse {
 
+	@XmlElement(name = "fuzzedCollection",type = FuzzedCollectionImpl.class)
 	protected List<FuzzedCollection> fuzzedCollections;
 	
 	@Override
@@ -41,24 +48,6 @@ public class CollectionResponseImpl extends AbstractResponse implements Collecti
 			fuzzedCollections = new ArrayList<>();
 		}
 		fuzzedCollections.add(value);
-	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse
-		  emfCollectionResponse = ResponseFactory.eINSTANCE.createCollectionResponse();
-		
-		for (FuzzedCollection fuzzedCollection : fuzzedCollections) {
-			emfCollectionResponse.getFuzzedCollections().add(fuzzedCollection.getEMFRepresentation());
-		}
-		
-		emfCollectionResponse.setWarnings(getWarningsSection().getEMFRepresentation());
-		emfCollectionResponse.setId(getId());
-		emfCollectionResponse.setMoreValues(moreValuesAvailable());
-		emfCollectionResponse.setName(getName());
-		emfCollectionResponse.setSeed(String.valueOf(getSeed()));
-		
-		return null;
 	}
 	
 	@Override

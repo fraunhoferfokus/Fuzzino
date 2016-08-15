@@ -19,12 +19,12 @@ import java.util.UUID;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperatorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.collection.CollectionOperatorChain;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CollectionRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CommonRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.ValidCollectionsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollectionsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CollectionResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;

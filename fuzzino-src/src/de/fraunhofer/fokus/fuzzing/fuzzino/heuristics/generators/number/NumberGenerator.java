@@ -14,7 +14,7 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListOfLists;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
 public abstract class NumberGenerator<E> extends ComputableListOfLists<E> {
 

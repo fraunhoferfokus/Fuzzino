@@ -13,7 +13,11 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java;
 
+import java.io.File;
+import java.io.PrintStream;
 import java.util.List;
+
+import javax.xml.bind.JAXBException;
 
 /**
  * This elements contains all responses:
@@ -66,11 +70,9 @@ public interface Response {
 	 * @param value The {@link ErrorResponse} to be contained in this response.
 	 */
 	void setErrorResponse(ErrorResponse value);
-	
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.Response}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.Response getEMFRepresentation();
+
+	void marshall(File responseFile) throws JAXBException;
+
+	void marshall(PrintStream out) throws JAXBException;
 	
 }

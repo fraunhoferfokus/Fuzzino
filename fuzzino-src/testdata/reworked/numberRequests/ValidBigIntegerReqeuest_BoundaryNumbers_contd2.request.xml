@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+    <number id="8bb434d6-150e-45c7-abba-54ba29fa120c" maxValues="5" name="NumberRequestTest" seed="-1">
+        <noGenerators>false</noGenerators>
+    </number>
+</ns2:request>

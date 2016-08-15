@@ -1,32 +1,21 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StructureOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StructureOperatorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.CommonRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Field;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.Operator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StructureSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GrammarResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructureResponse;
@@ -140,29 +129,21 @@ public class StructureRequestProcessor extends RequestProcessor<Structure> {
 		Structure structure = new StructureImpl();
 		structure.setStructureSpecification(specification);
 		for(Field field: specification.getFields()){
-			de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field<CommonResponse> structureField = new FieldImpl<>();
+			de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field structureField = new FieldImpl();
 			structureField.setName(field.getName());
-			CommonResponse resp;
+			//TODO: what do we do here, is there really a distinction between fuzz and don't fuzz field - where do the valid values responses come into play?
 			if(field.fuzz()){
-				if(field.getValueRequest().getLibraryType()==LibraryType.ENUM || field.getValueRequest().getLibraryType()==LibraryType.BOOLEAN){
-					throw new UnsupportedOperationException("Fuzzing not supported for request type: " + field.getValueRequest().getLibraryType());
-				}
-				//lookup the corresponding generator: RequestProcessorRegistry
-				RequestProcessor<?> proc = RequestProcessorRegistry.INSTANCE.get(field.getValueRequest().getName());
-				//TODO: what if we dont have anymore values to generate?
-				resp = proc.getResponse();
 				structureField.setValueIsFuzzed(true);
 			} else{
-				CommonRequest fieldReq = field.getValueRequest();
-				resp = buildValidValuesResponse(fieldReq);
 				structureField.setValueIsFuzzed(false);
 			}
-			structureField.setValue(resp);
+			structureField.setCorrespondingResponseId(field.getCorrespondingRequestId());
 			structure.add(structureField);
 		}
 		return structure;
 	}
 
+	//TODO: might still be needed (not sure), leave this method in for now
 	private CommonResponse buildValidValuesResponse(CommonRequest fieldReq) {
 		if(fieldReq.getLibraryType()==LibraryType.STRING){
 			ValidValuesResponse<String> resp = new ValidValuesResponse<>();
@@ -199,12 +180,10 @@ public class StructureRequestProcessor extends RequestProcessor<Structure> {
 	private Structure buildValidStructure(StructureRequest req) {
 		Structure structure = new StructureImpl();
 		for(Field field: req.getSpecification().getFields()){
-			de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field<CommonResponse> structureField = new FieldImpl<>();
+			de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field structureField = new FieldImpl();
 			structureField.setName(field.getName());
-			CommonRequest fieldReq = field.getValueRequest();
-			CommonResponse resp = buildValidValuesResponse(fieldReq);
 			structureField.setValueIsFuzzed(false);
-			structureField.setValue(resp);
+			structureField.setCorrespondingResponseId(field.getCorrespondingRequestId());
 			structure.add(structureField);
 		}
 		return structure;

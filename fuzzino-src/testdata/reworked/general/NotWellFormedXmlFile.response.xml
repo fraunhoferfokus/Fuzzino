@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<response>
+    <errorResponse reason="The element type &quot;validValues&quot; must be terminated by the matching end-tag &quot;&lt;/validValues&gt;&quot;." stackTrace="[Ljava.lang.StackTraceElement;@6d80e411"/>
+</response>

@@ -15,46 +15,36 @@ package de.fraunhofer.fokus.fuzzing.fuzzino;
 
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.xml.sax.SAXParseException;
+import javax.xml.bind.JAXBException;
+
+import org.xml.sax.SAXException;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.util.RequestResourceFactoryImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.AllGeneratorsBasedPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.AllOperatorsBasedPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ErrorResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.NoMoreValuesIndicator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponsePackage;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.util.ResponseResourceFactoryImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.util.Helpers;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.CloseRequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CloseRequestConfirmation;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CollectionResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ErrorResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalRequestFormat;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructureResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructuredValueResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.ResponseImpl;
 
 public class TestUtil {
 	
@@ -74,83 +64,18 @@ public class TestUtil {
 	 * 
 	 * @param requestFilename The filename of the XML request.
 	 * @return The parsed XML response from the library.
+	 * @throws JAXBException 
+	 * @throws SAXException 
 	 */
-	public static XmlResponseDocument getResponseDocForRequest(String requestFilename) {
-		return getResponseDocForRequest(requestFilename, false);
-	}
+		
+		public static Response getResponseDocForRequest(String requestFilename) throws JAXBException, SAXException {
+			return getResponseDocForRequest(requestFilename, false);
+		}
 	
-	public static XmlResponseDocument getResponseDocForRequest(String requestFilename, boolean encode) {
+	public static Response getResponseDocForRequest(String requestFilename, boolean encode) throws JAXBException, SAXException {
 		RequestDispatcher dispatcher = new RequestDispatcher(requestFilename, encode);
 		dispatcher.dispatch();
 		return loadResponseFileForRequest(requestFilename);
-	}
-	
-	/**
-	 * Starts the fuzzing library with the given filename and returns its XML response
-	 * already parsed to {@link XmlResponseDocument}.
-	 * 
-	 * @param xmlString A string containig a request in XML format.
-	 * @return The parsed XML response from the library.
-	 */
-	public static XmlResponseDocument getResponseDocForRequestString(String xmlString) {
-		RequestDispatcher dispatcher = new RequestDispatcher(xmlString);
-		dispatcher.dispatch();
-		return loadResponseString(dispatcher.getXmlResponseString());
-	}
-	
-	/**
-	 * Loads an {@link XmlRequestDocument} from a file.
-	 * 
-	 * @param fileName The filename of the file containing the request.
-	 * @return The parsed XML file as {@link XmlRequestDocument}.
-	 */
-	public static XmlRequestDocument loadRequestFile(String fileName) {
-		XmlRequestDocument requestDoc = null;
-
-		RequestPackage.eINSTANCE.eClass();
-
-		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("*", new RequestResourceFactoryImpl());
-
-		ResourceSet resSet = new ResourceSetImpl();
-
-		Resource resource = null;
-		try {
-			resource = resSet.getResource(URI.createURI(fileName), true);
-			requestDoc = (XmlRequestDocument) resource.getContents().get(0);
-		} catch (WrappedException e) {
-			SAXParseException cause = (SAXParseException) e.getCause();
-			System.out.println("line " + cause.getLineNumber() + ", column " + cause.getColumnNumber() + " : " + cause.getMessage());
-		}
-		return requestDoc;
-	}
-	
-	/**
-	 * Loads an {@link XmlRequestDocument} from an XML string.
-	 * 
-	 * @param 
-	 * @param xmlString The string containing a request in XML format.
-	 * @return The parsed XML file as {@link XmlRequestDocument}.
-	 */
-	public static XmlRequestDocument loadRequestString(String xmlString) {
-		XmlRequestDocument requestDoc = null;
-		RequestPackage.eINSTANCE.eClass();
-
-		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("*", new RequestResourceFactoryImpl());
-
-		ResourceSet resSet = new ResourceSetImpl();
-		
-		try {
-			EObject model = Helpers.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);	
-			requestDoc = (XmlRequestDocument) model;
-		} catch (WrappedException e) {
-			SAXParseException cause = (SAXParseException) e.getCause();
-			System.out.println("line " + cause.getLineNumber() + ", column " + cause.getColumnNumber() + " : " + cause.getMessage());
-		}
-		return requestDoc;
 	}
 	
 	/**
@@ -173,11 +98,11 @@ public class TestUtil {
 	 * @param responseDoc the response that should contain the error response.
 	 * @param expectedErrorMessage the message that should be enclosed in the error response.
 	 */
-	public static void checkResponseDocForErrorMessage(XmlResponseDocument responseDoc, String expectedErrorMessage) {
+	public static void checkResponseDocForErrorMessage(Response responseDoc, String expectedErrorMessage) {
 		checkResponseDocForErrorResponse(responseDoc, true);
-		ErrorResponse errorResponse = responseDoc.getResponse().getErrorResponse();
+		ErrorResponse errorResponse = responseDoc.getErrorResponse();
 		
-		String actualErrorMessage = errorResponse.getValue();
+		String actualErrorMessage = errorResponse.getReason();
 		assertTrueWithPrefix("ErrorResponse is " + actualErrorMessage + " instead of containing " + expectedErrorMessage,
 		           actualErrorMessage.contains(expectedErrorMessage));
 	}
@@ -188,8 +113,8 @@ public class TestUtil {
 	 * @param responseDoc the response possibly containing an error response.
 	 * @param expectedErrorResponseExists set to {@code true} if an error response is expected, {@code false} otherwise.
 	 */
-	public static void checkResponseDocForErrorResponse(XmlResponseDocument responseDoc, boolean expectedErrorResponseExists) {
-		boolean actualErrorResponseExists = responseDoc.getResponse().getErrorResponse() != null;
+	public static void checkResponseDocForErrorResponse(Response responseDoc, boolean expectedErrorResponseExists) {
+		boolean actualErrorResponseExists = responseDoc.getErrorResponse() != null;
 		
 		String message = expectedErrorResponseExists ? "No error response but was expected." : 
 			                                     "Error response exists but no error response was expected.";
@@ -197,35 +122,7 @@ public class TestUtil {
 		assertTrueWithPrefix(message,
 				   actualErrorResponseExists == expectedErrorResponseExists);
 	}
-//	
-	/**
-	 * Returns a string response (XML tag 'response:string') from a response (XML tag 'response:response') identified
-	 * by its index.
-	 * Fails if there is no string response with the given index. 
-	 * 
-	 * @param responseDoc the response containing the string response.
-	 * @param index the index that identifies the requested string response.
-	 * @return the requested string response.
-	 */
-	public static StringResponse getStringResponseFromResponseDoc(XmlResponseDocument responseDoc, int index) {
-		checkResponseDocForMinNumStringResponses(responseDoc, index+1);
-		return responseDoc.getResponse().getStringResponses().get(index);
-	}
-	
-	/**
-	 * Checks if there is at least a certain number of string responses (XML tag 'response:string') 
-	 * within a response (XML tag 'response:response').
-	 * Fails if not.
-	 * 
-	 * @param responseDoc the response containing the string responses.
-	 * @param expectedNumStringResponses the number of string responses to check for.
-	 */
-	public static void checkResponseDocForMinNumStringResponses(XmlResponseDocument responseDoc, int expectedNumStringResponses) {
-		List<StringResponse> stringResponses = responseDoc.getResponse().getStringResponses();
-		int actualNumResponses = stringResponses.size();
-		assertTrueWithPrefix("Wrong number of string responses: was " + actualNumResponses + " instead of " + expectedNumStringResponses,
-				   actualNumResponses >= expectedNumStringResponses);
-	}
+
 	
 	/**
 	 * Checks if there is a certain number of string responses (XML tag 'response:string') within a response 
@@ -235,63 +132,13 @@ public class TestUtil {
 	 * @param responseDoc the response containing the string responses.
 	 * @param expectedNumStringResponses the number of string responses to check for.
 	 */
-	public static void checkResponseDocForNumStringResponses(XmlResponseDocument responseDoc, int expectedNumStringResponses) {
-		List<StringResponse> stringResponses = responseDoc.getResponse().getStringResponses();
+	public static void checkResponseDocForNumStringResponses(Response responseDoc, int expectedNumStringResponses) {
+		List<StringResponse> stringResponses = responseDoc.getStringResponses();
 		int actualNumResponses = stringResponses.size();
 		assertTrueWithPrefix("Wrong number of string responses: was " + actualNumResponses + " instead of " + expectedNumStringResponses,
 				   actualNumResponses == expectedNumStringResponses);
 	}
-	
-	/**
-	 * Returns a numbere response (XML tag 'response:number') from a response (XML tag 'response:response') identified
-	 * by its index.
-	 * Fails if there is no number response with the given index. 
-	 * 
-	 * @param responseDoc the response containing the number response.
-	 * @param index the index that identifies the requested number response.
-	 * @return the requested number response.
-	 */
-	public static NumberResponse getNumberResponseFromResponseDoc(XmlResponseDocument responseDoc, int index) {
-		checkResponseDocForMinNumNumberResponses(responseDoc, index+1);
-		return responseDoc.getResponse().getNumberResponses().get(index);
-	}
-	
-	/**
-	 * Returns a numbere response (XML tag 'response:number') from a response (XML tag 'response:response') identified
-	 * by its index.
-	 * Fails if there is no number response with the given index. 
-	 * 
-	 * @param responseDoc the response containing the number response.
-	 * @param index the index that identifies the requested number response.
-	 * @return the requested number response.
-	 */
-	public static NumberResponse getNumberResponseFromResponseDocByName(XmlResponseDocument responseDoc, String name) {
-		List<NumberResponse> numberResponses = responseDoc.getResponse().getNumberResponses();
-		for (NumberResponse numberResponse : numberResponses) {
-			if (numberResponse.getName().equals(name)) {
-				return numberResponse;
-			}
-		}
-		
-		fail("Number response with the name " + name + " does not exists.");
-		
-		return null;
-	}
-	
-	/**
-	 * Checks if there is at least a certain number of number responses (XML tag 'response:number') 
-	 * within a response (XML tag 'response:response').
-	 * Fails if the number is smaller.
-	 * 
-	 * @param responseDoc the response containing the number responses.
-	 * @param expectedNumNumberResponses the number of number responses to check for.
-	 */
-	public static void checkResponseDocForMinNumNumberResponses(XmlResponseDocument responseDoc, int expectedNumNumberResponses) {
-		List<NumberResponse> numberResponses = responseDoc.getResponse().getNumberResponses();
-		int actualNumResponses = numberResponses.size();
-		assertTrueWithPrefix("Wrong number of number responses: was " + actualNumResponses + " instead of " + expectedNumNumberResponses,
-				   actualNumResponses >= expectedNumNumberResponses);
-	}
+
 	
 	/**
 	 * Checks if there is a certain number of number responses (XML tag 'response:number') within a response 
@@ -301,8 +148,8 @@ public class TestUtil {
 	 * @param responseDoc the response containing the number responses.
 	 * @param expectedNumNumberResponses the number of number responses to check for.
 	 */
-	public static void checkResponseDocForNumNumberResponses(XmlResponseDocument responseDoc, int expectedNumNumberResponses) {
-		List<NumberResponse> numberResponses = responseDoc.getResponse().getNumberResponses();
+	public static void checkResponseDocForNumNumberResponses(Response response, int expectedNumNumberResponses) {
+		List<NumberResponse<? extends Number>> numberResponses = response.getNumberResponses();
 		int actualNumResponses = numberResponses.size();
 		assertTrueWithPrefix("Wrong number of number responses: was " + actualNumResponses + " instead of " + expectedNumNumberResponses,
 				   actualNumResponses == expectedNumNumberResponses);
@@ -316,8 +163,8 @@ public class TestUtil {
 	 * @param responseDoc the response containing the collection responses.
 	 * @param expectedNumCollectionResponses the number of collection responses to check for.
 	 */
-	public static void checkResponseDocForNumCollectionResponses(XmlResponseDocument responseDoc, int expectedNumCollectionResponses) {
-		List<CollectionResponse> collectionResponses = responseDoc.getResponse().getCollectionResponses();
+	public static void checkResponseDocForNumCollectionResponses(Response responseDoc, int expectedNumCollectionResponses) {
+		List<CollectionResponse> collectionResponses = responseDoc.getCollectionResponses();
 		int actualNumResponses = collectionResponses.size();
 		assertTrueWithPrefix("Wrong number of collection responses: was " + actualNumResponses + " instead of " + expectedNumCollectionResponses,
 				   actualNumResponses == expectedNumCollectionResponses);
@@ -331,61 +178,13 @@ public class TestUtil {
 	 * @param responseDoc the response containing the structure responses.
 	 * @param expectedNumStructureResponses the number of structure responses to check for.
 	 */
-	public static void checkResponseDocForNumStructureResponses(XmlResponseDocument responseDoc, int expectedNumStructureResponses) {
-		List<StructureResponse> structureResponses = responseDoc.getResponse().getStructureResponses();
+	public static void checkResponseDocForNumStructureResponses(Response responseDoc, int expectedNumStructureResponses) {
+		List<StructureResponse> structureResponses = responseDoc.getStructureResponses();
 		int actualNumResponses = structureResponses.size();
 		assertTrueWithPrefix("Wrong number of structure responses: was " + actualNumResponses + " instead of " + expectedNumStructureResponses,
 				   actualNumResponses == expectedNumStructureResponses);
 	}
 	
-	/**
-	 * Returns a close request confirmation (XML tag 'response:closeRequestDone') from a response 
-	 * (XML tag 'response:response') identified by its index.
-	 * Fails if there is no close request confirmation with the given index.
-	 * 
-	 * @param responseDoc the response containing the request close request confirmation.
-	 * @param index the index that identifies the requested close request confirmation.
-	 * @return the requested close request confirmation.
-	 */
-	public static CloseRequestConfirmation getCloseRequestConfirmationFromResponseDoc(XmlResponseDocument responseDoc,
-			                                                                   int index) {
-		checkResponseDocForMinNumCloseRequestConfirmations(responseDoc, index+1);
-		return responseDoc.getResponse().getCloseRequestConfirmations().get(index);
-	}
-	
-	/**
-	 * Checks if there is a certain number of close request confirmations (XML tag 'response:closeRequestDone') 
-	 * within a response (XML tag 'response:response').
-	 * Fails if not.
-	 * 
-	 * @param responseDoc the response containing the close request confirmations.
-	 * @param expectedNumCloseRequestConfirmations the number of close request confirmation to check for.
-	 */
-	public static void checkResponseDocForNumCloseRequestConfirmations(XmlResponseDocument responseDoc,
-			                                                    int expectedNumCloseRequestConfirmations) {
-		List<CloseRequestConfirmation> closeRequestConfirmations = responseDoc.getResponse().getCloseRequestConfirmations();
-		
-		int actualNumCloseRequestConfirmations = closeRequestConfirmations.size();
-		assertTrueWithPrefix("Wrong number of close request confirmations: was " + actualNumCloseRequestConfirmations + " instead of " + expectedNumCloseRequestConfirmations,
-				   actualNumCloseRequestConfirmations == expectedNumCloseRequestConfirmations);
-	}
-	
-	/**
-	 * Checks if there is a minimal number of close request confirmations (XML tag 'response:closeRequestDone') 
-	 * within a response (XML tag 'response:response').
-	 * Fails if not.
-	 * 
-	 * @param responseDoc the response containing the close request confirmations.
-	 * @param expectedMinNumCloseRequestConfirmations the number of close request confirmation to check for.
-	 */
-	public static void checkResponseDocForMinNumCloseRequestConfirmations(XmlResponseDocument responseDoc,
-			                                                    int expectedMinNumCloseRequestConfirmations) {
-		List<CloseRequestConfirmation> closeRequestConfirmations = responseDoc.getResponse().getCloseRequestConfirmations();
-		
-		int actualNumCloseRequestConfirmations = closeRequestConfirmations.size();
-		assertTrueWithPrefix("Wrong number of close request confirmations: was " + actualNumCloseRequestConfirmations + " instead of " + expectedMinNumCloseRequestConfirmations,
-				   actualNumCloseRequestConfirmations >= expectedMinNumCloseRequestConfirmations);
-	}
 	
 	/**
 	 * Checks the 'id' attribute of a close request confirmation (XML tag 'response:closeRequestDone') for a certain value.
@@ -418,41 +217,6 @@ public class TestUtil {
 				   actualName.equals(expectedName));
 	}
 	
-	/**
-	 * Checks a close request confirmation (XML tag 'response:closeRequestDone') for a certain number of 
-	 * illegal request formats (XML tag 'response:illegalRequestFormat').
-	 * Fails if there is another number.
-	 * 
-	 * @param closeRequestConfirmation the close request confirmation in question.
-	 * @param expectedNumIllRequFormat the expected number of illegal request formats with the close request confirmation.
-	 */
-	public static void checkCloseRequestConfirmationForNumIllegalRequestFormats(CloseRequestConfirmation closeRequestConfirmation,
-			                                                             int expectedNumIllRequFormat) {
-		WarningsPart warningsPart = closeRequestConfirmation.getWarnings();
-		assertTrueWithPrefix("No warnings in close request confirmation with invalid id.",
-				   warningsPart != null);
-		
-		List<IllegalRequestFormat> illegalRequestFormats = warningsPart.getIllegalRequestFormats();
-		int actualNumIllRequFormat = illegalRequestFormats.size();
-		assertTrueWithPrefix("Wrong number of illegal request formats: was " + actualNumIllRequFormat + " instead of " + expectedNumIllRequFormat,
-				   actualNumIllRequFormat == expectedNumIllRequFormat);
-	}
-	
-	/**
-	 * Returns a illegal request format (XML tag 'response:illegalRequestFormat') from a close request confirmation 
-	 * (XML tag 'response:closeRequestDone') identified by its index. 
-	 * Fails if there is no such illegal request format.
-	 * 
-	 * @param closeRequestConfirmation the close request confirmation to get the illegal request format from.
-	 * @param index the index that identifies the requested illegal request format.
-	 * @return the requested illegal request format.
-	 */
-	public static IllegalRequestFormat getIllegalRequestFormatFromCloseRequestConfirmation(CloseRequestConfirmation closeRequestConfirmation,
-			                                                                        int index) {
-		checkCloseRequestConfirmationForNumIllegalRequestFormats(closeRequestConfirmation, index+1);
-		
-		return closeRequestConfirmation.getWarnings().getIllegalRequestFormats().get(index);
-	}
 	
 	/**
 	 * Returns a illegal request format (XML tag 'response:illegalRequestFormat') identified by its index.
@@ -462,9 +226,9 @@ public class TestUtil {
 	 * @param index the index identifying the requested illegal request format.
 	 * @return the requested illegal request format.
 	 */
-	public static IllegalRequestFormat getIllegalRequestFormatFromResponse(StringResponse stringResponse, int index) {
+	public static IllegalRequestFormat getIllegalRequestFormatFromResponse(CommonResponse response, int index) {
 		int counter = 0;
-		for (IllegalRequestFormat illegalRequestFormat : stringResponse.getWarnings().getIllegalRequestFormats()) {
+		for (IllegalRequestFormat illegalRequestFormat : response.getWarningsSection().getIllegalRequestFormats()) {
 			if (counter == index) {
 				return illegalRequestFormat;
 			}
@@ -481,42 +245,12 @@ public class TestUtil {
 	 * @param stringResponse the string response containing the illegal request formats.
 	 * @param expectedNumIllReqFormats the expected number of illegal request format elements within the string response.
 	 */
-	public static void checkResponseForNumIllegalRequestFormats(StringResponse stringResponse, int expectedNumIllReqFormats) {
+	public static void checkResponseForNumIllegalRequestFormats(CommonResponse stringResponse, int expectedNumIllReqFormats) {
 		checkResponseForWarningsPart(stringResponse, true);
 		
-		int actualNumIllReqFormats = stringResponse.getWarnings().getIllegalRequestFormats().size();
+		int actualNumIllReqFormats = stringResponse.getWarningsSection().getIllegalRequestFormats().size();
 		assertTrueWithPrefix("Wrong number of illegal request formats: was " + actualNumIllReqFormats + " instead of " + expectedNumIllReqFormats,
 				   actualNumIllReqFormats == expectedNumIllReqFormats);
-	}
-	
-	/**
-	 * Checks a number response (XML tag 'response:number') for the number of illegal request format
-	 * (XML tag 'response:illegalRequestFormat').
-	 * 
-	 * @param numberResponse the number response containing the illegal request formats.
-	 * @param expectedNumIllReqFormats the expected number of illegal request format elements within the number response.
-	 */
-	public static void checkResponseForNumIllegalRequestFormats(NumberResponse numberResponse, int expectedNumIllReqFormats) {
-		checkResponseForWarningsPart(numberResponse, true);
-		
-		int actualNumIllReqFormats = numberResponse.getWarnings().getIllegalRequestFormats().size();
-		assertTrueWithPrefix("Wrong number of illegal request formats: was " + actualNumIllReqFormats + " instead of " + expectedNumIllReqFormats,
-				   actualNumIllReqFormats == expectedNumIllReqFormats);
-	}
-	
-	/**
-	 * Checks a string response (XML tag 'response:string') for the number of illegal operators
-	 * (XML tag 'response:illegallGenerator').
-	 * 
-	 * @param stringResponse the string response containing the illegal generators.
-	 * @param expectedNumIllegalGenerators the expected number of illegal generator elements within the string response.
-	 */
-	public static void checkResponseForNumIllegalGenerators(StringResponse stringResponse, int expectedNumIllegalGenerators) {
-		checkResponseForWarningsPart(stringResponse, true);
-
-		int actualNumIllGenerators = stringResponse.getWarnings().getIllegalOperators().size();
-		assertTrueWithPrefix("Wrong number of illegal operators: was " + actualNumIllGenerators + " instead of " + expectedNumIllegalGenerators,
-				   actualNumIllGenerators == expectedNumIllegalGenerators);
 	}
 	
 	/**
@@ -526,10 +260,9 @@ public class TestUtil {
 	 * @param numberResponse the number response containing the illegal generators.
 	 * @param expectedNumIllegalGenerators the expected number of illegal generator elements within the number response.
 	 */
-	public static void checkResponseForNumIllegalGenerators(NumberResponse numberResponse, int expectedNumIllegalGenerators) {
+	public static void checkResponseForNumIllegalGenerators(CommonResponse numberResponse, int expectedNumIllegalGenerators) {
 		checkResponseForWarningsPart(numberResponse, true);
-
-		int actualNumIllGenerators = numberResponse.getWarnings().getIllegalGenerators().size();
+		int actualNumIllGenerators = numberResponse.getWarningsSection().getIllegalGenerators().size();
 		assertTrueWithPrefix("Wrong number of illegal operators: was " + actualNumIllGenerators + " instead of " + expectedNumIllegalGenerators,
 				   actualNumIllGenerators == expectedNumIllegalGenerators);
 	}
@@ -541,55 +274,11 @@ public class TestUtil {
 	 * @param stringResponse the string response containing the illegal operators.
 	 * @param expectedNumIllegalOperators the expected number of illegal operator elements within the string response.
 	 */
-	public static void checkResponseForNumIllegalOperators(StringResponse stringResponse, int expectedNumIllegalOperators) {
+	public static void checkResponseForNumIllegalOperators(CommonResponse stringResponse, int expectedNumIllegalOperators) {
 		checkResponseForWarningsPart(stringResponse, true);
-
-		int actualNumIllOperators = stringResponse.getWarnings().getIllegalOperators().size();
+		int actualNumIllOperators = stringResponse.getWarningsSection().getIllegalOperators().size();
 		assertTrueWithPrefix("Wrong number of illegal operators: was " + actualNumIllOperators + " instead of " + expectedNumIllegalOperators,
 				   actualNumIllOperators == expectedNumIllegalOperators);
-	}
-	
-	/**
-	 * Checks a number response (XML tag 'response:number') for the number of illegal operators
-	 * (XML tag 'response:illegallOperator').
-	 * 
-	 * @param numberResponse the number response containing the illegal operators.
-	 * @param expectedNumIllegalOperators the expected number of illegal operator elements within the number response.
-	 */
-	public static void checkResponseForNumIllegalOperators(NumberResponse numberResponse, int expectedNumIllegalOperators) {
-		checkResponseForWarningsPart(numberResponse, true);
-
-		int actualNumIllOperators = numberResponse.getWarnings().getIllegalOperators().size();
-		assertTrueWithPrefix("Wrong number of illegal operators: was " + actualNumIllOperators + " instead of " + expectedNumIllegalOperators,
-				   actualNumIllOperators == expectedNumIllegalOperators);
-	}
-	
-	/**
-	 * Returns a illegal request format (XML tag 'response:illegalRequestFormat') identified by its index.
-	 * Fails if there is no illegal request format with the given index.
-	 * 
-	 * @param numberResponse the number response containing the illegal request formats.
-	 * @param index the index identifying the requested illegal request format.
-	 * @return the requested illegal request format.
-	 */
-	public static IllegalRequestFormat getIllegalRequestFormatFromResponse(NumberResponse numberResponse, int index) {
-		checkResponseForWarningsPart(numberResponse, true);		
-
-		assertTrueWithPrefix("Number response does not contain illegal request formats.",
-				   numberResponse.getWarnings().getIllegalRequestFormats() != null);
-		
-		assertTrueWithPrefix("Number response does not contain illegal request formats.",
-				   !numberResponse.getWarnings().getIllegalRequestFormats().isEmpty());
-		
-		int counter = 0;
-		for (IllegalRequestFormat illegalRequestFormat : numberResponse.getWarnings().getIllegalRequestFormats()) {
-			if (counter == index) {
-				return illegalRequestFormat;
-			}
-			counter++;
-		}
-		fail("IllegalRequestFormat with index " + index + " does not exists.");
-		return null;
 	}
 	
 	/**
@@ -637,21 +326,22 @@ public class TestUtil {
 	 * Checks if a certain number of generator parts (XML tag 'response:generator') exists within a string response
 	 * (XML tag 'response:string').
 	 * Fails if the number differs from the expected.
+	 * @param <T>
 	 * 
 	 * @param stringResponse the string response containing the generator parts.
 	 * @param expectedNumGeneratorParts the expected number of generator parts within the string response.
 	 */
-	public static void checkResponseForNumGeneratorParts(StringResponse stringResponse, int expectedNumGeneratorParts) {
-		AllGeneratorsBasedPart allGeneratorsBasedPart = stringResponse.getGeneratorBasedPart();
+	public static <T> void checkResponseForNumGeneratorParts(StructuredValueResponse<T> response, int expectedNumGeneratorParts) {
+		FuzzedValuesByGenerators<T> allGeneratorsBasedPart = response.getGeneratorBasedSection();
 		if (allGeneratorsBasedPart == null && expectedNumGeneratorParts == 0) {
 			return;
 		} else {
-			assertTrueWithPrefix("String response does not contain generator parts.", 
+			assertTrueWithPrefix("Response does not contain generator parts.", 
 					   allGeneratorsBasedPart != null);
 		}
-		List<GeneratorPart> generatorParts = allGeneratorsBasedPart.getGeneratorParts();
+		List<GeneratorSpecificFuzzedValues<T>> generatorParts = allGeneratorsBasedPart.getGeneratorSpecificSections();
 		int actualNumGeneratorParts = generatorParts.size();
-		assertTrueWithPrefix("Wrong number of generator parts: was " + actualNumGeneratorParts + " instead of " + expectedNumGeneratorParts,
+		assertTrueWithPrefix("Wrong number of generator specific sections: was " + actualNumGeneratorParts + " instead of " + expectedNumGeneratorParts,
 				   actualNumGeneratorParts == expectedNumGeneratorParts);
 	}	
 	
@@ -664,14 +354,14 @@ public class TestUtil {
 	 * @param expectedMinNumGeneratorParts the expected number of generator parts within the string response.
 	 */
 	public static void checkResponseForMinNumGeneratorParts(StringResponse stringResponse, int expectedMinNumGeneratorParts) {
-		AllGeneratorsBasedPart allGeneratorsBasedPart = stringResponse.getGeneratorBasedPart();
+		FuzzedValuesByGenerators<String> allGeneratorsBasedPart = stringResponse.getGeneratorBasedSection();
 		if (allGeneratorsBasedPart == null && expectedMinNumGeneratorParts == 0) {
 			return;
 		} else {
 			assertTrueWithPrefix("String response does not contain generator parts.", 
 					   allGeneratorsBasedPart != null);
 		}
-		List<GeneratorPart> generatorParts = allGeneratorsBasedPart.getGeneratorParts();
+		 List<GeneratorSpecificFuzzedValues<String>> generatorParts = allGeneratorsBasedPart.getGeneratorSpecificSections();
 		int actualNumGeneratorParts = generatorParts.size();
 		assertTrueWithPrefix("Wrong number of generator parts: was " + actualNumGeneratorParts + " instead of " + expectedMinNumGeneratorParts,
 				   actualNumGeneratorParts >= expectedMinNumGeneratorParts);
@@ -681,100 +371,39 @@ public class TestUtil {
 	 * Checks if a certain number of operator parts (XML tag 'response:operator') exists within a number response
 	 * (XML tag 'response:number').
 	 * Fails if the number differs from the expected.
+	 * @param <T>
 	 * 
 	 * @param numberResponse the number response containing the operator parts.
 	 * @param expectedNumOperatorParts the expected number of operator parts within the number response.
 	 */
-	public static void checkResponseForNumOperatorParts(NumberResponse numberResponse, int expectedNumOperatorParts) {
-		AllOperatorsBasedPart allOperatorsBasedPart = numberResponse.getOperatorBasedPart();
+	public static <T> void checkResponseForNumOperatorParts(StructuredValueResponse<T> numberResponse, int expectedNumOperatorParts) {
+		if(numberResponse.getOperatorBasedSection()==null && expectedNumOperatorParts==0){
+			return;
+		}
+		List<OperatorSpecificFuzzedValues<T>> allOperatorsBasedPart = numberResponse.getOperatorBasedSection().getOperatorSpecificSections();
 		if (allOperatorsBasedPart == null && expectedNumOperatorParts == 0) {
 			return;
 		} else {
-			assertTrueWithPrefix("Number response contains no operator parts.", 
+			assertTrueWithPrefix("Number response contains no operator specific sections.", 
 					   allOperatorsBasedPart != null);
 		}
-		List<OperatorPart> operatorParts = allOperatorsBasedPart.getOperatorParts();
-		int actualNumOperatorParts = operatorParts.size();
-		assertTrueWithPrefix("Wrong number of operator parts: was " + actualNumOperatorParts + " instead of " + expectedNumOperatorParts,
+		int actualNumOperatorParts = allOperatorsBasedPart.size();
+		assertTrueWithPrefix("Wrong number of operator specific sections: was " + actualNumOperatorParts + " instead of " + expectedNumOperatorParts,
 				             actualNumOperatorParts == expectedNumOperatorParts);
 	}	
-	
-	/**
-	 * Checks if a certain number of operator parts (XML tag 'response:operator') exists within a string response
-	 * (XML tag 'response:string').
-	 * Fails if the number differs from the expected.
-	 * 
-	 * @param stringResponse the string response containing the operator parts.
-	 * @param expectedNumOperatorParts the expected number of operator parts within the string response.
-	 */
-	public static void checkResponseForNumOperatorParts(StringResponse stringResponse, int expectedNumOperatorParts) {
-		AllOperatorsBasedPart allOperatorsBasedPart = stringResponse.getOperatorBasedPart();
-		if (allOperatorsBasedPart == null && expectedNumOperatorParts == 0) {
-			return;
-		} else {
-			assertTrueWithPrefix("String response does not contain operator parts.", 
-					             allOperatorsBasedPart != null);
-		}
-		List<OperatorPart> operatorParts = allOperatorsBasedPart.getOperatorParts();
-		int actualNumOperatorParts = operatorParts.size();
-		assertTrueWithPrefix("Wrong number of operator parts: was " + actualNumOperatorParts + " instead of " + expectedNumOperatorParts,
-				             actualNumOperatorParts == expectedNumOperatorParts);
-	}	
-	
-	/**
-	 * Checks if a minimal number of operator parts (XML tag 'response:operator') exists within a string response
-	 * (XML tag 'response:string').
-	 * Fails if the number differs from the expected.
-	 * 
-	 * @param stringResponse the string response containing the operator parts.
-	 * @param expectedMinNumOperatorParts the expected number of operator parts within the string response.
-	 */
-	public static void checkResponseForMinNumOperatorParts(StringResponse stringResponse, int expectedMinNumOperatorParts) {
-		AllOperatorsBasedPart allOperatorsBasedPart = stringResponse.getOperatorBasedPart();
-		if (allOperatorsBasedPart == null && expectedMinNumOperatorParts == 0) {
-			return;
-		} else {
-			assertTrueWithPrefix("String response does not contain operator parts.", 
-					   allOperatorsBasedPart != null);
-		}
-		List<OperatorPart> operatorParts = allOperatorsBasedPart.getOperatorParts();
-		int actualNumOperatorParts = operatorParts.size();
-		assertTrueWithPrefix("Wrong number of operator parts: was " + actualNumOperatorParts + " instead of " + expectedMinNumOperatorParts,
-				             actualNumOperatorParts >= expectedMinNumOperatorParts);
-	}	
-	
-	/**
-	 * Checks if a certain number of generator parts (XML tag 'response:generator') exists within a number response
-	 * (XML tag 'response:number').
-	 * Fails if the number differs from the expected.
-	 * 
-	 * @param numberResponse the number response containing the generator parts.
-	 * @param expectedNumGeneratorParts the expected number of generator parts within the number response.
-	 */
-	public static void checkResponseForNumGeneratorParts(NumberResponse numberResponse, int expectedNumGeneratorParts) {
-		AllGeneratorsBasedPart allGeneratorsBasedPart = numberResponse.getGeneratorBasedPart();
-		if (allGeneratorsBasedPart == null && expectedNumGeneratorParts == 0) {
-			return;
-		} else {
-			assertTrueWithPrefix("Number response contains no generator parts.", 
-					   allGeneratorsBasedPart != null);
-		}
-		List<GeneratorPart> generatorParts = allGeneratorsBasedPart.getGeneratorParts();
-		int actualNumGeneratorParts = generatorParts.size();
-		assertTrueWithPrefix("Wrong number of generator parts: was " + actualNumGeneratorParts + " instead of " + expectedNumGeneratorParts,
-				   actualNumGeneratorParts == expectedNumGeneratorParts);
-	}
+
 	
 	/**
 	 * Returns a certain generator part (XML tag 'response:generator') identified by the attribute 'name'.
 	 * Fails if there is no such generator part.
+	 * @param <T>
 	 * 
 	 * @param stringResponse the string response containing the generator parts.
 	 * @param generatorName the name of the generator that identifies the request generator part.
 	 * @return the request generator part.
 	 */
-	public static GeneratorPart getGeneratorPartFromResponseByName(StringResponse stringResponse, String generatorName) {
-		for (GeneratorPart generatorPart : stringResponse.getGeneratorBasedPart().getGeneratorParts()) {
+	public static <T> GeneratorSpecificFuzzedValues<T> getGeneratorPartFromResponseByName(StructuredValueResponse<T> response, String generatorName) {
+		for (GeneratorSpecificFuzzedValues<T> generatorPart : response.getGeneratorBasedSection().getGeneratorSpecificSections()) {
 			if (generatorPart.getName().equals(generatorName)) {
 				return generatorPart;
 			}
@@ -786,58 +415,22 @@ public class TestUtil {
 	/**
 	 * Returns a certain operator part (XML tag 'response:operator') identified by the attribute 'name'.
 	 * Fails if there is no such operator part.
-	 * 
-	 * @param stringResponse the string response containing the operator parts.
-	 * @param operatorName the name of the operator that identifies the request operator part.
-	 * @return the request operator part.
-	 */
-	public static OperatorPart getOperatorPartFromResponseByName(StringResponse stringResponse, 
-			                                                     String operatorName,
-			                                                     String validValue) {
-		for (OperatorPart operatorPart : stringResponse.getOperatorBasedPart().getOperatorParts()) {
-			if (operatorPart.getName().equals(operatorName) && operatorPart.getBasedOn().equals(validValue)) {
-				return operatorPart;
-			}
-		}
-		fail("OperatorPart for operator \"" + operatorName + "\" does not exists.");
-		return null;
-	}	
-	/**
-	 * Returns a certain generator part (XML tag 'response:generator') identified by the attribute 'name'.
-	 * Fails if there is no such generator part.
-	 * 
-	 * @param numberResponse the number response containing the generator parts.
-	 * @param generatorName the name of the generator that identifies the request generator part.
-	 * @return the request generator part.
-	 */
-	public static GeneratorPart getGeneratorPartFromResponseByName(NumberResponse numberResponse, String generatorName) {
-		for (GeneratorPart generatorPart : numberResponse.getGeneratorBasedPart().getGeneratorParts()) {
-			if (generatorPart.getName().equals(generatorName)) {
-				return generatorPart;
-			}
-		}
-		fail("GeneratorPart for generator \"" + generatorName + "\" does not exists.");
-		return null;
-	}
-	
-	/**
-	 * Returns a certain operator part (XML tag 'response:operator') identified by the attribute 'name'.
-	 * Fails if there is no such operator part.
+	 * @param <T>
 	 * 
 	 * @param numberResponse the number response containing the operator parts.
 	 * @param operatorName the name of the operator that identifies the request operator part.
 	 * @param validValue the valid value the operator is applied to.
 	 * @return the request operator part.
 	 */
-	public static OperatorPart getOperatorPartFromNumberResponseByName(NumberResponse numberResponse, 
+	public static <T> OperatorSpecificFuzzedValues<T> getOperatorPartFromNumberResponseByName(StructuredValueResponse<T> numberResponse, 
 			                                                     String operatorName, 
 			                                                     String validValue) {
-		for (OperatorPart operatorPart : numberResponse.getOperatorBasedPart().getOperatorParts()) {
+		for (OperatorSpecificFuzzedValues<T> operatorPart : numberResponse.getOperatorBasedSection().getOperatorSpecificSections()) {
 			if (operatorPart.getName().equals(operatorName)) {
 				return operatorPart;
 			}
 		}
-		fail("OperatorPart for operator \"" + operatorName + "\" does not exists.");
+		fail("operator specific section for operator \"" + operatorName + "\" does not exists.");
 		return null;
 	}
 	
@@ -845,12 +438,13 @@ public class TestUtil {
 	 * Checks a generator part (XML tag 'response:generator')for a certain number of fuzzed values 
 	 * (XML tag 'response:fuzzedValue').
 	 * Fails if the number differs.
+	 * @param <T>
 	 * 
 	 * @param generatorPart the generator part containing the fuzzed values.
 	 * @param expectedNumFuzzedValues the expected number of fuzzed values.
 	 */
-	public static void checkGeneratorPartForNumFuzzedValues(GeneratorPart generatorPart, int expectedNumFuzzedValues) {
-		List<String> fuzzedValues = generatorPart.getFuzzedValues();
+	public static <T> void checkGeneratorPartForNumFuzzedValues(GeneratorSpecificFuzzedValues<T> generatorPart, int expectedNumFuzzedValues) {
+		List<FuzzedValue<T>> fuzzedValues = generatorPart.getFuzzedValues();
 		int actualNumFuzzedValues = fuzzedValues.size();
 		assertTrueWithPrefix("Wrong number of fuzzed values: was " + actualNumFuzzedValues + " instead of " + expectedNumFuzzedValues,
 				   actualNumFuzzedValues == expectedNumFuzzedValues);
@@ -860,12 +454,13 @@ public class TestUtil {
 	 * Checks a operator part (XML tag 'response:operator')for a certain number of fuzzed values 
 	 * (XML tag 'response:fuzzedValue').
 	 * Fails if the number differs.
+	 * @param <T>
 	 * 
 	 * @param opratorPart the operator part containing the fuzzed values.
 	 * @param expectedNumFuzzedValues the expected number of fuzzed values.
 	 */
-	public static void checkOperatorPartForNumFuzzedValues(OperatorPart operatorPart, int expectedNumFuzzedValues) {
-		List<String> fuzzedValues = operatorPart.getFuzzedValues();
+	public static <T> void checkOperatorPartForNumFuzzedValues(OperatorSpecificFuzzedValues<T> operatorPart, int expectedNumFuzzedValues) {
+		List<FuzzedValue<T>> fuzzedValues = operatorPart.getFuzzedValues();
 		int actualNumFuzzedValues = fuzzedValues.size();
 		assertTrueWithPrefix("Wrong number of fuzzed values: was " + actualNumFuzzedValues + " instead of " + expectedNumFuzzedValues,
 				   actualNumFuzzedValues == expectedNumFuzzedValues);
@@ -878,24 +473,10 @@ public class TestUtil {
 	 * @param stringResponse the string response whose more values attribute shall be checked.
 	 * @param expectedMoreValuesAttribute the expected value of the more values attribute.
 	 */
-	public static void checkResponseForMoreValuesAttribute(StringResponse stringResponse,
+	public static void checkResponseForMoreValuesAttribute(CommonResponse response,
 			                                               boolean expectedMoreValuesAttribute) {
-		boolean actualValue = stringResponse.isMoreValues();
-		assertTrueWithPrefix("moreValues was " + actualValue + " instead of " + expectedMoreValuesAttribute,
-				   actualValue == expectedMoreValuesAttribute);
-	}
-	
-	/**
-	 * Checks a number response (XML tag 'response:number') for the value of its 'moreValues' attribute.
-	 * Fails if it differs from the expected value.
-	 * 
-	 * @param numberResponse The number response whose more values attribute shall be checked.
-	 * @param expectedMoreValuesAttribute The expected value of the more values attribute.
-	 */
-	public static void checkResponseForMoreValuesAttribute(NumberResponse numberResponse,
-			                                               boolean expectedMoreValuesAttribute) {
-		boolean actualValue = numberResponse.isMoreValues();
-		assertTrueWithPrefix("moreValues was " + actualValue + " instead of " + expectedMoreValuesAttribute,
+		boolean actualValue = response.moreValuesAvailable();
+		assertTrueWithPrefix("moreValuesAvailable was " + actualValue + " instead of " + expectedMoreValuesAttribute,
 				   actualValue == expectedMoreValuesAttribute);
 	}
 	
@@ -905,8 +486,8 @@ public class TestUtil {
 	 * @param stringResponse the string response containing the seed.
 	 * @param expectedSeed the seed expected in the string response.
 	 */
-	public static void checkResponseForSeedValue(StringResponse stringResponse, String expectedSeed) {
-		String actualSeed = stringResponse.getSeed();
+	public static void checkResponseForSeedValue(StringResponse stringResponse, long expectedSeed) {
+		Long actualSeed = stringResponse.getSeed();
 		assertTrueWithPrefix("Wrong seed: was " + actualSeed + " instead of " + expectedSeed,
 				   actualSeed.equals(expectedSeed));
 	}
@@ -917,25 +498,12 @@ public class TestUtil {
 	 * @param stringResponse the string response that possibly contains warnings.
 	 * @param warningsPartExist set to {@code true} if warnings were expected, otherwise to {@code false}.
 	 */
-	public static void checkResponseForWarningsPart(StringResponse stringResponse, boolean warningsPartExist) {
-		boolean actualWarningsPartExist = stringResponse.getWarnings() != null;
+	public static void checkResponseForWarningsPart(CommonResponse response, boolean warningsPartExist) {
+		boolean actualWarningsPartExist = response.getWarningsSection() != null;
 		String message = (warningsPartExist ? "No warning exists but was expected." : "Warning exists but no warning was expected.");
 		assertTrueWithPrefix(message,
 				   actualWarningsPartExist == warningsPartExist);
-	}	
-
-	/**
-	 * Checks a number response for warnings.
-	 * 
-	 * @param numberResponse the string response that possibly contains warnings.
-	 * @param warningsPartExist set to {@code true} if warnings were expected, otherwise to {@code false}.
-	 */
-	public static void checkResponseForWarningsPart(NumberResponse numberResponse, boolean warningsPartExist) {
-		boolean actualWarningsPartExist = numberResponse.getWarnings() != null;
-		String message = (warningsPartExist ? "No warning exists but was expected." : "Warning exists but no warning was expected.");
-		assertTrueWithPrefix(message,
-				   actualWarningsPartExist == warningsPartExist);
-	}	
+	}
 
 	/**
 	 * Checks if a string response (XML tag 'response:string') contains a no more values warning
@@ -944,31 +512,11 @@ public class TestUtil {
 	 * 
 	 * @param contdStringResponse the string response that should contain the no more values indicator.
 	 */
-	public static void checkResponseForNoMoreValuesWarning(StringResponse contdStringResponse) {
-		WarningsPart warningsPart = contdStringResponse.getWarnings();
+	public static void checkResponseForNoMoreValuesWarning(CommonResponse response) {
+		WarningsSection warningsPart = response.getWarningsSection();
 		assertTrueWithPrefix("No warnings exist in string response.",
 				    warningsPart != null);
-		
-		NoMoreValuesIndicator noMoreValuesIndicator = warningsPart.getFlagNoMoreValues();
-		assertTrueWithPrefix("No more values indicator is not set.",
-				   noMoreValuesIndicator != null);
-	}
-
-	/**
-	 * Checks if a number response (XML tag 'response:number') contains a no more values warning
-	 * (XML tag 'response:noMoreValuesAvailable').
-	 * Fails if the indicator does not exist.
-	 * 
-	 * @param contdNumberResponse the number response that should contain the no more values indicator.
-	 */
-	public static void checkResponseForNoMoreValuesWarning(NumberResponse contdNumberResponse) {
-		WarningsPart warningsPart = contdNumberResponse.getWarnings();
-		assertTrueWithPrefix("No warnings exist in string response.",
-				             warningsPart != null);
-		
-		NoMoreValuesIndicator noMoreValuesIndicator = warningsPart.getFlagNoMoreValues();
-		assertTrueWithPrefix("No more values indicator is not set.",
-				             noMoreValuesIndicator != null);
+		org.junit.Assert.assertFalse(warningsPart.hasMoreValues());
 	}
 
 	/**
@@ -977,19 +525,17 @@ public class TestUtil {
 	 * @param stringResponseToContinueFrom the string response to continue from.
 	 * @param filename where to save the continued string request.
 	 * @param numValues the number of values to be requested by the continued request.
+	 * @throws JAXBException 
 	 */
-	public static void createContdRequest(StringResponse stringResponseToContinueFrom, String filename, int numValues) {
-		StringRequest contdStringRequest = RequestFactory.eINSTANCE.createStringRequest();
+	public static void createContdRequest(StringResponse stringResponseToContinueFrom, String filename, int numValues) throws JAXBException {
+		StringRequest contdStringRequest = new StringRequestImpl();
 		contdStringRequest.setId(stringResponseToContinueFrom.getId());
 		contdStringRequest.setName(stringResponseToContinueFrom.getName());
 		contdStringRequest.setMaxValues(numValues);
 		
-		Request request = RequestFactory.eINSTANCE.createRequest();
+		Request request = RequestFactory.INSTANCE.createRequest();
 		request.getStringRequests().add(contdStringRequest);
-		XmlRequestDocument requestDoc = RequestFactory.eINSTANCE.createXmlRequestDocument();
-		requestDoc.setRequest(request);
-		
-		saveRequest(requestDoc, filename);
+		request.marshall(new File(filename));
 	}
 	
 	/**
@@ -998,35 +544,18 @@ public class TestUtil {
 	 * @param numberResponseToContinueFrom the number response to continue from.
 	 * @param filename where to save the continued number request.
 	 * @param numValues the number of values to be requested by the continued request.
+	 * @throws JAXBException 
 	 */
-	public static void createContdRequest(NumberResponse numberResponseToContinueFrom, String filename, int numValues) {
-		NumberRequest contdNumberRequest = RequestFactory.eINSTANCE.createNumberRequest();
+	public static void createContdRequest(NumberResponse<?> numberResponseToContinueFrom, String filename, int numValues) throws JAXBException {
+		NumberRequest contdNumberRequest = RequestFactory.INSTANCE.createNumberRequest();
 		contdNumberRequest.setId(numberResponseToContinueFrom.getId());
 		contdNumberRequest.setName(numberResponseToContinueFrom.getName());
 		contdNumberRequest.setMaxValues(numValues);
 		
-		Request request = RequestFactory.eINSTANCE.createRequest();
+		Request request = RequestFactory.INSTANCE.createRequest();
 		request.getNumberRequests().add(contdNumberRequest);
-		XmlRequestDocument requestDoc = RequestFactory.eINSTANCE.createXmlRequestDocument();
-		requestDoc.setRequest(request);
+		request.marshall(new File(filename));
 		
-		saveRequest(requestDoc, filename);
-	}
-	
-	/**
-	 * Creates a request file that closes another one identified by the id from its response.
-	 * 
-	 * @param requestFilename where to save the close request.
-	 * @param stringResponse the response containing the id that is necessary to close the request.
-	 */
-	public static void createCloseRequestFileFromResponse(String requestFilename, StringResponse stringResponse) {
-		Request request = RequestFactory.eINSTANCE.createRequest();
-		createCloseRequestCommandFromResponse(stringResponse, request);
-		
-		XmlRequestDocument xmlRequestDocument = RequestFactory.eINSTANCE.createXmlRequestDocument();
-		xmlRequestDocument.setRequest(request);
-		
-		saveRequest(xmlRequestDocument, requestFilename);
 	}
 	
 	/**
@@ -1034,41 +563,14 @@ public class TestUtil {
 	 * 
 	 * @param requestFilename where to save the close request.
 	 * @param numberResponse the response containing the id that is necessary to close the request.
+	 * @throws JAXBException 
 	 */
-	public static void createCloseRequestFileFromResponse(String requestFilename, NumberResponse numberResponse) {
-		Request request = RequestFactory.eINSTANCE.createRequest();
-		createCloseRequestCommandFromResponse(numberResponse, request);
-		
-		XmlRequestDocument xmlRequestDocument = RequestFactory.eINSTANCE.createXmlRequestDocument();
-		xmlRequestDocument.setRequest(request);
-		
-		saveRequest(xmlRequestDocument, requestFilename);
-	}
-	
-	/**
-	 * Creates a close request command (XML tag 'request:closeRequest') for a given string response and stores it
-	 * into a given request.
-	 * 
-	 * @param stringResponse The string response to be closed.
-	 * @param request The request where to save the created close request command.
-	 */
-	public static void createCloseRequestCommandFromResponse(StringResponse stringResponse, Request request) {
-		CloseRequest closeRequest = RequestFactory.eINSTANCE.createCloseRequest();
-		closeRequest.setId(stringResponse.getId());
-		request.getCloseRequests().add(closeRequest);
-	}
-	
-	/**
-	 * Creates a close request command (XML tag 'request:closeRequest') for a given response and stores it
-	 * into a given request.
-	 * 
-	 * @param numberResponse The number response to be closed.
-	 * @param request The request where to save the created close request command.
-	 */
-	public static void createCloseRequestCommandFromResponse(NumberResponse numberResponse, Request request) {
-		CloseRequest closeRequest = RequestFactory.eINSTANCE.createCloseRequest();
-		closeRequest.setId(numberResponse.getId());
-		request.getCloseRequests().add(closeRequest);
+	public static void createCloseRequestFileFromResponse(String requestFilename, CommonResponse response) throws JAXBException {
+		Request request = new RequestImpl();
+		CloseRequest closeRequest = new CloseRequestImpl();
+		closeRequest.setId(response.getId());
+		request.addCloseRequest(closeRequest);
+		request.marshall(new File(requestFilename));
 	}
 	
 	/**
@@ -1077,88 +579,13 @@ public class TestUtil {
 	 * 
 	 * @param requestFilename the filename of the request where the response is generated for.
 	 * @return the response.
+	 * @throws JAXBException 
+	 * @throws SAXException 
 	 */
-	public static XmlResponseDocument loadResponseFileForRequest(String requestFilename) {
+	public static Response loadResponseFileForRequest(String requestFilename) throws JAXBException, SAXException {
 		checkIfResponseFileExists(requestFilename);
-		
 		String responseFilename = getResponseFilenameForRequest(requestFilename);
-		XmlResponseDocument responseDoc = null;
-
-		ResponsePackage.eINSTANCE.eClass();
-
-		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("*", new RequestResourceFactoryImpl());
-
-		ResourceSet resSet = new ResourceSetImpl();
-
-		Resource resource = null;
-		try {
-			resource = resSet.getResource(URI.createURI(responseFilename), true);
-			responseDoc = (XmlResponseDocument) resource.getContents().get(0);
-		} catch (WrappedException e) {
-			SAXParseException cause = (SAXParseException) e.getCause();
-			System.out.println("line " + cause.getLineNumber() + ", column " + cause.getColumnNumber() + " : " + cause.getMessage());
-		}
-		return responseDoc;
-	}
-	
-	/**
-	 * Loads an {@link XmlResponseDocument} from an XML string.
-	 * 
-	 * @param 
-	 * @param xmlString The string containing a response in XML format.
-	 * @return The parsed XML file as {@link XmlRequestDocument}.
-	 */
-	public static XmlResponseDocument loadResponseString(String xmlString) {
-		XmlResponseDocument responseDoc = null;
-		ResponsePackage.eINSTANCE.eClass();
-
-		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("*", new ResponseResourceFactoryImpl());
-
-		ResourceSet resSet = new ResourceSetImpl();
-		
-		try {
-			EObject model = Helpers.load(new ByteArrayInputStream(xmlString.getBytes()), "", resSet);	
-			responseDoc = (XmlResponseDocument) model;
-		} catch (WrappedException e) {
-			SAXParseException cause = (SAXParseException) e.getCause();
-			System.out.println("line " + cause.getLineNumber() + ", column " + cause.getColumnNumber() + " : " + cause.getMessage());
-		}
-		return responseDoc;
-	}
-	
-
-	
-	/**
-	 * Saves a request to a file.
-	 * 
-	 * @param xmlRequestDocument  the request to be saved.
-	 * @param fileName where to save the request.
-	 */
-	public static void saveRequest(XmlRequestDocument xmlRequestDocument, String fileName) {
-		// Create a resource set to hold the resources.
-		ResourceSet resourceSet = new ResourceSetImpl();
-
-		// Register the appropriate resource factory to handle all file extensions.
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-		(Resource.Factory.Registry.DEFAULT_EXTENSION, new ResponseResourceFactoryImpl());
-
-		// Register the package to ensure it is available during loading.
-		resourceSet.getPackageRegistry().put(ResponsePackage.eNS_URI, ResponsePackage.eINSTANCE);
-
-		try {
-			Resource resource = resourceSet.createResource(URI.createURI("http://library.fuzzing.fokus.fraunhofer.de/request"));
-			resource.getContents().add(xmlRequestDocument);
-
-			FileOutputStream out = new FileOutputStream(fileName);
-			resource.save(out, null);
-		}
-		catch (IOException exception) {
-			exception.printStackTrace();
-		}
+		return ResponseImpl.unmarshall(new File(responseFilename));
 	}
 	
 	/**
@@ -1168,13 +595,13 @@ public class TestUtil {
 	 * @param list1 one sequence of string values to be compared with <code>list1</code>.
 	 * @param list2 another sequence of string values to be compared with <code>list2</code>.
 	 */
-	public static void compareTwoSequences(List<String> list1, List<String> list2) {
+	public static void compareTwoSequences(List<FuzzedValue<String>> list1, List<FuzzedValue<String>> list2) {
 		assertTrueWithPrefix("Different lengths: list1 has " + list1.size() + " elements, list2 has " + list2.size() + " elements",
 				   list1.size() == list2.size());
 		
 		for (int i=0; i<list1.size(); i++) {
-			String list1Value = list1.get(i);
-			String list2Value = list2.get(i);
+			FuzzedValue<String> list1Value = list1.get(i);
+			FuzzedValue<String> list2Value = list2.get(i);
 			assertTrueWithPrefix("Differents elements (at index " + i + "): list1 has " + list1Value + ", list2 has " + list2Value,
 					   list1Value.equals(list2Value));
 		}

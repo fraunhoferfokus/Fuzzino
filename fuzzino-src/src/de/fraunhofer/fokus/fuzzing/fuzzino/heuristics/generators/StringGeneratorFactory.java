@@ -40,7 +40,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SQLInjec
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.UnicodeBomStringsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XMLInjectionsGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 /**
  * A factory that creates all kinds of string generators. A single string generator

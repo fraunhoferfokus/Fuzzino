@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+    <closeRequest id="close request id"/>
+    <CollectionRequest fuzzStructure="true" fuzzValues="true" maxMutations="17" minMutations="5" id="collection request id" maxValues="4000" name="name for my collection request" seed="1234">
+        <specification ref="some reference string that I have no ide what it does here :D" isUnique="true" isOrdered="true" minLength="1" maxLength="14"/>
+        <validCollections>
+            <operator name="OP 1 NAME"/>
+            <operator name="OP 2 NAME"/>
+            <operator name="OP 3 NAME" parameter="op 3 param"/>
+            <validCollection name="valid collection name 1">
+                <value>val 1</value>
+                <value>val2</value>
+                <value>val3</value>
+            </validCollection>
+            <validCollection name="valid collection name 2">
+                <value>val 1</value>
+                <value>val2</value>
+                <value>val3</value>
+            </validCollection>
+        </validCollections>
+    </CollectionRequest>
+    <number id="my number request id" maxValues="200" name="number request 1" seed="99">
+        <noGenerators>true</noGenerators>
+        <specification minValue="57" maxValue="1000" bits="16" isSigned="false" ignoreMinMaxValues="true"/>
+        <generator value="NUMBER GEN 1"/>
+        <generator value="NUMBER GEN 2" parameter="param 2"/>
+        <validValues>
+            <operator name="NUMBER OPERATOR 1"/>
+            <operator name="NUMBER OPERATOR 2"/>
+            <operator name="NUMBER OPERATOR 3" parameter="op3 param"/>
+            <value>11</value>
+            <value>12</value>
+            <value>13</value>
+            <value>14</value>
+        </validValues>
+    </number>
+    <string id="my string request id" maxValues="12" name="string request 1" seed="13">
+        <noGenerators>false</noGenerators>
+        <generator value="GEN1"/>
+        <generator value="GEN2"/>
+        <specification type="HOSTNAME" minLength="321" maxLength="1234" nullTerminated="true" encoding="UTF16" regEx="this is a regex" ignoreLengths="true"/>
+        <validValues>
+            <operator name="OP1"/>
+            <operator name="OP2" parameter="param1"/>
+            <value>valid</value>
+            <value>valid too</value>
+        </validValues>
+    </string>
+    <structure fuzzStructure="true" maxMutations="1337" minMutations="321" id="my structure req id" maxValues="12345" name="my structure req name" seed="54">
+        <operator name="MY FIRST OPERATOR"/>
+        <operator name="MY SECOND OPERATOR"/>
+        <operator name="MY THIRD OPERATOR" parameter="param1"/>
+        <specification ordered="true">
+            <field correspondingId="id1" fuzzField="true" name="f1"/>
+            <field correspondingId="id2" fuzzField="false" name="f2"/>
+        </specification>
+    </structure>
+</ns2:request>

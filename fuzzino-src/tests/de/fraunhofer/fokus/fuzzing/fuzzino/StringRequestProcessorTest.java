@@ -13,7 +13,6 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.assertTrueWithPrefix;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkGeneratorPartForNumFuzzedValues;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkOperatorPartForNumFuzzedValues;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorResponse;
@@ -31,31 +30,39 @@ import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForWarni
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.compareTwoSequences;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createContdRequest;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getGeneratorPartFromResponseByName;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromResponseByName;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromNumberResponseByName;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getStringResponseFromResponseDoc;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.loadRequestFile;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import javax.xml.bind.JAXBException;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperatorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.GeneratorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.OperatorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 public class StringRequestProcessorTest extends FuzzinoTest {
@@ -67,18 +74,14 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	
 	public static final int MIN_LENGTH = 2;
 	public static final int MAX_LENGTH = 5;
-
+	
+	private static String stringRootDir = "testdata/reworked/stringRequests/";
 	
 	@Before
 	public void init() throws Exception {
-		XmlRequestDocument request = loadRequestFile("./testdata/stringRequests/ValidStringRequest.request.xml");
-		if (request != null) {
-			de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest stringRequestEMF = request.getRequest().getStringRequests().get(0);
-			StringRequest stringRequest = RequestFactory.INSTANCE.createStringRequest(stringRequestEMF);
-			reqProc = new StringRequestProcessor(stringRequest, UUID.randomUUID());
-		} else {
-			throw new Exception("Request file could not be loaded.");
-		}
+		Request request = RequestImpl.unmarshall(new File(stringRootDir + "validStringRequest.request.xml"));
+		StringRequest stringRequest = request.getStringRequests().get(0);
+		reqProc = new StringRequestProcessor(stringRequest, UUID.randomUUID());
 	}
 
 	@Test
@@ -123,24 +126,20 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testWithValidStringRequest() {
-		String requestFilename = "./testdata/general/ValidRequest.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testWithValidStringRequest() throws JAXBException, SAXException {
+		String requestFilename = stringRootDir + "validStringRequest.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
-
-		assertTrueWithPrefix("No seed in response.",
-				   stringResponse.getSeed() != null);
-
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 		checkResponseForNumGeneratorParts(stringResponse, 1);
 		
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadStrings");
+		GeneratorSpecificFuzzedValues<String> generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadStrings");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, 47);
 		
 		checkResponseForNumOperatorParts(stringResponse, 1);
 
-		OperatorPart operatorPart = getOperatorPartFromResponseByName(stringResponse, "StringCase", "ABC");
+		OperatorSpecificFuzzedValues<String> operatorPart = getOperatorPartFromNumberResponseByName(stringResponse, "StringCase", "ABC");
 		checkOperatorPartForNumFuzzedValues(operatorPart, 3);
 		
 		checkResponseForWarningsPart(stringResponse, false);
@@ -151,24 +150,20 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testValidRequestWithEncodeAllCharacters() {
-		String requestFilename = "./testdata/general/ValidRequest.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename, true);
+	public void testValidRequestWithEncodeAllCharacters() throws JAXBException, SAXException {
+		String requestFilename = stringRootDir + "validStringRequest.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename, true);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
-
-		assertTrueWithPrefix("No seed in response.",
-				   stringResponse.getSeed() != null);
-
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 		checkResponseForNumGeneratorParts(stringResponse, 1);
 		
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadStrings");
+		GeneratorSpecificFuzzedValues<String> generatorPart = getGeneratorPartFromResponseByName(stringResponse, "BadStrings");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, 47);
 		
 		checkResponseForNumOperatorParts(stringResponse, 1);
 
-		OperatorPart operatorPart = getOperatorPartFromResponseByName(stringResponse, "StringCase", "ABC");
+		OperatorSpecificFuzzedValues<String> operatorPart = getOperatorPartFromNumberResponseByName(stringResponse, "StringCase", "ABC");
 		checkOperatorPartForNumFuzzedValues(operatorPart, 3);
 		
 		checkResponseForWarningsPart(stringResponse, false);
@@ -179,26 +174,26 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testContinuedStringRequest() {
+	public void testContinuedStringRequest() throws JAXBException, SAXException {
 		// load initial request
-		String requestFilename = "./testdata/stringRequests/ValidStringRequest.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+		String requestFilename = stringRootDir + "validStringRequest.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename);
 
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0); 
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 		
 		// create second request continuing the first one
-		String contdRequestFilename = "./testdata/stringRequests/ValidStringRequestContinued.request.xml";
+		String contdRequestFilename = stringRootDir + "ValidStringRequestContinued.request.xml";
 		int expectedNumOfContdFuzzedValues = 5;
 		createContdRequest(stringResponse, contdRequestFilename, expectedNumOfContdFuzzedValues);
 
 		// check response doc
-		XmlResponseDocument contdResponse = getResponseDocForRequest(contdRequestFilename);
+		Response contdResponse = getResponseDocForRequest(contdRequestFilename);
 
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse contdStringResponse = getStringResponseFromResponseDoc(contdResponse, 0);
+		StringResponse contdStringResponse = contdResponse.getStringResponses().get(0);
 
 		checkResponseForNumGeneratorParts(contdStringResponse, 1);
-		GeneratorPart contdGeneratorPart = getGeneratorPartFromResponseByName(contdStringResponse, "BadStrings");;
+		GeneratorSpecificFuzzedValues<String> contdGeneratorPart = getGeneratorPartFromResponseByName(contdStringResponse, "BadStrings");;
 		checkGeneratorPartForNumFuzzedValues(contdGeneratorPart, expectedNumOfContdFuzzedValues);
 		
 		checkResponseForNumOperatorParts(contdStringResponse, 0);
@@ -211,20 +206,20 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testContinuedStringRequestWithMoreValuesRequestedThanAvailable() throws UnknownFuzzingHeuristicException {
+	public void testContinuedStringRequestWithMoreValuesRequestedThanAvailable() throws UnknownFuzzingHeuristicException, JAXBException, SAXException {
 		// load initial request
-		String requestFileName = "./testdata/general/StringRequestSmallGenerator.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFileName);
+		String requestFileName = stringRootDir + "StringRequestSmallGenerator.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFileName);
 
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 		
 		checkResponseForMoreValuesAttribute(stringResponse, false);
 		
 		checkResponseForNumGeneratorParts(stringResponse, 1);
 		
 		String generatorName = "SmallGenerator";
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(stringResponse, generatorName);
+		GeneratorSpecificFuzzedValues<String> generatorPart = getGeneratorPartFromResponseByName(stringResponse, generatorName);
 		StringGenerator smallGenerator = StringGeneratorFactory.INSTANCE.create(generatorName, NO_PARAM, STRING_SPEC, SEED); 
 		checkGeneratorPartForNumFuzzedValues(generatorPart, smallGenerator.size());
 
@@ -237,13 +232,13 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 		checkResponseDocForNumStructureResponses(responseDoc, 0);
 
 		// create second request continuing the first one
-		String contdRequestFilename = "./testdata/stringRequests/StringRequestSmallGeneratorContinued.request.xml";
+		String contdRequestFilename = stringRootDir + "StringRequestSmallGeneratorContinued.request.xml";
 		int requestedNumFuzzedValuesContinued = 5;
 		createContdRequest(stringResponse, contdRequestFilename, requestedNumFuzzedValuesContinued);
-		XmlResponseDocument contdResponseDoc = getResponseDocForRequest(contdRequestFilename);
+		Response contdResponseDoc = getResponseDocForRequest(contdRequestFilename);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse contdStringResponse = getStringResponseFromResponseDoc(contdResponseDoc, 0);
+		StringResponse contdStringResponse = contdResponseDoc.getStringResponses().get(0);
 		
 		checkResponseForMoreValuesAttribute(contdStringResponse, false);
 		
@@ -258,32 +253,30 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testTwoRunsOfSameStringRequestWithSeed() {
+	public void testTwoRunsOfSameStringRequestWithSeed() throws JAXBException, SAXException {
 		String generatorName = "SmallGenerator";
 		String operatorName = "StringCase";
 		String validValue = "ABCDEFGHIJKLMNOPQRST";
-		String expectedSeed = "500000";
+		long expectedSeed = 500000;
 		int expectedNumOfFuzzedValues = 3;
 		
-		List<String> fuzzedValuesFromFirstRun;
-		List<String> fuzzedValuesFromSecondRun;
+		List<FuzzedValue<String>> fuzzedValuesFromFirstRun;
+		List<FuzzedValue<String>> fuzzedValuesFromSecondRun;
 		
-		String requestFileName = "./testdata/general/ValidRequestWithSeed.request.xml";
+		String requestFileName = stringRootDir + "ValidRequestWithSeed.request.xml";
 		
 		// first run
-		XmlResponseDocument responseDocFromFirstRun = getResponseDocForRequest(requestFileName);
+		Response responseDocFromFirstRun = getResponseDocForRequest(requestFileName);
 
 		checkResponseDocForNumStringResponses(responseDocFromFirstRun, 1);
-		StringResponse stringResponseFirstRun = getStringResponseFromResponseDoc(responseDocFromFirstRun, 0);
+		StringResponse stringResponseFirstRun = responseDocFromFirstRun.getStringResponses().get(0);
 		checkResponseForSeedValue(stringResponseFirstRun, expectedSeed);
 		
 		checkResponseForNumGeneratorParts(stringResponseFirstRun, 1);
-		GeneratorPart generatorPartFirstRun =
-				getGeneratorPartFromResponseByName(stringResponseFirstRun, generatorName);
+		GeneratorSpecificFuzzedValues<String> generatorPartFirstRun = getGeneratorPartFromResponseByName(stringResponseFirstRun, generatorName);
 		checkGeneratorPartForNumFuzzedValues(generatorPartFirstRun, 10);
 		checkResponseForNumOperatorParts(stringResponseFirstRun, 1);
-		OperatorPart operatorPartFirstRun = 
-				getOperatorPartFromResponseByName(stringResponseFirstRun, operatorName, validValue);
+		OperatorSpecificFuzzedValues<String> operatorPartFirstRun = getOperatorPartFromNumberResponseByName(stringResponseFirstRun, operatorName, validValue);
 		checkOperatorPartForNumFuzzedValues(operatorPartFirstRun, expectedNumOfFuzzedValues);
 		checkResponseForWarningsPart(stringResponseFirstRun, false);
 		
@@ -295,19 +288,17 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 		fuzzedValuesFromFirstRun = operatorPartFirstRun.getFuzzedValues();
 
 		// second run
-		XmlResponseDocument responseDocFromSecondRun = getResponseDocForRequest(requestFileName);
+		Response responseDocFromSecondRun = getResponseDocForRequest(requestFileName);
 
 		checkResponseDocForNumStringResponses(responseDocFromSecondRun, 1);
-		StringResponse stringResponseSecondRun = getStringResponseFromResponseDoc(responseDocFromSecondRun, 0);
+		StringResponse stringResponseSecondRun = responseDocFromSecondRun.getStringResponses().get(0);
 		checkResponseForSeedValue(stringResponseSecondRun, expectedSeed);
 		
 		checkResponseForNumGeneratorParts(stringResponseSecondRun, 1);
-		GeneratorPart generatorPartSecondRun =
-				getGeneratorPartFromResponseByName(stringResponseSecondRun, generatorName);
+		GeneratorSpecificFuzzedValues<String> generatorPartSecondRun = getGeneratorPartFromResponseByName(stringResponseSecondRun, generatorName);
 		checkGeneratorPartForNumFuzzedValues(generatorPartSecondRun, 10);
 		checkResponseForNumOperatorParts(stringResponseSecondRun, 1);
-		OperatorPart operatorPartSecondRun = 
-				getOperatorPartFromResponseByName(stringResponseSecondRun, operatorName, validValue);
+		OperatorSpecificFuzzedValues<String> operatorPartSecondRun = getOperatorPartFromNumberResponseByName(stringResponseSecondRun, operatorName, validValue);
 		checkOperatorPartForNumFuzzedValues(operatorPartSecondRun, expectedNumOfFuzzedValues);
 		checkResponseForWarningsPart(stringResponseSecondRun, false);
 		
@@ -322,21 +313,18 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testMatchesLength() {
-		String requestFilename = "./testdata/stringRequests/StringRequestTestMatchesLength.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testMatchesLength() throws JAXBException, SAXException {
+		String requestFilename = stringRootDir + "StringRequestTestMatchesLength.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
-
-		assertTrueWithPrefix("No seed in response.",
-				   stringResponse.getSeed() != null);
-
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 		checkResponseForNumGeneratorParts(stringResponse, 1);
 		
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(stringResponse, "SmallGenerator");
-		List<String> fuzzedValues = generatorPart.getFuzzedValues();
-		for (String value : fuzzedValues) {
+		GeneratorSpecificFuzzedValues<String> generatorPart = getGeneratorPartFromResponseByName(stringResponse, "SmallGenerator");
+		List<FuzzedValue<String>> fuzzedValues = generatorPart.getFuzzedValues();
+		for (FuzzedValue<String> fuzzValue : fuzzedValues) {
+			String value = fuzzValue.getValue();
 			int actualLength = value.length();
 			
 			assertTrue("Wrong length: was too short  " + actualLength + " < MIN_LENGTH(" + MIN_LENGTH + ")",
@@ -356,19 +344,16 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	}
 
 	@Test
-	public void testIgnoringLength() {
-		String requestFilename = "./testdata/stringRequests/StringRequestTestIgnoringLength.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testIgnoringLength() throws JAXBException, SAXException {
+		String requestFilename = stringRootDir + "StringRequestTestIgnoringLength.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
-
-		assertTrueWithPrefix("No seed in response.",
-				   stringResponse.getSeed() != null);
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 
 		checkResponseForNumGeneratorParts(stringResponse, 1);
 		
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(stringResponse, "LongStrings");
+		GeneratorSpecificFuzzedValues<String> generatorPart = getGeneratorPartFromResponseByName(stringResponse, "LongStrings");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, 50);
 		
 		checkResponseForNumOperatorParts(stringResponse, 0);
@@ -380,12 +365,12 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testAllGeneratorsOneOperator() {
-		String requestFilename = "./testdata/general/ValidRequestAllGeneratorsOneOperator.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testAllGeneratorsOneOperator() throws JAXBException, SAXException {
+		String requestFilename = stringRootDir + "ValidRequestAllGeneratorsOneOperator.request.xml";
+		Response responseDoc = getResponseDocForRequest(requestFilename);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
-		StringResponse stringResponse = getStringResponseFromResponseDoc(responseDoc, 0);
+		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 
 		checkResponseForMinNumGeneratorParts(stringResponse, 1);
 		checkResponseForNumOperatorParts(stringResponse, 1);

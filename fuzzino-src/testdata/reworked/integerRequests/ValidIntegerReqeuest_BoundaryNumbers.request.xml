@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="request">
+    <number maxValues="5" name="NumberRequestTest" seed="-1">
+        <noGenerators>false</noGenerators>
+        <specification minValue="-2147483648" maxValue="2147483647" bits="32" isSigned="true" ignoreMinMaxValues="false"/>
+    </number>
+</ns2:request>

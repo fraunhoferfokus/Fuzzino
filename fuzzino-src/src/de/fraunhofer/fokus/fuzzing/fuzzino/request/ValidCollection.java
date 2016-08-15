@@ -13,69 +13,46 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Valid Collection</b></em>'.
- * <!-- end-user-doc -->
+ * This class represents a valid collection made up of its elements.
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection#getValue <em>Value</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection#getName <em>Name</em>}</li>
- * </ul>
- * </p>
- *
- * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getValidCollection()
- * @model extendedMetaData="name='validCollection_._type' kind='elementOnly'"
- * @generated
  */
-public interface ValidCollection extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Value</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value</em>' attribute list.
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getValidCollection_Value()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='element' name='value' namespace='##targetNamespace'"
-	 * @generated
-	 */
-	EList<String> getValue();
+public interface ValidCollection extends Serializable {
 
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getValidCollection_Name()
-	 * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.ID" required="true"
-	 *        extendedMetaData="kind='attribute' name='name'"
-	 * @generated
+	 * @return A list of all values contained in this collection.
+	 */
+	List<String> getValues();
+	
+	/**
+	 * Replaces all values of this collection.
+	 * 
+	 * @param value A list of values replacing the existing values.
+	 */
+	void setValues(List<String> value);
+	
+	/**
+	 * Adds a value at the end of the list of all values.
+	 * 
+	 * @param value The value to be added at the end of the list.
+	 */
+	void addValue(String value);
+	
+	/**
+	 * @return The user-defined identifier of this collection.
 	 */
 	String getName();
-
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
+	 * User-defined dentifier of this collection that will be mentioned in the response.
+	 * 
+	 * @param value
 	 */
 	void setName(String value);
-
-} // ValidCollection
+	
+}

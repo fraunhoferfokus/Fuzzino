@@ -13,7 +13,6 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino;
 
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.assertTrueWithPrefix;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkGeneratorPartForNumFuzzedValues;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkOperatorPartForNumFuzzedValues;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorResponse;
@@ -30,18 +29,21 @@ import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForNumOp
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseForWarningsPart;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createContdRequest;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getGeneratorPartFromResponseByName;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getNumberResponseFromResponseDoc;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromNumberResponseByName;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.loadRequestFile;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.xml.bind.JAXBException;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
@@ -49,16 +51,20 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerato
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperatorFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.XmlRequestDocument;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.IntegerSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.XmlResponseDocument;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.GeneratorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.IntegerSpecificationImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.NumberRequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
 
-public class BigIntegerRequestProcessorTest extends FuzzinoTest {
+public class BigIntegerRequestProcessorTest extends FuzzinoTest{
 
 	private static final long SEED = 4711;
 	private static final String NO_PARAM = null;
@@ -69,17 +75,17 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest {
 	}
 	protected BigIntegerRequestProcessor reqProc;
 
+	private static String numRequestRoot = "testdata/reworked/NumberRequests/";
+
+	
 	@Before
 	public void init() throws Exception {
-		XmlRequestDocument request = loadRequestFile("./testdata/NumberRequests/ValidBigIntegerRequest.request.xml");
-		if (request != null) {
-			de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest numberRequestEMF = 
-					request.getRequest().getNumberRequests().get(0);
-			NumberRequest numberRequest = RequestFactory.INSTANCE.createNumberRequest(numberRequestEMF);
-			reqProc = new BigIntegerRequestProcessor(numberRequest, UUID.randomUUID());
-		} else {
-			throw new Exception("Request file could not be loaded.");
-		}
+		
+		Request request = RequestImpl.unmarshall(new File(numRequestRoot + "ValidBigIntegerRequest.request.xml"));
+		NumberRequest numberRequest = request.getNumberRequests().get(0);
+		//TODO: we originally made a deepcopy here - was that important?
+		reqProc = new BigIntegerRequestProcessor(numberRequest, UUID.randomUUID());
+		
 	}
 
 	@Test
@@ -124,77 +130,68 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest {
 	}
 
 	@Test
-	public void testValidIntegerRequest() {
-		String requestFilename = "./testdata/NumberRequests/ValidBigIntegerRequest.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testValidIntegerRequest() throws IOException, JAXBException, SAXException {
+		//test
+		String requestFilename = numRequestRoot + "ValidBigIntegerRequest.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
 		
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
+		NumberResponse<?> numberResponse = response.getNumberResponses().get(0);
 		
-		assertTrueWithPrefix("No seed in response.",
-				   numberResponse.getSeed() != null);
-
 		checkResponseForNumGeneratorParts(numberResponse, 1);
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(numberResponse, "BoundaryNumbers");
+		GeneratorSpecificFuzzedValues<?> generatorPart = getGeneratorPartFromResponseByName(numberResponse, "BoundaryNumbers");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, 17);
 		
 		checkResponseForNumOperatorParts(numberResponse, 1);
-		OperatorPart operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
+		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
 		checkOperatorPartForNumFuzzedValues(operatorPart, 20);
 		
 		checkResponseForWarningsPart(numberResponse, false);
 
-		checkResponseDocForErrorResponse(responseDoc, false);
-		checkResponseDocForNumStringResponses(responseDoc, 0);
-		checkResponseDocForNumCollectionResponses(responseDoc, 0);
-		checkResponseDocForNumStructureResponses(responseDoc, 0);
+		checkResponseDocForErrorResponse(response, false);
+		checkResponseDocForNumStringResponses(response, 0);
+		checkResponseDocForNumCollectionResponses(response, 0);
+		checkResponseDocForNumStructureResponses(response, 0);
 	}
 	
 	@Test
-	public void testValidIntegerRequest_BoundaryNumbers() {
-		String requestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
-		
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
-		
-		assertTrueWithPrefix("No seed in response.",
-				   numberResponse.getSeed() != null);
+	public void testValidIntegerRequest_BoundaryNumbers() throws JAXBException, SAXException {
+		String requestFilename = numRequestRoot + "ValidBigIntegerReqeuest_BoundaryNumbers.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
+		NumberResponse<?> numberResponse = response.getNumberResponses().get(0);
 
 		checkResponseForNumGeneratorParts(numberResponse, 1);
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(numberResponse, "BoundaryNumbers");
+		GeneratorSpecificFuzzedValues<?> generatorPart = getGeneratorPartFromResponseByName(numberResponse, "BoundaryNumbers");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, 5);
 		
 		checkResponseForNumOperatorParts(numberResponse, 0);
 		
 		checkResponseForWarningsPart(numberResponse, false);
 
-		checkResponseDocForErrorResponse(responseDoc, false);
-		checkResponseDocForNumStringResponses(responseDoc, 0);
-		checkResponseDocForNumCollectionResponses(responseDoc, 0);
-		checkResponseDocForNumStructureResponses(responseDoc, 0);
+		checkResponseDocForErrorResponse(response, false);
+		checkResponseDocForNumStringResponses(response, 0);
+		checkResponseDocForNumCollectionResponses(response, 0);
+		checkResponseDocForNumStructureResponses(response, 0);
 	}
 	
 	@Test
-	public void testValidIntegerRequest_BoundaryNumbersContinued() {
-		String requestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testValidIntegerRequest_BoundaryNumbersContinued() throws JAXBException, SAXException {
+		String requestFilename = numRequestRoot + "ValidBigIntegerReqeuest_BoundaryNumbers.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
 		
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
+		NumberResponse<?> numberResponse = response.getNumberResponses().get(0);
 		
-		String contdRequestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers_contd.request.xml";
+		String contdRequestFilename = numRequestRoot +"ValidBigIntegerReqeuest_BoundaryNumbers_contd.request.xml";
 		int expectedNumFuzzedValues = 12;
 		createContdRequest(numberResponse, contdRequestFilename, expectedNumFuzzedValues);
 		
-		XmlResponseDocument responseDocContd = getResponseDocForRequest(contdRequestFilename);
+		Response responseDocContd = getResponseDocForRequest(contdRequestFilename);
 		
-		NumberResponse numberResponseContd = getNumberResponseFromResponseDoc(responseDocContd, 0);
-		
-		assertTrueWithPrefix("No seed in response.",
-				numberResponseContd.getSeed() != null);
-		
+		NumberResponse<?> numberResponseContd = responseDocContd.getNumberResponses().get(0);
+
 		checkResponseForMoreValuesAttribute(numberResponseContd, false);
 
 		checkResponseForNumGeneratorParts(numberResponseContd, 1);
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(numberResponseContd, "BoundaryNumbers");
+		GeneratorSpecificFuzzedValues<?> generatorPart = getGeneratorPartFromResponseByName(numberResponseContd, "BoundaryNumbers");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, expectedNumFuzzedValues);
 		
 
@@ -208,32 +205,32 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testValidIntegerRequest_BoundaryNumbersContinuedTwoTimes() {
-		String requestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testValidIntegerRequest_BoundaryNumbersContinuedTwoTimes() throws JAXBException, SAXException {
+		String requestFilename =  numRequestRoot + "ValidBigIntegerReqeuest_BoundaryNumbers.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
 		
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
+		NumberResponse<?> numberResponse = response.getNumberResponses().get(0);
 		
-		String contdRequestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers_contd.request.xml";
+		String contdRequestFilename = numRequestRoot + "ValidBigIntegerReqeuest_BoundaryNumbers_contd.request.xml";
 		int expectedNumFuzzedValues = 7;
 		createContdRequest(numberResponse, contdRequestFilename, expectedNumFuzzedValues);
 		
-		XmlResponseDocument responseDocContd = getResponseDocForRequest(contdRequestFilename);
+		Response responseDocContd = getResponseDocForRequest(contdRequestFilename);
 		
-		NumberResponse numberResponseContd = getNumberResponseFromResponseDoc(responseDocContd, 0);
+		NumberResponse<?> numberResponseContd = response.getNumberResponses().get(0);
 
 		int expectedNumFuzzedValues2 = 5;
-		String contd2RequestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers_contd2.request.xml";
+		String contd2RequestFilename = numRequestRoot +"ValidBigIntegerReqeuest_BoundaryNumbers_contd2.request.xml";
 		createContdRequest(numberResponseContd, contd2RequestFilename, expectedNumFuzzedValues2);
 		
-		XmlResponseDocument responseDocContd2 = getResponseDocForRequest(contd2RequestFilename);
+		Response responseDocContd2 = getResponseDocForRequest(contd2RequestFilename);
 		
-		NumberResponse numberResponseContd2 = getNumberResponseFromResponseDoc(responseDocContd2, 0);
+		NumberResponse<?> numberResponseContd2 = responseDocContd2.getNumberResponses().get(0);
 
 		checkResponseForMoreValuesAttribute(numberResponseContd2, false);
 
 		checkResponseForNumGeneratorParts(numberResponseContd2, 1);
-		GeneratorPart generatorPart = getGeneratorPartFromResponseByName(numberResponseContd2, "BoundaryNumbers");
+		GeneratorSpecificFuzzedValues<?> generatorPart = getGeneratorPartFromResponseByName(numberResponseContd2, "BoundaryNumbers");
 		checkGeneratorPartForNumFuzzedValues(generatorPart, expectedNumFuzzedValues2);
 		
 		checkResponseForNumOperatorParts(numberResponseContd2, 0);
@@ -246,24 +243,24 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest {
 	}
 
 	@Test
-	public void testContdIntegerRequestWithMoreValuesThanAvailable() {
-		String requestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testContdIntegerRequestWithMoreValuesThanAvailable() throws JAXBException, SAXException {
+		String requestFilename = numRequestRoot + "ValidBigIntegerReqeuest_BoundaryNumbers.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
 		
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
+		NumberResponse<?> numberResponse = response.getNumberResponses().get(0);
 		
-		String contdRequestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers_MoreValuesContd.request.xml";
+		String contdRequestFilename = numRequestRoot + "ValidBigIntegerReqeuest_BoundaryNumbers_MoreValuesContd.request.xml";
 		createContdRequest(numberResponse, contdRequestFilename, 100);
-		XmlResponseDocument responseDocContd = getResponseDocForRequest(contdRequestFilename);
+		Response responseDocContd = getResponseDocForRequest(contdRequestFilename);
 		
-		NumberResponse numberResponseContd = getNumberResponseFromResponseDoc(responseDocContd, 0);
+		NumberResponse<?> numberResponseContd = responseDocContd.getNumberResponses().get(0);
 
-		String contd2RequestFilename = "./testdata/NumberRequests/ValidBigIntegerReqeuest_BoundaryNumbers_MoreValuesContd2.request.xml";
+		String contd2RequestFilename = numRequestRoot +"ValidBigIntegerReqeuest_BoundaryNumbers_MoreValuesContd2.request.xml";
 		createContdRequest(numberResponseContd, contd2RequestFilename, 1);
 		
-		XmlResponseDocument responseDocContd2 = getResponseDocForRequest(contd2RequestFilename);
+		Response responseDocContd2 = getResponseDocForRequest(contd2RequestFilename);
 		
-		NumberResponse numberResponseContd2 = getNumberResponseFromResponseDoc(responseDocContd2, 0);
+		NumberResponse<?> numberResponseContd2 = responseDocContd2.getNumberResponses().get(0);
 
 		checkResponseForNoMoreValuesWarning(numberResponseContd2);
 		
@@ -280,27 +277,24 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest {
 	}
 	
 	@Test
-	public void testValidIntegerRequest_NumericalVariance() {
-		String requestFilename = "./testdata/NumberRequests/ValidBigIntegerRequest_NumericalVariance.request.xml";
-		XmlResponseDocument responseDoc = getResponseDocForRequest(requestFilename);
+	public void testValidIntegerRequest_NumericalVariance() throws JAXBException, SAXException {
+		String requestFilename = numRequestRoot + "ValidBigIntegerRequest_NumericalVariance.request.xml";
+		Response response = getResponseDocForRequest(requestFilename);
 		
-		NumberResponse numberResponse = getNumberResponseFromResponseDoc(responseDoc, 0);
+		NumberResponse<?> numberResponse = response.getNumberResponses().get(0);
 		
-		assertTrueWithPrefix("No seed in response.",
-				   numberResponse.getSeed() != null);
-
 		checkResponseForNumOperatorParts(numberResponse, 1);
-		OperatorPart operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
+		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
 		int expNumFuzzedValues = 20;
 		checkOperatorPartForNumFuzzedValues(operatorPart, expNumFuzzedValues);
 		
 		checkResponseForNumGeneratorParts(numberResponse, 0);
 		checkResponseForWarningsPart(numberResponse, false);
 
-		checkResponseDocForErrorResponse(responseDoc, false);
-		checkResponseDocForNumStringResponses(responseDoc, 0);
-		checkResponseDocForNumCollectionResponses(responseDoc, 0);
-		checkResponseDocForNumStructureResponses(responseDoc, 0);
+		checkResponseDocForErrorResponse(response, false);
+		checkResponseDocForNumStringResponses(response, 0);
+		checkResponseDocForNumCollectionResponses(response, 0);
+		checkResponseDocForNumStructureResponses(response, 0);
 	}
 
 }

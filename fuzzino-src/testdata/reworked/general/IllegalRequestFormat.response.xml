@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<response>
+    <errorResponse reason="cvc-complex-type.4: Attribute 'maxValues' must appear on element 'string'." stackTrace="[Ljava.lang.StackTraceElement;@303fbc4"/>
+</response>

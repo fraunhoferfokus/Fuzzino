@@ -47,10 +47,4 @@ public interface FuzzedValuesByOperators<T> extends Iterable<OperatorSpecificFuz
 	 */
 	void addOperatorSpecificSection(OperatorSpecificFuzzedValues<T> value);
 	
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.AllOperatorsBasedPart}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.AllOperatorsBasedPart getEMFRepresentation();
-	
 }

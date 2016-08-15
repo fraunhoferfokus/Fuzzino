@@ -66,10 +66,4 @@ public interface OperatorSpecificFuzzedValues<T> extends Iterable<FuzzedValue<T>
 	 * @param value A name of an operator.
 	 */
 	void setName(String value);
-	
-	/**
-	 * @return Returns the corresponding EMF object {@link de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart}
-	 *         initialized with the values of this response.
-	 */
-	de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorPart getEMFRepresentation();
 }

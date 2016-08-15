@@ -13,16 +13,36 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalRequestFormat;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class IllegalRequestFormatImpl implements IllegalRequestFormat {
 
+	@XmlAttribute
 	protected String attribute;
+	@XmlAttribute
 	protected String element;
+	@XmlAttribute
 	protected String missingAttribute;
+	@XmlAttribute
 	protected String missingElement;
 	
+	public IllegalRequestFormatImpl() {
+	}
+	
+	public IllegalRequestFormatImpl(String attribute, String element, String missingAttribute, String missingElement) {
+		this.attribute = attribute;
+		this.element = element;
+		this.missingAttribute = missingAttribute;
+		this.missingElement = missingElement;
+	}
+
 	@Override
 	public String getAttribute() {
 		return attribute;
@@ -62,19 +82,6 @@ public class IllegalRequestFormatImpl implements IllegalRequestFormat {
 	public void setMissingElement(String value) {
 		missingElement = value;
 	}
-
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat
-		   emfIllegalRequestFormat = ResponseFactory.eINSTANCE.createIllegalRequestFormat();
-		
-		emfIllegalRequestFormat.setAttribute(getAttribute());
-		emfIllegalRequestFormat.setElement(getElement());
-		emfIllegalRequestFormat.setMissingAttribute(getMissingAttribute());
-		emfIllegalRequestFormat.setMissingElement(getMissingElement());
-		
-		return emfIllegalRequestFormat;
-	}
 	
 	@Override
 	public String toString() {
@@ -82,6 +89,17 @@ public class IllegalRequestFormatImpl implements IllegalRequestFormat {
 				                         (attribute == null ? "" : " attribute:" + attribute) +
 				                         (missingElement == null ? "" : " missingElement:" + missingElement) + 
 				                         (missingAttribute == null ? "" : " missingAttribute:" + missingAttribute) + "]";
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if( o instanceof IllegalRequestFormatImpl){
+			IllegalRequestFormatImpl other = (IllegalRequestFormatImpl) o;
+			return attribute.equals(other.getAttribute()) && element.equals(other.getElement()) && 
+					missingAttribute.equals(other.getMissingAttribute()) && missingElement.equals(other.getMissingElement());
+		} else{
+			return false;
+		}
 	}
 
 }

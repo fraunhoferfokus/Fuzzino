@@ -13,214 +13,58 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import static de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil.normalize;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage;
 
-/**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Operator</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.OperatorImpl#getValue <em>Value</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.OperatorImpl#getParam <em>Param</em>}</li>
- * </ul>
- * </p>
- *
- * @generated
- */
-public class OperatorImpl extends EObjectImpl implements Operator {
-	/**
-	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String VALUE_EDEFAULT = null;
+@XmlAccessorType(XmlAccessType.NONE)
+public class OperatorImpl implements Operator {
 
-	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected String value = VALUE_EDEFAULT;
+	private static final long serialVersionUID = 1599135300363968257L;
+	@XmlAttribute
+	protected String name;
+	@XmlAttribute
+	protected String parameter;
 
-	/**
-	 * The default value of the '{@link #getParam() <em>Param</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getParam()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String PARAM_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getParam() <em>Param</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getParam()
-	 * @generated
-	 * @ordered
-	 */
-	protected String param = PARAM_EDEFAULT;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected OperatorImpl() {
-		super();
+	public OperatorImpl(String operatorName){
+		setOperatorName(operatorName);
+	}
+	
+	public OperatorImpl() {
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	public OperatorImpl(String operatorName, String param) {
+		setOperatorName(operatorName);
+		this.parameter = param;
+	}
+
 	@Override
-	protected EClass eStaticClass() {
-		return RequestPackage.Literals.OPERATOR;
+	public String getOperatorName() {
+		return name;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getValue() {
-		return value;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setValue(String newValue) {
-		String oldValue = value;
-		value = newValue;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RequestPackage.OPERATOR__VALUE, oldValue, value));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getParam() {
-		return param;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setParam(String newParam) {
-		String oldParam = param;
-		param = newParam;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RequestPackage.OPERATOR__PARAM, oldParam, param));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case RequestPackage.OPERATOR__VALUE:
-				return getValue();
-			case RequestPackage.OPERATOR__PARAM:
-				return getParam();
-		}
-		return super.eGet(featureID, resolve, coreType);
+	public void setOperatorName(String value) {
+		this.name = normalize(value);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case RequestPackage.OPERATOR__VALUE:
-				setValue((String)newValue);
-				return;
-			case RequestPackage.OPERATOR__PARAM:
-				setParam((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
+	public String getParameter() {
+		return parameter;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case RequestPackage.OPERATOR__VALUE:
-				setValue(VALUE_EDEFAULT);
-				return;
-			case RequestPackage.OPERATOR__PARAM:
-				setParam(PARAM_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
+	public void setParameter(String value) {
+		parameter = value;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case RequestPackage.OPERATOR__VALUE:
-				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
-			case RequestPackage.OPERATOR__PARAM:
-				return PARAM_EDEFAULT == null ? param != null : !PARAM_EDEFAULT.equals(param);
-		}
-		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
-		result.append(value);
-		result.append(", param: ");
-		result.append(param);
-		result.append(')');
-		return result.toString();
+		return "[Operator name:" + name + " parameter:" + parameter + "]";
 	}
 
-} //OperatorImpl
+}

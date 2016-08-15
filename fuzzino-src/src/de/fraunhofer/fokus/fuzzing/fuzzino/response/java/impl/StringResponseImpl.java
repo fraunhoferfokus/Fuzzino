@@ -13,14 +13,22 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class StringResponseImpl extends AbstractResponse implements StringResponse {
 
+	@XmlElement(name = "generatorBased",type = FuzzedValuesByGeneratorsImpl.class)
 	protected FuzzedValuesByGenerators<String> allGeneratorsBasedPart;
+	@XmlElement(name = "operatorBased",type = FuzzedValuesByOperatorsImpl.class)
 	protected FuzzedValuesByOperators<String> allOperatorsBasedPart;
 	
 	@Override
@@ -43,28 +51,6 @@ public class StringResponseImpl extends AbstractResponse implements StringRespon
 		allOperatorsBasedPart = value;
 	}
 
-	@Override
-	public de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse getEMFRepresentation() {
-		de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse
-		  emfStringResponse = ResponseFactory.eINSTANCE.createStringResponse();
-		
-		if (getGeneratorBasedSection() != null) {
-			emfStringResponse.setGeneratorBasedPart(getGeneratorBasedSection().getEMFRepresentation());
-		}
-		if (getOperatorBasedSection() != null) {
-			emfStringResponse.setOperatorBasedPart(getOperatorBasedSection().getEMFRepresentation());
-		}
-		if (getWarningsSection() != null) {
-			emfStringResponse.setWarnings(getWarningsSection().getEMFRepresentation());
-		}
-		emfStringResponse.setId(getId());
-		emfStringResponse.setMoreValues(moreValuesAvailable());
-		emfStringResponse.setName(getName());
-		emfStringResponse.setSeed(String.valueOf(getSeed()));
-		
-		return emfStringResponse;
-	}
-	
 	@Override
 	public String toString() {
 		return "[StringResponse name:" + getName() + " id:" + getId() + " seed:" + getSeed() + " moreValues:" + moreValuesAvailable() +

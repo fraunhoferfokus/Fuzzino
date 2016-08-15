@@ -13,308 +13,86 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.request;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
-
+import java.util.List;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Structure Request</b></em>'.
- * <!-- end-user-doc -->
+ * A StructureRequest opens a request for a data structure to be fuzzed by the library.
+ * It determines the fuzzing generators and operators that shall be used for generating
+ * fuzzed data structures.
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getSpecification <em>Specification</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getOperators <em>Operators</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#isFuzzStructure <em>Fuzz Structure</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#isFuzzValues <em>Fuzz Values</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getId <em>Id</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getMaxMutations <em>Max Mutations</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getMaxValues <em>Max Values</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getMinMutations <em>Min Mutations</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getName <em>Name</em>}</li>
- *   <li>{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getSeed <em>Seed</em>}</li>
- * </ul>
- * </p>
- *
- * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest()
- * @model extendedMetaData="name='structure_._type' kind='elementOnly'"
- * @generated
  */
-public interface StructureRequest extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Specification</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Specification</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Specification</em>' containment reference.
-	 * @see #setSpecification(RequestSpecification)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_Specification()
-	 * @model containment="true"
-	 *        extendedMetaData="kind='element' name='specification' namespace='##targetNamespace'"
-	 * @generated
-	 */
-	RequestSpecification getSpecification();
+public interface StructureRequest extends CommonRequest {
 
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getSpecification <em>Specification</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Specification</em>' containment reference.
-	 * @see #getSpecification()
-	 * @generated
+	 * @return The {@link StructureSpecification} of this structure request.
 	 */
-	void setSpecification(RequestSpecification value);
+	StructureSpecification getSpecification();
 
 	/**
-	 * Returns the value of the '<em><b>Operators</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Operators</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Operators</em>' containment reference list.
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_Operators()
-	 * @model containment="true"
-	 *        extendedMetaData="kind='element' name='operator' namespace='##targetNamespace'"
-	 * @generated
+	 * Sets the {@link StructureSpecification} of this structure request.
+	 * 
+	 * @param value the {@link StructureSpecification} to be set.
 	 */
-	EList<Operator> getOperators();
-
+	void setSpecification(StructureSpecification value);
+	
 	/**
-	 * Returns the value of the '<em><b>Fuzz Structure</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Fuzz Structure</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Fuzz Structure</em>' attribute.
-	 * @see #setFuzzStructure(boolean)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_FuzzStructure()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='fuzzStructure'"
-	 * @generated
+	 * @return The {@link Operator}s to be used by the fuzzing library.
 	 */
-	boolean isFuzzStructure();
-
+	List<Operator> getRequestedOperators();
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#isFuzzStructure <em>Fuzz Structure</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Fuzz Structure</em>' attribute.
-	 * @see #isFuzzStructure()
-	 * @generated
+	 * Replaces the list of {@link Operator}s to be used by the fuzzing library.
+	 * 
+	 * @param value the list of {@link Operator}s replacing the existing one.
+	 */
+	void setRequestedOperators(List<Operator> value);
+	
+	/**
+	 * Adds an {@link Operator} to be used by the fuzzing library.
+	 * 
+	 * @param value The {@link Operator} to be added.
+	 */
+	void addRequestedOperator(Operator value);
+	
+	/**
+	 * @return {@code true} if the structure itself shall be fuzzed.
+	 */
+	boolean fuzzStructure();
+	
+	/**
+	 * Specifies if the structure of the data structure shall be fuzzed, meaning whether 
+	 * the order and appearance of the fields within the data structure shall be changed.
+	 * Must be true if {@code fuzzValues() == false}.
+	 * 
+	 * @param value Set to {@code true} if the structure itself shall be fuzzed.
 	 */
 	void setFuzzStructure(boolean value);
-
+	
 	/**
-	 * Returns the value of the '<em><b>Fuzz Values</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Fuzz Values</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Fuzz Values</em>' attribute.
-	 * @see #setFuzzValues(boolean)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_FuzzValues()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='fuzzValues'"
-	 * @generated
-	 */
-	boolean isFuzzValues();
-
-	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#isFuzzValues <em>Fuzz Values</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Fuzz Values</em>' attribute.
-	 * @see #isFuzzValues()
-	 * @generated
-	 */
-	void setFuzzValues(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_Id()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.NCName" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='id'"
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Max Mutations</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Max Mutations</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Max Mutations</em>' attribute.
-	 * @see #setMaxMutations(int)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_MaxMutations()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='maxMutations'"
-	 * @generated
+	 * @return The maximum number of mutations applied to each fuzzed structure.
 	 */
 	int getMaxMutations();
-
+	
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getMaxMutations <em>Max Mutations</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Max Mutations</em>' attribute.
-	 * @see #getMaxMutations()
-	 * @generated
+	 * Sets the maximum number of mutations applied to each fuzzed structure.
+	 * 
+	 * @param value The maximum number of mutations applied to each fuzzed structure.
 	 */
 	void setMaxMutations(int value);
-
+	
 	/**
-	 * Returns the value of the '<em><b>Max Values</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Max Values</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Max Values</em>' attribute.
-	 * @see #setMaxValues(int)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_MaxValues()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int" required="true" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='maxValues'"
-	 * @generated
-	 */
-	int getMaxValues();
-
-	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getMaxValues <em>Max Values</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Max Values</em>' attribute.
-	 * @see #getMaxValues()
-	 * @generated
-	 */
-	void setMaxValues(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Min Mutations</b></em>' attribute.
-	 * The default value is <code>"1"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Min Mutations</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Min Mutations</em>' attribute.
-	 * @see #setMinMutations(int)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_MinMutations()
-	 * @model default="1" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='minMutations'"
-	 * @generated
+	 * @return The minimal number of mutations applied to a valid structure.
 	 */
 	int getMinMutations();
 
 	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getMinMutations <em>Min Mutations</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Min Mutations</em>' attribute.
-	 * @see #getMinMutations()
-	 * @generated
+	 * The minimum number of mutations applied to each fuzzed structure.
+	 * If this attribute is not set, it has the default value 1.
+	 * 
+	 * @param value The minimum number of mutations applied to each fuzzed structure.
 	 */
 	void setMinMutations(int value);
 
-	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_Name()
-	 * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.ID" required="true" suppressedIsSetVisibility="true" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='name'"
-	 * @generated
-	 */
-	String getName();
-
-	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Seed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Seed</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Seed</em>' attribute.
-	 * @see #isSetSeed()
-	 * @see #setSeed(long)
-	 * @see de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestPackage#getStructureRequest_Seed()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Long" suppressedUnsetVisibility="true"
-	 *        extendedMetaData="kind='attribute' name='seed'"
-	 * @generated
-	 */
-	long getSeed();
-
-	/**
-	 * Sets the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getSeed <em>Seed</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Seed</em>' attribute.
-	 * @see #isSetSeed()
-	 * @see #getSeed()
-	 * @generated
-	 */
-	void setSeed(long value);
-
-	/**
-	 * Returns whether the value of the '{@link de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest#getSeed <em>Seed</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Seed</em>' attribute is set.
-	 * @see #getSeed()
-	 * @see #setSeed(long)
-	 * @generated
-	 */
-	boolean isSetSeed();
-
-} // StructureRequest
+}

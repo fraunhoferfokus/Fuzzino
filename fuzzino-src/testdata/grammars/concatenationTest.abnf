@@ -1,0 +1,4 @@
+startrule = altRule1 altRule2 altRule3 
+altRule1 = "1" / "a"
+altRule2 = "2" / "b"
+altRule3 = "3" / "c"
