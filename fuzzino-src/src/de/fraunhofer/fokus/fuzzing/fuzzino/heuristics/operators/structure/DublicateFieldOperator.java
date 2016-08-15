@@ -5,7 +5,7 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StructureOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Field;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 
 /***

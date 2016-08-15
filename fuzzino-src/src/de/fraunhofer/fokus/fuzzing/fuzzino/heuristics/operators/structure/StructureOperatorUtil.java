@@ -3,7 +3,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.structure;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Field;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.StructureImpl;
 

@@ -15,8 +15,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.util;
 
 import java.io.Serializable;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
 
 public class ValidationResult implements Serializable {
 

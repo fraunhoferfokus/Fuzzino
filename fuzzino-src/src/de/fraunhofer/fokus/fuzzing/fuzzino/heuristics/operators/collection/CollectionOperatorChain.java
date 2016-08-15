@@ -26,8 +26,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperat
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 
 /**
  * A chain of {@link CollectionOperator}s that fuzz a valid collection.

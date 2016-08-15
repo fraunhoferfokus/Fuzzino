@@ -59,10 +59,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.GeneratorImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.IntegerSpecificationImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.NumberRequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
 
 public class BigIntegerRequestProcessorTest extends FuzzinoTest{
 

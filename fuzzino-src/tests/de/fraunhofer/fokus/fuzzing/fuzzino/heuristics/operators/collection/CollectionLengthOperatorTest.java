@@ -28,8 +28,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperat
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 
 public class CollectionLengthOperatorTest extends FuzzinoTest {
 	

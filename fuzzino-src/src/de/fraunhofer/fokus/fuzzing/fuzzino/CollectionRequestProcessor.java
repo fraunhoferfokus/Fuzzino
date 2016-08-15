@@ -25,11 +25,11 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollectionsSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CollectionResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CommonResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.PermutationsOfFixedLength;
 
 public class CollectionRequestProcessor extends RequestProcessor<FuzzedCollection> {

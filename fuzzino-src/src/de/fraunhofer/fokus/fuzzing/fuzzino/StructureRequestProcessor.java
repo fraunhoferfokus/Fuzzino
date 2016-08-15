@@ -14,15 +14,15 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GrammarResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructureResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ValidValuesResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.EmptyResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.FieldImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.StructureResponseImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CommonResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GrammarResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ValidValuesResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.EmptyResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.FieldImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.StructureResponseImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.Structure;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.StructureImpl;
 
@@ -129,7 +129,7 @@ public class StructureRequestProcessor extends RequestProcessor<Structure> {
 		Structure structure = new StructureImpl();
 		structure.setStructureSpecification(specification);
 		for(Field field: specification.getFields()){
-			de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field structureField = new FieldImpl();
+			de.fraunhofer.fokus.fuzzing.fuzzino.response.Field structureField = new FieldImpl();
 			structureField.setName(field.getName());
 			//TODO: what do we do here, is there really a distinction between fuzz and don't fuzz field - where do the valid values responses come into play?
 			if(field.fuzz()){
@@ -180,7 +180,7 @@ public class StructureRequestProcessor extends RequestProcessor<Structure> {
 	private Structure buildValidStructure(StructureRequest req) {
 		Structure structure = new StructureImpl();
 		for(Field field: req.getSpecification().getFields()){
-			de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field structureField = new FieldImpl();
+			de.fraunhofer.fokus.fuzzing.fuzzino.response.Field structureField = new FieldImpl();
 			structureField.setName(field.getName());
 			structureField.setValueIsFuzzed(false);
 			structureField.setCorrespondingResponseId(field.getCorrespondingRequestId());

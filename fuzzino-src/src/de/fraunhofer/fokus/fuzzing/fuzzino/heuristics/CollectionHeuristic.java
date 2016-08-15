@@ -14,7 +14,7 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
 
 /**
  * A fuzzing heuristic that creates fuzzed values of type collection, e.g. lists, sets, etc.

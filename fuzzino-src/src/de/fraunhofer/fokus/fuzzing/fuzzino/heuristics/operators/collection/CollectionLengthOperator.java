@@ -21,9 +21,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.CollectionOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Value;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Value;
 
 public class CollectionLengthOperator extends CollectionOperatorImpl implements CollectionOperator {
 

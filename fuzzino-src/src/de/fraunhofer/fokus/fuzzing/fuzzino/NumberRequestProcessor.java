@@ -20,12 +20,12 @@ import java.util.UUID;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByOperators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 
 public abstract class NumberRequestProcessor<T extends Number> extends RequestProcessor<T> {
 

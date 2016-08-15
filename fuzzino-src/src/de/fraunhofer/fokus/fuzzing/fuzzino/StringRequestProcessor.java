@@ -33,14 +33,14 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValuesSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByOperators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
 
 /**

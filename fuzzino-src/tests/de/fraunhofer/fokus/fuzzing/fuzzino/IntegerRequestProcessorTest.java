@@ -55,10 +55,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
 
 public class IntegerRequestProcessorTest extends FuzzinoTest {
 

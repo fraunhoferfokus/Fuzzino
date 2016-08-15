@@ -14,7 +14,7 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.CollectionHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
 
 public interface CollectionOperator extends CollectionHeuristic {
 

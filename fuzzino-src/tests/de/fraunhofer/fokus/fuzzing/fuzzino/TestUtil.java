@@ -30,21 +30,21 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.CloseRequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CloseRequestConfirmation;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CollectionResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ErrorResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalRequestFormat;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructureResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructuredValueResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.ResponseImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CommonResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ErrorResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructuredValueResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.ResponseImpl;
 
 public class TestUtil {
 	

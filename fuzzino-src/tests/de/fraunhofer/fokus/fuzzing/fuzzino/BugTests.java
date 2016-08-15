@@ -34,9 +34,9 @@ import javax.xml.bind.JAXBException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 
 public class BugTests extends FuzzinoTest{
 

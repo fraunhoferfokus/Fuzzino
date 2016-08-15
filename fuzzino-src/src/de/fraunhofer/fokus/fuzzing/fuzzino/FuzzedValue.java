@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.FuzzedCollectionImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.FuzzedCollectionImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.structure.StructureImpl;
 
 /**

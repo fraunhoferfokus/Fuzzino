@@ -37,20 +37,33 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.CloseRequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.NumberRequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CloseRequestConfirmation;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CollectionResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ErrorResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StructureResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.ResponseImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CollectionResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ErrorResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByOperators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.ResponseImpl;
+//Copyright 2012-2013 Fraunhofer FOKUS
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
 
 public class JAXBSerializationTest extends FuzzinoTest{
 	

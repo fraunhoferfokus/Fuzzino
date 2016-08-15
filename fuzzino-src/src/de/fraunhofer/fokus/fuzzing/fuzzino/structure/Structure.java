@@ -3,7 +3,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.structure;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Field;
 
 public interface Structure {
 	

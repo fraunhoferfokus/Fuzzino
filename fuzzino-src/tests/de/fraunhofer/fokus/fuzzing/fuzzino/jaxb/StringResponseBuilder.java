@@ -1,3 +1,16 @@
+//   Copyright 2012-2013 Fraunhofer FOKUS
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.jaxb;
 
 import java.util.Arrays;
@@ -10,21 +23,21 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.AllBadSt
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadDateGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.DelimiterOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByOperators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.FuzzedValuesByGeneratorsImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.FuzzedValuesByOperatorsImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.GeneratorSpecificFuzzedValuesImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.IllegalGeneratorImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.IllegalOperatorImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.IllegalRequestFormatImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.OperatorSpecificFuzzedValuesImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.StringResponseImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.WarningsSectionImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByOperators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.FuzzedValuesByGeneratorsImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.FuzzedValuesByOperatorsImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.GeneratorSpecificFuzzedValuesImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.IllegalGeneratorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.IllegalOperatorImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.IllegalRequestFormatImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.OperatorSpecificFuzzedValuesImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.StringResponseImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.WarningsSectionImpl;
 
 public class StringResponseBuilder {
 

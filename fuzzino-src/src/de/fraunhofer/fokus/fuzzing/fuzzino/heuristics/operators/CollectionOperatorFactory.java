@@ -22,7 +22,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicExc
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.collection.CollectionLengthOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedCollection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 public class CollectionOperatorFactory {

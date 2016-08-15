@@ -25,9 +25,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CollectionSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidCollectionsSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalRequestFormat;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
 
 @XmlAccessorType(XmlAccessType.NONE)

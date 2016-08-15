@@ -7,10 +7,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BadFloat
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.NumberResponseImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.NumberResponseImpl;
 
 public class FloatRequestProcessor extends NumberRequestProcessor<Double> {
 

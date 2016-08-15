@@ -27,7 +27,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.AbstractRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
 
 @XmlRootElement

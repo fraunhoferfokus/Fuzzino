@@ -59,10 +59,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.OperatorImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.OperatorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 public class StringRequestProcessorTest extends FuzzinoTest {

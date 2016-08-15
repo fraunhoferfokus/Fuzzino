@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StructureSpecificationImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Field;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.FieldImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Field;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.FieldImpl;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)

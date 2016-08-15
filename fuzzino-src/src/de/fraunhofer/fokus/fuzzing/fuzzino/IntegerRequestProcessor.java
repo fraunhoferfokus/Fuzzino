@@ -32,10 +32,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValuesSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalGenerator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IntegerResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IntegerResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 
 public class IntegerRequestProcessor extends NumberRequestProcessor<Long> {
 	

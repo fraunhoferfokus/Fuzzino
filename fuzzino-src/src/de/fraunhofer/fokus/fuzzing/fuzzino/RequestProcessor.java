@@ -25,9 +25,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.DeleteRequestProcessorFail
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CloseRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CommonResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CommonResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
 
 /**

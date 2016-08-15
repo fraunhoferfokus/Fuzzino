@@ -38,17 +38,17 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.BigIntegerResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.CloseRequestConfirmation;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ErrorResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IllegalRequestFormat;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.IntegerResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.NumberResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.Response;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.ResponseFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.WarningsSection;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.impl.ResponseImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.BigIntegerResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ErrorResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.IntegerResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.ResponseImpl;
 
 /**
  * This class dispatches a request from an XML file (compliant to fuzzingRequest.xsd) to type specific request processors. 
