@@ -2,14 +2,14 @@ import java.util.UUID;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.StringRequestProcessor;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringEncoding;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.java.StringType;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.FuzzedValuesByGenerators;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.GeneratorSpecificFuzzedValues;
-import de.fraunhofer.fokus.fuzzing.fuzzino.response.java.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.FuzzedValuesByGenerators;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
+import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 
 
 public class JavaRequestClassesExample {

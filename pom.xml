@@ -1,6 +1,139 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.fraunhofer.fokus.fuzzing.fuzzino</groupId>
-  <artifactId>OpenFuzzino</artifactId>
+  <artifactId>Fuzzino</artifactId>
   <version>0.5.0.6</version>
+  
+  <repositories>
+    <repository>
+      <id>localrepository</id>
+      <url>file://${basedir}/src/main/resources/repo/</url>
+    </repository>
+  </repositories>
+  
+  <dependencies>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.0</version>
+      <scope>test</scope>
+    </dependency>  
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.5</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>de.fraunhofer.fokus.fuzzing.grammar_fuzzing</groupId>
+      <artifactId>Grammar_Fuzzing</artifactId>
+      <version>1.0.0</version>
+      <scope>compile</scope>
+    </dependency>  
+  
+  </dependencies>
+  
+  <build>
+    <plugins>
+    
+      <!-- install grammar_fuzzing library as local maven repository-->  
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.5.2</version>
+        <configuration>
+          <groupId>de.fraunhofer.fokus.fuzzing.grammar_fuzzing</groupId>
+          <artifactId>Grammar_Fuzzing</artifactId>
+          <version>1.0.0</version>
+          <packaging>jar</packaging>
+          <file>${basedir}/dependencies/Grammar_Fuzzing-1.0.0.jar</file>
+          <generatePom>true</generatePom>
+        </configuration>
+        <executions>
+          <execution>
+            <id>install-jar-lib</id>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+      </plugin>
+  
+      <!-- Define compiler settings -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>ISO-8859-1</encoding>
+        </configuration>  
+      </plugin>
+      
+      <!-- Create jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+	          <mainClass>de.fraunhofer.fokus.fuzzing.fuzzino.Fuzzino</mainClass>
+             </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      
+      <!-- Create jar with dependencies -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+	          <mainClass>de.fraunhofer.fokus.fuzzing.fuzzino.Fuzzino</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+     
+      <!-- Define which test should run and which not in AllTestsSuite.java; This needs couple of minutes; -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20.1</version>
+        <configuration>
+          <includes>
+            <include>AllTestsSuite.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/Test*.java</exclude>
+            <exclude>**/*Test.java</exclude>
+            <exclude>**/*Tests.java</exclude>
+            <exclude>**/*TestCase.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      
+     </plugins>
+  </build>
 </project>
