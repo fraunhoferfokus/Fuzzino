@@ -23,15 +23,15 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 /**
- * This class applies the {@link StringRepetitionOperator} to a list of valid values.
+ * This class applies the {@link RepeatStringOperator} to a list of valid values.
  *
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  */
-public class StringRepetitionOperator extends ComposedFuzzingHeuristic<String> implements StringOperator {
+public class RepeatStringOperator extends ComposedFuzzingHeuristic<String> implements StringOperator {
 
 	private static final long serialVersionUID = 7254440377424293671L;
 
-	public StringRepetitionOperator(List<String> validValues, StringSpecification stringSpec, long seed) {
+	public RepeatStringOperator(List<String> validValues, StringSpecification stringSpec, long seed) {
 		super(seed);
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");
@@ -39,7 +39,7 @@ public class StringRepetitionOperator extends ComposedFuzzingHeuristic<String> i
 		initHeuristics(stringSpec, validValues);
 	}
 
-	public StringRepetitionOperator(List<String> validValues, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
+	public RepeatStringOperator(List<String> validValues, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed);
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");

@@ -39,8 +39,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.Popular4
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.StringRepeaterTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperatorFactoryTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.NumericalVarianceOperatorTest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.RepeatStringOperatorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringCaseOperatorListTest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringRepetitionOperatorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoderTest;
 
 @RunWith(Suite.class)
@@ -85,7 +85,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoderTest;
 	NumericalVarianceOperatorTest.class,
 	// Operators String
 	StringCaseOperatorListTest.class,
-	StringRepetitionOperatorTest.class
+	RepeatStringOperatorTest.class
 })
 
 public class AllTestsSuite {

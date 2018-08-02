@@ -21,7 +21,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicExc
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.DelimiterOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringCaseOperator;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringRepetitionOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.RepeatStringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 /**
@@ -126,8 +126,8 @@ public class StringOperatorFactory {
 		return new StringCaseOperator(validValues, stringSpec, seed);
 	}
 	
-	public StringRepetitionOperator createStringRepetitionOperator(List<String> validValues, StringSpecification stringSpec, long seed) {
-		return new StringRepetitionOperator(validValues, stringSpec, seed);
+	public RepeatStringOperator createStringRepetitionOperator(List<String> validValues, StringSpecification stringSpec, long seed) {
+		return new RepeatStringOperator(validValues, stringSpec, seed);
 	}
 
 }

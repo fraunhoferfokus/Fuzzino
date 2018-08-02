@@ -27,7 +27,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
-public class StringRepetitionOperatorTest extends FuzzinoTest {
+public class RepeatStringOperatorTest extends FuzzinoTest {
 
 	public static final long SEED = 4711;
 	public static final StringSpecification STRING_SPEC = RequestFactory.INSTANCE.createStringSpecification();
@@ -40,19 +40,19 @@ public class StringRepetitionOperatorTest extends FuzzinoTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testWithNullString() throws Exception {
-		new StringRepetitionOperator(StringUtil.asList((String)null), STRING_SPEC, SEED);
+		new RepeatStringOperator(StringUtil.asList((String)null), STRING_SPEC, SEED);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testWithNullList() throws Exception {
-		new StringRepetitionOperator((List<String>)null, STRING_SPEC, SEED);
+		new RepeatStringOperator((List<String>)null, STRING_SPEC, SEED);
 	}
 	
 	@Test
 	public void testWithSingleString() throws Exception {
 		String expectedValue = "singleString";
 		
-		StringRepetitionOperator stringRepetitionOperatorList = new StringRepetitionOperator(StringUtil.asList(expectedValue), STRING_SPEC, SEED);
+		RepeatStringOperator stringRepetitionOperatorList = new RepeatStringOperator(StringUtil.asList(expectedValue), STRING_SPEC, SEED);
 		
 		int expectedSize = 1;
 		int actualSize = stringRepetitionOperatorList.getValidValues().size();
@@ -69,7 +69,7 @@ public class StringRepetitionOperatorTest extends FuzzinoTest {
 		String expectedValue = "singleString";
 		listOfStrings = StringUtil.asList(expectedValue);
 		
-		StringRepetitionOperator stringRepetitionOperatorList = new StringRepetitionOperator(listOfStrings, STRING_SPEC, SEED);
+		RepeatStringOperator stringRepetitionOperatorList = new RepeatStringOperator(listOfStrings, STRING_SPEC, SEED);
 		
 		int expectedSize = 1;
 		int actualSize = stringRepetitionOperatorList.getValidValues().size();
@@ -87,7 +87,7 @@ public class StringRepetitionOperatorTest extends FuzzinoTest {
 		String secondExpectedValue = "2";
 		listOfStrings = StringUtil.asList(firstExpectedValue, secondExpectedValue);
 		
-		StringRepetitionOperator stringRepetitionOperatorList = new StringRepetitionOperator(listOfStrings, STRING_SPEC, SEED);
+		RepeatStringOperator stringRepetitionOperatorList = new RepeatStringOperator(listOfStrings, STRING_SPEC, SEED);
 		
 		int expectedSize = 2;
 		int actualSize = stringRepetitionOperatorList.getValidValues().size();
@@ -108,7 +108,7 @@ public class StringRepetitionOperatorTest extends FuzzinoTest {
 		String secondValidValue = "2";
 		listOfStrings = StringUtil.asList(firstValidValue, secondValidValue);
 		
-		StringRepetitionOperator stringRepetitionOperatorList = new StringRepetitionOperator(listOfStrings, STRING_SPEC, SEED);
+		RepeatStringOperator stringRepetitionOperatorList = new RepeatStringOperator(listOfStrings, STRING_SPEC, SEED);
 
 		List<Integer> expectedLengths = IntegerUtil.asList(2, 2, 10, 10, 100, 100); 
 				
@@ -132,7 +132,7 @@ public class StringRepetitionOperatorTest extends FuzzinoTest {
 		listOfStrings = StringUtil.asList("1", "2");
 		final String HEX_FE = "\\xFE";
 		
-		StringRepetitionOperator stringRepetitionOperator = new StringRepetitionOperator(listOfStrings, STRING_SPEC_UTF8, SEED);
+		RepeatStringOperator repeatStringOperator = new RepeatStringOperator(listOfStrings, STRING_SPEC_UTF8, SEED);
 
 		List<Integer> expectedLengths = IntegerUtil.asList(2, 2, 10, 10, 100, 100, 
 				                                           2 + HEX_FE.length(), 2 + HEX_FE.length(),
@@ -140,7 +140,7 @@ public class StringRepetitionOperatorTest extends FuzzinoTest {
 				                                           100 + HEX_FE.length(), 100 + HEX_FE.length()); 
 				
 		int index = 0;
-		for (FuzzedValue<String> fuzzedValue : stringRepetitionOperator) {
+		for (FuzzedValue<String> fuzzedValue : repeatStringOperator) {
 			int expectedLength = expectedLengths.get(index);
 			int actualLength = fuzzedValue.getValue().length();
 			assertTrue("Invalid length at index " + index + ": was " + actualLength + " instead of " + expectedLength + " (fuzzedValue: " + fuzzedValue.getValue() + ")", 
@@ -157,7 +157,7 @@ public class StringRepetitionOperatorTest extends FuzzinoTest {
 		}
 
 		int expectedSize = listOfStrings.size() * 6;
-		int actualSize = stringRepetitionOperator.size();
+		int actualSize = repeatStringOperator.size();
 		assertTrue("Invalid size: was " + actualSize + " instead of " + expectedSize, 
 				   actualSize == expectedSize);
 	}
