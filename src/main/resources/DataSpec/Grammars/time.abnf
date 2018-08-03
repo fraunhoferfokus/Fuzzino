@@ -1,0 +1,4 @@
+time = hours ":" mins ":" secs
+hours = %d48-49 %d48-57 / "2" %d48-51
+mins = %d48-53 %d48-57
+secs = %d48-53 %d48-57

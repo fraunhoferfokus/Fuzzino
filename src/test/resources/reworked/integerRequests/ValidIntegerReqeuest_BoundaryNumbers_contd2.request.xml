@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:request xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
-    <number id="6cadbb08-2b9c-44a3-bc52-454ae0623880" maxValues="5" name="NumberRequestTest" seed="-1">
-        <noGenerators>false</noGenerators>
-    </number>
-</ns2:request>

@@ -37,17 +37,49 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.FormatSt
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.LongStringsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.Popular4DigitPinsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SQLInjectionsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SQLTimeBasedInjectionsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.UnicodeBomStringsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XMLInjectionsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XSSBasicInputGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 /**
- * A factory that creates all kinds of string generators. A single string generator
- * can be requested by its name ({@link #create(String, String, StringSpecification, long)} or
- * by calling the corresponding create method.
- * The factory is a singleton.
- * 
+ * <p>
+ * A factory that creates all kinds of string generators. A single string
+ * generator can be requested by its name via the method {@link #create} or by
+ * calling the corresponding create method. The factory is a singleton which
+ * instance can be obtained by calling {@code StringGeneratorFactory.INSTANCE}.
+ * </p>
+ * <p>
+ * Following are all available working StringGenerators listed by their name.
+ * This name is not the class name but the name used in a request.
+ * <ul>
+ * <li>{@link AllBadStringsGenerator AllBadStrings}</li>
+ * <li>{@link BadDateGenerator BadDate}</li>
+ * <li>{@link BadFilenamesGenerator BadFilenames}</li>
+ * <li>{@link BadHostnamesGenerator BadIpAddresses}</li>
+ * <li>{@link BadIpAddressesGenerator BadHostnames}</li>
+ * <li>{@link BadLongStringsGenerator BadLongStrings}</li>
+ * <li>{@link BadLongUnicodeStringsGenerator BadLongUnicodeStrings}</li>
+ * <li>{@link BadNumbersAsStringGenerator BadNumbersAsString}</li>
+ * <li>{@link BadPathsGenerator BadPaths}</li>
+ * <li>{@link BadStringsGenerator BadStrings}</li>
+ * <li>{@link BadTimeGenerator BadTime}</li>
+ * <li>{@link BadUnicodeUtf8StringsGenerator BadUnicodeUtf8Strings}</li>
+ * <li>{@link CommandInjectionsGenerator CommandInjections}</li>
+ * <li>{@link DelimitersGenerator Delimiters}</li>
+ * <li>{@link FormatStringsGenerator FormatStrings}</li>
+ * <li>{@link LongStringsGenerator LongStrings}</li>
+ * <li>{@link Popular4DigitPinsGenerator Popular4DigitPins}</li>
+ * <li>{@link SmallGenerator SmallGenerator}</li>
+ * <li>{@link SQLInjectionsGenerator SQLInjections}</li>
+ * <li>{@link SQLTimeBasedInjectionsGenerator SQLTimeBasedInjections}</li>
+ * <li>{@link UnicodeBomStringsGenerator UnicodeBomStrings}</li>
+ * <li>{@link XMLInjectionsGenerator XMLInjections}</li>
+ * <li>{@link XSSBasicInputGenerator XSSBasicInput}</li>
+ * </ul>
+ * </p>
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
@@ -64,17 +96,27 @@ public class StringGeneratorFactory {
 	/**
 	 * Creates a string generator identified by its name.
 	 * 
-	 * @param name The name of the string generator that is not the class name but the name used
-	 *             in a request (see {@link ComputableFuzzingHeuristic#getName()} or documentation for a
-	 *             list of string generators and its names).
-	 * @param param A parameter for the requested string generator. May be {@code null} if the requested
-	 *              generator does not have a parameter or a default value shall be used.
-	 * @param stringSpec The string specification that describes the type the generator shall create values for.
-	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @param name
+	 *            The name of the string generator that is not the class name
+	 *            but the name used in a request (see Javadoc in
+	 *            {@link StringGeneratorFactory} or
+	 *            {@link ComputableFuzzingHeuristic#getName()}) or documentation for
+	 *            a list of string generators and its names).
+	 * @param param
+	 *            A parameter for the requested string generator. May be
+	 *            {@code null} if the requested generator does not have a parameter
+	 *            or a default value shall be used.
+	 * @param stringSpec
+	 *            The string specification that describes the type the generator
+	 *            shall create values for.
+	 * @param seed
+	 *            The seed to be used for random-based fuzzing heuristics.
 	 * @return the requested instance of string generator.
-	 * @throws UnknownFuzzingHeuristicException if no generator with {@code name} is known. 
+	 * @throws UnknownFuzzingHeuristicException
+	 *             if no generator with {@code name} is known.
 	 */
-	public StringGenerator create(String name, String param, StringSpecification stringSpec, long seed) throws UnknownFuzzingHeuristicException {
+	public StringGenerator create(String name, String param, StringSpecification stringSpec, long seed)
+			throws UnknownFuzzingHeuristicException {
 		if (name == null) {
 			throw new UnknownFuzzingHeuristicException(name);
 		}
@@ -109,6 +151,9 @@ public class StringGeneratorFactory {
 		if (canonicalName.equals("BadStrings".toUpperCase())) {
 			return createBadStringsGenerator(stringSpec, seed);
 		} else
+	    if (canonicalName.equals("BadTime".toUpperCase())) {
+	    	return createBadTimeGenerator(stringSpec, seed);
+	    } else
 		if (canonicalName.equals("BadUnicodeUtf8Strings".toUpperCase())) {
 			return createBadUnicodeUtf8Strings(stringSpec, seed);
 		} else
@@ -133,12 +178,18 @@ public class StringGeneratorFactory {
 		if (canonicalName.equals("SQLInjections".toUpperCase())) {
 			return createSqlInjections(stringSpec, seed);
 		} else
+		if (canonicalName.equals("SQLTimeBasedInjections".toUpperCase())) {
+			return createSqlTimeBasedInjections(stringSpec, seed);
+		} else
 		if (canonicalName.equals("UnicodeBomStrings".toUpperCase())) {
 			return createUnicodeBomStringsGenerator(stringSpec, seed);
-		} 
+		} else
 		if (canonicalName.equals("XMLInjections".toUpperCase())) {
 			return createXmlInjections(stringSpec, seed);
-		}
+		} else
+		if (canonicalName.equals("XSSBasicInput".toUpperCase())) {
+			return createXSSBasicInput(stringSpec, seed, param);
+		} 
 		else {
 			throw new UnknownFuzzingHeuristicException(name);
 		}
@@ -166,9 +217,12 @@ public class StringGeneratorFactory {
 		allStringGenerators.add(createLongStrings(stringSpec, seed));
 		allStringGenerators.add(createPopular4DigitPinsGenerator(stringSpec, seed));
 		allStringGenerators.add(createSqlInjections(stringSpec, seed));
+		allStringGenerators.add(createSqlTimeBasedInjections(stringSpec, seed));
 		allStringGenerators.add(createUnicodeBomStringsGenerator(stringSpec, seed));
 		allStringGenerators.add(createXmlInjections(stringSpec, seed));
-
+		// TODO Add valid parameter for XSSBasicInputGenerator
+		allStringGenerators.add(createXSSBasicInput(stringSpec, seed, "attackerURL"));
+		
 		List<StringGenerator> applicableGenerators = new LinkedList<>();
 		for (StringGenerator stringGenerator : allStringGenerators) {
 			if (stringGenerator.canCreateValuesFor(stringSpec)) {
@@ -387,6 +441,17 @@ public class StringGeneratorFactory {
 	public SQLInjectionsGenerator createSqlInjections(StringSpecification stringSpec, long seed) {
 		return new SQLInjectionsGenerator(stringSpec, seed);
 	}
+
+	/**
+	 * Returns an instance of {@link SQLTimeBasedInjectionsGenerator}.
+	 * 
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link SQLTimeBasedInjectionsGenerator}.
+	 */
+	public SQLTimeBasedInjectionsGenerator createSqlTimeBasedInjections(StringSpecification stringSpec, long seed) {
+		return new SQLTimeBasedInjectionsGenerator(stringSpec, seed);
+	}
 	
 	/**
 	 * Returns an instance of {@link UnicodeBomStringsGenerator}.
@@ -408,6 +473,17 @@ public class StringGeneratorFactory {
 	 */
 	public XMLInjectionsGenerator createXmlInjections(StringSpecification stringSpec, long seed) {
 		return new XMLInjectionsGenerator(stringSpec, seed);
+	}
+	
+	/**
+	 * Returns an instance of {@link XSSBasicInputGenerator}.
+	 * 
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link XSSBasicInputGenerator}
+	 */
+	public XSSBasicInputGenerator createXSSBasicInput(StringSpecification stringSpec, long seed, String attackerURL) {
+		return new XSSBasicInputGenerator(stringSpec, seed, attackerURL);
 	}
 	
 }

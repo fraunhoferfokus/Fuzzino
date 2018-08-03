@@ -1,0 +1,4 @@
+*.abnf	text eol=crlf
+date.regex text eol=crlf
+ipv4.regex text eol=crlf
+test.regex text eol=crlf

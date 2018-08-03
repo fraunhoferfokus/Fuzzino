@@ -13,6 +13,12 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.exceptions;
 
+/**
+ * This exception indicates that no values could be generated that are conform to the constraints.
+ * 
+ * @author Rene W. Rollet (rene.wiegmann.rollet@fokus.fraunhofer.de)
+ *
+ */
 public class NoMatchingValuesException extends Exception {
 	
 	private static final long serialVersionUID = 4203604743417978559L;

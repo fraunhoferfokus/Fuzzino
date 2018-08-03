@@ -1,0 +1,24 @@
+;Attack grammar to produce sql-injections, main goal was to include all strings, that were also produced by the old library
+
+;startrule: All injection attack-vectors:
+sql-injection-attack-vector = drop-av / admin-av / op1-av / load-file-av / shutdown-av / or-av / hardcoded-av
+
+drop-av = [ ( dquote / "'" )] ";DROP " drop-av-tablename ";" comment-sign
+drop-av-tablename = "users"
+
+admin-av = "admin'" [SP] comment-sign [SP]
+
+op1-av = "OP1'"  [SP] comment-sign [SP]
+
+load-file-av = ";SELECT LOAD_FILE(" load-file-fileref ");" comment-sign
+load-file-fileref = "0x633A5C626F6F742E696E69"
+
+shutdown-av = "';shutdown " comment-sign [SP]
+
+or-av = "'" [")"] " or " ("1=1" / "'1'='1" / "('1'='1" ) comment-sign
+
+hardcoded-av = "'sqlattempt1" / "(sqlattempt2)" / "1;SELECT%20*" / "OR%201=1"
+
+;general definitions
+comment-sign = "--" / "#" / "/*"
+dquote = %d34 

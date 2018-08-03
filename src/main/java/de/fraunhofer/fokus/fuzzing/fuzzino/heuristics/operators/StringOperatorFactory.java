@@ -18,11 +18,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.DelimiterOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringCaseOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringRepetitionOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
+/**
+ * <p>
+ * A factory that creates all kinds of StringOperators. A single StringOperator
+ * can be requested by its name via the method {@link #create} or by calling the
+ * corresponding create method. The factory is a singleton which instance can be
+ * obtained by calling {@code StringOperatorFactory.INSTANCE}.
+ * </p>
+ * <p>
+ * Following are all available working StringOperators listed by their name.
+ * This name is not the class name but the name used in a request.
+ * <ul>
+ * <li>{@link DelimiterOperator Delimiter}</li>
+ * <li>{@link StringCaseOperator StringCase}</li>
+ * <li>{@link StringRepetitionOperator StringRepetition}</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
+ *
+ */
 public class StringOperatorFactory {
 
 	public static final StringOperatorFactory INSTANCE = new StringOperatorFactory();
@@ -33,6 +54,27 @@ public class StringOperatorFactory {
 	private StringOperatorFactory() {
 	}
 	
+	/**
+	 * Creates an StringOperator identified by its name.
+	 * 
+	 * @param name
+	 *            The name of the StringOperator that is not the class name
+	 *            but the name used in a request (see Javadoc in
+	 *            {@link StringOperatorFactory} or
+	 *            {@link ComputableFuzzingHeuristic#getName()}) or documentation for
+	 *            a list of operators and its names).
+	 * @param validValues A list of strings that can be mutated
+	 * @param param
+	 *            A parameter for the requested StringOperator. May be
+	 *            {@code null} if the requested generator does not have a parameter
+	 *            or a default value shall be used.
+	 * @param stringSpec
+	 * @param seed
+	 *            The seed to be used for random-based fuzzing heuristics.
+	 * @return the requested instance of StringOperator.
+	 * @throws UnknownFuzzingHeuristicException
+	 *             if no generator with {@code NAME} is known.
+	 */
 	public StringOperator create(String name, 
 			                     List<String> validValues,
 			                     String param,
@@ -52,12 +94,14 @@ public class StringOperatorFactory {
 		}
 	}
 	
-	/**
-	 * Returns all String generators that are applicable to a given specification.
-	 * @param spec the specification of a String the generators must be applicable to.
-	 * 
-	 * @return all String generators that are applicable to <code>spec</spec>
-	 */
+	 /**
+	  * A list of all StringOperators that can create values for {@code stringSpec}.
+	  * 
+	  * @param validValues
+	  * @param stringSpec The StringSpecification describes the type the generator shall create values for.
+	  * @param seed The seed to be used for random-based fuzzing heuristics.
+	  * @return a list of all StringOperators that can create values for {@code stringSpec}.
+	  */
 	public List<StringOperator> createAll(List<String> validValues, StringSpecification stringSpec, long seed) {
 		List<StringOperator> allStringOperators = new ArrayList<>();
 		allStringOperators.add(createDelimiterOperator(validValues, stringSpec, seed));

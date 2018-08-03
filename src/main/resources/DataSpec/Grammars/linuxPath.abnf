@@ -1,0 +1,22 @@
+;source: http://www.boost.org/doc/libs/1_33_1/libs/filesystem/doc/path.htm#Grammar
+path = [root] [relative-path]  ;source: http://www.boost.org/doc/libs/1_33_1/libs/filesystem/doc/path.htm#Grammar
+
+root = [root-name] [root-directory]
+
+root-directory = separator
+
+relative-path = path-element *(separator path-element) [separator]
+
+path-element = name / parent-directory / directory-placeholder
+
+name = 1*char
+
+directory-placeholder = "."
+
+parent-directory = ".."
+
+separator = "/"  ;an implementation may define additional separators 
+
+;added default values:
+root-name = "home";
+char = %d1-46 / %d48-255;

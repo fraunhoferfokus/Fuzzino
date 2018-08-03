@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:response xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
-    <errorResponse reason="cvc-elt.1: Cannot find the declaration of element 'request'." stackTrace="[Ljava.lang.StackTraceElement;@6a638c79"/>
-</ns2:response>

@@ -21,11 +21,21 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BadFloat
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.NumberResponseImpl;
 
+/**
+ * This class processes a {@link NumberRequest} and a creates a
+ * {@link NumberResponse}, if the NumberSpecification in the request specifies
+ * {@code NumberType.FLOAT}.
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
+ * @see NumberSpecification
+ * @see NumberType
+ */
 public class FloatRequestProcessor extends NumberRequestProcessor<Double> {
 
 	private static final String FLOAT_EXTENSION = ".floatProcessor";

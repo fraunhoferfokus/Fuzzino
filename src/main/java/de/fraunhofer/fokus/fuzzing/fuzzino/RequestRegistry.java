@@ -38,8 +38,7 @@ public class RequestRegistry {
 	}
 
 	public void remove(CommonRequest request) {
-		//TODO: this is a bug (im pretty sure) remove requires strings!
-		requests.remove(request);
+		requests.remove(request.getName());
 	}
 
 }

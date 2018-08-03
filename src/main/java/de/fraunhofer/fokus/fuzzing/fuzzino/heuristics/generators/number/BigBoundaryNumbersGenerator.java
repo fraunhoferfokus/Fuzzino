@@ -26,6 +26,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
 public class BigBoundaryNumbersGenerator extends SimpleBigIntegerGenerator {
 
 	private static final long serialVersionUID = 1781058301031766759L;
+	/**
+	 * {@value}
+	 */
+	public static final String NAME = "BoundaryNumbers";
 	protected List<BigInteger> fuzzValues = new ArrayList<>();
 
 	public BigBoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed) {
@@ -79,9 +83,12 @@ public class BigBoundaryNumbersGenerator extends SimpleBigIntegerGenerator {
 		return false;
 	}
 
+	/**
+	 * @return {@value #name}
+	 */
 	@Override
 	public String getName() {
-		return "BoundaryNumbers";
+		return NAME;
 	}
 
 	@Override

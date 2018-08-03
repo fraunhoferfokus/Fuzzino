@@ -18,7 +18,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+<<<<<<< HEAD
  * The entry point of Fuzzino.
+=======
+ * <p>
+ * This class is the entry point of Fuzzino.
+ * </p>
+ * <p>
+ * 1. Use Fuzzino as a command line tool:<br>
+ * Build the project with Maven and use {@code java -jar Fuzzino.jar [-encode]
+ * <requestFileName>} on the command line to pass a XML file to Fuzzino to
+ * process. Fuzzino will create a file "&ltrequestFileName&gt.response.xml" in
+ * the directory of the input file, that either contains the response or, if the
+ * execution failed, an exception.
+ * </p>
+ * <p>
+ * 2. Pass XML strings directly to Fuzzino:<br>
+ * Use either one of the two methods {@link #processXmlString(String)} or
+ * {@link #processXmlString(String)} to pass a XML file as Java string. This
+ * avoids time-consuming serialization and deserialization.
+ * </p>
+ * <p>
+ * 3. Use heuristics directly: <br>
+ * There exists multiple factory classes that list all existing heuristics. You
+ * can create generators by using the factories defined in package
+ * {@link de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators
+ * fuzzino.heuristics.generators} and you can create operators by using the
+ * factories defined in package
+ * {@link de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators
+ * fuzzino.heuristics.operators}. Alternatively you can also directly
+ * instantiate the heuristics.
+ * </p>
+>>>>>>> 82b7d95... added some javadoc
  * 
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
@@ -32,7 +63,7 @@ public final class Fuzzino {
 			                               "  \\U<nnnnnnnn> 32-bit Unicode character\n" +
 			                               "  n is a hexa-dezimal digit\n" +
 			                               "  If this argument is omitted, only characters <= 32 and >=255 will be encoded.";
-	private static final String version = "0.6.0.0";
+	private static final String version = "0.6.0.1";
 	
 	private static boolean encode = false;
 	private static String filename = null;
@@ -42,6 +73,8 @@ public final class Fuzzino {
 	}
 	
 	/**
+	 * Get the current version of Fuzzino.
+	 * 
 	 * @return The version of the fuzzing library. 
 	 */
 	public static String getVersion() {
@@ -78,6 +111,13 @@ public final class Fuzzino {
 		return dispatcher.getXmlResponseString();
 	}
 
+	/**
+	 * After it was invoked by executing the {@code Fuzzino.jar}, this method
+	 * handles command-line parameters and forwards execution to the
+	 * {@link RequestDispatcher}.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		System.out.println("Fuzzino v" + version + " developed by Fraunhofer FOKUS.");
 		

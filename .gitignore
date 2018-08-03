@@ -1,4 +1,9 @@
 /target/
 .jar
 !Grammar_Fuzzing*.jar
-XML+Interface+Description.docx
+*.response.xml
+*ontinued.request.xml
+*ontd.request.xml
+*ontd2.request.xml
+*CloseStringRequest.request.xml
+*CloseIntegerRequest.request.xml

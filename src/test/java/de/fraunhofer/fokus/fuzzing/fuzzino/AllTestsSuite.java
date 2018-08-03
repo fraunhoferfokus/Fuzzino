@@ -41,10 +41,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperatorFa
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.NumericalVarianceOperatorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringCaseOperatorListTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringRepetitionOperatorTest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.structure.DeleteFieldOperatorTest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.structure.NeighbouringFieldSwapOperatorTest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.structure_tests.ContinuedRequestTest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.structure_tests.StructureRequestProcessorFuzzAllFieldsTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoderTest;
 
 @RunWith(Suite.class)
@@ -56,6 +52,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoderTest;
 	BugTests.class,
 	FloatRequestProcessorTest.class,
 	IntegerRequestProcessorTest.class,
+	RequestDispatcherTest.class,
 	// Heuristics
 	StringRequestProcessorTest.class,
 	ComposedFuzzingHeuristicTest.class,
@@ -88,13 +85,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoderTest;
 	NumericalVarianceOperatorTest.class,
 	// Operators String
 	StringCaseOperatorListTest.class,
-	StringRepetitionOperatorTest.class,
-	// Operators Structure
-	DeleteFieldOperatorTest.class,
-	NeighbouringFieldSwapOperatorTest.class,
-	// Structure 
-	ContinuedRequestTest.class,
-	StructureRequestProcessorFuzzAllFieldsTest.class
+	StringRepetitionOperatorTest.class
 })
 
 public class AllTestsSuite {

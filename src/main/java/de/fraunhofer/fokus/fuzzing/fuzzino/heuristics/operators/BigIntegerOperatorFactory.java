@@ -18,9 +18,28 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.BigNumericalVarianceOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
+/**
+ * <p>
+ * A factory that creates all kinds of big integer operators. A single big
+ * integer operator can be requested by its name via the method {@link #create}
+ * or by calling the corresponding create method. The factory is a singleton
+ * which instance can be obtained by calling
+ * {@code BigIntegerOperatorFactory.INSTANCE}.
+ * </p>
+ * <p>
+ * Following are all available working BigIntegerOperators listed by their name.
+ * This name is not the class name but the name used in a request.
+ * <ul>
+ * <li>{@link BigNumericalVarianceOperator NumericalVariance}</li>
+ * </ul>
+ * </p>
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
+ *
+ */
 public class BigIntegerOperatorFactory {
 
 	public static final BigIntegerOperatorFactory INSTANCE = new BigIntegerOperatorFactory();
@@ -28,6 +47,27 @@ public class BigIntegerOperatorFactory {
 	private BigIntegerOperatorFactory() {
 	}
 
+	/**
+	 * Creates an big integer operator identified by its name.
+	 * 
+	 * @param name
+	 *            The name of the big integer operator that is not the class name
+	 *            but the name used in a request (see Javadoc in
+	 *            {@link BigIntegerOperatorFactory} or
+	 *            {@link ComputableFuzzingHeuristic#getName()}) or documentation for
+	 *            a list of operators and its names).
+	 * @param validValues A list of BigInteger values that can be mutated.
+	 * @param param
+	 *            A parameter for the requested big integer operator. May be
+	 *            {@code null} if the requested generator does not have a parameter
+	 *            or a default value shall be used.
+	 * @param numberSpec
+	 * @param seed
+	 *            The seed to be used for random-based fuzzing heuristics.
+	 * @return the requested instance of BigIntegerOperator.
+	 * @throws UnknownFuzzingHeuristicException
+	 *             if no generator with {@code name} is known.
+	 */
 	public BigIntegerOperator create(String name, 
 			                         List<BigInteger> validValues, 
 			                         String param, 
@@ -40,6 +80,14 @@ public class BigIntegerOperatorFactory {
 		}
 	}
 	
+	 /**
+	  * A list of all BigIntegerOperators that can create values for {@code numberSpec}.
+	  * 
+	  * @param validValues
+	  * @param numberSpec The IntegerSpecification that describes the type the generator shall create values for.
+	  * @param seed The seed to be used for random-based fuzzing heuristics.
+	  * @return a list of all BigIntegerOperators that can create values for {@code numberSpec}.
+	  */
 	public List<BigIntegerOperator> createAll(List<BigInteger> validValues, 
 			                               IntegerSpecification numberSpec, 
 			                               long seed) {

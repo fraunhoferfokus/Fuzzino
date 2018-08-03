@@ -50,7 +50,6 @@ public class FloatRequestProcessorTest extends FuzzinoTest {
 		List<Double> expected = gen.getFuzzValues();
 		assertEquals(1,resp.getGeneratorBasedSection().getGeneratorSpecificSections().size());
 		for(FuzzedValue<Double> val : resp.getGeneratorBasedSection().getGeneratorSpecificSections().get(0)){
-			System.out.println(val.getValue());
 			expected.remove(val.getValue());
 		}
 		assertEquals(0, expected.size());
@@ -73,7 +72,6 @@ public class FloatRequestProcessorTest extends FuzzinoTest {
 		List<Double> expected = gen.getFuzzValues();
 		assertEquals(1,resp.getGeneratorBasedSection().getGeneratorSpecificSections().size());
 		for(FuzzedValue<Double> val : resp.getGeneratorBasedSection().getGeneratorSpecificSections().get(0)){
-			System.out.println(val.getValue());
 			expected.remove(val.getValue());
 		}
 		assertEquals(0, expected.size());

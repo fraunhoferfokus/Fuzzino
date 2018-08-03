@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<response>
-    <string id="e394cd5a-ef8b-43ea-9209-e0a030414876" moreValues="false" name="StringRequestTestInvalidId" seed="0">
-        <warningsPart hasMoreValues="true">
-            <illegalRequestFormat attribute="id" element="string"/>
-        </warningsPart>
-    </string>
-</response>

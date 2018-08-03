@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:response xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
-    <number id="38efb6dd-efad-4a36-b29f-4daa2889bf44" moreValues="false" name="NumberRequestTest" seed="-1">
-        <warningsPart hasMoreValues="false"/>
-    </number>
-</ns2:response>

@@ -11,25 +11,10 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-package de.fraunhofer.fokus.fuzzing.fuzzino.exceptions;
 
 /**
- * This exception indicates that a request processor could not be deleted when trying to
- * perform a close request command. 
- * 
- * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
- *
+ * Contains the interfaces and abstract classes implemented and extended by the
+ * generators and operators. Therefore the most basic functionality of all
+ * generators and operators is defined within here.
  */
-public class DeleteRequestFailedException extends Exception {
-	
-	private static final long serialVersionUID = -6516365540093449516L;
-
-	public DeleteRequestFailedException() {
-		super();
-	}
-	
-	public DeleteRequestFailedException(String message) {
-		super(message);
-	}
-
-}
+package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics;

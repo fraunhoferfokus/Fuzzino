@@ -14,12 +14,12 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourceResolver;
 
 public class StringContainerFileLoader {
 
@@ -30,8 +30,8 @@ public class StringContainerFileLoader {
 	}
 
 	public void loadFileIntoStringContainer(StringContainer stringContainer) {
-		try (FileReader fileReader = new FileReader(new File(filePath))) {
-			BufferedReader reader = new BufferedReader(fileReader);
+		try (InputStreamReader streamReader = new InputStreamReader(new ResourceResolver().loadResource(filePath))) {
+			BufferedReader reader = new BufferedReader(streamReader);
 			
 			String line = reader.readLine();
 			while(line != null) {
@@ -44,7 +44,6 @@ public class StringContainerFileLoader {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
 	}
 
 }

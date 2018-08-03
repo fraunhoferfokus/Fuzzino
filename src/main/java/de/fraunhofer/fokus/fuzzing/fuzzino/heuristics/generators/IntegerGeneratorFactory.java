@@ -23,11 +23,19 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.Boundary
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
 /**
- * A factory that creates all kinds of integer generators. A single integer generator
- * can be requested by its name ({@link #create(String, String, IntegerSpecification, long)} or
- * by calling the corresponding create method.
- * The factory is a singleton.
- * 
+ * <p>
+ * A factory that creates all kinds of integer generators. A single integer
+ * generator can be requested by its name via the method {@link #create} or by
+ * calling the corresponding create method. The factory is a singleton which
+ * instance can be obtained by calling {@code IntegerGeneratorFactory.INSTANCE}.
+ * </p>
+ * <p>
+ * Following are all available working IntegerGenerators listed by their name.
+ * This name is not the class name but the name used in a request.
+ * <ul>
+ * <li>{@link BoundaryNumbersGenerator BoundaryNumbers}</li>
+ * </ul>
+ * </p>
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
@@ -44,16 +52,26 @@ public class IntegerGeneratorFactory {
 	/**
 	 * Creates an integer generator identified by its name.
 	 * 
-	 * @param name The name of the integer generator that is not the class name but the name used
-	 *             in a request (see {@link ComputableFuzzingHeuristic#getName()} or documentation for a
-	 *             list of string generators and its names).
-	 * @param param A parameter for the requested integer generator. May be {@code null} if the requested
-	 *              generator does not have a parameter or a default value shall be used.
-	 * @param numberSpec The number specification that describes the type the generator shall create values for.
-	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @param name
+	 *            The name of the integer generator that is not the class name
+	 *            but the name used in a request (see Javadoc in
+	 *            {@link IntegerGeneratorFactory} or
+	 *            {@link ComputableFuzzingHeuristic#getName()}) or documentation for
+	 *            a list of string generators and its names).
+	 * @param param
+	 *            A parameter for the requested integer generator. May be
+	 *            {@code null} if the requested generator does not have a parameter
+	 *            or a default value shall be used.
+	 * @param numberSpec
+	 *            The number specification that describes the type the generator
+	 *            shall create values for.
+	 * @param seed
+	 *            The seed to be used for random-based fuzzing heuristics.
 	 * @return the requested instance of integer generator.
-	 * @throws UnknownFuzzingHeuristicException if no generator with {@code name} is known. 
-	 */	public IntegerGenerator create(String name, String param, IntegerSpecification numberSpec, long seed) throws UnknownFuzzingHeuristicException {
+	 * @throws UnknownFuzzingHeuristicException
+	 *             if no generator with {@code name} is known.
+	 */
+	public IntegerGenerator create(String name, String param, IntegerSpecification numberSpec, long seed) throws UnknownFuzzingHeuristicException {
 		if (name == null) {
 			throw new UnknownFuzzingHeuristicException(name);
 		}

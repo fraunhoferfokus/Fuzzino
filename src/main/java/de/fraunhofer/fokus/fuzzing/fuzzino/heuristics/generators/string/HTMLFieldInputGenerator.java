@@ -41,7 +41,7 @@ public class HTMLFieldInputGenerator extends ComposedStringGenerator {
 	private void initHeuristics() {
 		heuristics.add(new AllXSSGenerator(stringSpec, seed, owner, attackerURL));
 		heuristics.add(new SQLInjectionsGenerator(seed, stringSpec, owner));
-		
+		heuristics.add(new SQLTimeBasedInjectionsGenerator(seed, stringSpec, owner));
 	}
 
 	@Override

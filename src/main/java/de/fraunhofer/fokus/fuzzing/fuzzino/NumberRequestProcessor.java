@@ -27,6 +27,16 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 
+/**
+ * This abstract class provides a basic functionality for number request processors.
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
+ *
+ * @param <T> can be BigInteger, Double or Long.
+ * @see BigIntegerRequestProcessor
+ * @see IntegerRequestProcessor
+ * @see FloatRequestProcessor
+ */
 public abstract class NumberRequestProcessor<T extends Number> extends RequestProcessor<T> {
 
 	private static final long serialVersionUID = 6665646119450731161L;

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<response>
-    <closeRequestDone id="INVALID_ID">
-        <warnings hasMoreValues="true">
-            <illegalRequestFormat attribute="id" element="closeRequest"/>
-        </warnings>
-    </closeRequestDone>
-</response>

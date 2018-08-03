@@ -17,7 +17,14 @@ package de.fraunhofer.fokus.fuzzing.fuzzino;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Every {@link RequestProcessor} that is created during runtime will register at RequestProcessorRegistry. 
+ * You can receive the Processors by calling {@link #getProcessor(String)} with its name or id.
+ * This class is a singleton which can be obtained by calling its field {@link #INSTANCE}.
+ * 
+ * @author Rene W. Rollet (rene.wiegmann.rollet@fokus.fraunhofer.de)
+ *
+ */
 public class RequestProcessorRegistry {
 
 	public static RequestProcessorRegistry INSTANCE = new RequestProcessorRegistry();

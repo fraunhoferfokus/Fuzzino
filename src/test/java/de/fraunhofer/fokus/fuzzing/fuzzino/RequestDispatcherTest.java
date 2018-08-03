@@ -17,7 +17,6 @@ import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkCloseRequestConf
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkCloseRequestConfirmationForName;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkIllegalRequestFormatForElementAndId;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkOperatorPartForNumFuzzedValues;
-import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorMessage;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForErrorResponse;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumCollectionResponses;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.checkResponseDocForNumNumberResponses;
@@ -30,9 +29,8 @@ import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.createCloseRequestFil
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getIllegalRequestFormatFromResponse;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getOperatorPartFromNumberResponseByName;
 import static de.fraunhofer.fokus.fuzzing.fuzzino.TestUtil.getResponseDocForRequest;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
@@ -40,36 +38,27 @@ import javax.xml.bind.JAXBException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.GeneratorImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.OperatorImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.CloseRequestConfirmation;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalRequestFormat;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
 
 public class RequestDispatcherTest extends FuzzinoTest {
 	
-	private static String generalRequestRoot = "testdata/reworked/general/";
-	private static String stringRequestRoot = "testdata/reworked/stringRequests/";
-	private static String integerRequestRoot = "testdata/reworked/integerRequests/";
+	private static String generalRequestRoot = ResourcePath.TEST_RESOURCE + "/reworked/general/";
+	private static String stringRequestRoot = ResourcePath.TEST_RESOURCE + "reworked/stringRequests/";
+	private static String integerRequestRoot = ResourcePath.TEST_RESOURCE + "reworked/integerRequests/";
 	
 	@Test
 	public void testNonExistingRequestFile() throws IOException, JAXBException, SAXException {
-		String requestFilename = generalRequestRoot +"THAT_FILE_MUST_NOT_EXIST";
+		String requestFilename = generalRequestRoot + "THAT_FILE_MUST_NOT_EXIST";
 		RequestDispatcher dispatcher = new RequestDispatcher(requestFilename);
 		dispatcher.dispatch();
 		Response responseDoc = getResponseDocForRequest(requestFilename);
-		String expectedErrorMessage = "The system cannot find the file specified";
-		checkResponseDocForErrorMessage(responseDoc, expectedErrorMessage);
-	
+		assert (responseDoc.getErrorResponse().getStackTrace().contains("java.io.FileNotFoundException"));
 		checkResponseDocForNumStringResponses(responseDoc, 0);
 		checkResponseDocForNumNumberResponses(responseDoc, 0);
 		checkResponseDocForNumCollectionResponses(responseDoc, 0);
@@ -80,9 +69,10 @@ public class RequestDispatcherTest extends FuzzinoTest {
 	public void testInvalidXmlDocument() throws JAXBException, SAXException {
 		String requestFilename = generalRequestRoot +"NotWellFormedXmlFile.request.xml";
 		Response response = getResponseDocForRequest(requestFilename);
-		String expectedErrorMessage = "The element type \"validValues\" must be terminated by the matching end-tag \"</validValues>\".";
-		checkResponseDocForErrorMessage(response, expectedErrorMessage);
-
+		String expectedErrorMessageElement = "validValues";
+		assertTrue("Error message does not specify the important value \"" + expectedErrorMessageElement + "\".", 
+				response.getErrorResponse().getReason().contains(expectedErrorMessageElement));
+		
 		checkResponseDocForNumStringResponses(response, 0);
 		checkResponseDocForNumNumberResponses(response, 0);
 		checkResponseDocForNumCollectionResponses(response, 0);
@@ -96,9 +86,9 @@ public class RequestDispatcherTest extends FuzzinoTest {
 		RequestDispatcher dispatcher = new RequestDispatcher(requestFilename);
 		dispatcher.dispatch();
 		Response responseDoc = getResponseDocForRequest(requestFilename);
-		
-		String expectedErrorMessage = "cvc-complex-type.4: Attribute 'maxValues' must appear on element 'string'.";
-		checkResponseDocForErrorMessage(responseDoc, expectedErrorMessage);
+		String expectedErrorMessageElement = "maxValues";
+		assertTrue("Error message does not specify the important value \"" + expectedErrorMessageElement + "\".", 
+				responseDoc.getErrorResponse().getReason().contains(expectedErrorMessageElement));		
 		
 		checkResponseDocForNumStringResponses(responseDoc, 0);
 		checkResponseDocForNumNumberResponses(responseDoc, 0);

@@ -49,6 +49,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.ResponseImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.StackTrace;
 
 /**
  * This class dispatches a request from an XML file (compliant to fuzzingRequest.xsd) to type specific request processors. 
@@ -179,7 +180,7 @@ public class RequestDispatcher {
 				errorResponse.setMessage(xmlParsingError.getMessage());
 			} 
 			if(xmlParsingError.getStackTrace()!=null){
-				errorResponse.setStackTrace(xmlParsingError.getStackTrace().toString());
+				errorResponse.setStackTrace(new StackTrace(xmlParsingError).toString());
 			}
 		}
 		response.setErrorResponse(errorResponse);

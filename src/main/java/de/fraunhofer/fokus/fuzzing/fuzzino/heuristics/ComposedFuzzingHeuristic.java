@@ -66,7 +66,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	 * @param seed The seed that is used by random-based fuzzing heuristics.
 	 */
 	protected ComposedFuzzingHeuristic(long seed) {
-		//FIXME: If the user specifies 0 he will be surprised....
+		//FIXME: If the user specifies 0 he will be surprised...
 		if (seed != 0) {
 			this.seed = seed;
 		} else {

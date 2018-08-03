@@ -71,14 +71,12 @@ public class JAXBSerializationTest extends FuzzinoTest{
 		Response resp = new ResponseImpl();
 		StringResponse stringResponse = StringResponseBuilder.initStringResponse();
 		NumberResponse<Integer> numberResponse = NumberResponseBuilder.initNumberResponse();
-		StructureResponse structureResponse = StructureResponseBuilder.initStructureResponse();
 		CollectionResponse collectionResponse = CollectionResponseBuilder.initCollectionResponse();
 		ErrorResponse errorResponse = ErrorResponseBuilder.initErrorResponse();
 		CloseRequestConfirmation closeRequestConfirmation = CloseRequestConfirmationBuilder.initCloseRequestConfirmation();
 		resp.getCollectionResponses().add(collectionResponse);
 		resp.getStringResponses().add(stringResponse);
 		resp.getNumberResponses().add(numberResponse);
-		resp.getStructureResponses().add(structureResponse);
 		resp.setErrorResponse(errorResponse);
 		resp.getCloseRequestConfirmations().add(closeRequestConfirmation);
 		File responseFile = new ResourceResolver().loadProjectFile(ResourcePath.TEST_RESOURCE + "reworked/general/allResponses.response.xml");
@@ -87,7 +85,6 @@ public class JAXBSerializationTest extends FuzzinoTest{
 		Response unMarshalled = ResponseImpl.unmarshall(responseFile);
 		assertResponseEquality(stringResponse,unMarshalled.getStringResponses().get(0));
 		assertResponseEquality(numberResponse,(NumberResponse<Integer>) unMarshalled.getNumberResponses().get(0));
-		assertResponseEquality(structureResponse,unMarshalled.getStructureResponses().get(0));
 		assertResponseEquality(collectionResponse,unMarshalled.getCollectionResponses().get(0));
 		assertResponseEquality(errorResponse,unMarshalled.getErrorResponse());
 		assertCloseRequestConfirmationEquality(closeRequestConfirmation,resp.getCloseRequestConfirmations().get(0));
@@ -95,7 +92,6 @@ public class JAXBSerializationTest extends FuzzinoTest{
 	
 	@Test
 	public void testRequest() throws JAXBException, SAXException {
-		System.out.println(Integer.MAX_VALUE);
 		Request req = new RequestImpl();
 		StringRequestImpl stringReq = StringRequestBuilder.initStringRequest();
 		req.addStringRequest(stringReq);

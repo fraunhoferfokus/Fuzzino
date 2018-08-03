@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:response xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
-    <string id="430966e4-fa41-48d0-8bb4-74850d2ad2ca" moreValues="false" name="StringRequestSmallGenerator" seed="-1">
-        <warningsPart hasMoreValues="false"/>
-    </string>
-</ns2:response>

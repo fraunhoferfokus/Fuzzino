@@ -35,7 +35,6 @@ public class BadFloatGeneratorTest extends FuzzinoTest {
 		List<Double> expected = new ArrayList<>(Arrays.asList(0.1,0.5,Double.MAX_VALUE,Double.MIN_VALUE,Double.NaN,Double.NEGATIVE_INFINITY,Double.POSITIVE_INFINITY));
 		BadFloatGenerator gen = new BadFloatGenerator(floatSpec, 10);
 		for(FuzzedValue<Double> val:gen){
-			System.out.println(val.getValue());
 			expected.remove(val.getValue());
 		}
 		assertEquals(0,expected.size());

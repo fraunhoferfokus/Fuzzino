@@ -5,31 +5,7 @@
 	targetNamespace="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
 	
   <xs:element name="request" type="requestImpl"/>
-
-  <xs:element name="abstractRequest" type="abstractRequest"/>
-
-  <xs:element name="closeRequestImpl" type="closeRequestImpl"/>
-
-  <xs:element name="collectionRequestImpl" type="collectionRequestImpl"/>
-
-  <xs:element name="collectionSpecificationImpl" type="collectionSpecificationImpl"/>
-
-  <xs:element name="fieldImpl" type="fieldImpl"/>
-
-  <xs:element name="integerSpecificationImpl" type="integerSpecificationImpl"/>
-
-  <xs:element name="numberRequestImpl" type="numberRequestImpl"/>
-
-  <xs:element name="stringRequestImpl" type="stringRequestImpl"/>
-
-  <xs:element name="structureRequestImpl" type="structureRequestImpl"/>
-
-  <xs:element name="structureSpecificationImpl" type="structureSpecificationImpl"/>
-
-  <xs:element name="validCollectionImpl" type="validCollectionImpl"/>
-
-  <xs:element name="validCollectionsSectionImpl" type="validCollectionsSectionImpl"/>
-
+  
   <xs:complexType name="requestImpl">
     <xs:sequence>
       <xs:element name="closeRequest" type="closeRequestImpl" minOccurs="0" maxOccurs="unbounded"/>
@@ -45,7 +21,6 @@
   </xs:complexType>
 
   <xs:complexType name="closeRequestImpl">
-    <xs:sequence/>
     <xs:attribute name="id" type="xs:string"/>
   </xs:complexType>
 
@@ -65,15 +40,13 @@
   </xs:complexType>
 
   <xs:complexType name="abstractRequest" abstract="true">
-    <xs:sequence/>
     <xs:attribute name="id" type="xs:string"/>
     <xs:attribute name="maxValues" type="xs:int" use="required"/>
-    <xs:attribute name="name" type="xs:string"/>
-    <xs:attribute name="seed" type="xs:long" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="seed" type="xs:long"/>
   </xs:complexType>
 
   <xs:complexType name="collectionSpecificationImpl">
-    <xs:sequence/>
     <xs:attribute name="ref" type="xs:string"/>
     <xs:attribute name="isUnique" type="xs:boolean" use="required"/>
     <xs:attribute name="isOrdered" type="xs:boolean" use="required"/>
@@ -89,7 +62,6 @@
   </xs:complexType>
 
   <xs:complexType name="operatorImpl">
-    <xs:sequence/>
     <xs:attribute name="name" type="xs:string"/>
     <xs:attribute name="parameter" type="xs:string"/>
   </xs:complexType>
@@ -103,15 +75,13 @@
 
   <xs:complexType name="regexRequest">
     <xs:complexContent>
-      <xs:extension base="abstractLanguageRequest">
-        <xs:sequence/>
-      </xs:extension>
-  </xs:complexContent>
-  
+      <xs:extension base="abstractLanguageRequest" />
+    </xs:complexContent>
   </xs:complexType>
-    <xs:complexType name="fieldImpl">
-    <xs:sequence/>
-    <xs:attribute name="correspondingId" type="xs:string"/>
+  
+  <xs:complexType name="fieldImpl">
+    <!-- requestReference can an id or a name of another request-->
+    <xs:attribute name="requestReference" type="xs:string"/>
     <xs:attribute name="fuzzField" type="xs:boolean" use="required"/>
     <xs:attribute name="name" type="xs:string"/>
   </xs:complexType>
@@ -133,7 +103,6 @@
   </xs:complexType>
 
   <xs:complexType name="internalConfig">
-    <xs:sequence/>
     <xs:attribute name="desiredMaxRepeatCount" type="xs:int" use="required"/>
     <xs:attribute name="desiredFuzzCount" type="xs:int" use="required"/>
     <xs:attribute name="maxDecisionsPerNode" type="xs:int" use="required"/>
@@ -143,7 +112,6 @@
   <xs:complexType name="grammarRequest">
     <xs:complexContent>
       <xs:extension base="abstractLanguageRequest">
-        <xs:sequence/>
         <xs:attribute name="startRuleName" type="xs:string"/>
       </xs:extension>
     </xs:complexContent>
@@ -163,7 +131,6 @@
   </xs:complexType>
 
   <xs:complexType name="integerSpecificationImpl">
-    <xs:sequence/>
     <xs:attribute name="minValue" type="xs:integer"/>
     <xs:attribute name="maxValue" type="xs:integer"/>
     <xs:attribute name="bits" type="xs:int" use="required"/>
@@ -172,7 +139,6 @@
   </xs:complexType>
 
   <xs:complexType name="generatorImpl">
-    <xs:sequence/>
     <xs:attribute name="value" type="xs:string"/>
     <xs:attribute name="parameter" type="xs:string"/>
   </xs:complexType>
@@ -198,7 +164,6 @@
   </xs:complexType>
 
   <xs:complexType name="stringSpecificationImpl">
-    <xs:sequence/>
     <xs:attribute name="type" type="stringType"/>
     <xs:attribute name="minLength" type="xs:int" use="required"/>
     <xs:attribute name="maxLength" type="xs:int" use="required"/>

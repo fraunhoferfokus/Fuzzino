@@ -18,6 +18,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
+// TODO delete because unused?
+
 public abstract class ComposedIntegerGenerator extends ComposedFuzzingHeuristic<Long> implements IntegerGenerator {
 
 	private static final long serialVersionUID = 9200185621686463628L;

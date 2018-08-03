@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:request xmlns:ns2="request">
+<ns2:request xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
     <string id="e394cd5a-ef8b-43ea-9209-e0a030414876" maxValues="5" name="StringRequestTestInvalidId" seed="-1">
         <noGenerators>false</noGenerators>
         <generator value="BADSTRINGS"/>

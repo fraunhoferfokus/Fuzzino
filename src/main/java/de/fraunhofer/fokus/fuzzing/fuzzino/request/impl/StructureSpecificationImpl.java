@@ -37,7 +37,8 @@ public class StructureSpecificationImpl implements StructureSpecification {
 	
 	@Override
 	public ValidationResult validate() {
-		return new ValidationResult(true, null); // TODO
+		// TODO implement
+		return new ValidationResult(true, null);
 	}
 
 	@Override

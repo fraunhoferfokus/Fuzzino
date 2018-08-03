@@ -29,6 +29,6 @@ public class ResourcePath {
 	public final static String SCHEMA_DIRECTORY = MAIN_RESOURCE + "schemas" + fs;
 	public final static String FUZZINO_FILES = System.getProperty("user.home") + fs + "FuzzinoFiles";
 	public final static String DATA_SPEC = MAIN_RESOURCE + "DataSpec" + fs;
-	public final static String FUZZING_VALUES = MAIN_RESOURCE + fs + "FuzzingValues" + fs;
+	public final static String FUZZING_VALUES = MAIN_RESOURCE + "FuzzingValues" + fs;
 
 }

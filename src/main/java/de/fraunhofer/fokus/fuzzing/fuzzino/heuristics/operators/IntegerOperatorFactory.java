@@ -17,11 +17,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.NumericalVarianceOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 
 /**
- * A factory for all kinds of NumberOperators.
+ * <p>
+ * A factory that creates all kinds of NumberOperators. A single NumberOperator
+ * can be requested by its name via the method {@link #create} or by calling the
+ * corresponding create method. The factory is a singleton which instance can be
+ * obtained by calling {@code IntegerOperatorFactory.INSTANCE}.
+ * </p>
+ * <p>
+ * Following are all available working NumberOperators listed by their name.
+ * This name is not the class name but the name used in a request.
+ * <ul>
+ * <li>{@link NumericalVarianceOperator NumericalVariance}</li>
+ * </ul>
+ * </p>
  * 
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
@@ -39,6 +52,27 @@ public class IntegerOperatorFactory {
 	private IntegerOperatorFactory() {
 	}
 	
+	/**
+	 * Creates an IntegerOperator identified by its name.
+	 * 
+	 * @param name
+	 *            The name of the IntegerOperator that is not the class name
+	 *            but the name used in a request (see Javadoc in
+	 *            {@link IntegerOperatorFactory} or
+	 *            {@link ComputableFuzzingHeuristic#getName()}) or documentation for
+	 *            a list of operators and its names).
+	 * @param validValues A list of Long values that can be mutated.
+	 * @param param
+	 *            A parameter for the requested IntegerOperator. May be
+	 *            {@code null} if the requested generator does not have a parameter
+	 *            or a default value shall be used.
+	 * @param numberSpec
+	 * @param seed
+	 *            The seed to be used for random-based fuzzing heuristics.
+	 * @return the requested instance of IntegerOperator.
+	 * @throws UnknownFuzzingHeuristicException
+	 *             if no generator with {@code NAME} is known.
+	 */
 	public IntegerOperator create(String name, List<Long> validValues, String param, IntegerSpecification numberSpec, long seed) throws UnknownFuzzingHeuristicException {
 		String canonicalName = name.trim().toUpperCase();
 		if (canonicalName.equals("NumericalVariance".toUpperCase())) {
@@ -48,6 +82,14 @@ public class IntegerOperatorFactory {
 		}
 	}
 	
+	 /**
+	  * A list of all IntegerOperators that can create values for {@code numberSpec}.
+	  * 
+	  * @param validValues
+	  * @param collectionSpec The IntegerSpecificationn that describes the type the generator shall create values for.
+	  * @param seed The seed to be used for random-based fuzzing heuristics.
+	  * @return a list of all IntegerOperators that can create values for {@code numberSpec}.
+	  */
 	public List<IntegerOperator> createAll(List<Long> validValues, 
 			                               IntegerSpecification numberSpec, 
 			                               long seed) {
