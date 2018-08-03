@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.fraunhofer.fokus.fuzzing.fuzzino</groupId>
   <artifactId>Fuzzino</artifactId>
-  <version>0.5.0.6</version>
+  <version>0.6.0.0</version>
   
   <repositories>
     <repository>
@@ -31,43 +31,12 @@
       <artifactId>antlr4-runtime</artifactId>
       <version>4.5.2</version>
     </dependency>
-    
-    <dependency>
-      <groupId>de.fraunhofer.fokus.fuzzing.grammar_fuzzing</groupId>
-      <artifactId>Grammar_Fuzzing</artifactId>
-      <version>1.0.0</version>
-      <scope>compile</scope>
-    </dependency>  
   
   </dependencies>
   
   <build>
     <plugins>
-    
-      <!-- install grammar_fuzzing library as local maven repository-->  
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <version>2.5.2</version>
-        <configuration>
-          <groupId>de.fraunhofer.fokus.fuzzing.grammar_fuzzing</groupId>
-          <artifactId>Grammar_Fuzzing</artifactId>
-          <version>1.0.0</version>
-          <packaging>jar</packaging>
-          <file>${basedir}/dependencies/Grammar_Fuzzing-1.0.0.jar</file>
-          <generatePom>true</generatePom>
-        </configuration>
-        <executions>
-          <execution>
-            <id>install-jar-lib</id>
-            <goals>
-              <goal>install-file</goal>
-            </goals>
-            <phase>validate</phase>
-          </execution>
-        </executions>
-      </plugin>
-  
+      
       <!-- Define compiler settings -->
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -78,21 +47,7 @@
           <encoding>ISO-8859-1</encoding>
         </configuration>  
       </plugin>
-      
-      <!-- Create jar -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <manifest>
-	          <mainClass>de.fraunhofer.fokus.fuzzing.fuzzino.Fuzzino</mainClass>
-             </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-      
+            
       <!-- Create jar with dependencies -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>

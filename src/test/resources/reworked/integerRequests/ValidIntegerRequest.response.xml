@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<response>
-    <number id="d31fe7ba-0c76-4667-bfb9-7c93aa4281c1" moreValues="false" name="NumberRequestTest" seed="-1">
+<ns2:response xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+    <number id="a2f87a70-a74e-401e-b6e9-36f6e200bbbf" moreValues="false" name="NumberRequestTest" seed="-1">
         <generatorBased>
             <generator name="BoundaryNumbers">
                 <fuzzedValue>
@@ -178,4 +178,4 @@
             </operator>
         </operatorBased>
     </number>
-</response>
+</ns2:response>

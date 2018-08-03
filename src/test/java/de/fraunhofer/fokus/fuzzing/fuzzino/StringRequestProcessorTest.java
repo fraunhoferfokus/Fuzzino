@@ -51,18 +51,14 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperatorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.GeneratorImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.OperatorImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.RequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringRequestImpl;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 public class StringRequestProcessorTest extends FuzzinoTest {
@@ -75,7 +71,7 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	public static final int MIN_LENGTH = 2;
 	public static final int MAX_LENGTH = 5;
 	
-	private static String stringRootDir = "testdata/reworked/stringRequests/";
+	private static String stringRootDir = ResourcePath.TEST_RESOURCE + "reworked/stringRequests/";
 	
 	@Before
 	public void init() throws Exception {

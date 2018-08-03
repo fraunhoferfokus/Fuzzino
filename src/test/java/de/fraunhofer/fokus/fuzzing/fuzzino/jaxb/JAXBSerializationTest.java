@@ -1,15 +1,25 @@
+//   Copyright 2012-2013 Fraunhofer FOKUS
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.jaxb;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.SchemaOutputResolver;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -51,19 +61,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.impl.ResponseImpl;
-//Copyright 2012-2013 Fraunhofer FOKUS
-//
-//Licensed under the Apache License, Version 2.0 (the "License");
-//you may not use this file except in compliance with the License.
-//You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-//Unless required by applicable law or agreed to in writing, software
-//distributed under the License is distributed on an "AS IS" BASIS,
-//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//See the License for the specific language governing permissions and
-//limitations under the License.
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourceResolver;
 
 public class JAXBSerializationTest extends FuzzinoTest{
 	
@@ -82,7 +81,7 @@ public class JAXBSerializationTest extends FuzzinoTest{
 		resp.getStructureResponses().add(structureResponse);
 		resp.setErrorResponse(errorResponse);
 		resp.getCloseRequestConfirmations().add(closeRequestConfirmation);
-		File responseFile = new File("testdata/reworked/general/allResponses.response.xml");
+		File responseFile = new ResourceResolver().loadProjectFile(ResourcePath.TEST_RESOURCE + "reworked/general/allResponses.response.xml");
 		resp.marshall(responseFile);
 		resp.marshall(System.out);
 		Response unMarshalled = ResponseImpl.unmarshall(responseFile);
@@ -108,7 +107,7 @@ public class JAXBSerializationTest extends FuzzinoTest{
 		req.addCollectionRequest(collectionRequest);
 		CloseRequest closeRequest = new CloseRequestImpl("close request id");
 		req.addCloseRequest(closeRequest);
-		File requestFile = new File("testdata/reworked/numberRequests/allRequests.request.xml");
+		File requestFile = new ResourceResolver().loadProjectFile(ResourcePath.TEST_RESOURCE + "reworked/numberRequests/allRequests.request.xml");
 		req.marshall(requestFile);
 		req.marshall(System.out);
 		Request unmarshalled = RequestImpl.unmarshall(requestFile);

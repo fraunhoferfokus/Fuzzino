@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:request xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
+    <string maxValues="3" name="ValidRequestWithSeed" seed="500000">
+        <noGenerators>true</noGenerators>
+        <specification type="STRING" minLength="0" maxLength="2147483647" nullTerminated="true" encoding="UTF8" ignoreLengths="false"/>
+        <validValues>
+            <operator name="STRINGCASE"/>
+            <value>ABCDEFGHIJKLMNOPQRST</value>
+        </validValues>
+    </string>
+</ns2:request>
+

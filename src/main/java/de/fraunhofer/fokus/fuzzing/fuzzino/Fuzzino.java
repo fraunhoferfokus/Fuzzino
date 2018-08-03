@@ -32,7 +32,7 @@ public final class Fuzzino {
 			                               "  \\U<nnnnnnnn> 32-bit Unicode character\n" +
 			                               "  n is a hexa-dezimal digit\n" +
 			                               "  If this argument is omitted, only characters <= 32 and >=255 will be encoded.";
-	private static final String version = "0.5.0.6";
+	private static final String version = "0.6.0.0";
 	
 	private static boolean encode = false;
 	private static String filename = null;

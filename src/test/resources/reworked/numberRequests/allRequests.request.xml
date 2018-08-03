@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:request xmlns:ns2="request">
+<ns2:request xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
     <closeRequest id="close request id"/>
     <CollectionRequest fuzzStructure="true" fuzzValues="true" maxMutations="17" minMutations="5" id="collection request id" maxValues="4000" name="name for my collection request" seed="1234">
         <specification ref="some reference string that I have no ide what it does here :D" isUnique="true" isOrdered="true" minLength="1" maxLength="14"/>

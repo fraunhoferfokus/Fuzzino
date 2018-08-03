@@ -37,10 +37,11 @@ import org.xml.sax.SAXException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
 
 public class BugTests extends FuzzinoTest{
 
-	private static String bugDir = "testdata/reworked/bugs/";
+	private static String bugDir = ResourcePath.TEST_RESOURCE + "/reworked/bugs/";
 	
 	/*@Test
 	public void init() throws JAXBException{

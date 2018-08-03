@@ -63,6 +63,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValue
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourceResolver;
 
 public class BigIntegerRequestProcessorTest extends FuzzinoTest{
 
@@ -75,7 +77,7 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest{
 	}
 	protected BigIntegerRequestProcessor reqProc;
 
-	private static String numRequestRoot = "testdata/reworked/NumberRequests/";
+	private static String numRequestRoot = ResourcePath.TEST_RESOURCE + "reworked/NumberRequests/";
 
 	
 	@Before

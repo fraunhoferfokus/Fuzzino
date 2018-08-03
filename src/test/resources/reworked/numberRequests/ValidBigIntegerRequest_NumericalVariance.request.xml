@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:request xmlns:ns2="request">
+<ns2:request xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
     <number maxValues="500" name="NumberRequestTest" seed="-1">
         <noGenerators>true</noGenerators>
         <specification minValue="-9223372036854775807" maxValue="4611686018427387902" bits="128" isSigned="true" ignoreMinMaxValues="false"/>

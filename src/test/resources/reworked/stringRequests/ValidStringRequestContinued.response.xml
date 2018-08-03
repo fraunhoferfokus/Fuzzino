@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<response>
-    <string id="462dcbc1-2f83-4efb-9644-5c78d5d41c74" moreValues="true" name="StringRequestTest" seed="-1">
+<ns2:response xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+    <string id="f0b7cc30-fc33-4f7a-9804-f563959c26d8" moreValues="true" name="StringRequestTest" seed="-1">
         <generatorBased>
             <generator name="BadStrings">
                 <fuzzedValue>
@@ -26,4 +26,4 @@
             </generator>
         </generatorBased>
     </string>
-</response>
+</ns2:response>

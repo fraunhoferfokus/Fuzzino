@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://fuzzino.fuzzing.fokus.fraunhofer.de/response"
+	targetNamespace="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+
+  <xs:element name="abstractResponse" type="abstractResponse"/>
+
+  <xs:element name="closeRequestConfirmationImpl" type="closeRequestConfirmationImpl"/>
+
+  <xs:element name="collectionResponseImpl" type="collectionResponseImpl"/>
+
+  <xs:element name="errorResponseImpl" type="errorResponseImpl"/>
+
+  <xs:element name="responseFieldImpl" nillable="true" type="xs:anyType"/>
+  
+  <xs:element name="requestFieldImpl" nillable="true" type="xs:anyType"/>
+
+  <xs:element name="fuzzedCollectionImpl" type="fuzzedCollectionImpl"/>
+
+  <xs:element name="fuzzedValue" type="fuzzedValueType"/>
+
+  <xs:element name="fuzzedValuesByGeneratorsImpl" type="fuzzedValuesByGeneratorsImpl"/>
+
+  <xs:element name="fuzzedValuesByOperatorsImpl" type="fuzzedValuesByOperatorsImpl"/>
+
+  <xs:element name="generatorSpecificFuzzedValuesImpl" type="generatorSpecificFuzzedValuesImpl"/>
+
+  <xs:element name="illegalGeneratorImpl" type="illegalGeneratorImpl"/>
+
+  <xs:element name="illegalHeuristic" type="illegalHeuristic"/>
+
+  <xs:element name="illegalOperatorImpl" type="illegalOperatorImpl"/>
+
+  <xs:element name="illegalRequestFormatImpl" type="illegalRequestFormatImpl"/>
+
+  <xs:element name="numberResponseImpl" type="numberResponseImpl"/>
+
+  <xs:element name="operatorSpecificFuzzedValuesImpl" type="operatorSpecificFuzzedValuesImpl"/>
+
+  <xs:element name="response" type="responseImpl"/>
+
+  <xs:element name="stringResponseImpl" type="stringResponseImpl"/>
+
+  <xs:element name="structureImpl" type="structureImpl"/>
+
+  <xs:element name="structureResponseImpl" type="structureResponseImpl"/>
+
+  <xs:element name="structureSpecificationImpl" type="structureSpecificationImpl"/>
+
+  <xs:element name="valueImpl" type="valueImpl"/>
+
+  <xs:element name="warningsSectionImpl" type="warningsSectionImpl"/>
+
+  <xs:complexType name="responseFieldImpl">
+    <xs:sequence/>
+    <xs:attribute name="correspondingId" type="xs:string"/>
+    <xs:attribute name="fuzz" type="xs:boolean" use="required"/>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  
+  <xs:complexType name="requestFieldImpl">
+    <xs:sequence/>
+    <xs:attribute name="correspondingId" type="xs:string"/>
+    <xs:attribute name="fuzzField" type="xs:boolean" use="required"/>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  
+  <xs:complexType name="responseImpl">
+    <xs:sequence>
+      <xs:element name="closeRequestDone" type="closeRequestConfirmationImpl" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="collection" type="collectionResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="errorResponse" type="errorResponseImpl" minOccurs="0"/>
+      <xs:element name="language" type="grammarResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="number" type="numberResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="string" type="stringResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="structure" type="structureResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="closeRequestConfirmationImpl">
+    <xs:sequence>
+      <xs:element name="warnings" type="warningsSectionImpl" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="warningsSectionImpl">
+    <xs:sequence>
+      <xs:element name="illegalGenerator" type="illegalGeneratorImpl" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="illegalOperators" type="illegalOperatorImpl" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="illegalRequestFormat" type="illegalRequestFormatImpl" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="hasMoreValues" type="xs:boolean" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="illegalGeneratorImpl">
+    <xs:complexContent>
+      <xs:extension base="illegalHeuristic">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="illegalHeuristic" abstract="true">
+    <xs:sequence/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="reason" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="illegalOperatorImpl">
+    <xs:complexContent>
+      <xs:extension base="illegalHeuristic">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="illegalRequestFormatImpl">
+    <xs:sequence/>
+    <xs:attribute name="attribute" type="xs:string"/>
+    <xs:attribute name="element" type="xs:string"/>
+    <xs:attribute name="missingAttribute" type="xs:string"/>
+    <xs:attribute name="missingElement" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="collectionResponseImpl">
+    <xs:complexContent>
+      <xs:extension base="abstractResponse">
+        <xs:sequence>
+          <xs:element name="fuzzedCollection" type="fuzzedCollectionImpl" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="abstractResponse" abstract="true">
+    <xs:sequence>
+      <xs:element name="warningsPart" type="warningsSectionImpl" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="moreValues" type="xs:boolean" use="required"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="seed" type="xs:long" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="fuzzedCollectionImpl">
+    <xs:sequence>
+      <xs:element name="value" type="valueImpl" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="basedOn" type="xs:string"/>
+    <xs:attribute name="mutations" type="xs:int" use="required"/>
+    <xs:attribute name="operators" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="valueImpl">
+    <xs:sequence/>
+    <xs:attribute name="value" type="xs:string"/>
+    <xs:attribute name="basedOn" type="xs:string"/>
+    <xs:attribute name="generator" type="xs:string"/>
+    <xs:attribute name="operator" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="errorResponseImpl">
+    <xs:sequence/>
+    <xs:attribute name="reason" type="xs:string"/>
+    <xs:attribute name="message" type="xs:string"/>
+    <xs:attribute name="stackTrace" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="grammarResponseImpl">
+    <xs:complexContent>
+      <xs:extension base="abstractResponse">
+        <xs:sequence>
+          <xs:element name="fuzzedValue" type="fuzzedValueType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="fuzzedValueType">
+    <xs:sequence>
+      <xs:element name="value" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="basedOnValue" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="kind" type="kind" minOccurs="0"/>
+      <xs:element name="usedGrammarOperatorNames" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="usedGrammarOperatorNames" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="structureImpl">
+    <xs:sequence>
+      <xs:element name="specification" type="structureSpecificationImpl" minOccurs="0"/>
+      <xs:element name="field" type="responseFieldImpl" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="structureSpecificationImpl">
+    <xs:sequence>
+      <xs:element name="field" type="requestFieldImpl" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="ordered" type="xs:boolean" use="required"/>
+  </xs:complexType>
+
+
+
+  <xs:complexType name="numberResponseImpl">
+    <xs:complexContent>
+      <xs:extension base="abstractResponse">
+        <xs:sequence>
+          <xs:element name="generatorBased" type="fuzzedValuesByGeneratorsImpl" minOccurs="0"/>
+          <xs:element name="operatorBased" type="fuzzedValuesByOperatorsImpl" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="fuzzedValuesByGeneratorsImpl">
+    <xs:sequence>
+      <xs:element name="generator" type="generatorSpecificFuzzedValuesImpl" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="generatorSpecificFuzzedValuesImpl">
+    <xs:sequence>
+      <xs:element name="fuzzedValue" type="fuzzedValueType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="fuzzedValuesByOperatorsImpl">
+    <xs:sequence>
+      <xs:element name="operator" type="operatorSpecificFuzzedValuesImpl" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="operatorSpecificFuzzedValuesImpl">
+    <xs:sequence>
+      <xs:element name="fuzzedValue" type="fuzzedValueType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="basedOn" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="stringResponseImpl">
+    <xs:complexContent>
+      <xs:extension base="abstractResponse">
+        <xs:sequence>
+          <xs:element name="generatorBased" type="fuzzedValuesByGeneratorsImpl" minOccurs="0"/>
+          <xs:element name="operatorBased" type="fuzzedValuesByOperatorsImpl" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="structureResponseImpl">
+    <xs:complexContent>
+      <xs:extension base="abstractResponse">
+        <xs:sequence>
+          <xs:element name="fuzzedValue" type="fuzzedValueType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="kind">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="GENERATED"/>
+      <xs:enumeration value="MUTATED"/>
+      <xs:enumeration value="NONE"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

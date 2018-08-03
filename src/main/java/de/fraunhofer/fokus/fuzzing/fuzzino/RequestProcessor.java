@@ -28,6 +28,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.CommonRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.CommonResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.ResponseFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.WarningsSection;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourceResolver;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ValidationResult;
 
 /**
@@ -79,7 +81,7 @@ public abstract class RequestProcessor<T> extends ComposedFuzzingHeuristic<T> im
 	 */
 	public abstract CommonResponse getResponse();
 	
-	protected static File dir = new File(System.getProperty("user.home") + File.separator + "FuzzinoFiles");
+	protected static File dir = new ResourceResolver().loadProjectFile(ResourcePath.FUZZINO_FILES);
 
 	public static void setSerializationDir(File newDir){
 		dir = newDir;

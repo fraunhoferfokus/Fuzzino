@@ -59,6 +59,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.GeneratorSpecificFuzzedValue
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.OperatorSpecificFuzzedValues;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourceResolver;
 
 public class IntegerRequestProcessorTest extends FuzzinoTest {
 
@@ -70,7 +72,7 @@ public class IntegerRequestProcessorTest extends FuzzinoTest {
 		NUMBER_SPEC.setIsSigned(true);
 	}
 	protected IntegerRequestProcessor reqProc;
-	private static String numRequestRoot = "testdata/reworked/integerRequests/";
+	private static String numRequestRoot = ResourcePath.TEST_RESOURCE + "reworked/integerRequests/";
 
 	@Before
 	public void init() throws Exception {

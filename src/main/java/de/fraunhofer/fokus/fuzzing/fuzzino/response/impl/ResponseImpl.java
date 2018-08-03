@@ -40,12 +40,14 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.response.NumberResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.Response;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StringResponse;
 import de.fraunhofer.fokus.fuzzing.fuzzino.response.StructureResponse;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourceResolver;
 
-@XmlRootElement(name = "response")
+@XmlRootElement(namespace = "http://fuzzino.fuzzing.fokus.fraunhofer.de/response", name = "response")
 @XmlAccessorType(XmlAccessType.NONE)
 public class ResponseImpl implements Response {
 
-	private static final File schemaLocation = new File("schemas/response/schema3.xsd");
+	private static final File schemaLocation = new ResourceResolver().loadSchemaFromJarAsNewFile(ResourcePath.SCHEMA_DIRECTORY + "response/response.xsd");
 	
 	protected List<StringResponse> stringResponses;
 	protected List<NumberResponse<? extends Number>> numberResponses;

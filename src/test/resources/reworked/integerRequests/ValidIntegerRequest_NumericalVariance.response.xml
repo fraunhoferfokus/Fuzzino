@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<response>
-    <number id="f4f018ec-f8be-4022-ac40-d50c90e52dc7" moreValues="false" name="NumericalVarianceTest" seed="-1">
+<ns2:response xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+    <number id="53db7769-e5b8-423f-805a-e78b7c7cde16" moreValues="false" name="NumericalVarianceTest" seed="-1">
         <operatorBased>
             <operator basedOn="10" name="NumericalVariance">
                 <fuzzedValue>
@@ -106,4 +106,4 @@
             </operator>
         </operatorBased>
     </number>
-</response>
+</ns2:response>

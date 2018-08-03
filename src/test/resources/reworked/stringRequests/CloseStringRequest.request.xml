@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:request xmlns:ns2="request">
-    <closeRequest id="ceef5f40-4726-413a-ab13-da16b2813a06"/>
+<ns2:request xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
+    <closeRequest id="057449a3-9815-4c68-8863-da4fbd267580"/>
 </ns2:request>

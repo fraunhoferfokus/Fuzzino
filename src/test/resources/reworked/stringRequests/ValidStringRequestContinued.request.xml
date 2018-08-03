@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:request xmlns:ns2="request">
-    <string id="462dcbc1-2f83-4efb-9644-5c78d5d41c74" maxValues="5" name="StringRequestTest" seed="-1">
+<ns2:request xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
+    <string id="f0b7cc30-fc33-4f7a-9804-f563959c26d8" maxValues="5" name="StringRequestTest" seed="-1">
         <noGenerators>false</noGenerators>
     </string>
 </ns2:request>

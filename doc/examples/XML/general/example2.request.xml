@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<request:request xmlns:request="http://fuzzino.fuzzing.fokus.fraunhofer.de/request">
-  <request:closeRequest id="bcc077a2-51fe-449c-8f39-af8e86d5ed57"/>
-  <request:closeRequest id="797c5247-730d-46ea-b764-abca1c6db02f"/>
-</request:request>

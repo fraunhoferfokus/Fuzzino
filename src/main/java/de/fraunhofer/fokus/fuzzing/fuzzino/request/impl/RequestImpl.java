@@ -39,12 +39,14 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringRequest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StructureRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourceResolver;
 
-@XmlRootElement(namespace = "request",name = "request")
+@XmlRootElement(namespace = "http://fuzzino.fuzzing.fokus.fraunhofer.de/request", name = "request")
 @XmlAccessorType(XmlAccessType.NONE)
 public class RequestImpl implements Request {
 	
-	private static final File schemaLocation = new File("schemas/request/schema2.xsd");
+	private static final File schemaLocation = new ResourceResolver().loadSchemaFromJarAsNewFile(ResourcePath.SCHEMA_DIRECTORY + "request/request.xsd");
 	private static final long serialVersionUID = 1915856810760232417L;
 	protected List<StringRequest> stringRequests;
 	protected List<NumberRequest> numberRequests;

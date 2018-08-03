@@ -1,1 +1,4 @@
 /target/
+.jar
+!Grammar_Fuzzing*.jar
+XML+Interface+Description.docx

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<response>
-    <string id="6f0d0d2b-dcf9-4428-a2ad-81552bdd851f" moreValues="false" name="ValidRequestWithSeed" seed="500000">
+<ns2:response xmlns:ns2="http://fuzzino.fuzzing.fokus.fraunhofer.de/response">
+    <string id="5e4c35d4-1ba0-42a2-aae7-29a9686969dd" moreValues="false" name="ValidRequestWithSeed" seed="500000">
         <generatorBased>
             <generator name="SmallGenerator">
                 <fuzzedValue>
@@ -65,4 +65,4 @@
             </operator>
         </operatorBased>
     </string>
-</response>
+</ns2:response>
