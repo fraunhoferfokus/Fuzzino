@@ -9,14 +9,8 @@
   <xs:complexType name="requestImpl">
     <xs:sequence>
       <xs:element name="closeRequest" type="closeRequestImpl" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="CollectionRequest" type="collectionRequestImpl" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="regex" type="regexRequest"/>
-        <xs:element name="grammar" type="grammarRequest"/>
-      </xs:choice>
       <xs:element name="number" type="numberRequestImpl" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="string" type="stringRequestImpl" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="structure" type="structureRequestImpl" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -24,41 +18,11 @@
     <xs:attribute name="id" type="xs:string"/>
   </xs:complexType>
 
-  <xs:complexType name="collectionRequestImpl">
-    <xs:complexContent>
-      <xs:extension base="abstractRequest">
-        <xs:sequence>
-          <xs:element name="specification" type="collectionSpecificationImpl" minOccurs="0"/>
-          <xs:element name="validCollections" type="validCollectionsSectionImpl" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="fuzzStructure" type="xs:boolean" use="required"/>
-        <xs:attribute name="fuzzValues" type="xs:boolean" use="required"/>
-        <xs:attribute name="maxMutations" type="xs:int" use="required"/>
-        <xs:attribute name="minMutations" type="xs:int" use="required"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="abstractRequest" abstract="true">
     <xs:attribute name="id" type="xs:string"/>
     <xs:attribute name="maxValues" type="xs:int" use="required"/>
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="seed" type="xs:long"/>
-  </xs:complexType>
-
-  <xs:complexType name="collectionSpecificationImpl">
-    <xs:attribute name="ref" type="xs:string"/>
-    <xs:attribute name="isUnique" type="xs:boolean" use="required"/>
-    <xs:attribute name="isOrdered" type="xs:boolean" use="required"/>
-    <xs:attribute name="minLength" type="xs:int" use="required"/>
-    <xs:attribute name="maxLength" type="xs:int" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="validCollectionsSectionImpl">
-    <xs:sequence>
-      <xs:element name="operator" type="operatorImpl" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="validCollection" type="validCollectionImpl" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="operatorImpl">
@@ -72,51 +36,7 @@
     </xs:sequence>
     <xs:attribute name="name" type="xs:string"/>
   </xs:complexType>
-
-  <xs:complexType name="regexRequest">
-    <xs:complexContent>
-      <xs:extension base="abstractLanguageRequest" />
-    </xs:complexContent>
-  </xs:complexType>
   
-  <xs:complexType name="fieldImpl">
-    <!-- requestReference can an id or a name of another request-->
-    <xs:attribute name="requestReference" type="xs:string"/>
-    <xs:attribute name="fuzzField" type="xs:boolean" use="required"/>
-    <xs:attribute name="name" type="xs:string"/>
-  </xs:complexType>
-  
-  <xs:complexType name="abstractLanguageRequest" abstract="true">
-    <xs:complexContent>
-      <xs:extension base="abstractRequest">
-        <xs:sequence>
-          <xs:element name="operator" type="operatorImpl" minOccurs="0" maxOccurs="unbounded"/>
-          <xs:element name="validValue" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-          <xs:element name="config" type="internalConfig" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="maxMutations" type="xs:int" use="required"/>
-        <xs:attribute name="minMutations" type="xs:int" use="required"/>
-        <xs:attribute name="languageSpecificationFilePath" type="xs:string"/>
-        <xs:attribute name="generateOnlyValidValues" type="xs:boolean" use="required"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="internalConfig">
-    <xs:attribute name="desiredMaxRepeatCount" type="xs:int" use="required"/>
-    <xs:attribute name="desiredFuzzCount" type="xs:int" use="required"/>
-    <xs:attribute name="maxDecisionsPerNode" type="xs:int" use="required"/>
-    <xs:attribute name="convergenceFactor" type="xs:double" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="grammarRequest">
-    <xs:complexContent>
-      <xs:extension base="abstractLanguageRequest">
-        <xs:attribute name="startRuleName" type="xs:string"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="numberRequestImpl">
     <xs:complexContent>
       <xs:extension base="abstractRequest">
@@ -172,28 +92,6 @@
     <xs:attribute name="regEx" type="xs:string"/>
     <xs:attribute name="ignoreLengths" type="xs:boolean" use="required"/>
   </xs:complexType>
-
-  <xs:complexType name="structureRequestImpl">
-    <xs:complexContent>
-      <xs:extension base="abstractRequest">
-        <xs:sequence>
-          <xs:element name="operator" type="operatorImpl" minOccurs="0" maxOccurs="unbounded"/>
-          <xs:element name="specification" type="structureSpecificationImpl" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="fuzzStructure" type="xs:boolean" use="required"/>
-        <xs:attribute name="maxMutations" type="xs:int" use="required"/>
-        <xs:attribute name="minMutations" type="xs:int" use="required"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="structureSpecificationImpl">
-    <xs:sequence>
-      <xs:element name="field" type="fieldImpl" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="ordered" type="xs:boolean" use="required"/>
-  </xs:complexType>
-
 
   <xs:simpleType name="stringType">
     <xs:restriction base="xs:string">

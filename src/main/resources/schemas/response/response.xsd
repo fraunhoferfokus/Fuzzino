@@ -8,15 +8,7 @@
 
   <xs:element name="closeRequestConfirmationImpl" type="closeRequestConfirmationImpl"/>
 
-  <xs:element name="collectionResponseImpl" type="collectionResponseImpl"/>
-
   <xs:element name="errorResponseImpl" type="errorResponseImpl"/>
-
-  <xs:element name="responseFieldImpl" nillable="true" type="xs:anyType"/>
-  
-  <xs:element name="requestFieldImpl" nillable="true" type="xs:anyType"/>
-
-  <xs:element name="fuzzedCollectionImpl" type="fuzzedCollectionImpl"/>
 
   <xs:element name="fuzzedValue" type="fuzzedValueType"/>
 
@@ -42,39 +34,14 @@
 
   <xs:element name="stringResponseImpl" type="stringResponseImpl"/>
 
-  <xs:element name="structureImpl" type="structureImpl"/>
-
-  <xs:element name="structureResponseImpl" type="structureResponseImpl"/>
-
-  <xs:element name="structureSpecificationImpl" type="structureSpecificationImpl"/>
-
-  <xs:element name="valueImpl" type="valueImpl"/>
-
   <xs:element name="warningsSectionImpl" type="warningsSectionImpl"/>
-
-  <xs:complexType name="responseFieldImpl">
-    <xs:sequence/>
-    <xs:attribute name="correspondingId" type="xs:string"/>
-    <xs:attribute name="fuzz" type="xs:boolean" use="required"/>
-    <xs:attribute name="name" type="xs:string"/>
-  </xs:complexType>
-  
-  <xs:complexType name="requestFieldImpl">
-    <xs:sequence/>
-    <xs:attribute name="correspondingId" type="xs:string"/>
-    <xs:attribute name="fuzzField" type="xs:boolean" use="required"/>
-    <xs:attribute name="name" type="xs:string"/>
-  </xs:complexType>
   
   <xs:complexType name="responseImpl">
     <xs:sequence>
       <xs:element name="closeRequestDone" type="closeRequestConfirmationImpl" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="collection" type="collectionResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="errorResponse" type="errorResponseImpl" minOccurs="0"/>
-      <xs:element name="language" type="grammarResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="number" type="numberResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="string" type="stringResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="structure" type="structureResponseImpl" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -125,16 +92,6 @@
     <xs:attribute name="missingElement" type="xs:string"/>
   </xs:complexType>
 
-  <xs:complexType name="collectionResponseImpl">
-    <xs:complexContent>
-      <xs:extension base="abstractResponse">
-        <xs:sequence>
-          <xs:element name="fuzzedCollection" type="fuzzedCollectionImpl" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="abstractResponse" abstract="true">
     <xs:sequence>
       <xs:element name="warningsPart" type="warningsSectionImpl" minOccurs="0"/>
@@ -145,38 +102,11 @@
     <xs:attribute name="seed" type="xs:long" use="required"/>
   </xs:complexType>
 
-  <xs:complexType name="fuzzedCollectionImpl">
-    <xs:sequence>
-      <xs:element name="value" type="valueImpl" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="basedOn" type="xs:string"/>
-    <xs:attribute name="mutations" type="xs:int" use="required"/>
-    <xs:attribute name="operators" type="xs:string"/>
-  </xs:complexType>
-
-  <xs:complexType name="valueImpl">
-    <xs:sequence/>
-    <xs:attribute name="value" type="xs:string"/>
-    <xs:attribute name="basedOn" type="xs:string"/>
-    <xs:attribute name="generator" type="xs:string"/>
-    <xs:attribute name="operator" type="xs:string"/>
-  </xs:complexType>
-
   <xs:complexType name="errorResponseImpl">
     <xs:sequence/>
     <xs:attribute name="reason" type="xs:string"/>
     <xs:attribute name="message" type="xs:string"/>
     <xs:attribute name="stackTrace" type="xs:string"/>
-  </xs:complexType>
-
-  <xs:complexType name="grammarResponseImpl">
-    <xs:complexContent>
-      <xs:extension base="abstractResponse">
-        <xs:sequence>
-          <xs:element name="fuzzedValue" type="fuzzedValueType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="fuzzedValueType">
@@ -193,22 +123,6 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-
-  <xs:complexType name="structureImpl">
-    <xs:sequence>
-      <xs:element name="specification" type="structureSpecificationImpl" minOccurs="0"/>
-      <xs:element name="field" type="responseFieldImpl" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="structureSpecificationImpl">
-    <xs:sequence>
-      <xs:element name="field" type="requestFieldImpl" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="ordered" type="xs:boolean" use="required"/>
-  </xs:complexType>
-
-
 
   <xs:complexType name="numberResponseImpl">
     <xs:complexContent>
@@ -254,16 +168,6 @@
         <xs:sequence>
           <xs:element name="generatorBased" type="fuzzedValuesByGeneratorsImpl" minOccurs="0"/>
           <xs:element name="operatorBased" type="fuzzedValuesByOperatorsImpl" minOccurs="0"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="structureResponseImpl">
-    <xs:complexContent>
-      <xs:extension base="abstractResponse">
-        <xs:sequence>
-          <xs:element name="fuzzedValue" type="fuzzedValueType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
