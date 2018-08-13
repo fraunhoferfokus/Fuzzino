@@ -21,6 +21,7 @@ public interface RequestFactory {
 	CollectionSpecification createCollectionSpecification();
 	Field createField();
 	Generator createGenerator();
+	Generator createGenerator(String name);
 	NumberRequest createNumberRequest();
 	IntegerSpecification createNumberSpecification();
 	IntegerSpecification createNumberSpecification(IntegerSpecification numberSpec);

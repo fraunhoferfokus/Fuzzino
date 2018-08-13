@@ -98,6 +98,13 @@ public class RequestFactoryImpl implements RequestFactory {
 	}
 	
 	@Override
+	public Generator createGenerator(String name) {
+		Generator generator = new GeneratorImpl();
+		generator.setGeneratorName(name);
+		return generator;
+	}
+	
+	@Override
 	public IntegerSpecification createNumberSpecification() {
 		return new IntegerSpecificationImpl();
 	}
