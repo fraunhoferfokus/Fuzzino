@@ -116,7 +116,7 @@ public class XSSOpenHTMLTagVarianceGenerator extends ComposedStringGenerator {
 
 	@Override
 	public boolean canCreateValuesFor(StringSpecification stringSpec) {
-		return stringSpec.getType().equals(StringType.XSS);
+		return stringSpec.getType() == StringType.XSS;
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
 /**
  * This class applies the {@link RepeatStringOperator} to a list of valid values.
@@ -61,7 +62,7 @@ public class RepeatStringOperator extends ComposedFuzzingHeuristic<String> imple
 
 	@Override
 	public boolean canCreateValuesFor(StringSpecification spec) {
-		boolean properType = spec.getType().equals("String");
+		boolean properType = spec.getType() == StringType.STRING;
 		return properType;
 	}
 

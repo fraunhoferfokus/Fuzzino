@@ -21,6 +21,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
 /**
  * This class applies the {@link SimpleStringCaseOperator} to a list of valid values.
@@ -61,8 +62,8 @@ public class StringCaseOperator extends ComposedFuzzingHeuristic<String> impleme
 
 	@Override
 	public boolean canCreateValuesFor(StringSpecification spec) {
-		boolean properType = spec.getType().equals("String".toUpperCase()) || 
-				             spec.getType().equals("SQL");
+		boolean properType = spec.getType() == StringType.STRING || 
+				             spec.getType() == StringType.SQL;
 		return properType;
 	}
 
