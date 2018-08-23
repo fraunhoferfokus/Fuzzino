@@ -22,6 +22,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+
+/**
+ * This operator repeats a delimiter. It is taken from Sulley.
+ */
 public class DelimiterOperator extends ComposedFuzzingHeuristic<String> implements StringOperator {
 
 	private static final long serialVersionUID = -913348243610129815L;

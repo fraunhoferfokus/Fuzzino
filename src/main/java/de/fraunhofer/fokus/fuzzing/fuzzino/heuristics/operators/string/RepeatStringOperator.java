@@ -57,7 +57,7 @@ public class RepeatStringOperator extends ComposedFuzzingHeuristic<String> imple
 
 	@Override
 	public String getName() {
-		return "StringRepetition";
+		return "RepeatString";
 	}
 
 	@Override

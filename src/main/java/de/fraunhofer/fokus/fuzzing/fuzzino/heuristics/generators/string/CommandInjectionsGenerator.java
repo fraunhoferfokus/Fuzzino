@@ -21,23 +21,27 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.Com
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This generator creates some strings having the capability to reveal command
+ * injection weaknesses. It is taken from Sulley.
+ */
 public class CommandInjectionsGenerator extends SimpleStringGenerator implements StringGenerator {
 
 	private static final long serialVersionUID = -26300349097703353L;
 	protected static CommandInjections commandInjections = CommandInjections.INSTANCE;
-	
+
 	public CommandInjectionsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
 	}
-	
+
 	public CommandInjectionsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 	}
-	
+
 	@Override
 	public boolean canCreateValuesFor(StringSpecification stringSpec) {
 		boolean properType = stringSpec.getType() == StringType.COMMAND;
-		
+
 		return properType;
 	}
 

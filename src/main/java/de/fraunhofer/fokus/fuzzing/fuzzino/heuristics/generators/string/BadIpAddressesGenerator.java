@@ -17,6 +17,11 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This generator creates IPv4 addresses consisting of bad numbers for each part
+ * of an IPv4 address and with illegal combinations of dots and numbers. They
+ * are taken from Peach.
+ */
 public class BadIpAddressesGenerator extends ComposedStringGenerator {
 
 	private static final long serialVersionUID = -4963585339268120873L;

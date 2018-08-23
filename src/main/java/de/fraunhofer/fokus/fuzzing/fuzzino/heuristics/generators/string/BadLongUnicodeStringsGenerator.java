@@ -21,17 +21,21 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.Bad
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
-
+/**
+ * This generator creates a list of long Unicode strings that are taken from the
+ * fuzzer Peach.
+ */
 public class BadLongUnicodeStringsGenerator extends SimpleStringGenerator {
-	
+
 	private static final long serialVersionUID = -7960330496907626351L;
 	protected static BadLongUnicodeStrings badLongUnicodeStrings = BadLongUnicodeStrings.INSTANCE;
-	
+
 	public BadLongUnicodeStringsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
 	}
-	
-	public BadLongUnicodeStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+
+	public BadLongUnicodeStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed,
+			StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 	}
 
@@ -43,9 +47,8 @@ public class BadLongUnicodeStringsGenerator extends SimpleStringGenerator {
 	@Override
 	public boolean canCreateValuesFor(StringSpecification spec) {
 		StringEncoding encoding = spec.getEncoding();
-		boolean properEncoding = encoding == StringEncoding.UTF8 || 
-				                 encoding == StringEncoding.UTF16 ||
-				                 encoding == StringEncoding.UTF32;
+		boolean properEncoding = encoding == StringEncoding.UTF8 || encoding == StringEncoding.UTF16
+				|| encoding == StringEncoding.UTF32;
 		return properEncoding;
 	}
 
@@ -63,5 +66,5 @@ public class BadLongUnicodeStringsGenerator extends SimpleStringGenerator {
 	public List<Integer> getFuzzValueLengths() {
 		return badLongUnicodeStrings.getLengths();
 	}
-	
+
 }

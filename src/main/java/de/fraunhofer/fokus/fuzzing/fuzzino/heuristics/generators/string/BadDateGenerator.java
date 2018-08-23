@@ -20,8 +20,12 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.Bad
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This generator creates strings of dates in various formats. The dates have
+ * either an invalid form or are part of the edge cases.
+ */
 public class BadDateGenerator extends SimpleStringGenerator {
-	
+
 	private static final long serialVersionUID = 3604973452226730695L;
 	protected static BadDates badDates = BadDates.INSTANCE;
 
@@ -36,7 +40,7 @@ public class BadDateGenerator extends SimpleStringGenerator {
 	@Override
 	public boolean canCreateValuesFor(StringSpecification stringSpec) {
 		boolean validType = stringSpec.getType() == StringType.DATE;
-		
+
 		return validType;
 	}
 

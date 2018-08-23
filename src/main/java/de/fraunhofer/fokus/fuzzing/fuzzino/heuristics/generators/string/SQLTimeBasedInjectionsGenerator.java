@@ -7,6 +7,16 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.SQL
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This generator creates strings that can be used for time-based SQL injection.
+ * The strings contain commands that request an SQL database to be inactive for
+ * a certain amount of time. If the SQL injection was successful, then the
+ * database should not response for a moment. There exist commands for multiple
+ * databases like Oracle DB, MySQL, PostgreSQL and so on.
+ * 
+ * @author Rene W. Rollet (rene.wiegmann.rollet@fokus.fraunhofer.de)
+ *
+ */
 public class SQLTimeBasedInjectionsGenerator extends SimpleStringGenerator {
 
 	private static final long serialVersionUID = -7710016654009836682L;

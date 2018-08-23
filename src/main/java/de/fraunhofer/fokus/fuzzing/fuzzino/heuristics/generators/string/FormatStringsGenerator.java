@@ -19,15 +19,19 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.FormatStrings;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
+/**
+ * This generator creates some strings having the capability to reveal format
+ * string weaknesses. It is taken from Sulley.
+ */
 public class FormatStringsGenerator extends SimpleStringGenerator {
-	
+
 	private static final long serialVersionUID = -972726578158153904L;
 	protected static FormatStrings formatStrings = FormatStrings.INSTANCE;
 
 	public FormatStringsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
 	}
-	
+
 	public FormatStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 	}

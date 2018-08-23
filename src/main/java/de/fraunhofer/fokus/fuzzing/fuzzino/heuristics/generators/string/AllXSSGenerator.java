@@ -20,27 +20,29 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 public class AllXSSGenerator extends ComposedStringGenerator {
 
 	/**
-	 * 
+	 * This is just a short cut for the generators XSSBasicInput,
+	 * XSSMultipleLinesInput and XSSOpenHTMLTagVariance.
 	 */
 	private static final long serialVersionUID = 5660446360084743986L;
-	
+
 	private String attackerURL;
 
-	public AllXSSGenerator(StringSpecification stringSpec, long seed,String attackerURL) {
+	public AllXSSGenerator(StringSpecification stringSpec, long seed, String attackerURL) {
 		super(stringSpec, seed);
 		this.attackerURL = attackerURL;
 		initHeuristics();
 	}
-	
-	public AllXSSGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner,String attackerURL) {
+
+	public AllXSSGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner,
+			String attackerURL) {
 		super(stringSpec, seed, owner);
 		this.attackerURL = attackerURL;
 		initHeuristics();
 	}
 
-	private void initHeuristics() {		
-		heuristics.add(new XSSBasicInputGenerator(stringSpec,seed,owner,attackerURL));
-		heuristics.add(new XSSMultipleLinesInputGenerator(stringSpec, seed,owner));
+	private void initHeuristics() {
+		heuristics.add(new XSSBasicInputGenerator(stringSpec, seed, owner, attackerURL));
+		heuristics.add(new XSSMultipleLinesInputGenerator(stringSpec, seed, owner));
 		heuristics.add(new XSSOpenHTMLTagVarianceGenerator(stringSpec, seed, owner));
 	}
 
@@ -51,7 +53,7 @@ public class AllXSSGenerator extends ComposedStringGenerator {
 
 	@Override
 	public String getName() {
-		return "ALLXSS";
+		return "AllXSS";
 	}
 
 }

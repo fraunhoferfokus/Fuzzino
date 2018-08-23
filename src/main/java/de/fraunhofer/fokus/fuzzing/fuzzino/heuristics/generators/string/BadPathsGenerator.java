@@ -20,59 +20,60 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
+/**
+ * Bad paths are created by combine different special purpose strings for
+ * filesystems, e.g. "." and ".." and combines them with directory separators
+ * from different operating systems, for instance "/" (from Linux), "\" (from
+ * Windows) and ":" (from MacOS). They are taken from Peach.
+ */
 public class BadPathsGenerator extends ComposedStringGenerator {
-	
+
 	private static final long serialVersionUID = 7934181535264715351L;
 
 	public BadPathsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
 		initHeuristics();
 	}
-	
+
 	public BadPathsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 		initHeuristics();
 	}
-	
+
 	private void initHeuristics() {
 		List<String> simpleRepeaterValues = StringUtil.asList(".", "\\", "/", ":", "../", "..\\");
 		for (String str : simpleRepeaterValues) {
-			StringRepeater.Builder builder = new StringRepeater.Builder()
-			                                                   .string(str)
-			                                                   .startIndex(1);
+			StringRepeater.Builder builder = new StringRepeater.Builder().string(str).startIndex(1);
 			StringRepeater strRepeater = new StringRepeater(stringSpec, owner, seed, builder);
 			heuristics.add(strRepeater);
 		}
-		
+
 		List<String> specialRepeatedValues = StringUtil.asList("*\\", "*/", "//\\", "//..\\..", "aaa//", "aaa\\");
 		for (String str : specialRepeatedValues) {
-			StringRepeater.Builder builder = new StringRepeater.Builder()
-			                                                   .string(str)
-			                                                   .size(100)
-			                                                   .stepSize(10)
-			                                                   .startIndex(1);
+			StringRepeater.Builder builder = new StringRepeater.Builder().string(str).size(100).stepSize(10)
+					.startIndex(1);
 			StringRepeater strRepeater = new StringRepeater(stringSpec, owner, seed, builder);
 			heuristics.add(strRepeater);
 		}
-		
+
 		AllBadStringsGenerator badStrings = new AllBadStringsGenerator(owner, seed, stringSpec);
 		ConcreteValuesGenerator colonBackslash = new ConcreteValuesGenerator(stringSpec, seed, owner, ":\\");
-		
+
 		Combinator badColonBackslash = new Combinator(stringSpec, seed, owner, badStrings, colonBackslash);
 		heuristics.add(badColonBackslash);
-		
+
 		ConcreteValuesGenerator colonSlash = new ConcreteValuesGenerator(stringSpec, seed, owner, ":/");
 		Combinator badColonSlash = new Combinator(stringSpec, seed, owner, badStrings, colonSlash);
 		heuristics.add(badColonSlash);
-		
+
 		ConcreteValuesGenerator backslashBackslash = new ConcreteValuesGenerator(stringSpec, seed, owner, "\\\\");
 		Combinator backslashBackslashBad = new Combinator(stringSpec, seed, owner, backslashBackslash, badStrings);
 		heuristics.add(backslashBackslashBad);
-		
+
 		ConcreteValuesGenerator dotSlash = new ConcreteValuesGenerator(stringSpec, seed, owner, "./");
 		Combinator dotSlashBad = new Combinator(stringSpec, seed, owner, dotSlash, badStrings);
 		heuristics.add(dotSlashBad);
-		
+
 		ConcreteValuesGenerator slash = new ConcreteValuesGenerator(stringSpec, seed, owner, "/");
 		Combinator slashBadSlash = new Combinator(stringSpec, seed, owner, slash, badStrings, slash);
 		heuristics.add(slashBadSlash);
@@ -85,8 +86,7 @@ public class BadPathsGenerator extends ComposedStringGenerator {
 
 	@Override
 	public boolean canCreateValuesFor(StringSpecification spec) {
-		boolean properType = spec.getType() == StringType.FILENAME ||
-				             spec.getType() == StringType.PATH;
+		boolean properType = spec.getType() == StringType.FILENAME || spec.getType() == StringType.PATH;
 		return properType;
 	}
 

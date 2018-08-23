@@ -23,6 +23,11 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
+// TODO Almost identical to LongSulleyStringsGenerator... Is one of them deprecated?
+
+/**
+ * This generator creates long strings of letters, digits and special characters.
+ */
 public class LongStrings2Generator extends ComputableListImpl<FuzzedValue<String>> implements StringGenerator {
 
 	private static final long serialVersionUID = 4305075477520228717L;

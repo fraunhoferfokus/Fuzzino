@@ -19,6 +19,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.SpecialBadUtf8Strings;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
+/**
+ * This generator creates very long strings with rarely used UTF-8 characters
+ */
 public class SpecialBadUtf8StringsGenerator extends SimpleStringGenerator {
 
 	private static final long serialVersionUID = 4106194963270267622L;

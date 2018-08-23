@@ -19,6 +19,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
+/**
+ * This generator just creates simple long strings, e.g. 10,240 "A"s. 
+ */
 public class LongStringsGenerator extends ComposedStringGenerator {
 	
 	private static final long serialVersionUID = -6590352070931853912L;

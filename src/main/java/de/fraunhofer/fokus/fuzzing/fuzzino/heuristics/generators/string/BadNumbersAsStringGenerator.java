@@ -22,8 +22,12 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.Boundary
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This generator provides the values of the generator BadNumbers as string
+ * values.
+ */
 public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<String>> implements StringGenerator {
-	
+
 	private static final long serialVersionUID = 5566745227758128426L;
 	protected StringSpecification stringSpec;
 	protected long seed;
@@ -43,16 +47,16 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 		this.owner = owner;
 		initHeuristic();
 	}
-	
+
 	private void initHeuristic() {
-		boundaryNumbersGenerator = IntegerGeneratorFactory.INSTANCE.createBoundaryNumbersGenerator
-				(stringSpec.createPositiveNumberSpec(), seed);
+		boundaryNumbersGenerator = IntegerGeneratorFactory.INSTANCE
+				.createBoundaryNumbersGenerator(stringSpec.createPositiveNumberSpec(), seed);
 	}
 
 	@Override
 	public boolean canCreateValuesFor(StringSpecification stringSpec) {
 		boolean validType = stringSpec.getType() == StringType.NUMBER;
-		
+
 		return validType;
 	}
 
@@ -70,7 +74,7 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 	public FuzzedValue<String> computeElement(int index) {
 		String fuzzedValueItself = boundaryNumbersGenerator.get(index).getValue().toString();
 		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owner);
-		
+
 		return fuzzedValue;
 	}
 

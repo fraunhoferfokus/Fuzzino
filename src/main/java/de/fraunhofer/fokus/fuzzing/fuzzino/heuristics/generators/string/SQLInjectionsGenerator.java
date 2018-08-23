@@ -20,8 +20,12 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.SQL
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This generator creates some strings having the capability to reveal SQL
+ * injection weaknesses. It is taken from Sulley.
+ */
 public class SQLInjectionsGenerator extends SimpleStringGenerator {
-	
+
 	private static final long serialVersionUID = -7843381710363032951L;
 	protected static SQLInjections sqlInjections = SQLInjections.INSTANCE;
 
@@ -36,7 +40,7 @@ public class SQLInjectionsGenerator extends SimpleStringGenerator {
 	@Override
 	public boolean canCreateValuesFor(StringSpecification stringSpec) {
 		boolean validType = stringSpec.getType() == StringType.SQL;
-		
+
 		return validType;
 	}
 

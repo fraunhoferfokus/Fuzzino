@@ -19,15 +19,20 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.BadStrings;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
+/**
+ * Bad strings are for instance strings with a special meaning for specific
+ * operating systems, e.g. "COM1:", and many other special purpose strings. They
+ * are taken from Peach.
+ */
 public class BadStringsGenerator extends SimpleStringGenerator {
-	
+
 	private static final long serialVersionUID = 6147412563759585722L;
 	protected static BadStrings badStrings = BadStrings.INSTANCE;
-	
+
 	public BadStringsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
 	}
-	
+
 	public BadStringsGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(stringSpec, seed, owner);
 	}

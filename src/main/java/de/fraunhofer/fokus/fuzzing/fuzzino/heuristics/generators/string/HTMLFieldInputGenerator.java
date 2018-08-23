@@ -19,10 +19,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
 public class HTMLFieldInputGenerator extends ComposedStringGenerator {
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8107495173162069001L;
 	private String attackerURL;
 
@@ -51,7 +47,7 @@ public class HTMLFieldInputGenerator extends ComposedStringGenerator {
 
 	@Override
 	public String getName() {
-		return "HTMLFieldInputGenerator";
+		return "HTMLFieldInput";
 	}
 
 }

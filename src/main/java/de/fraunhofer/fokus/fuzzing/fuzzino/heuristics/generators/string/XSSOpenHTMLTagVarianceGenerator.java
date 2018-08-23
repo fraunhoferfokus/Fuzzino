@@ -19,10 +19,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
 public class XSSOpenHTMLTagVarianceGenerator extends ComposedStringGenerator {
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2577010930240145001L;
 
 	public XSSOpenHTMLTagVarianceGenerator(StringSpecification stringSpec,long seed) {

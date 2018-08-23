@@ -18,6 +18,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * Provides a list of bad HTTP time strings. They are taken from Peach.
+ */
 public class BadTimeGenerator extends ComposedStringGenerator {
 
 	private static final long serialVersionUID = -1977467047419460480L;

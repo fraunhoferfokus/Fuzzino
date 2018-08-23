@@ -20,6 +20,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.Del
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This generator creates usual delimiter values. It is taken from Sulley.
+ */
 public class DelimitersGenerator extends SimpleStringGenerator {
 
 	private static final long serialVersionUID = -5743510099717919588L;

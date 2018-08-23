@@ -20,6 +20,9 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.Spe
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
+/**
+ * This generator creates very strings with byte order marks. 
+ */
 public class SpecialUnicodeBomStringsGenerator extends SimpleStringGenerator {
 	
 	private static final long serialVersionUID = -3788510733877627596L;

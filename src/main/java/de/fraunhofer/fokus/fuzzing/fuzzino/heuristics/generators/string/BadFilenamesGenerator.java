@@ -13,11 +13,15 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This generator creates filenames of different lengths and formats, e.g. a
+ * long string followed by a "." or a string followed by many repetitions of the
+ * file extension ".doc". They are taken from Peach.
+ */
 public class BadFilenamesGenerator extends ComposedStringGenerator {
 
 	private static final long serialVersionUID = 3849636252243363106L;
@@ -26,12 +30,12 @@ public class BadFilenamesGenerator extends ComposedStringGenerator {
 		super(stringSpec, seed);
 		initHeuristics();
 	}
-	
+
 	public BadFilenamesGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		super(stringSpec, seed, owner);
 		initHeuristics();
 	}
-	
+
 	private void initHeuristics() {
 		AllBadStringsGenerator badStrings = new AllBadStringsGenerator(owner, seed, stringSpec);
 		ConcreteValuesGenerator dotGenerator = new ConcreteValuesGenerator(stringSpec, seed, owner, ".");
@@ -39,36 +43,37 @@ public class BadFilenamesGenerator extends ComposedStringGenerator {
 
 		Combinator badDotBad = new Combinator(stringSpec, seed, owner, badStrings, dotGenerator, badStrings);
 		heuristics.add(badDotBad);
-		
+
 		Combinator dotBad = new Combinator(stringSpec, seed, owner, dotGenerator, badStrings);
 		heuristics.add(dotBad);
-		
+
 		Combinator badDot = new Combinator(stringSpec, seed, owner, badStrings, dotGenerator);
 		heuristics.add(badDot);
-		
-		StringRepeater strRepeaterDot = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder().string(".").startIndex(1));
+
+		StringRepeater strRepeaterDot = new StringRepeater(stringSpec, owner, seed,
+				new StringRepeater.Builder().string(".").startIndex(1));
 		heuristics.add(strRepeaterDot);
-		
-		StringRepeater strRepeater_a_dot_a = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder().string("a.a").startIndex(1));
+
+		StringRepeater strRepeater_a_dot_a = new StringRepeater(stringSpec, owner, seed,
+				new StringRepeater.Builder().string("a.a").startIndex(1));
 		heuristics.add(strRepeater_a_dot_a);
-		
-		StringRepeater strRepeaterAdot_A_ = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder().prefix("A.").startIndex(1));
+
+		StringRepeater strRepeaterAdot_A_ = new StringRepeater(stringSpec, owner, seed,
+				new StringRepeater.Builder().prefix("A.").startIndex(1));
 		heuristics.add(strRepeaterAdot_A_);
 
-		StringRepeater strRepeater_A_dotA = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder().suffix(".A").startIndex(1));
+		StringRepeater strRepeater_A_dotA = new StringRepeater(stringSpec, owner, seed,
+				new StringRepeater.Builder().suffix(".A").startIndex(1));
 		heuristics.add(strRepeater_A_dotA);
-		
-		StringRepeater strRepeaterAAAA_dotDoc_ = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder()
-		                                                                              .string(".doc")
-		                                                                              .prefix("AAAA")
-		                                                                              .startIndex(1));
+
+		StringRepeater strRepeaterAAAA_dotDoc_ = new StringRepeater(stringSpec, owner, seed,
+				new StringRepeater.Builder().string(".doc").prefix("AAAA").startIndex(1));
 		heuristics.add(strRepeaterAAAA_dotDoc_);
-		
-		StringRepeater strRepeater_AAAAAAAAAA_ = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder()
-		                                                                              .stepSize(10)
-		                                                                              .startIndex(1)
-		                                                                              .size(100));
-		Combinator aDotA = new Combinator(stringSpec, seed, owner, strRepeater_AAAAAAAAAA_, dotGenerator, strRepeater_AAAAAAAAAA_);
+
+		StringRepeater strRepeater_AAAAAAAAAA_ = new StringRepeater(stringSpec, owner, seed,
+				new StringRepeater.Builder().stepSize(10).startIndex(1).size(100));
+		Combinator aDotA = new Combinator(stringSpec, seed, owner, strRepeater_AAAAAAAAAA_, dotGenerator,
+				strRepeater_AAAAAAAAAA_);
 		heuristics.add(aDotA);
 	}
 
@@ -79,9 +84,8 @@ public class BadFilenamesGenerator extends ComposedStringGenerator {
 
 	@Override
 	public boolean canCreateValuesFor(StringSpecification spec) {
-		boolean properType = spec.getType() == StringType.FILENAME || 
-				             spec.getType() == StringType.PATH;
+		boolean properType = spec.getType() == StringType.FILENAME || spec.getType() == StringType.PATH;
 		return properType;
 	}
-	
+
 }

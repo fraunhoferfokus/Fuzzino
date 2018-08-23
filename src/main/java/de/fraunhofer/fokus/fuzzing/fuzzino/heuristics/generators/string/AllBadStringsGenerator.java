@@ -17,6 +17,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
+/**
+ * This is just a short cut for the generators BadLongStrings, BadStrings and
+ * LongStrings.
+ */
 public class AllBadStringsGenerator extends ComposedStringGenerator {
 
 	private static final long serialVersionUID = -2259863920514644374L;
