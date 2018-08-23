@@ -16,7 +16,6 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.request.impl;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -40,9 +39,10 @@ public class StringSpecificationImpl implements StringSpecification {
 	@XmlAttribute
 	protected int maxLength = Integer.MAX_VALUE;
 	@XmlAttribute
-	protected boolean nullTerminated;
+	protected boolean nullTerminated = false;
 	@XmlAttribute
-	protected StringEncoding encoding;
+	protected StringEncoding encoding = StringEncoding.ASCII;
+	// TODO set default value for regEx?
 	@XmlAttribute
 	protected String regEx;
 	@XmlAttribute

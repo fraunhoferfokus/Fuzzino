@@ -41,7 +41,7 @@
     <xs:complexContent>
       <xs:extension base="abstractRequest">
         <xs:sequence>
-          <xs:element name="noGenerators" type="xs:boolean"/>
+          <xs:element name="noGenerators" type="xs:boolean" minOccurs="0"/>
           <xs:element name="specification" type="integerSpecificationImpl" minOccurs="0"/>
           <xs:element name="generator" type="generatorImpl" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="validValues" type="validValuesSectionImpl" minOccurs="0"/>
@@ -54,8 +54,8 @@
     <xs:attribute name="minValue" type="xs:integer"/>
     <xs:attribute name="maxValue" type="xs:integer"/>
     <xs:attribute name="bits" type="xs:int" use="required"/>
-    <xs:attribute name="isSigned" type="xs:boolean" use="required"/>
-    <xs:attribute name="ignoreMinMaxValues" type="xs:boolean" use="required"/>
+    <xs:attribute name="isSigned" type="xs:boolean"/>
+    <xs:attribute name="ignoreMinMaxValues" type="xs:boolean"/>
   </xs:complexType>
 
   <xs:complexType name="generatorImpl">
@@ -66,7 +66,7 @@
   <xs:complexType name="validValuesSectionImpl">
     <xs:sequence>
       <xs:element name="operator" type="operatorImpl" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="value" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -74,7 +74,7 @@
     <xs:complexContent>
       <xs:extension base="abstractRequest">
         <xs:sequence>
-          <xs:element name="noGenerators" type="xs:boolean"/>
+          <xs:element name="noGenerators" type="xs:boolean" minOccurs="0"/>
           <xs:element name="generator" type="generatorImpl" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="specification" type="stringSpecificationImpl" minOccurs="0"/>
           <xs:element name="validValues" type="validValuesSectionImpl" minOccurs="0"/>
@@ -85,12 +85,12 @@
 
   <xs:complexType name="stringSpecificationImpl">
     <xs:attribute name="type" type="stringType"/>
-    <xs:attribute name="minLength" type="xs:int" use="required"/>
-    <xs:attribute name="maxLength" type="xs:int" use="required"/>
-    <xs:attribute name="nullTerminated" type="xs:boolean" use="required"/>
+    <xs:attribute name="minLength" type="xs:int"/>
+    <xs:attribute name="maxLength" type="xs:int"/>
+    <xs:attribute name="nullTerminated" type="xs:boolean"/>
     <xs:attribute name="encoding" type="stringEncoding"/>
     <xs:attribute name="regEx" type="xs:string"/>
-    <xs:attribute name="ignoreLengths" type="xs:boolean" use="required"/>
+    <xs:attribute name="ignoreLengths" type="xs:boolean"/>
   </xs:complexType>
 
   <xs:simpleType name="stringType">
