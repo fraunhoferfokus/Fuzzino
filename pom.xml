@@ -3,14 +3,7 @@
   <groupId>de.fraunhofer.fokus.fuzzing.fuzzino</groupId>
   <artifactId>de.fraunhofer.fokus.fuzzing.fuzzino</artifactId>
   <version>0.6.0.1</version>
-  
-  <repositories>
-    <repository>
-      <id>localrepository</id>
-      <url>file://${basedir}/src/main/resources/repo/</url>
-    </repository>
-  </repositories>
-  
+    
   <dependencies>
     
     <dependency>
@@ -47,30 +40,7 @@
           <encoding>ISO-8859-1</encoding>
         </configuration>  
       </plugin>
-            
-      <!-- Create jar with dependencies -->
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-            <manifest>
-	          <mainClass>de.fraunhofer.fokus.fuzzing.fuzzino.Fuzzino</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-     
+                 
       <!-- Define which test should run and which not in AllTestsSuite.java; This needs couple of minutes; -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -89,6 +59,19 @@
         </configuration>
       </plugin>
       
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-jar-plugin</artifactId>
+		<version>3.1.0</version>
+		<configuration>
+		  <archive>
+			<manifest>
+				<mainClass>de.fraunhofer.fokus.fuzzing.fuzzino.Fuzzino</mainClass>
+			</manifest>
+		  </archive>
+		</configuration>
+	  </plugin>
+			
      </plugins>
   </build>
 </project>
