@@ -25,6 +25,12 @@ public interface RequestFactory {
 	NumberRequest createNumberRequest();
 	IntegerSpecification createNumberSpecification();
 	IntegerSpecification createNumberSpecification(IntegerSpecification numberSpec);
+	/**
+	 * Creates a {@code NumberSpecification<Double>} with Double.MIN_VALUE
+	 * and Double.MAX_VALUE as border values.
+	 * @return NumberSpecification<Double>
+	 */
+	NumberSpecification<Double> createFloatSpecification();
 	Operator createOperator();
 	Operator createOperator(String name);
 	Request createRequest();

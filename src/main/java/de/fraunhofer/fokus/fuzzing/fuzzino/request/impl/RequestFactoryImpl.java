@@ -20,6 +20,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.Field;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Generator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberRequest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Operator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.Request;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -144,6 +145,11 @@ public class RequestFactoryImpl implements RequestFactory {
 	@Override
 	public StructureSpecification createStructureSpecification() {
 		return new StructureSpecificationImpl();
+	}
+
+	@Override
+	public NumberSpecification<Double> createFloatSpecification() {
+		return new FloatSpecificationImpl(Double.MIN_VALUE, Double.MAX_VALUE);
 	}
 
 }
