@@ -2,6 +2,7 @@
 org.eclipse.*
 .project
 .classpath
+.settings
 /target/
 .jar
 !Grammar_Fuzzing*.jar
