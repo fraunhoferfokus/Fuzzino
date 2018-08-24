@@ -19,6 +19,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BoundaryNumbersGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -35,14 +36,26 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 	protected BoundaryNumbersGenerator boundaryNumbersGenerator;
 
 	public BadNumbersAsStringGenerator(StringSpecification stringSpec, long seed) {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
+
 		this.seed = seed;
 		owner = this;
 		initHeuristic();
 	}
 
 	public BadNumbersAsStringGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
+
 		this.seed = seed;
 		this.owner = owner;
 		initHeuristic();

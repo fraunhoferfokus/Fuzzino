@@ -18,6 +18,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.SimpleFuzzingGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 
 public abstract class SimpleIntegerGenerator extends SimpleFuzzingGenerator<Long> implements IntegerGenerator {
 
@@ -26,12 +27,22 @@ public abstract class SimpleIntegerGenerator extends SimpleFuzzingGenerator<Long
 	
 	public SimpleIntegerGenerator(IntegerSpecification numberSpec, long seed) {
 		super(seed);
-		this.numberSpec = numberSpec;
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 	}
 	
 	public SimpleIntegerGenerator(IntegerSpecification numberSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed, owner);
-		this.numberSpec = numberSpec;
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 	}
 	
 	@Override

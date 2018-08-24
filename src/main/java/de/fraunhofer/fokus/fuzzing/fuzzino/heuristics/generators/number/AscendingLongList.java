@@ -19,6 +19,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 
 /**
  * * Computes a list of ascending numbers of the type Long.
@@ -90,7 +91,12 @@ public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> imp
 	 * @throws NoMatchingValuesException 
 	 */
 	public AscendingLongList(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, Builder builder) throws NoMatchingValuesException {
-		this.numberSpec = numberSpec;
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 		this.owner = owner;
 		this.seed = seed;
 		Builder matchingBuilder = makeBuilderMatchingSpecification(builder);

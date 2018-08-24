@@ -19,6 +19,7 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -48,6 +49,9 @@ public class DelimiterOperator extends ComposedFuzzingHeuristic<String> implemen
 	}
 	
 	private void initHeuristics(StringSpecification stringSpec, List<String> validValues) {
+		if (stringSpec == null) {
+			stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
 		this.validValues.addAll(validValues);
 		for (String validValue : validValues) {
 			SimpleDelimiterOperator stringRepetitionOperator = new SimpleDelimiterOperator(validValue, stringSpec, seed, owner);

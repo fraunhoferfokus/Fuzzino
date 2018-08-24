@@ -17,6 +17,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 
 // TODO delete because unused?
 
@@ -27,12 +28,22 @@ public abstract class ComposedIntegerGenerator extends ComposedFuzzingHeuristic<
 	
 	public ComposedIntegerGenerator(long seed, IntegerSpecification numberSpec) {
 		super(seed);
-		this.numberSpec = numberSpec;
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 	}
 	
 	public ComposedIntegerGenerator(ComputableFuzzingHeuristic<?> owner, long seed, IntegerSpecification numberSpec) {
 		super(seed, owner);
-		this.numberSpec = numberSpec;
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 	}
 
 }

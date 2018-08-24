@@ -19,6 +19,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerUtil;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
@@ -54,13 +55,23 @@ public class LongSulleyStringsGenerator extends ComputableListImpl<FuzzedValue<S
 	public LongSulleyStringsGenerator(long seed, StringSpecification stringSpec) {
 		this.seed = seed;
 		owner = this;
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
 	}
 	
 	public LongSulleyStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
 		this.seed = seed;
 		this.owner = owner;
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
 	}
 	
 	@Override

@@ -19,6 +19,7 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.IntegerOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 
 /**
  * This operator generates numbers around a list of given values.
@@ -36,6 +37,9 @@ public class NumericalVarianceOperator extends ComposedFuzzingHeuristic<Long> im
 			                         IntegerSpecification numberSpec,
 			                         long seed) {
 		super(seed);
+		if (numberSpec == null) {
+			numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");
 		}

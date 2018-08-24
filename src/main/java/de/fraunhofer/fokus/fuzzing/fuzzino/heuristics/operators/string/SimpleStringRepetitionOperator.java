@@ -16,6 +16,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
@@ -27,12 +28,22 @@ public class SimpleStringRepetitionOperator extends SimpleFuzzingOperator<String
 	
 	public SimpleStringRepetitionOperator(String validValue, StringSpecification stringSpec, long seed) {
 		super(validValue, seed);
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
 	}
 	
 	public SimpleStringRepetitionOperator(String validValue, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(validValue, seed, owner);
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
 	}
 	
 	@Override

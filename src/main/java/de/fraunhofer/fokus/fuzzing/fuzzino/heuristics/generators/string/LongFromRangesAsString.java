@@ -18,6 +18,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.LongFromRanges;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.LongFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.LongRange;
@@ -47,7 +48,13 @@ public class LongFromRangesAsString extends ComputableListImpl<FuzzedValue<Strin
 	}
 	
 	public LongFromRangesAsString(StringSpecification stringSpec, long seed, LongFromRangesBuilder builder) {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
+
 		owner = this;
 		this.seed = seed;
 		
@@ -55,7 +62,13 @@ public class LongFromRangesAsString extends ComputableListImpl<FuzzedValue<Strin
 	}
 
 	public LongFromRangesAsString(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, LongFromRangesBuilder builder) {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
+
 		this.owner = owner;
 		this.seed = seed;
 		

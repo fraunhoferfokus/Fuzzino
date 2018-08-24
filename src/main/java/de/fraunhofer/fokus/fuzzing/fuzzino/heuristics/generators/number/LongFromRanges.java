@@ -18,6 +18,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.LongFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.LongRange;
 
@@ -45,7 +46,12 @@ public class LongFromRanges extends ComposedFuzzingHeuristic<Long> implements Nu
 	
 	public LongFromRanges(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, LongFromRangesBuilder builder) {
 		super(seed, owner);
-		this.numberSpec = numberSpec;
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 		for (LongRange range : builder.allRanges()) {
 			AscendingLongList intList;
 			try {

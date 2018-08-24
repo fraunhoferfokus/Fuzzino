@@ -21,6 +21,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BigIntFromRanges;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntRange;
@@ -50,7 +51,13 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 	}
 	
 	public BigIntFromRangesAsString(StringSpecification stringSpec, long seed, BigIntFromRangesBuilder builder) {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
+
 		owner = this;
 		this.seed = seed;
 		
@@ -58,7 +65,13 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 	}
 
 	public BigIntFromRangesAsString(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, BigIntFromRangesBuilder builder) {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
+
 		this.owner = owner;
 		this.seed = seed;
 		

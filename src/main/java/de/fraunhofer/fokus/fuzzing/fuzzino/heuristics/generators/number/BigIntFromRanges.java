@@ -20,6 +20,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.IntegerSpecificationImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntRange;
 
@@ -47,7 +49,12 @@ public class BigIntFromRanges extends ComposedFuzzingHeuristic<BigInteger> imple
 	
 	public BigIntFromRanges(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, BigIntFromRangesBuilder builder) {
 		super(seed, owner);
-		this.numberSpec = numberSpec;
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 		for (BigIntRange range : builder.allRanges()) {
 			try {
 				AscendingBigIntList intList = new AscendingBigIntList(numberSpec, owner, seed, new AscendingBigIntList.Builder(range.start(), range.size()));

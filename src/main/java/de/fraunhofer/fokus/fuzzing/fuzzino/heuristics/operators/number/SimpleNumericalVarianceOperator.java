@@ -19,6 +19,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 
 public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuzzingOperator<T> {
 	
@@ -65,6 +66,9 @@ public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuz
 			                               long seed,
 			                               ComputableFuzzingHeuristic<?> owner) {
 		super(validValue, seed, owner);
+		if (numberSpec == null) {
+			numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
 		if (varianceRange != 0) {
 			this.varianceRange = Math.abs(varianceRange);
 		}

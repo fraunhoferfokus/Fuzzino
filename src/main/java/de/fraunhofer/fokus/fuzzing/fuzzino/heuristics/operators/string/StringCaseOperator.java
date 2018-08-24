@@ -20,6 +20,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -49,6 +50,9 @@ public class StringCaseOperator extends ComposedFuzzingHeuristic<String> impleme
 	}
 	
 	private void initHeuristics(StringSpecification stringSpec, List<String> validValues) {
+		if (stringSpec == null) {
+			stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
 		for (String validValue : validValues) {
 			SimpleStringCaseOperator stringCaseOperator = new SimpleStringCaseOperator(validValue, stringSpec, seed, owner);
 			heuristics.add(stringCaseOperator);

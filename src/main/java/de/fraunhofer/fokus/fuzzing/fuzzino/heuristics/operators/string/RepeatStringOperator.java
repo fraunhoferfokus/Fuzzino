@@ -20,8 +20,10 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
 
 /**
  * This class applies the {@link RepeatStringOperator} to a list of valid values.
@@ -49,6 +51,9 @@ public class RepeatStringOperator extends ComposedFuzzingHeuristic<String> imple
 	}
 	
 	private void initHeuristics(StringSpecification stringSpec, List<String> validValues) {
+		if (stringSpec == null) {
+			stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
 		for (String validValue : validValues) {
 			SimpleStringRepetitionOperator stringRepetitionOperator = new SimpleStringRepetitionOperator(validValue, stringSpec, seed, owner);
 			heuristics.add(stringRepetitionOperator);

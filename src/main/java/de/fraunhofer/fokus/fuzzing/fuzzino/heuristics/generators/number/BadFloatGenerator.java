@@ -19,6 +19,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.SimpleFuzzingGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 
 
 public class BadFloatGenerator extends SimpleFuzzingGenerator<Double>{
@@ -31,7 +32,12 @@ public class BadFloatGenerator extends SimpleFuzzingGenerator<Double>{
 
 	public BadFloatGenerator(NumberSpecification<Double> floatSpec,long seed) {
 		super(seed);
-		this.floatSpec = floatSpec;
+		if (floatSpec == null) {
+			this.floatSpec = RequestFactory.INSTANCE.createFloatSpecification();
+		}
+		else {
+			this.floatSpec = floatSpec;
+		}
 	}
 
 	@Override

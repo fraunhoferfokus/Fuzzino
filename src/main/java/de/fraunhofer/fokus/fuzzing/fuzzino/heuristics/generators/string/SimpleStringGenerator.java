@@ -19,6 +19,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.SimpleFuzzingGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
 
@@ -30,18 +31,22 @@ public abstract class SimpleStringGenerator extends SimpleFuzzingGenerator<Strin
 	public SimpleStringGenerator(StringSpecification stringSpec, long seed) {
 		super(seed);
 		if (stringSpec == null) {
-			throw new IllegalArgumentException("stringSpec must not be null");
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
-		this.stringSpec = stringSpec;
+		else {
+			this.stringSpec = stringSpec;
+		}
 		findMatchingValues();
 	}
 	
 	public SimpleStringGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed, owner);
 		if (stringSpec == null) {
-			throw new IllegalArgumentException("stringSpec must not be null");
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
-		this.stringSpec = stringSpec;
+		else {
+			this.stringSpec = stringSpec;
+		}
 		findMatchingValues();
 	}
 	

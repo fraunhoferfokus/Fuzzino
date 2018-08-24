@@ -18,6 +18,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.IntegerFromRanges;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.IntegerFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.Range;
@@ -47,14 +48,26 @@ public class IntegerFromRangesAsString extends ComputableListImpl<FuzzedValue<St
 	}
 	
 	public IntegerFromRangesAsString(StringSpecification stringSpec, long seed, IntegerFromRangesBuilder builder) {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
+
 		owner = this;
 		this.seed = seed;
 		initHeuristics(builder);
 	}
 
 	public IntegerFromRangesAsString(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, IntegerFromRangesBuilder builder) {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
+
 		this.owner = owner;
 		this.seed = seed;
 		initHeuristics(builder);

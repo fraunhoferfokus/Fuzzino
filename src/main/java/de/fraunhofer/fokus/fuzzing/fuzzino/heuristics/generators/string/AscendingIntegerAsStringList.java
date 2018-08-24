@@ -19,6 +19,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingIntegerList;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -81,7 +82,12 @@ public class AscendingIntegerAsStringList extends ComputableListImpl<FuzzedValue
 			                            ComputableFuzzingHeuristic<?> owner, 
 			                            long seed, 
 			                            Builder builder) throws NoMatchingValuesException {
-		this.stringSpec = stringSpec;
+		if (stringSpec == null) {
+			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
+		}
+		else {
+			this.stringSpec = stringSpec;
+		}
 		this.owner = owner;
 		this.seed = seed;
 		AscendingIntegerList.Builder integerBuilder = 

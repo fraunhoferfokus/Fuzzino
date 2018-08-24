@@ -20,6 +20,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.SimpleFuzzingGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 
 public abstract class SimpleBigIntegerGenerator extends SimpleFuzzingGenerator<BigInteger> implements BigIntegerGenerator {
 
@@ -28,12 +29,23 @@ public abstract class SimpleBigIntegerGenerator extends SimpleFuzzingGenerator<B
 
 	protected SimpleBigIntegerGenerator(IntegerSpecification numberSpec, long seed) {
 		super(seed);
-		this.numberSpec = numberSpec;
+		
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 	}
 
 	protected SimpleBigIntegerGenerator(IntegerSpecification numberSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
 		super(seed, owner);
-		this.numberSpec = numberSpec;
+		if (numberSpec == null) {
+			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
+		}
+		else {
+			this.numberSpec = numberSpec;
+		}
 	}
 	
 	@Override
