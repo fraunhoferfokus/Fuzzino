@@ -1,4 +1,7 @@
 /bin/
+org.eclipse.*
+.project
+.classpath
 /target/
 .jar
 !Grammar_Fuzzing*.jar
