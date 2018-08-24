@@ -23,20 +23,18 @@ Unless required by applicable law or agreed to in writing, software distributed 
 Requirements
 ============
 
-Fuzzino was developed and tested with java 8 .
-For compiling and executing the tests, you additionally need [JUnit 4](http://junit.org/).
-
+Fuzzino was developed and tested with Java 8 and compiled with Maven.
 
 Usage
 =====
 
 You can obtain fuzz test data from Fuzzino in two ways:
 
-* XML: This is the most generic way for obtaining fuzz test data from the library. It works from any programming language that is able to generate and process XML documents. You run Fuzzino via the console using `java -jar <filename.request.xml>`.
+* XML: This is the most generic way for obtaining fuzz test data from the library. It works from any programming language that is able to generate and process XML documents. You run Fuzzino via the console using `java -jar <filename.request.xml>`. For example you have a valid XML request file with the name "badFilenames.xml" and the Fuzzino Jar de.fraunhofer.fokus.fuzzing.fuzzino-VERSION.jar in your current directory, then you can execute Fuzzino with following command from the console: `java -jar de.fraunhofer.fokus.fuzzing.fuzzino-VERSION.jar badFilenames.xml`. This command will create a XML response file in the directory of your XLM request file, in this case in the current directory.
 * Java: You can directly interact with Fuzzino by submitting XML String instead of XML files in order to avoid time-consuming serialization and deserialization. It is also possible to instantiate Java classes that carry the information taken from the XML instead of using XML. A third way is to directly instantiate specific fuzzing heuristics by the corresponding heuristics factory. 
 
 
 Documentation & Examples
 ========================
 
-A documentation for the XML format as well as some general information can be found in the folder doc. Java and XML examples can be found in the folder doc/examples. More documentation will follow soon.
+A documentation for the XML format as well as the XML schema documents for XML request and response files can be found in the folder doc/xml_description. Java examples can be found in the folder doc/java_examples and XML examples can be found in the folder doc/xml_examples.

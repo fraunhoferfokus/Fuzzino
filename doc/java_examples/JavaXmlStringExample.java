@@ -1,4 +1,3 @@
-package JavaExamples;
 import de.fraunhofer.fokus.fuzzing.fuzzino.RequestDispatcher;
 
 

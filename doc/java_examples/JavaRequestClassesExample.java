@@ -1,4 +1,3 @@
-package JavaExamples;
 import java.util.UUID;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
