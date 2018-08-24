@@ -20,7 +20,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 /**
- * This generator just creates simple long strings, e.g. 10,240 "A"s. 
+ * This generator creates by itself simple long strings, e.g. 10,240 "A"s and uses the LongSulleyStringsGenerator.
  */
 public class LongStringsGenerator extends ComposedStringGenerator {
 	
@@ -58,7 +58,7 @@ public class LongStringsGenerator extends ComposedStringGenerator {
 		heuristics.add(repeaterOf127_A_);
 		heuristics.add(repeaterOf1024_A_);
 		
-		heuristics.add(new LongStrings2Generator(owner, seed, stringSpec));
+		heuristics.add(new LongSulleyStringsGenerator(owner, seed, stringSpec));
 	}
 
 	@Override
