@@ -75,7 +75,7 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	
 	@Before
 	public void init() throws Exception {
-		Request request = RequestImpl.unmarshall(new File(stringRootDir + "validStringRequest.request.xml"));
+		Request request = RequestImpl.unmarshall(new File(stringRootDir + "ValidStringRequest.request.xml"));
 		StringRequest stringRequest = request.getStringRequests().get(0);
 		reqProc = new StringRequestProcessor(stringRequest, UUID.randomUUID());
 	}
@@ -123,7 +123,7 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	
 	@Test
 	public void testWithValidStringRequest() throws JAXBException, SAXException {
-		String requestFilename = stringRootDir + "validStringRequest.request.xml";
+		String requestFilename = stringRootDir + "ValidStringRequest.request.xml";
 		Response responseDoc = getResponseDocForRequest(requestFilename);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
@@ -147,7 +147,7 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	
 	@Test
 	public void testValidRequestWithEncodeAllCharacters() throws JAXBException, SAXException {
-		String requestFilename = stringRootDir + "validStringRequest.request.xml";
+		String requestFilename = stringRootDir + "ValidStringRequest.request.xml";
 		Response responseDoc = getResponseDocForRequest(requestFilename, true);
 		
 		checkResponseDocForNumStringResponses(responseDoc, 1);
@@ -172,7 +172,7 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	@Test
 	public void testContinuedStringRequest() throws JAXBException, SAXException {
 		// load initial request
-		String requestFilename = stringRootDir + "validStringRequest.request.xml";
+		String requestFilename = stringRootDir + "ValidStringRequest.request.xml";
 		Response responseDoc = getResponseDocForRequest(requestFilename);
 
 		StringResponse stringResponse = responseDoc.getStringResponses().get(0);

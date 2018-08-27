@@ -77,7 +77,7 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest{
 	}
 	protected BigIntegerRequestProcessor reqProc;
 
-	private static String numRequestRoot = ResourcePath.TEST_RESOURCE + "reworked/NumberRequests/";
+	private static String numRequestRoot = ResourcePath.TEST_RESOURCE + "reworked/numberRequests/";
 
 	
 	@Before
