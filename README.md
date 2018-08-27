@@ -23,7 +23,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 Requirements
 ============
 
-Fuzzino was developed and tested with Java 8 and compiled with Maven.
+Fuzzino was developed and tested with Java 8 and can be built using Maven.
 
 Usage
 =====
