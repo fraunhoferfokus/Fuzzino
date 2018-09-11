@@ -21,7 +21,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.IntegerSpecificationImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntFromRangesBuilder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.BigIntRange;
 

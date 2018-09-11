@@ -153,7 +153,6 @@ public class RequestDispatcher {
 	protected void loadRequestFromFile() {
 		prepareEmptyResponse();
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(RequestImpl.class);
 			request = RequestImpl.unmarshall(new File(requestFilename));
 		} catch (UnmarshalException e) {
 			xmlParsingError = e;//.getCause();
@@ -287,8 +286,6 @@ public class RequestDispatcher {
 					}
 				} else{
 					//TODO: more to do with this map?
-					FloatRequestProcessor reqProc = new FloatRequestProcessor(numberRequest, id);
-					//floatRequestProcessors.put(id,reqProc);
 				}
 			}
 		}

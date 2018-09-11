@@ -23,7 +23,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
-import de.fraunhofer.fokus.fuzzing.fuzzino.request.impl.StringSpecificationImpl;
 
 /**
  * This class applies the {@link RepeatStringOperator} to a list of valid values.
