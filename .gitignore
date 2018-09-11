@@ -7,7 +7,7 @@ org.eclipse.*
 .jar
 !Grammar_Fuzzing*.jar
 *.response.xml
-!doc/**.response.xml
+!doc/**/**.response.xml
 *ontinued.request.xml
 *ontd.request.xml
 *ontd2.request.xml
