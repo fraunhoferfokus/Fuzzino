@@ -13,8 +13,11 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
@@ -41,8 +44,11 @@ public class BoundaryNumbersGenerator extends SimpleIntegerGenerator {
 	private void initFuzzValues() {
 		modifyNumberSpec();
 		
+		// Add all fuzzValues to a HashSet to automatically filter duplicates
+		Set<Long> filteredFuzzValues = new LinkedHashSet<>();
+		
 		if (matchesSpecification(new FuzzedValue<>(0L, owner))) {
-			fuzzValues.add(0L);
+			filteredFuzzValues.add(0L);
 		}
 		
 		List<Integer> divisors = IntegerUtil.asList(1, 2, 3, 4, 8, 16, 32);
@@ -52,18 +58,20 @@ public class BoundaryNumbersGenerator extends SimpleIntegerGenerator {
 			long maxValueDivided = maxValue / divisor;
 			FuzzedValue<Long> fuzzedValue = new FuzzedValue<>(maxValueDivided, owner);
 			if (matchesSpecification(fuzzedValue)) {
-				fuzzValues.add(maxValueDivided);
+				filteredFuzzValues.add(maxValueDivided);
 			}
 			
 			long minValueDivided = minValue / divisor;
 			fuzzedValue = new FuzzedValue<>(minValueDivided, owner);
 			if (matchesSpecification(fuzzedValue)) {
-				fuzzValues.add(minValueDivided);
+				filteredFuzzValues.add(minValueDivided);
 			}
 		}
 		
-		fuzzValues.add(minValue - 1);
-		fuzzValues.add(maxValue + 1);
+		filteredFuzzValues.add(minValue - 1);
+		filteredFuzzValues.add(maxValue + 1);
+		
+		fuzzValues.addAll(filteredFuzzValues);
 	}
 
 	protected void modifyNumberSpec() {
