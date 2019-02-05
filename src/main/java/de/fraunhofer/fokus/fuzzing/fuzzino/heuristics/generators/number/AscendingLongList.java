@@ -157,9 +157,7 @@ public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> imp
 		}
 		long nextElement = startInt + index * stepSize;
 		
-		FuzzedValue<Long> fuzzedValue = new FuzzedValue<>(nextElement, owner);
-		
-		return fuzzedValue;
+		return new FuzzedValue<>(nextElement, owner);
 	}
 
 	@Override
