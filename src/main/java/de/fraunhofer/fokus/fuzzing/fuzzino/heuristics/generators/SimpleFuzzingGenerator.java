@@ -13,12 +13,14 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 
 /**
  * A fuzzing generator that simply returns values of a list.
@@ -33,7 +35,7 @@ public abstract class SimpleFuzzingGenerator<T> extends ComputableListImpl<Fuzze
                                                 implements ComputableFuzzingHeuristic<T> {
 
 	private static final long serialVersionUID = -8543542004586252385L;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	protected long seed;
 	protected Random random;
 	
@@ -45,31 +47,27 @@ public abstract class SimpleFuzzingGenerator<T> extends ComputableListImpl<Fuzze
 	protected SimpleFuzzingGenerator(long seed) {
 		this.seed = seed;
 		this.random = new Random(this.seed);
-		owner = this;
+		this.owners = new LinkedList<>();
 	}
 	
 	/**
 	 * Constructor for subclasses.
 	 * 
 	 * @param seed The seed to be used for random-based fuzzingheuristics.
-	 * @param owner The fuzzing heuristic that uses this fuzzing operator for its own purpose.
+	 * @param owners The fuzzing heuristic that uses this fuzzing operator for its own purpose.
 	 *              fuzzed Value will return {@code owner} instead of {@code this} when calling
 	 *              {@link FuzzedValue#getHeuristic()}.
 	 */
-	protected SimpleFuzzingGenerator(long seed, ComputableFuzzingHeuristic<?> owner) {
+	protected SimpleFuzzingGenerator(long seed, List<FuzzingHeuristic> owners) {
 		this.seed = seed;
 		random = new Random(this.seed);
-		if (owner == null) {
-			owner = this;
-		} else {
-			this.owner = owner;
-		}
+		this.owners = new LinkedList<>(owners);
 	}
 	
 	@Override
 	public FuzzedValue<T> computeElement(int index) {
 		T fuzzedValueItself = getFuzzValues().get(index);
-		FuzzedValue<T> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owner);
+		FuzzedValue<T> fuzzedValue = new FuzzedValue<T>(fuzzedValueItself, owners);
 		
 		return fuzzedValue;
 	}
@@ -94,7 +92,7 @@ public abstract class SimpleFuzzingGenerator<T> extends ComputableListImpl<Fuzze
 	
 	@Override
 	public String toString() {
-		return "[SimpleFuzzingGenerator name:" + getName() + " owner:" + owner.getName() + " seed:" + seed + "]";
+		return "[SimpleFuzzingGenerator name:" + getName() + " owners:" + owners + " seed:" + seed + "]";
 	}
 	
 }

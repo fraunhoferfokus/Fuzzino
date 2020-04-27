@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -28,20 +30,22 @@ public class BadIpAddressesGenerator extends ComposedStringGenerator {
 
 	public BadIpAddressesGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		initHeuristics();
 	}
 
-	public BadIpAddressesGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(stringSpec, seed, owner);
+	public BadIpAddressesGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
 	private void initHeuristics() {
-		SpecialBadIpAddressesGenerator specialBadIpAddressesGenerator = new SpecialBadIpAddressesGenerator(stringSpec, seed, owner);
+		SpecialBadIpAddressesGenerator specialBadIpAddressesGenerator = new SpecialBadIpAddressesGenerator(stringSpec, seed, owners);
 		
-		BadNumbersAsStringGenerator badNumbers = new BadNumbersAsStringGenerator(stringSpec, seed, owner);
-		ConcreteValuesGenerator dot = new ConcreteValuesGenerator(stringSpec, seed, owner, ".");
-		Combinator badIpAddress = new Combinator(stringSpec, seed, owner, badNumbers, dot, badNumbers, dot, badNumbers, dot, badNumbers);
+		BadNumbersAsStringGenerator badNumbers = new BadNumbersAsStringGenerator(stringSpec, seed, owners);
+		ConcreteValuesGenerator dot = new ConcreteValuesGenerator(stringSpec, seed, owners, ".");
+		Combinator badIpAddress = new Combinator(stringSpec, seed, owners, badNumbers, dot, badNumbers, dot, badNumbers, dot, badNumbers);
 		
 		heuristics.add(specialBadIpAddressesGenerator);
 		heuristics.add(badIpAddress);

@@ -2,7 +2,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.SQLTimeBasedInjections;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
@@ -24,10 +24,12 @@ public class SQLTimeBasedInjectionsGenerator extends SimpleStringGenerator {
 
 	public SQLTimeBasedInjectionsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 	}
 
-	public SQLTimeBasedInjectionsGenerator(long seed, StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner) {
-		super(stringSpec, seed, owner);
+	public SQLTimeBasedInjectionsGenerator(long seed, StringSpecification stringSpec, List<FuzzingHeuristic> owners) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 	}
 
 	@Override

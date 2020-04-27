@@ -32,6 +32,7 @@ public class BigNumericalVarianceOperator extends ComposedFuzzingHeuristic<BigIn
 			                         IntegerSpecification numberSpec,
 			                         long seed) {
 		super(seed);
+		this.owners.add(this);
 		if (numberSpec == null) {
 			numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
@@ -47,7 +48,7 @@ public class BigNumericalVarianceOperator extends ComposedFuzzingHeuristic<BigIn
 		}
 		for (BigInteger validValue : validValues) {
 			SimpleNumericalVarianceOperator<BigInteger> simpleNumericalVarianceOperator = 
-					new SimpleNumericalVarianceOperator<>(validValue, varianceRange, numberSpec, seed, owner);
+					new SimpleNumericalVarianceOperator<>(validValue, varianceRange, numberSpec, seed, owners);
 			heuristics.add(simpleNumericalVarianceOperator);
 		}
 	}

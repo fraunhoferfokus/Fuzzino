@@ -13,6 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ConcreteValuesGeneratorTest extends FuzzinoTest {
 		sP.setEncoding(StringEncoding.get("ASCII"));
 		sP.setIgnoreLengths(true);
 		AllBadStringsGenerator owner = new AllBadStringsGenerator(sP, 0);
-		ConcreteValuesGenerator gen1 = new ConcreteValuesGenerator(sP, 0,owner,"test1","test2");
+		ConcreteValuesGenerator gen1 = new ConcreteValuesGenerator(sP, 0, Arrays.asList(owner),"test1","test2");
 		gen1.addAll(StringUtil.asList("test3","test4"));
 		Iterator<FuzzedValue<String>> it = gen1.iterator();
 		List<String> allValues= StringUtil.asList("test1","test2","test3","test4");

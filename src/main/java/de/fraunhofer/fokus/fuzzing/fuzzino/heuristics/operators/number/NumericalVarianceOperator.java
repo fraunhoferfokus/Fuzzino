@@ -37,6 +37,7 @@ public class NumericalVarianceOperator extends ComposedFuzzingHeuristic<Long> im
 			                         IntegerSpecification numberSpec,
 			                         long seed) {
 		super(seed);
+		this.owners.add(this);
 		if (numberSpec == null) {
 			numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
@@ -52,7 +53,7 @@ public class NumericalVarianceOperator extends ComposedFuzzingHeuristic<Long> im
 		}
 		for (Long validValue : validValues) {
 			SimpleNumericalVarianceOperator<Long> simpleNumericalVarianceOperator = 
-					new SimpleNumericalVarianceOperator<>(validValue, varianceRange, numberSpec, seed, owner);
+					new SimpleNumericalVarianceOperator<>(validValue, varianceRange, numberSpec, seed, owners);
 			heuristics.add(simpleNumericalVarianceOperator);
 		}
 	}

@@ -13,9 +13,11 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -28,6 +30,7 @@ public abstract class ComposedStringGenerator extends ComposedFuzzingHeuristic<S
 	
 	public ComposedStringGenerator(StringSpecification stringSpec, long seed) {
 		super(seed);
+		this.owners.add(this);
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -36,8 +39,9 @@ public abstract class ComposedStringGenerator extends ComposedFuzzingHeuristic<S
 		}
 	}
 	
-	public ComposedStringGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(seed, owner);
+	public ComposedStringGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(seed, owners);
+		this.owners.add(this);
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}

@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -24,20 +26,22 @@ public class HTMLFieldInputGenerator extends ComposedStringGenerator {
 
 	public HTMLFieldInputGenerator(StringSpecification stringSpec,long seed, String attackerURL) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		this.attackerURL = attackerURL;
 		initHeuristics();
 	}
 	
-	public HTMLFieldInputGenerator(StringSpecification stringSpec,long seed,ComputableFuzzingHeuristic<?> owner, String attackerURL) {
-		super(stringSpec, seed, owner);
+	public HTMLFieldInputGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners, String attackerURL) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		this.attackerURL = attackerURL;
 		initHeuristics();
 	}
 	
 	private void initHeuristics() {
-		heuristics.add(new AllXSSGenerator(stringSpec, seed, owner, attackerURL));
-		heuristics.add(new SQLInjectionsGenerator(seed, stringSpec, owner));
-		heuristics.add(new SQLTimeBasedInjectionsGenerator(seed, stringSpec, owner));
+		heuristics.add(new AllXSSGenerator(stringSpec, seed, owners, attackerURL));
+		heuristics.add(new SQLInjectionsGenerator(seed, stringSpec, owners));
+		heuristics.add(new SQLTimeBasedInjectionsGenerator(seed, stringSpec, owners));
 	}
 
 	@Override

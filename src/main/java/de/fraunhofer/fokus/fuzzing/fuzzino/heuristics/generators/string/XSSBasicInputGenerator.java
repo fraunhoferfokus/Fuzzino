@@ -14,7 +14,9 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.StringContainer;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.XSSBasicInputStrings;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -30,19 +32,20 @@ public class XSSBasicInputGenerator extends ComposedStringGenerator {
 
 	public XSSBasicInputGenerator(StringSpecification stringSpec, long seed, String attackerURL) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		xssBasicInputStrings = new XSSBasicInputStrings(attackerURL);
 		initHeuristics();
 	}
 	
-	public XSSBasicInputGenerator(StringSpecification stringSpec, long seed,ComputableFuzzingHeuristic<?> owner, String attackerURL) {
-		super(stringSpec, seed);
-		this.owner = owner;
+	public XSSBasicInputGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners, String attackerURL) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		xssBasicInputStrings = new XSSBasicInputStrings(attackerURL);
 		initHeuristics();
 	}
 
 	private void initHeuristics() {
-		ConcreteValuesGenerator gen1 = new ConcreteValuesGenerator(stringSpec, seed, owner);
+		ConcreteValuesGenerator gen1 = new ConcreteValuesGenerator(stringSpec, seed, owners);
 		gen1.addAll(xssBasicInputStrings.getValues());
 		heuristics.add(gen1);
 	}

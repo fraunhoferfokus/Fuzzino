@@ -16,7 +16,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.BadLongUnicodeStrings;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -32,11 +32,12 @@ public class BadLongUnicodeStringsGenerator extends SimpleStringGenerator {
 
 	public BadLongUnicodeStringsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 	}
 
-	public BadLongUnicodeStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed,
-			StringSpecification stringSpec) {
-		super(stringSpec, seed, owner);
+	public BadLongUnicodeStringsGenerator(List<FuzzingHeuristic> owners, long seed, StringSpecification stringSpec) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 	}
 
 	@Override

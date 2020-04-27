@@ -85,12 +85,27 @@ public class FuzzedValue<T> implements Serializable {
 	 * @param fuzzedValue The value created by {@code generator}.
 	 * @param generator The fuzzing generator that created {@code fuzzedValue}.
 	 */
-	public FuzzedValue(T fuzzedValue, FuzzingHeuristic generator) {
-		if (generator == null) {
+//	public FuzzedValue(T fuzzedValue, FuzzingHeuristic generator) {
+//		if (generator == null) {
+//			throw new IllegalArgumentException("generator must not be null.");
+//		}
+//		value = fuzzedValue;
+//		heuristics.add(generator);
+//		kind = Kind.GENERATED;
+//	}
+
+	/**
+	 * Creates a new instance that stores a fuzzed value created by a fuzzing generator.
+	 * 
+	 * @param fuzzedValue The value created by {@code generator}.
+	 * @param generator The fuzzing generator that created {@code fuzzedValue}.
+	 */
+	public FuzzedValue(T fuzzedValue, List<FuzzingHeuristic> generators) {
+		if (generators == null || generators.isEmpty()) {
 			throw new IllegalArgumentException("generator must not be null.");
 		}
 		value = fuzzedValue;
-		heuristics.add(generator);
+		heuristics.addAll(generators);
 		kind = Kind.GENERATED;
 	}
 	
@@ -119,7 +134,7 @@ public class FuzzedValue<T> implements Serializable {
 	 * @param operators The fuzzing operators that mutated {@code basedOnValue}.
 	 */
 	public FuzzedValue(T fuzzedValue, T basedOnValue, List<FuzzingHeuristic> operators) {
-		if (operators == null) {
+		if (operators == null || operators.isEmpty()) {
 			throw new IllegalArgumentException("operators must not be null.");
 		}
 		value = fuzzedValue;
@@ -203,18 +218,18 @@ public class FuzzedValue<T> implements Serializable {
 	}
 
 	/**
-	 * @return The first fuzzing heuristic that was used while creating the fuzzed value {@link #getValue()}.
+	 * @return The most specific fuzzing heuristic that was used while creating the fuzzed value {@link #getValue()}.
 	 * In a lot of cases there is only one fuzzing heuristic involved in the creation of one FuzzedValue
 	 * @throws UnsupportedOperationException if {@link #isGenerated()} returns {@code false}.
 	 */
 	public FuzzingHeuristic getHeuristic() {
 		if (isNone()) {
-			throw new UnsupportedOperationException("This is not fuzzed value, neither generated nor mutated.");
+			throw new UnsupportedOperationException("This is not a fuzzed value, neither generated nor mutated.");
 		}
-		if(heuristics.size()==0){
+		if (heuristics.isEmpty()) {
 			return null;
 		}
-		return heuristics.get(0);
+		return heuristics.get(heuristics.size()-1);
 	}
 	
 	@Override
@@ -223,7 +238,7 @@ public class FuzzedValue<T> implements Serializable {
 				(basedOnValue == null ? "" : basedOnValue) + "]";
 	}
 
-	private String getAllHeuristicNames() {
+	public String getAllHeuristicNames() {
 		StringBuffer sb = new StringBuffer();
 		for(int i = 0;i<heuristics.size();i++){
 			FuzzingHeuristic heuristic = heuristics.get(i);

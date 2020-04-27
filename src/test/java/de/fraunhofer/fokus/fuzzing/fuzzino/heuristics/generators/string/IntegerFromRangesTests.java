@@ -15,6 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -40,7 +41,7 @@ public class IntegerFromRangesTests extends FuzzinoTest {
 	@Before
 	public void init() {
 		intFromRanges = new IntegerFromRanges(NUMBER_SPEC, 
-				                              OWNER, 
+				Arrays.asList(OWNER), 
 				                              SEED, 
 				                              new IntegerFromRanges.Builder(-2, -1)
 		                                                           .addRange(0, 1)
@@ -50,7 +51,7 @@ public class IntegerFromRangesTests extends FuzzinoTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testInvalidRange() {
 		intFromRanges = new IntegerFromRanges(NUMBER_SPEC, 
-				                              OWNER, 
+				Arrays.asList(OWNER), 
 				                              SEED, 
 				                              new IntegerFromRanges.Builder(11, 10));
 	}
@@ -58,7 +59,7 @@ public class IntegerFromRangesTests extends FuzzinoTest {
 	@Test
 	public void testRangeOfOneValue() {
 		intFromRanges = new IntegerFromRanges(NUMBER_SPEC, 
-				                              OWNER, 
+				Arrays.asList(OWNER), 
 				                              SEED, 
 				                              new IntegerFromRanges.Builder(10, 10));
 	}
@@ -66,7 +67,7 @@ public class IntegerFromRangesTests extends FuzzinoTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testNegativeInvalidRange() {
 		intFromRanges = new IntegerFromRanges(NUMBER_SPEC, 
-				                              OWNER, 
+				Arrays.asList(OWNER), 
 				                              SEED, 
 				                              new IntegerFromRangesBuilder(-10, -11));
 	}
@@ -74,7 +75,7 @@ public class IntegerFromRangesTests extends FuzzinoTest {
 	@Test
 	public void testNegativeValidRange() {
 		intFromRanges = new IntegerFromRanges(NUMBER_SPEC, 
-				                              OWNER, 
+				Arrays.asList(OWNER), 
 				                              SEED, 
 				                              new IntegerFromRangesBuilder(-11, -10));
 	}
@@ -82,7 +83,7 @@ public class IntegerFromRangesTests extends FuzzinoTest {
 	@Test
 	public void testSizeWithOneRange() {
 		intFromRanges = new IntegerFromRanges(NUMBER_SPEC, 
-				                              OWNER, 
+				Arrays.asList(OWNER), 
 				                              SEED, 
 				                              new IntegerFromRanges.Builder(-10, 10));
 		
@@ -95,7 +96,7 @@ public class IntegerFromRangesTests extends FuzzinoTest {
 	@Test
 	public void testSizeWithTwoRanges() {
 		intFromRanges = new IntegerFromRanges(NUMBER_SPEC, 
-				                              OWNER, 
+				Arrays.asList(OWNER), 
 				                              SEED, 
 				                              new IntegerFromRanges.Builder(-10, 10)
 		                                                           .addRange(-20, -15));

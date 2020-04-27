@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -27,18 +29,20 @@ public class AllBadStringsGenerator extends ComposedStringGenerator {
 
 	public AllBadStringsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
-	public AllBadStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
-		super(stringSpec, seed, owner);
+	public AllBadStringsGenerator(List<FuzzingHeuristic> owners, long seed, StringSpecification stringSpec) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
 	private void initHeuristics() {
-		heuristics.add(new BadLongStringsGenerator(owner, seed, stringSpec));
-		heuristics.add(new BadStringsGenerator(stringSpec, seed, owner));
-		heuristics.add(new LongStringsGenerator(owner, seed, stringSpec));
+		heuristics.add(new BadLongStringsGenerator(owners, seed, stringSpec));
+		heuristics.add(new BadStringsGenerator(stringSpec, seed, owners));
+		heuristics.add(new LongStringsGenerator(owners, seed, stringSpec));
 	}
 
 	@Override

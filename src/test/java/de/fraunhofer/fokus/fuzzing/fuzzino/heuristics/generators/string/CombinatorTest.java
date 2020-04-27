@@ -15,6 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -34,10 +35,10 @@ public class CombinatorTest extends FuzzinoTest {
 	
 	@Test
 	public void testWithOneList() throws NoMatchingValuesException {
-		AscendingIntegerAsStringList ascIntList = new AscendingIntegerAsStringList(STRING_SPEC, OWNER, SEED,
+		AscendingIntegerAsStringList ascIntList = new AscendingIntegerAsStringList(STRING_SPEC, Arrays.asList(OWNER), SEED,
 				new AscendingIntegerAsStringList.Builder(0, 10));
 		
-		Combinator combinator = new Combinator(STRING_SPEC, SEED, OWNER, ascIntList);
+		Combinator combinator = new Combinator(STRING_SPEC, SEED, Arrays.asList(OWNER), ascIntList);
 
 		int counter = 0;
 		for (FuzzedValue<String> fuzzedValue : combinator) {
@@ -51,14 +52,14 @@ public class CombinatorTest extends FuzzinoTest {
 	
 	@Test
 	public void testWithTwoLists() throws NoMatchingValuesException {
-		AscendingIntegerAsStringList ascIntList1 = new AscendingIntegerAsStringList(STRING_SPEC, OWNER, SEED,
+		AscendingIntegerAsStringList ascIntList1 = new AscendingIntegerAsStringList(STRING_SPEC, Arrays.asList(OWNER), SEED,
 				new AscendingIntegerAsStringList.Builder(0, 2));
-		AscendingIntegerAsStringList ascIntList2 = new AscendingIntegerAsStringList(STRING_SPEC, OWNER, SEED, 
+		AscendingIntegerAsStringList ascIntList2 = new AscendingIntegerAsStringList(STRING_SPEC, Arrays.asList(OWNER), SEED, 
 				new AscendingIntegerAsStringList.Builder(0, 3));
 		
 		List<String> expectedValues = StringUtil.asList("00", "10", "01", "11", "02", "12");
 		
-		Combinator combinator = new Combinator(STRING_SPEC, SEED, OWNER, ascIntList1, ascIntList2);
+		Combinator combinator = new Combinator(STRING_SPEC, SEED, Arrays.asList(OWNER), ascIntList1, ascIntList2);
 
 		int counter = 0;
 		for (FuzzedValue<String> fuzzedValue : combinator) {
@@ -72,17 +73,17 @@ public class CombinatorTest extends FuzzinoTest {
 	
 	@Test
 	public void testWithThreeLists() throws NoMatchingValuesException {
-		AscendingIntegerAsStringList ascIntList1 = new AscendingIntegerAsStringList(STRING_SPEC, OWNER, SEED,
+		AscendingIntegerAsStringList ascIntList1 = new AscendingIntegerAsStringList(STRING_SPEC, Arrays.asList(OWNER), SEED,
 				new AscendingIntegerAsStringList.Builder(0, 2));
-		AscendingIntegerAsStringList ascIntList2 = new AscendingIntegerAsStringList(STRING_SPEC, OWNER, SEED,
+		AscendingIntegerAsStringList ascIntList2 = new AscendingIntegerAsStringList(STRING_SPEC, Arrays.asList(OWNER), SEED,
 				new AscendingIntegerAsStringList.Builder(2, 3));
-		AscendingIntegerAsStringList ascIntList3 = new AscendingIntegerAsStringList(STRING_SPEC, OWNER, SEED,
+		AscendingIntegerAsStringList ascIntList3 = new AscendingIntegerAsStringList(STRING_SPEC, Arrays.asList(OWNER), SEED,
 				new AscendingIntegerAsStringList.Builder(5, 2));
 		
 		List<String> expectedValues = StringUtil.asList("025", "125", "035", "135", "045", "145", 
 				                                        "026", "126", "036", "136", "046", "146");
 		
-		Combinator combinator = new Combinator(STRING_SPEC, SEED, OWNER, ascIntList1, ascIntList2, ascIntList3);
+		Combinator combinator = new Combinator(STRING_SPEC, SEED, Arrays.asList(OWNER), ascIntList1, ascIntList2, ascIntList3);
 
 		int counter = 0;
 		for (FuzzedValue<String> fuzzedValue : combinator) {

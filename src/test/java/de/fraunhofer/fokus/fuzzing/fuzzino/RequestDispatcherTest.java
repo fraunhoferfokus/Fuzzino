@@ -199,7 +199,7 @@ public class RequestDispatcherTest extends FuzzinoTest {
 		NumberResponse<?> numberResponse = responseDoc.getNumberResponses().get(0);
 
 		checkResponseForNumOperatorParts(numberResponse, 1);
-		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
+		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "SimpleNumericalVarianceOperator", "10");
 		checkOperatorPartForNumFuzzedValues(operatorPart, 20);
 		checkResponseForWarningsPart(numberResponse, false);
 

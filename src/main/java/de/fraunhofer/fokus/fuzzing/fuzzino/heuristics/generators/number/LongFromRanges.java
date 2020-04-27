@@ -13,9 +13,11 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -44,8 +46,9 @@ public class LongFromRanges extends ComposedFuzzingHeuristic<Long> implements Nu
 		}
 	}
 	
-	public LongFromRanges(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, LongFromRangesBuilder builder) {
-		super(seed, owner);
+	public LongFromRanges(IntegerSpecification numberSpec, List<FuzzingHeuristic> owners, long seed, LongFromRangesBuilder builder) {
+		super(seed, owners);
+		this.owners.add(this);
 		if (numberSpec == null) {
 			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
@@ -55,7 +58,7 @@ public class LongFromRanges extends ComposedFuzzingHeuristic<Long> implements Nu
 		for (LongRange range : builder.allRanges()) {
 			AscendingLongList intList;
 			try {
-				intList = new AscendingLongList(numberSpec, owner, seed, new AscendingLongList.Builder(range.start(), range.size()));
+				intList = new AscendingLongList(numberSpec, owners, seed, new AscendingLongList.Builder(range.start(), range.size()));
 				heuristics.add(intList);
 			} catch (NoMatchingValuesException e) {
 			}

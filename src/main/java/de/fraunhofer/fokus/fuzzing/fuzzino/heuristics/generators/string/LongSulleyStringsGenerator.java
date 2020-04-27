@@ -13,11 +13,12 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -32,7 +33,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 public class LongSulleyStringsGenerator extends ComputableListImpl<FuzzedValue<String>> implements StringGenerator {
 
 	private static final long serialVersionUID = 4305075477520228717L;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owner;
 	protected long seed;
 	protected StringSpecification stringSpec;
 	protected int size;
@@ -54,7 +55,8 @@ public class LongSulleyStringsGenerator extends ComputableListImpl<FuzzedValue<S
 	
 	public LongSulleyStringsGenerator(long seed, StringSpecification stringSpec) {
 		this.seed = seed;
-		owner = this;
+		owner = new LinkedList<FuzzingHeuristic>();
+		owner.add(this);
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -63,9 +65,10 @@ public class LongSulleyStringsGenerator extends ComputableListImpl<FuzzedValue<S
 		}
 	}
 	
-	public LongSulleyStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
+	public LongSulleyStringsGenerator(List<FuzzingHeuristic> owners, long seed, StringSpecification stringSpec) {
 		this.seed = seed;
-		this.owner = owner;
+		this.owner = new LinkedList<FuzzingHeuristic>(owners);
+		this.owner.add(this);
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}

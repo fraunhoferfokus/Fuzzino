@@ -14,11 +14,13 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import java.math.BigInteger;
+import java.util.LinkedList;
+import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -29,12 +31,13 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
  *
  */
-public class AscendingBigIntList extends ComputableListImpl<FuzzedValue<BigInteger>> implements NumberGenerator<BigInteger> {
+public class AscendingBigIntList extends ComputableListImpl<FuzzedValue<BigInteger>> 
+                                 implements NumberGenerator<BigInteger> {
 
 	private static final long serialVersionUID = 2624736600645787331L;
 	protected IntegerSpecification numberSpec;
 	protected long seed;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	/**
 	 * The first integer.
 	 */
@@ -101,14 +104,15 @@ public class AscendingBigIntList extends ComputableListImpl<FuzzedValue<BigInteg
 	 * @param builder the builder holding the parameters for the AscendingIntegerList to be constructed.
 	 * @throws NoMatchingValuesException 
 	 */
-	public AscendingBigIntList(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, Builder builder) throws NoMatchingValuesException {
+	public AscendingBigIntList(IntegerSpecification numberSpec, List<FuzzingHeuristic> owners, long seed, Builder builder) throws NoMatchingValuesException {
 		if (numberSpec == null) {
 			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
 		else {
 			this.numberSpec = numberSpec;
 		}
-		this.owner = owner;
+		this.owners = new LinkedList<FuzzingHeuristic>(owners);
+		this.owners.add(this);
 		this.seed = seed;
 		Builder matchingBuilder = makeBuilderMatchingSpecification(builder);
 		startInt = matchingBuilder.startInt;
@@ -177,7 +181,7 @@ public class AscendingBigIntList extends ComputableListImpl<FuzzedValue<BigInteg
 		BigInteger addThis = BigInteger.valueOf(index).multiply(BigInteger.valueOf(stepSize));
 		BigInteger nextElement = startInt.add(addThis);
 		
-		FuzzedValue<BigInteger> fuzzedValue = new FuzzedValue<>(nextElement, owner);
+		FuzzedValue<BigInteger> fuzzedValue = new FuzzedValue<>(nextElement, owners);
 		
 		return fuzzedValue;
 	}

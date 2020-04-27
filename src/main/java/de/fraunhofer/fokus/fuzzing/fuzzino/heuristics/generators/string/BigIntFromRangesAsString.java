@@ -14,10 +14,12 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.math.BigInteger;
+import java.util.LinkedList;
+import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BigIntFromRanges;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
@@ -35,7 +37,7 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 
 	private static final long serialVersionUID = 3185452668513139695L;
 	protected StringSpecification stringSpec;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	protected long seed;
 	private BigIntFromRanges bigIntFromRanges;
 	
@@ -58,13 +60,14 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 			this.stringSpec = stringSpec;
 		}
 
-		owner = this;
+		owners = new LinkedList<FuzzingHeuristic>();
+		owners.add(this);
 		this.seed = seed;
 		
 		initHeuristics(builder);
 	}
 
-	public BigIntFromRangesAsString(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, BigIntFromRangesBuilder builder) {
+	public BigIntFromRangesAsString(StringSpecification stringSpec, List<FuzzingHeuristic> owners, long seed, BigIntFromRangesBuilder builder) {
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -72,7 +75,8 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 			this.stringSpec = stringSpec;
 		}
 
-		this.owner = owner;
+		this.owners = new LinkedList<>(owners);
+		this.owners.add(this);
 		this.seed = seed;
 		
 		initHeuristics(builder);
@@ -81,13 +85,13 @@ public class BigIntFromRangesAsString extends ComputableListImpl<FuzzedValue<Str
 	private void initHeuristics(BigIntFromRangesBuilder builder) {
 		IntegerSpecification numberSpec = stringSpec.createNegativeNumberSpec();
 		numberSpec.setIgnoreMinMaxValues(true);
-		bigIntFromRanges = new BigIntFromRanges(numberSpec, owner, seed, builder);
+		bigIntFromRanges = new BigIntFromRanges(numberSpec, owners, seed, builder);
 	}
 	
 	@Override
 	public FuzzedValue<String> computeElement(int index) {
 		String fuzzedValueItself = bigIntFromRanges.get(index).getValue().toString();
-		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owner);
+		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owners);
 		return fuzzedValue;
 	}
 

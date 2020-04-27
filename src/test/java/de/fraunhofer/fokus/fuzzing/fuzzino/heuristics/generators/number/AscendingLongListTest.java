@@ -15,6 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -41,7 +42,7 @@ public class AscendingLongListTest extends FuzzinoTest {
 	@Before
 	public void init() throws NoMatchingValuesException {
 		ascLongList = new AscendingLongList(NUMBER_SPEC,
-				                            OWNER, 
+				                            Arrays.asList(OWNER), 
 				                            SEED, 
 				                            new AscendingLongList.Builder(-10, 10)
 		                                                         .stepSize(2));
@@ -102,7 +103,7 @@ public class AscendingLongListTest extends FuzzinoTest {
 		IntegerSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		numberSpec.setMin(0L);
 		Builder builder = new Builder(-100, 200).stepSize(1);
-		AscendingLongList all = new AscendingLongList(numberSpec, null, 0, builder);
+		AscendingLongList all = new AscendingLongList(numberSpec, Arrays.asList(OWNER), 0, builder);
 		
 		Builder matchingBuilder = all.makeBuilderMatchingSpecification(builder);
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);
@@ -112,7 +113,7 @@ public class AscendingLongListTest extends FuzzinoTest {
 		numberSpec.setMin(10L);
 		numberSpec.setMax(999L);
 		builder = new Builder(1, 100).stepSize(3);
-		all = new AscendingLongList(numberSpec, null, 0, builder);
+		all = new AscendingLongList(numberSpec, Arrays.asList(OWNER), 0, builder);
 		
 		matchingBuilder = all.makeBuilderMatchingSpecification(builder);
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);

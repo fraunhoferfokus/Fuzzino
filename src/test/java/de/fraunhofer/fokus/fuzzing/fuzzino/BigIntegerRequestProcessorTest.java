@@ -144,7 +144,7 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest{
 		checkGeneratorPartForNumFuzzedValues(generatorPart, 17);
 		
 		checkResponseForNumOperatorParts(numberResponse, 1);
-		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
+		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "SimpleNumericalVarianceOperator", "10");
 		checkOperatorPartForNumFuzzedValues(operatorPart, 20);
 		
 		checkResponseForWarningsPart(numberResponse, false);
@@ -286,7 +286,7 @@ public class BigIntegerRequestProcessorTest extends FuzzinoTest{
 		NumberResponse<?> numberResponse = response.getNumberResponses().get(0);
 		
 		checkResponseForNumOperatorParts(numberResponse, 1);
-		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "NumericalVariance", "10");
+		OperatorSpecificFuzzedValues<?> operatorPart = getOperatorPartFromNumberResponseByName(numberResponse, "SimpleNumericalVarianceOperator", "10");
 		int expNumFuzzedValues = 20;
 		checkOperatorPartForNumFuzzedValues(operatorPart, expNumFuzzedValues);
 		

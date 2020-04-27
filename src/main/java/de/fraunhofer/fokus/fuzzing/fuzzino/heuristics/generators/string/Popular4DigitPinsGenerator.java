@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.Popular4DigitPins;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
@@ -27,10 +27,12 @@ public class Popular4DigitPinsGenerator extends SimpleStringGenerator {
 
 	public Popular4DigitPinsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 	}
 
-	public Popular4DigitPinsGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(stringSpec, seed, owner);
+	public Popular4DigitPinsGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 	}
 
 	@Override

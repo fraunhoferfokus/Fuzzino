@@ -13,10 +13,13 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -32,7 +35,7 @@ public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> imp
 	private static final long serialVersionUID = 7478158087438890519L;
 	protected IntegerSpecification numberSpec;
 	protected long seed;
-	protected ComputableFuzzingHeuristic<?> owner = this;
+	protected List<FuzzingHeuristic> owners;
 	/**
 	 * The first integer.
 	 */
@@ -90,14 +93,15 @@ public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> imp
 	 * @param builder the builder holding the parameters for the AscendingIntegerList to be constructed.
 	 * @throws NoMatchingValuesException 
 	 */
-	public AscendingLongList(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, Builder builder) throws NoMatchingValuesException {
+	public AscendingLongList(IntegerSpecification numberSpec, List<FuzzingHeuristic> owners, long seed, Builder builder) throws NoMatchingValuesException {
 		if (numberSpec == null) {
 			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
 		else {
 			this.numberSpec = numberSpec;
 		}
-		this.owner = owner;
+		this.owners = new LinkedList<>(owners);
+		this.owners.add(this);
 		this.seed = seed;
 		Builder matchingBuilder = makeBuilderMatchingSpecification(builder);
 		startInt = matchingBuilder.startInt;
@@ -157,7 +161,7 @@ public class AscendingLongList extends ComputableListImpl<FuzzedValue<Long>> imp
 		}
 		long nextElement = startInt + index * stepSize;
 		
-		FuzzedValue<Long> fuzzedValue = new FuzzedValue<>(nextElement, owner);
+		FuzzedValue<Long> fuzzedValue = new FuzzedValue<>(nextElement, owners);
 		
 		return fuzzedValue;
 	}

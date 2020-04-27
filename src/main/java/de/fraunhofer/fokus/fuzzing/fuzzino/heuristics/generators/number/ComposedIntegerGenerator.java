@@ -13,8 +13,10 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -36,7 +38,7 @@ public abstract class ComposedIntegerGenerator extends ComposedFuzzingHeuristic<
 		}
 	}
 	
-	public ComposedIntegerGenerator(ComputableFuzzingHeuristic<?> owner, long seed, IntegerSpecification numberSpec) {
+	public ComposedIntegerGenerator(List<FuzzingHeuristic> owner, long seed, IntegerSpecification numberSpec) {
 		super(seed, owner);
 		if (numberSpec == null) {
 			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();

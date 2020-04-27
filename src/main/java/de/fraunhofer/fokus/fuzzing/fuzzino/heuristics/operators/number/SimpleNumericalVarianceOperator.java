@@ -14,9 +14,10 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -29,6 +30,7 @@ public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuz
 
 	public SimpleNumericalVarianceOperator(T validValue, long seed) {
 		super(validValue, seed);
+		this.owners.add(this);
 }
 	/**
 	 * Creates a new instance where this operator is owned by another meaning the heuristic stores
@@ -39,14 +41,16 @@ public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuz
 	 */
 	public SimpleNumericalVarianceOperator(T validValue, 
 			                               long seed, 
-			                               ComputableFuzzingHeuristic<?> owner) {
+			                               List<FuzzingHeuristic> owner) {
 		super(validValue, seed, owner);
+		this.owners.add(this);
 	}
 
 	public SimpleNumericalVarianceOperator(T validValue, 
                                            int varianceRange,
                                            long seed) {
 		super(validValue, seed);
+		this.owners.add(this);
 		if (varianceRange != 0) {
 			this.varianceRange = Math.abs(varianceRange);
 		}
@@ -58,14 +62,15 @@ public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuz
 	 * @param validValue the valid value used to generate number around.
 	 * @param varianceRange the range to generate values around <code>validValue</code>
 	 * @param seed the seed needed to support repeatibility.
-	 * @param owner the owner of the operator.
+	 * @param owners the owner of the operator.
 	 */
 	public SimpleNumericalVarianceOperator(T validValue,
 			                               int varianceRange,
 			                               IntegerSpecification numberSpec,
 			                               long seed,
-			                               ComputableFuzzingHeuristic<?> owner) {
-		super(validValue, seed, owner);
+			                               List<FuzzingHeuristic> owners) {
+		super(validValue, seed, owners);
+		this.owners.add(this);
 		if (numberSpec == null) {
 			numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
@@ -76,7 +81,7 @@ public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuz
 
 	@Override
 	public String getName() {
-		return "NumericalVarianceOperator";
+		return "SimpleNumericalVarianceOperator";
 	}
 
 	@Override
@@ -85,7 +90,7 @@ public class SimpleNumericalVarianceOperator<T extends Number> extends SimpleFuz
 		if (index >= varianceRange) {
 			offset++; // that is necessary to exculde the valid value itself
 		}
-		return new FuzzedValue<>(addToValidValue(offset), inputValue, owner);
+		return new FuzzedValue<>(addToValidValue(offset), inputValue, owners);
 	}
 	
 	private T addToValidValue(int value2) {

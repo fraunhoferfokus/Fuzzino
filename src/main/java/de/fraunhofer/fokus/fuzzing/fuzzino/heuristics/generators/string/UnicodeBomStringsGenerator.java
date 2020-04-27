@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
@@ -24,24 +26,26 @@ public class UnicodeBomStringsGenerator extends ComposedStringGenerator {
 
 	public UnicodeBomStringsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
-	public UnicodeBomStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
-		super(stringSpec, seed, owner);
+	public UnicodeBomStringsGenerator(List<FuzzingHeuristic> owners, long seed, StringSpecification stringSpec) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
 	private void initHeuristics() {
-		StringRepeater bomMarker1 = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder()
+		StringRepeater bomMarker1 = new StringRepeater(stringSpec, owners, seed, new StringRepeater.Builder()
 		                                                                .stepSize(2)
 		                                                                .size(1024)
 		                                                                .prefix("\\xfe;\\xff;"));
-		StringRepeater bomMarker2 = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder()
+		StringRepeater bomMarker2 = new StringRepeater(stringSpec, owners, seed, new StringRepeater.Builder()
 		                                                                .stepSize(2)
 		                                                                .size(1024)
 		                                                                .prefix("\\xff;\\xef;"));
-		StringRepeater bomMarker3 = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder()
+		StringRepeater bomMarker3 = new StringRepeater(stringSpec, owners, seed, new StringRepeater.Builder()
 		                                                                .stepSize(2)
 		                                                                .size(1024)
 		                                                                .prefix("\\xef;\\xbb;\\xbf;"));
@@ -49,7 +53,7 @@ public class UnicodeBomStringsGenerator extends ComposedStringGenerator {
 		heuristics.add(bomMarker1);
 		heuristics.add(bomMarker2);
 		heuristics.add(bomMarker3);
-		heuristics.add(new SpecialUnicodeBomStringsGenerator(owner, seed, stringSpec));
+		heuristics.add(new SpecialUnicodeBomStringsGenerator(owners, seed, stringSpec));
 
 	}
 

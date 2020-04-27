@@ -13,10 +13,13 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingIntegerList;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -33,7 +36,7 @@ public class AscendingIntegerAsStringList extends ComputableListImpl<FuzzedValue
 
 	private static final long serialVersionUID = -1618516165078304269L;
 	protected StringSpecification stringSpec;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	protected long seed;
 	private AscendingIntegerList ascIntegerList;
 
@@ -79,7 +82,7 @@ public class AscendingIntegerAsStringList extends ComputableListImpl<FuzzedValue
 	}
 	
 	public AscendingIntegerAsStringList(StringSpecification stringSpec, 
-			                            ComputableFuzzingHeuristic<?> owner, 
+			                           List<FuzzingHeuristic> owners, 
 			                            long seed, 
 			                            Builder builder) throws NoMatchingValuesException {
 		if (stringSpec == null) {
@@ -88,18 +91,19 @@ public class AscendingIntegerAsStringList extends ComputableListImpl<FuzzedValue
 		else {
 			this.stringSpec = stringSpec;
 		}
-		this.owner = owner;
+		this.owners = new LinkedList<>(owners);
+		this.owners.add(this);
 		this.seed = seed;
 		AscendingIntegerList.Builder integerBuilder = 
 				new AscendingIntegerList.Builder(builder.startInt, builder.size).stepSize(builder.stepSize);
 		
-		ascIntegerList = new AscendingIntegerList(stringSpec.createPositiveNumberSpec(), owner, seed, integerBuilder);
+		ascIntegerList = new AscendingIntegerList(stringSpec.createPositiveNumberSpec(), owners, seed, integerBuilder);
 	}
 	
 	@Override
 	public FuzzedValue<String> computeElement(int index) {
 		String fuzzedValueItself = Integer.toString(ascIntegerList.get(index).getValue());
-		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owner);
+		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owners);
 		return fuzzedValue;
 	}
 

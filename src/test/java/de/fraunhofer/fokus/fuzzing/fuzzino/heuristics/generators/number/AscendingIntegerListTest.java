@@ -15,6 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -41,7 +42,7 @@ public class AscendingIntegerListTest extends FuzzinoTest {
 	@Before
 	public void init() throws NoMatchingValuesException {
 		ascIntList = new AscendingIntegerList(NUMBER_SPEC,
-				                              OWNER, 
+				                              Arrays.asList(OWNER), 
 				                              SEED, 
 				                              new AscendingIntegerList.Builder(-10, 10)
 		                                                              .stepSize(2));
@@ -102,7 +103,7 @@ public class AscendingIntegerListTest extends FuzzinoTest {
 		IntegerSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		numberSpec.setMin(0L);
 		Builder builder = new Builder(-100, 200).stepSize(1);
-		AscendingIntegerList ail = new AscendingIntegerList(numberSpec, null, 0, builder);
+		AscendingIntegerList ail = new AscendingIntegerList(numberSpec, Arrays.asList(OWNER), 0, builder);
 		
 		Builder matchingBuilder = ail.makeBuilderMatchingSpecification(builder);
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);
@@ -112,7 +113,7 @@ public class AscendingIntegerListTest extends FuzzinoTest {
 		numberSpec.setMin(10L);
 		numberSpec.setMax(999L);
 		builder = new Builder(1, 100).stepSize(3);
-		ail = new AscendingIntegerList(numberSpec, null, 0, builder);
+		ail = new AscendingIntegerList(numberSpec, Arrays.asList(OWNER), 0, builder);
 		
 		matchingBuilder = ail.makeBuilderMatchingSpecification(builder);
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);

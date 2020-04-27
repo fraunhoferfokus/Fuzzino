@@ -13,11 +13,14 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 
 /**
  * A fuzzing operator that fuzzes a single value.
@@ -32,7 +35,7 @@ public abstract class SimpleFuzzingOperator<T> extends ComputableListImpl<Fuzzed
 	
 	private static final long serialVersionUID = -1331806699416808551L;
 	protected T inputValue;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	protected long seed;
 	protected Random random;
 
@@ -50,7 +53,7 @@ public abstract class SimpleFuzzingOperator<T> extends ComputableListImpl<Fuzzed
 		this.seed = seed;
 		this.random = new Random(this.seed);
 		this.inputValue = inputValue;
-		owner = this;
+		this.owners = new LinkedList<FuzzingHeuristic>();
 	}
 
 	/**
@@ -62,7 +65,7 @@ public abstract class SimpleFuzzingOperator<T> extends ComputableListImpl<Fuzzed
 	 *              fuzzed Value will return {@code owner} instead of {@code this} when calling
 	 *              {@link FuzzedValue#getHeuristic()}.
 	 */
-	protected SimpleFuzzingOperator(T inputValue, long seed, ComputableFuzzingHeuristic<?> owner) {
+	protected SimpleFuzzingOperator(T inputValue, long seed, List<FuzzingHeuristic> owner) {
 		super();
 		if (inputValue == null) {
 			throw new IllegalArgumentException("inputValue must not be null");
@@ -70,7 +73,7 @@ public abstract class SimpleFuzzingOperator<T> extends ComputableListImpl<Fuzzed
 		this.seed = seed;
 		this.random = new Random(this.seed);
 		this.inputValue = inputValue;
-		this.owner = owner;
+		this.owners = new LinkedList<FuzzingHeuristic>(owner);
 	}
 	
 	/**
@@ -88,7 +91,7 @@ public abstract class SimpleFuzzingOperator<T> extends ComputableListImpl<Fuzzed
 	
 	@Override
 	public String toString() {
-		return "[SimpleFuzzingOperator name:" + getName() + " owner:" + owner.getName() + " inputValue:" + inputValue + " seed:" + seed + "]";
+		return "[SimpleFuzzingOperator name:" + getName() + " owner:" + owners.toString() + " inputValue:" + inputValue + " seed:" + seed + "]";
 	}
 
 }
