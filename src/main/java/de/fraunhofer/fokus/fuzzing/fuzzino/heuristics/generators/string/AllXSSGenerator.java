@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -29,21 +31,23 @@ public class AllXSSGenerator extends ComposedStringGenerator {
 
 	public AllXSSGenerator(StringSpecification stringSpec, long seed, String attackerURL) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		this.attackerURL = attackerURL;
 		initHeuristics();
 	}
 
-	public AllXSSGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner,
+	public AllXSSGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners,
 			String attackerURL) {
-		super(stringSpec, seed, owner);
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		this.attackerURL = attackerURL;
 		initHeuristics();
 	}
 
 	private void initHeuristics() {
-		heuristics.add(new XSSBasicInputGenerator(stringSpec, seed, owner, attackerURL));
-		heuristics.add(new XSSMultipleLinesInputGenerator(stringSpec, seed, owner));
-		heuristics.add(new XSSOpenHTMLTagVarianceGenerator(stringSpec, seed, owner));
+		heuristics.add(new XSSBasicInputGenerator(stringSpec, seed, owners, attackerURL));
+		heuristics.add(new XSSMultipleLinesInputGenerator(stringSpec, seed, owners));
+		heuristics.add(new XSSOpenHTMLTagVarianceGenerator(stringSpec, seed, owners));
 	}
 
 	@Override

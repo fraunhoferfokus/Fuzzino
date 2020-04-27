@@ -18,6 +18,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -41,8 +42,9 @@ public class RepeatStringOperator extends ComposedFuzzingHeuristic<String> imple
 		initHeuristics(stringSpec, validValues);
 	}
 
-	public RepeatStringOperator(List<String> validValues, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(seed);
+	public RepeatStringOperator(List<String> validValues, StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(seed, owners);
+		this.owners.add(this);
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");
 		}
@@ -54,7 +56,7 @@ public class RepeatStringOperator extends ComposedFuzzingHeuristic<String> imple
 			stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
 		for (String validValue : validValues) {
-			SimpleStringRepetitionOperator stringRepetitionOperator = new SimpleStringRepetitionOperator(validValue, stringSpec, seed, owner);
+			SimpleStringRepetitionOperator stringRepetitionOperator = new SimpleStringRepetitionOperator(validValue, stringSpec, seed, owners);
 			heuristics.add(stringRepetitionOperator);
 		}
 	}

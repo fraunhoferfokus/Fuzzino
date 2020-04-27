@@ -16,6 +16,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -36,7 +37,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	/**
 	 * The owner of the heuristic. This value is used as generator or operator for {@link FuzzedValue}.
 	 */
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	/**
 	 * The fuzzing heuristics incorporated by this one.
 	 */
@@ -66,7 +67,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	 * @param seed The seed that is used by random-based fuzzing heuristics.
 	 */
 	protected ComposedFuzzingHeuristic(long seed) {
-		//FIXME: If the user specifies 0 he will be surprised...
+		// FIXME: If the user specifies 0 he will be surprised. 0 is used to indicate value not present but can also be the actual value
 		if (seed != 0) {
 			this.seed = seed;
 		} else {
@@ -74,7 +75,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 			this.seed = random.nextLong();
 		}
 		this.random = new Random(this.seed);
-		owner = this;
+		this.owners = new LinkedList<FuzzingHeuristic>();
 		
 		lastIndex = Integer.MAX_VALUE;
 		lastComposedIndex = null;
@@ -82,18 +83,15 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	
 	/**
 	 * @param seed The seed that is used by random-based fuzzing heuristics.
-	 * @param owner The fuzzing heuristic that uses this fuzzing operator for its own purpose.
+	 * @param owners The fuzzing heuristic that uses this fuzzing operator for its own purpose.
 	 *              fuzzed Value will return {@code owner} instead of {@code this} when calling
 	 *              {@link FuzzedValue#getHeuristic()}.
 	 */
-	protected ComposedFuzzingHeuristic(long seed, ComputableFuzzingHeuristic<?> owner) {
+	protected ComposedFuzzingHeuristic(long seed, List<FuzzingHeuristic> owners) {
 		this.seed = seed;
 		random = new Random(seed);
-		if (owner == null) {
-			owner = this;
-		} else {
-			this.owner = owner;
-		}
+		
+		this.owners = new LinkedList<FuzzingHeuristic>(owners);
 	}
 	
 	@Override
@@ -263,7 +261,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	public String toString() {
 		return "[ComposedFuzzingHeuristic name:" + getName() + 
 			   " heuristics:" + (heuristics == null ? "0" : heuristics.size()) +
-			   " owner: " + owner +
+			   " owner: " + owners +
 			   " seed:" + seed + "]";
 	}
 	

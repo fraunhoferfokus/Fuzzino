@@ -15,6 +15,8 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
@@ -45,7 +47,7 @@ public class AscendingIntegerAsStringListTest extends FuzzinoTest {
 				new AscendingIntegerAsStringList.Builder(START_INT, SIZE).stepSize(STEP_SIZE);
 		
 		AscendingIntegerAsStringList heuristic = 
-				new AscendingIntegerAsStringList(STRING_SPEC, OWNER, SEED, builder);
+				new AscendingIntegerAsStringList(STRING_SPEC, Arrays.asList(OWNER), SEED, builder);
 		
 		int expectedSize = 97;
 		int actualSize = heuristic.size();

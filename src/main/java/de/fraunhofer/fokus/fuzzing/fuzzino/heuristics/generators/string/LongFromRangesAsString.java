@@ -13,9 +13,12 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.LongFromRanges;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -32,7 +35,7 @@ public class LongFromRangesAsString extends ComputableListImpl<FuzzedValue<Strin
 
 	private static final long serialVersionUID = -5335433153804940901L;
 	protected StringSpecification stringSpec;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owner;
 	protected long seed;
 	private LongFromRanges longFromRanges;
 	
@@ -54,22 +57,22 @@ public class LongFromRangesAsString extends ComputableListImpl<FuzzedValue<Strin
 		else {
 			this.stringSpec = stringSpec;
 		}
-
-		owner = this;
+		owner = new LinkedList<FuzzingHeuristic>();
+		owner.add(this);
 		this.seed = seed;
 		
 		initHeuristics(builder);
 	}
 
-	public LongFromRangesAsString(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, LongFromRangesBuilder builder) {
+	public LongFromRangesAsString(StringSpecification stringSpec, List<FuzzingHeuristic> owners, long seed, LongFromRangesBuilder builder) {
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
 		else {
 			this.stringSpec = stringSpec;
 		}
-
-		this.owner = owner;
+		this.owner = new LinkedList<FuzzingHeuristic>(owners);
+		this.owner.add(this);
 		this.seed = seed;
 		
 		initHeuristics(builder);

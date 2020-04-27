@@ -13,6 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.ConcreteValuesGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -24,14 +27,18 @@ public class SimpleComposedFuzzingHeuristic extends ComposedFuzzingHeuristic<Str
 	private static final long NO_SEED = 4711;
 	private static final StringSpecification STRING_SPEC = RequestFactory.INSTANCE.createStringSpecification();
 	private static final SmallGenerator OWNER = new SmallGenerator(STRING_SPEC, NO_SEED);
+	private static final List<FuzzingHeuristic> OWNERS = new LinkedList<FuzzingHeuristic>();
+	{
+		OWNERS.add(OWNER);
+	}
 	
 	public SimpleComposedFuzzingHeuristic() {
 		super(NO_SEED);
-		ConcreteValuesGenerator a = new ConcreteValuesGenerator(STRING_SPEC, NO_SEED, OWNER, "1A", "4A", "7A");
+		ConcreteValuesGenerator a = new ConcreteValuesGenerator(STRING_SPEC, NO_SEED, OWNERS, "1A", "4A", "7A");
 
-		ConcreteValuesGenerator b = new ConcreteValuesGenerator(STRING_SPEC, NO_SEED, OWNER, "2B", "5B");
+		ConcreteValuesGenerator b = new ConcreteValuesGenerator(STRING_SPEC, NO_SEED, OWNERS, "2B", "5B");
 
-		ConcreteValuesGenerator c = new ConcreteValuesGenerator(STRING_SPEC, NO_SEED, OWNER, "3C", "6C", "8C", "9C", "10C");
+		ConcreteValuesGenerator c = new ConcreteValuesGenerator(STRING_SPEC, NO_SEED, OWNERS, "3C", "6C", "8C", "9C", "10C");
 		
 		heuristics.add(a);
 		heuristics.add(b);

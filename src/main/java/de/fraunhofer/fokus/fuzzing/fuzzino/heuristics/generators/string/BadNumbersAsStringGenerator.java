@@ -13,9 +13,12 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.IntegerGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.BoundaryNumbersGenerator;
@@ -32,7 +35,7 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 	private static final long serialVersionUID = 5566745227758128426L;
 	protected StringSpecification stringSpec;
 	protected long seed;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	protected BoundaryNumbersGenerator boundaryNumbersGenerator;
 
 	public BadNumbersAsStringGenerator(StringSpecification stringSpec, long seed) {
@@ -44,11 +47,12 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 		}
 
 		this.seed = seed;
-		owner = this;
+		this.owners = new LinkedList<FuzzingHeuristic>();
+		this.owners.add(this);
 		initHeuristic();
 	}
 
-	public BadNumbersAsStringGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
+	public BadNumbersAsStringGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -57,7 +61,8 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 		}
 
 		this.seed = seed;
-		this.owner = owner;
+		this.owners = new LinkedList<>(owners);
+		this.owners.add(this);
 		initHeuristic();
 	}
 
@@ -86,7 +91,7 @@ public class BadNumbersAsStringGenerator extends ComputableListImpl<FuzzedValue<
 	@Override
 	public FuzzedValue<String> computeElement(int index) {
 		String fuzzedValueItself = boundaryNumbersGenerator.get(index).getValue().toString();
-		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owner);
+		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owners);
 
 		return fuzzedValue;
 	}

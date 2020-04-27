@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.Delimiters;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
@@ -30,10 +30,12 @@ public class DelimitersGenerator extends SimpleStringGenerator {
 	
 	public DelimitersGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 	}
 
-	public DelimitersGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(stringSpec, seed, owner);
+	public DelimitersGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 	}
 
 	@Override

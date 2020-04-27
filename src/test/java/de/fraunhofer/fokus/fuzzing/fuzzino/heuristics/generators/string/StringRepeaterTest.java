@@ -15,6 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -40,7 +41,7 @@ public class StringRepeaterTest extends FuzzinoTest {
 	
 	@Before
 	public void init() {
-		customStringRepeater = new StringRepeater(STRING_SPEC, OWNER, SEED, new StringRepeater.Builder().string("ABC").stepSize(3).size(4).offset(1));
+		customStringRepeater = new StringRepeater(STRING_SPEC, Arrays.asList(OWNER), SEED, new StringRepeater.Builder().string("ABC").stepSize(3).size(4).offset(1));
 	}
 
 	@Test

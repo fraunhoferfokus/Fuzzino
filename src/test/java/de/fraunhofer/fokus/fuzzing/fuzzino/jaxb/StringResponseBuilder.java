@@ -108,8 +108,8 @@ public class StringResponseBuilder {
 
 	private static List<FuzzedValue<String>> initFuzzedValues(FuzzingHeuristic heuristic) {
 		return Arrays.asList(
-				new FuzzedValue<String>("fuzzed value 1", heuristic),
-				new FuzzedValue<String>("fuzzed value 2", heuristic)
+				new FuzzedValue<String>("fuzzed value 1", Arrays.asList(heuristic)),
+				new FuzzedValue<String>("fuzzed value 2", Arrays.asList(heuristic))
 			);
 	}
 

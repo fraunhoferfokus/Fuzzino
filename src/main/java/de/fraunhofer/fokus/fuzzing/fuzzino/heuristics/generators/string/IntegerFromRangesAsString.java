@@ -13,9 +13,12 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.IntegerFromRanges;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -32,7 +35,7 @@ public class IntegerFromRangesAsString extends ComputableListImpl<FuzzedValue<St
 	
 	private static final long serialVersionUID = 1709289383888439893L;
 	protected StringSpecification stringSpec;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	protected long seed;
 	private IntegerFromRanges intFromRanges;
 	
@@ -54,13 +57,13 @@ public class IntegerFromRangesAsString extends ComputableListImpl<FuzzedValue<St
 		else {
 			this.stringSpec = stringSpec;
 		}
-
-		owner = this;
+		owners = new LinkedList<FuzzingHeuristic>();
+		owners.add(this);
 		this.seed = seed;
 		initHeuristics(builder);
 	}
 
-	public IntegerFromRangesAsString(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, IntegerFromRangesBuilder builder) {
+	public IntegerFromRangesAsString(StringSpecification stringSpec, List<FuzzingHeuristic> owners, long seed, IntegerFromRangesBuilder builder) {
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -68,19 +71,20 @@ public class IntegerFromRangesAsString extends ComputableListImpl<FuzzedValue<St
 			this.stringSpec = stringSpec;
 		}
 
-		this.owner = owner;
+		this.owners = new LinkedList<FuzzingHeuristic>(owners);
+		this.owners.add(this);
 		this.seed = seed;
 		initHeuristics(builder);
 	}
 	
 	private void initHeuristics(IntegerFromRangesBuilder builder) {
-		intFromRanges = new IntegerFromRanges(stringSpec.createNegativeNumberSpec(), owner, seed, builder);
+		intFromRanges = new IntegerFromRanges(stringSpec.createNegativeNumberSpec(), owners, seed, builder);
 	}
 
 	@Override
 	public FuzzedValue<String> computeElement(int index) {
 		String fuzzedValueItself = intFromRanges.get(index).getValue().toString();
-		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owner);
+		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(fuzzedValueItself, owners);
 		return fuzzedValue;
 	}
 

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
@@ -28,8 +28,9 @@ public class ConcreteValuesGenerator extends SimpleStringGenerator {
 	protected final List<String> fuzzValues = new ArrayList<>();
 	protected final List<Integer> fuzzValueLengths = new ArrayList<>();
 	
-	public ConcreteValuesGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner, String ...values) {
-		super(stringSpec, seed, owner);
+	public ConcreteValuesGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners, String ...values) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		addAll(StringUtil.asList(values));
 	}
 

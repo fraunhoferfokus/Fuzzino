@@ -15,7 +15,7 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.List;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.data.SQLInjections;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
@@ -31,10 +31,12 @@ public class SQLInjectionsGenerator extends SimpleStringGenerator {
 
 	public SQLInjectionsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 	}
 
-	public SQLInjectionsGenerator(long seed, StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner) {
-		super(stringSpec, seed, owner);
+	public SQLInjectionsGenerator(long seed, StringSpecification stringSpec, List<FuzzingHeuristic> owners) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 	}
 
 	@Override

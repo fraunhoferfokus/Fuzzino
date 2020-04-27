@@ -13,8 +13,10 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string;
 
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
@@ -28,6 +30,7 @@ public class SimpleStringRepetitionOperator extends SimpleFuzzingOperator<String
 	
 	public SimpleStringRepetitionOperator(String validValue, StringSpecification stringSpec, long seed) {
 		super(validValue, seed);
+		this.owners.add(this);
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -36,8 +39,9 @@ public class SimpleStringRepetitionOperator extends SimpleFuzzingOperator<String
 		}
 	}
 	
-	public SimpleStringRepetitionOperator(String validValue, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(validValue, seed, owner);
+	public SimpleStringRepetitionOperator(String validValue, StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(validValue, seed, owners);
+		this.owners.add(this);
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -74,7 +78,7 @@ public class SimpleStringRepetitionOperator extends SimpleFuzzingOperator<String
 			break;
 		}
 		
-		return new FuzzedValue<>(fuzzedValueItself, inputValue, owner);
+		return new FuzzedValue<>(fuzzedValueItself, inputValue, owners);
 	}
 	
 	@Override

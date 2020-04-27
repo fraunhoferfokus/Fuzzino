@@ -14,10 +14,12 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 /**
@@ -38,8 +40,9 @@ public class Combinator extends ComposedStringGenerator {
 	 * @param theLists all the lists whose elements shall be combined.
 	 */
 	@SafeVarargs
-	public Combinator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner, ComputableFuzzingHeuristic<String> ...theLists) {
-		super(stringSpec, seed, owner);
+	public Combinator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners, ComputableFuzzingHeuristic<String> ...theLists) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		heuristics = new ArrayList<>(theLists.length);
 		for (ComputableFuzzingHeuristic<String> list : theLists) {
 			heuristics.add(list);
@@ -60,7 +63,7 @@ public class Combinator extends ComposedStringGenerator {
 			result += currentList.get(indexForCurrentList).getValue();
 		}
 		
-		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(result, owner);
+		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(result, owners);
 		
 		return fuzzedValue;
 	}
@@ -111,7 +114,7 @@ public class Combinator extends ComposedStringGenerator {
 
 	@Override
 	public String getName() {
-		return owner.getName();
+		return owners.toString();
 	}
 
 }

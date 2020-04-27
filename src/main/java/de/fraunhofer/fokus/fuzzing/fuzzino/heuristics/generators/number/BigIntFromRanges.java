@@ -14,10 +14,11 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -46,8 +47,9 @@ public class BigIntFromRanges extends ComposedFuzzingHeuristic<BigInteger> imple
 		}
 	}
 	
-	public BigIntFromRanges(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, BigIntFromRangesBuilder builder) {
-		super(seed, owner);
+	public BigIntFromRanges(IntegerSpecification numberSpec, List<FuzzingHeuristic> owners, long seed, BigIntFromRangesBuilder builder) {
+		super(seed, owners);
+		this.owners.add(this);
 		if (numberSpec == null) {
 			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
@@ -56,7 +58,7 @@ public class BigIntFromRanges extends ComposedFuzzingHeuristic<BigInteger> imple
 		}
 		for (BigIntRange range : builder.allRanges()) {
 			try {
-				AscendingBigIntList intList = new AscendingBigIntList(numberSpec, owner, seed, new AscendingBigIntList.Builder(range.start(), range.size()));
+				AscendingBigIntList intList = new AscendingBigIntList(numberSpec, owners, seed, new AscendingBigIntList.Builder(range.start(), range.size()));
 				heuristics.add(intList);
 			} catch (NoMatchingValuesException e) {
 				// don't add the heuristic

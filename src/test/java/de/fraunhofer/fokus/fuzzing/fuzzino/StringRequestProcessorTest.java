@@ -135,7 +135,7 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 		
 		checkResponseForNumOperatorParts(stringResponse, 1);
 
-		OperatorSpecificFuzzedValues<String> operatorPart = getOperatorPartFromNumberResponseByName(stringResponse, "StringCase", "ABC");
+		OperatorSpecificFuzzedValues<String> operatorPart = getOperatorPartFromNumberResponseByName(stringResponse, "SimpleStringCaseOperator", "ABC");
 		checkOperatorPartForNumFuzzedValues(operatorPart, 3);
 		
 		checkResponseForWarningsPart(stringResponse, false);
@@ -159,7 +159,7 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 		
 		checkResponseForNumOperatorParts(stringResponse, 1);
 
-		OperatorSpecificFuzzedValues<String> operatorPart = getOperatorPartFromNumberResponseByName(stringResponse, "StringCase", "ABC");
+		OperatorSpecificFuzzedValues<String> operatorPart = getOperatorPartFromNumberResponseByName(stringResponse, "SimpleStringCaseOperator", "ABC");
 		checkOperatorPartForNumFuzzedValues(operatorPart, 3);
 		
 		checkResponseForWarningsPart(stringResponse, false);
@@ -251,7 +251,7 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 	@Test
 	public void testTwoRunsOfSameStringRequestWithSeed() throws JAXBException, SAXException {
 		String generatorName = "SmallGenerator";
-		String operatorName = "StringCase";
+		String operatorName = "SimpleStringCaseOperator";
 		String validValue = "ABCDEFGHIJKLMNOPQRST";
 		long expectedSeed = 500000;
 		int expectedNumOfFuzzedValues = 3;
@@ -347,10 +347,13 @@ public class StringRequestProcessorTest extends FuzzinoTest {
 		checkResponseDocForNumStringResponses(responseDoc, 1);
 		StringResponse stringResponse = responseDoc.getStringResponses().get(0);
 
-		checkResponseForNumGeneratorParts(stringResponse, 1);
+		checkResponseForNumGeneratorParts(stringResponse, 2);
 		
 		GeneratorSpecificFuzzedValues<String> generatorPart = getGeneratorPartFromResponseByName(stringResponse, "LongStrings");
-		checkGeneratorPartForNumFuzzedValues(generatorPart, 50);
+		checkGeneratorPartForNumFuzzedValues(generatorPart, 37);
+
+		GeneratorSpecificFuzzedValues<String> generatorPartSulley = getGeneratorPartFromResponseByName(stringResponse, "LongSulleyStrings");
+		checkGeneratorPartForNumFuzzedValues(generatorPartSulley, 13);
 		
 		checkResponseForNumOperatorParts(stringResponse, 0);
 		checkResponseForWarningsPart(stringResponse, false);

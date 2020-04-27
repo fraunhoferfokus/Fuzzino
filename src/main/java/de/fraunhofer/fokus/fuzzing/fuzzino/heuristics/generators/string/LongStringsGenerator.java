@@ -14,8 +14,10 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
@@ -28,11 +30,13 @@ public class LongStringsGenerator extends ComposedStringGenerator {
 
 	public LongStringsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
-	public LongStringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
-		super(stringSpec, seed, owner);
+	public LongStringsGenerator(List<FuzzingHeuristic> owners, long seed, StringSpecification stringSpec) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
@@ -42,15 +46,15 @@ public class LongStringsGenerator extends ComposedStringGenerator {
 	}
 	
 	private void initHeuristics() {
-		StringRepeater repeaterOf10_A_ = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder().string(StringUtil.repeat("A", 10))
+		StringRepeater repeaterOf10_A_ = new StringRepeater(stringSpec, owners, seed, new StringRepeater.Builder().string(StringUtil.repeat("A", 10))
 				                                                                        .size(200)
 				                                                                        .startIndex(1));
 
-		StringRepeater repeaterOf127_A_ = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder().string(StringUtil.repeat("A", 127))
+		StringRepeater repeaterOf127_A_ = new StringRepeater(stringSpec, owners, seed, new StringRepeater.Builder().string(StringUtil.repeat("A", 127))
                                                                                          .size(100)
                                                                                          .startIndex(1));
 
-		StringRepeater repeaterOf1024_A_ = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder().string(StringUtil.repeat("A", 1024))
+		StringRepeater repeaterOf1024_A_ = new StringRepeater(stringSpec, owners, seed, new StringRepeater.Builder().string(StringUtil.repeat("A", 1024))
                                                                                           .size(10)
                                                                                           .startIndex(1));
 		
@@ -58,7 +62,7 @@ public class LongStringsGenerator extends ComposedStringGenerator {
 		heuristics.add(repeaterOf127_A_);
 		heuristics.add(repeaterOf1024_A_);
 		
-		heuristics.add(new LongSulleyStringsGenerator(owner, seed, stringSpec));
+		heuristics.add(new LongSulleyStringsGenerator(owners, seed, stringSpec));
 	}
 
 	@Override

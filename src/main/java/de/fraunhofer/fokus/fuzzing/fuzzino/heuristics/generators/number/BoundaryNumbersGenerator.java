@@ -13,14 +13,13 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.NumberType;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -33,11 +32,13 @@ public class BoundaryNumbersGenerator extends SimpleIntegerGenerator {
 	
 	public BoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed) {
 		super(numberSpec, seed);
+		this.owners.add(this);
 		initFuzzValues();
 	}
 
-	public BoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
+	public BoundaryNumbersGenerator(IntegerSpecification numberSpec, long seed, List<FuzzingHeuristic> owner) {
 		super(numberSpec, seed, owner);
+		this.owners.add(this);
 		initFuzzValues();
 	}
 	
@@ -47,7 +48,7 @@ public class BoundaryNumbersGenerator extends SimpleIntegerGenerator {
 		// Add all fuzzValues to a HashSet to automatically filter duplicates
 		Set<Long> filteredFuzzValues = new LinkedHashSet<>();
 		
-		if (matchesSpecification(new FuzzedValue<>(0L, owner))) {
+		if (matchesSpecification(new FuzzedValue<>(0L, owners))) {
 			filteredFuzzValues.add(0L);
 		}
 		
@@ -56,13 +57,13 @@ public class BoundaryNumbersGenerator extends SimpleIntegerGenerator {
 		long minValue = numberSpec.getMin();
 		for (Integer divisor : divisors) {
 			long maxValueDivided = maxValue / divisor;
-			FuzzedValue<Long> fuzzedValue = new FuzzedValue<>(maxValueDivided, owner);
+			FuzzedValue<Long> fuzzedValue = new FuzzedValue<>(maxValueDivided, owners);
 			if (matchesSpecification(fuzzedValue)) {
 				filteredFuzzValues.add(maxValueDivided);
 			}
 			
 			long minValueDivided = minValue / divisor;
-			fuzzedValue = new FuzzedValue<>(minValueDivided, owner);
+			fuzzedValue = new FuzzedValue<>(minValueDivided, owners);
 			if (matchesSpecification(fuzzedValue)) {
 				filteredFuzzValues.add(minValueDivided);
 			}

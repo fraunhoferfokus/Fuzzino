@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -28,51 +30,53 @@ public class BadFilenamesGenerator extends ComposedStringGenerator {
 
 	public BadFilenamesGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		initHeuristics();
 	}
 
-	public BadFilenamesGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
-		super(stringSpec, seed, owner);
+	public BadFilenamesGenerator(List<FuzzingHeuristic> owners, long seed, StringSpecification stringSpec) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		initHeuristics();
 	}
 
 	private void initHeuristics() {
-		AllBadStringsGenerator badStrings = new AllBadStringsGenerator(owner, seed, stringSpec);
-		ConcreteValuesGenerator dotGenerator = new ConcreteValuesGenerator(stringSpec, seed, owner, ".");
+		AllBadStringsGenerator badStrings = new AllBadStringsGenerator(owners, seed, stringSpec);
+		ConcreteValuesGenerator dotGenerator = new ConcreteValuesGenerator(stringSpec, seed, owners, ".");
 		heuristics.add(badStrings);
 
-		Combinator badDotBad = new Combinator(stringSpec, seed, owner, badStrings, dotGenerator, badStrings);
+		Combinator badDotBad = new Combinator(stringSpec, seed, owners, badStrings, dotGenerator, badStrings);
 		heuristics.add(badDotBad);
 
-		Combinator dotBad = new Combinator(stringSpec, seed, owner, dotGenerator, badStrings);
+		Combinator dotBad = new Combinator(stringSpec, seed, owners, dotGenerator, badStrings);
 		heuristics.add(dotBad);
 
-		Combinator badDot = new Combinator(stringSpec, seed, owner, badStrings, dotGenerator);
+		Combinator badDot = new Combinator(stringSpec, seed, owners, badStrings, dotGenerator);
 		heuristics.add(badDot);
 
-		StringRepeater strRepeaterDot = new StringRepeater(stringSpec, owner, seed,
+		StringRepeater strRepeaterDot = new StringRepeater(stringSpec, owners, seed,
 				new StringRepeater.Builder().string(".").startIndex(1));
 		heuristics.add(strRepeaterDot);
 
-		StringRepeater strRepeater_a_dot_a = new StringRepeater(stringSpec, owner, seed,
+		StringRepeater strRepeater_a_dot_a = new StringRepeater(stringSpec, owners, seed,
 				new StringRepeater.Builder().string("a.a").startIndex(1));
 		heuristics.add(strRepeater_a_dot_a);
 
-		StringRepeater strRepeaterAdot_A_ = new StringRepeater(stringSpec, owner, seed,
+		StringRepeater strRepeaterAdot_A_ = new StringRepeater(stringSpec, owners, seed,
 				new StringRepeater.Builder().prefix("A.").startIndex(1));
 		heuristics.add(strRepeaterAdot_A_);
 
-		StringRepeater strRepeater_A_dotA = new StringRepeater(stringSpec, owner, seed,
+		StringRepeater strRepeater_A_dotA = new StringRepeater(stringSpec, owners, seed,
 				new StringRepeater.Builder().suffix(".A").startIndex(1));
 		heuristics.add(strRepeater_A_dotA);
 
-		StringRepeater strRepeaterAAAA_dotDoc_ = new StringRepeater(stringSpec, owner, seed,
+		StringRepeater strRepeaterAAAA_dotDoc_ = new StringRepeater(stringSpec, owners, seed,
 				new StringRepeater.Builder().string(".doc").prefix("AAAA").startIndex(1));
 		heuristics.add(strRepeaterAAAA_dotDoc_);
 
-		StringRepeater strRepeater_AAAAAAAAAA_ = new StringRepeater(stringSpec, owner, seed,
+		StringRepeater strRepeater_AAAAAAAAAA_ = new StringRepeater(stringSpec, owners, seed,
 				new StringRepeater.Builder().stepSize(10).startIndex(1).size(100));
-		Combinator aDotA = new Combinator(stringSpec, seed, owner, strRepeater_AAAAAAAAAA_, dotGenerator,
+		Combinator aDotA = new Combinator(stringSpec, seed, owners, strRepeater_AAAAAAAAAA_, dotGenerator,
 				strRepeater_AAAAAAAAAA_);
 		heuristics.add(aDotA);
 	}

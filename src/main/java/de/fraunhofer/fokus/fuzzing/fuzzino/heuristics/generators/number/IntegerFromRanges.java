@@ -13,9 +13,11 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.NumberGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -44,8 +46,9 @@ public class IntegerFromRanges extends ComposedFuzzingHeuristic<Integer> impleme
 		}
 	}
 	
-	public IntegerFromRanges(IntegerSpecification numberSpec, ComputableFuzzingHeuristic<?> owner, long seed, IntegerFromRangesBuilder builder) {
-		super(seed, owner);
+	public IntegerFromRanges(IntegerSpecification numberSpec, List<FuzzingHeuristic> owners, long seed, IntegerFromRangesBuilder builder) {
+		super(seed, owners);
+		this.owners.add(this);
 		if (numberSpec == null) {
 			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
@@ -55,7 +58,7 @@ public class IntegerFromRanges extends ComposedFuzzingHeuristic<Integer> impleme
 		for (Range range : builder.allRanges()) {
 			try {
 				AscendingIntegerList.Builder localBuilder = new AscendingIntegerList.Builder(range.start(), range.size());			
-				AscendingIntegerList intList = new AscendingIntegerList(numberSpec, owner, seed, localBuilder);
+				AscendingIntegerList intList = new AscendingIntegerList(numberSpec, owners, seed, localBuilder);
 				heuristics.add(intList);
 			} catch (NoMatchingValuesException e) {
 				// don't add heuristic if it has no matching values

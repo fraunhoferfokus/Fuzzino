@@ -14,9 +14,10 @@
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.BigIntegerGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.SimpleFuzzingGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
@@ -29,7 +30,7 @@ public abstract class SimpleBigIntegerGenerator extends SimpleFuzzingGenerator<B
 
 	protected SimpleBigIntegerGenerator(IntegerSpecification numberSpec, long seed) {
 		super(seed);
-		
+		this.owners.add(this);
 		if (numberSpec == null) {
 			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}
@@ -38,8 +39,9 @@ public abstract class SimpleBigIntegerGenerator extends SimpleFuzzingGenerator<B
 		}
 	}
 
-	protected SimpleBigIntegerGenerator(IntegerSpecification numberSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(seed, owner);
+	protected SimpleBigIntegerGenerator(IntegerSpecification numberSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(seed, owners);
+		this.owners.add(this);
 		if (numberSpec == null) {
 			this.numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		}

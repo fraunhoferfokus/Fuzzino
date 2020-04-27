@@ -93,8 +93,8 @@ public class NumberResponseBuilder {
 
 	private static List<FuzzedValue<Integer>> initFuzzedValues(FuzzingHeuristic heuristic) {
 		return Arrays.asList(
-				new FuzzedValue<Integer>(13, heuristic),
-				new FuzzedValue<Integer>(24, heuristic)
+				new FuzzedValue<Integer>(13, Arrays.asList(heuristic)),
+				new FuzzedValue<Integer>(24, Arrays.asList(heuristic))
 			);
 	}
 

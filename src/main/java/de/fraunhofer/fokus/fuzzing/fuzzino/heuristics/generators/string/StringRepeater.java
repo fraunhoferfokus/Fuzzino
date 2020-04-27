@@ -13,9 +13,12 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -32,7 +35,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 public class StringRepeater extends ComputableListImpl<FuzzedValue<String>> implements StringGenerator {
 	
 	private static final long serialVersionUID = -6632206431310168223L;
-	protected ComputableFuzzingHeuristic<?> owner;
+	protected List<FuzzingHeuristic> owners;
 	protected long seed;
 	protected StringSpecification stringSpec;
 	
@@ -166,7 +169,7 @@ public class StringRepeater extends ComputableListImpl<FuzzedValue<String>> impl
 	 * 
 	 * @param builder the builder holding the parameters for the StringRepeater to be constructed.
 	 */
-	public StringRepeater(StringSpecification stringSpec, ComputableFuzzingHeuristic<?> owner, long seed, Builder builder) {
+	public StringRepeater(StringSpecification stringSpec, List<FuzzingHeuristic> owners, long seed, Builder builder) {
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -174,7 +177,7 @@ public class StringRepeater extends ComputableListImpl<FuzzedValue<String>> impl
 			this.stringSpec = stringSpec;
 		}
 
-		this.owner = owner;
+		this.owners = new LinkedList<FuzzingHeuristic>(owners);
 		this.seed = seed;
 		str = builder.str;
 		startIndex = builder.startIndex;
@@ -201,7 +204,7 @@ public class StringRepeater extends ComputableListImpl<FuzzedValue<String>> impl
 		String nextElement = StringUtil.repeat(str, offset + actualIndex * stepSize);
 		nextElement = prefix + nextElement + suffix;
 		
-		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(nextElement, owner);
+		FuzzedValue<String> fuzzedValue = new FuzzedValue<>(nextElement, owners);
 		
 		return fuzzedValue;
 	}

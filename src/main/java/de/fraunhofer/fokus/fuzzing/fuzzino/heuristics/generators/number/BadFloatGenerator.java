@@ -30,8 +30,9 @@ public class BadFloatGenerator extends SimpleFuzzingGenerator<Double>{
 	private static final long serialVersionUID = 1L;
 	private NumberSpecification<Double> floatSpec;
 
-	public BadFloatGenerator(NumberSpecification<Double> floatSpec,long seed) {
+	public BadFloatGenerator(NumberSpecification<Double> floatSpec, long seed) {
 		super(seed);
+		this.owners.add(this);
 		if (floatSpec == null) {
 			this.floatSpec = RequestFactory.INSTANCE.createFloatSpecification();
 		}

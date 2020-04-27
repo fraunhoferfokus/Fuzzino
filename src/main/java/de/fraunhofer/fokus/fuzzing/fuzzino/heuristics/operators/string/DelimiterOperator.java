@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -34,14 +34,16 @@ public class DelimiterOperator extends ComposedFuzzingHeuristic<String> implemen
 	
 	public DelimiterOperator(List<String> validValues, StringSpecification stringSpec, long seed) {
 		super(seed);
+		this.owners.add(this);
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");
 		}
 		initHeuristics(stringSpec, validValues);
 	}
 
-	public DelimiterOperator(List<String> validValues, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(seed);
+	public DelimiterOperator(List<String> validValues, StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(seed, owners);
+		this.owners.add(this);
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");
 		}
@@ -54,7 +56,7 @@ public class DelimiterOperator extends ComposedFuzzingHeuristic<String> implemen
 		}
 		this.validValues.addAll(validValues);
 		for (String validValue : validValues) {
-			SimpleDelimiterOperator stringRepetitionOperator = new SimpleDelimiterOperator(validValue, stringSpec, seed, owner);
+			SimpleDelimiterOperator stringRepetitionOperator = new SimpleDelimiterOperator(validValue, stringSpec, seed, owners);
 			heuristics.add(stringRepetitionOperator);
 		}
 	}

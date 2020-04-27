@@ -60,6 +60,7 @@ public class Delimiters extends StringContainer {
 		add(",");
 		add("\\x0D");
 		add("\\x0A");
+		add("\"");
 		add(StringUtil.repeat("\\x0D\\x0A", 64));
 		add(StringUtil.repeat("\\x0D\\x0A", 128));
 		add(StringUtil.repeat("\\x0D\\x0A", 512));

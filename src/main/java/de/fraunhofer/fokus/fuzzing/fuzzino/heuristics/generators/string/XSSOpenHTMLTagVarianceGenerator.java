@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
 
@@ -23,17 +25,19 @@ public class XSSOpenHTMLTagVarianceGenerator extends ComposedStringGenerator {
 
 	public XSSOpenHTMLTagVarianceGenerator(StringSpecification stringSpec,long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
-	public XSSOpenHTMLTagVarianceGenerator(StringSpecification stringSpec,long seed,ComputableFuzzingHeuristic<?> owner) {
-		super(stringSpec, seed, owner);
+	public XSSOpenHTMLTagVarianceGenerator(StringSpecification stringSpec,long seed, List<FuzzingHeuristic> owners) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
 	private void initHeuristics() {
 		//TODO: maybe make the hardcoded javascript function call (alert) dynamic?
-		ConcreteValuesGenerator openHTMLTagsGen = new ConcreteValuesGenerator(stringSpec, seed, owner, 
+		ConcreteValuesGenerator openHTMLTagsGen = new ConcreteValuesGenerator(stringSpec, seed, owners, 
 				"<",
 				"%3C",
 				"&lt",
@@ -105,8 +109,8 @@ public class XSSOpenHTMLTagVarianceGenerator extends ComposedStringGenerator {
 				"\\u003c",
 				"\\u003C"
 		);
-		ConcreteValuesGenerator restCommand = new ConcreteValuesGenerator(stringSpec, seed, owner, "IMG SRC=\"javascript:alert('XSS');\">");
-		heuristics.add(new Combinator(stringSpec,seed,owner,openHTMLTagsGen,restCommand));
+		ConcreteValuesGenerator restCommand = new ConcreteValuesGenerator(stringSpec, seed, owners, "IMG SRC=\"javascript:alert('XSS');\">");
+		heuristics.add(new Combinator(stringSpec,seed,owners,openHTMLTagsGen,restCommand));
 		
 	}
 

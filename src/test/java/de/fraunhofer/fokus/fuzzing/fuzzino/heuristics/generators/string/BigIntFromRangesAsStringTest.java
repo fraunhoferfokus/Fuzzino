@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -45,7 +46,7 @@ public class BigIntFromRangesAsStringTest extends FuzzinoTest {
 	@Before
 	public void init() {
 		HEURISTIC = 
-				new BigIntFromRangesAsString(STRING_SPEC, OWNER, SEED, new BigIntFromRangesAsString.Builder(
+				new BigIntFromRangesAsString(STRING_SPEC, Arrays.asList(OWNER), SEED, new BigIntFromRangesAsString.Builder(
 						                                                           new BigInteger("-9223372036854775858"),
 				                                                                   new BigInteger("-9223372036854775759"))
 		                                                                 .addRange(new BigInteger("9223372036854775757"), 

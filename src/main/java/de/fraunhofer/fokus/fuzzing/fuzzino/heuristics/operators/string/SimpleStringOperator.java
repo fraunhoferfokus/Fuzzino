@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -25,6 +27,7 @@ public abstract class SimpleStringOperator extends SimpleFuzzingOperator<String>
 	
 	public SimpleStringOperator(String validValue, StringSpecification stringSpec, long seed) {
 		super(validValue, seed);
+		this.owners.add(this);
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
@@ -33,8 +36,9 @@ public abstract class SimpleStringOperator extends SimpleFuzzingOperator<String>
 		}
 	}
 	
-	public SimpleStringOperator(String validValue, StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(validValue, seed, owner);
+	public SimpleStringOperator(String validValue, StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(validValue, seed, owners);
+		this.owners.add(this);
 		if (stringSpec == null) {
 			this.stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}

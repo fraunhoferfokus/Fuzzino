@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGeneratorFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
@@ -27,29 +29,31 @@ public class BadTimeGenerator extends ComposedStringGenerator {
 
 	public BadTimeGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		initHeuristics();
 	}
 
-	public BadTimeGenerator(StringSpecification stringSpec, long seed, ComputableFuzzingHeuristic<?> owner) {
-		super(stringSpec, seed, owner);
+	public BadTimeGenerator(StringSpecification stringSpec, long seed, List<FuzzingHeuristic> owners) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
 	private void initHeuristics() {
-		ConcreteValuesGenerator str08 = new ConcreteValuesGenerator(stringSpec, seed, owner, "08");
+		ConcreteValuesGenerator str08 = new ConcreteValuesGenerator(stringSpec, seed, owners, "08");
 		BadStringsGenerator badString = StringGeneratorFactory.INSTANCE.createBadStringsGenerator(stringSpec, seed);
 		BadNumbersAsStringGenerator badNumbers = StringGeneratorFactory.INSTANCE.createBadNumbersAsStringGenerator(stringSpec, seed);
-		ConcreteValuesGenerator strColon01Colon01 = new ConcreteValuesGenerator(stringSpec, seed, owner, ":01:01");
-		ConcreteValuesGenerator strColon01 = new ConcreteValuesGenerator(stringSpec, seed, owner, ":01");
+		ConcreteValuesGenerator strColon01Colon01 = new ConcreteValuesGenerator(stringSpec, seed, owners, ":01:01");
+		ConcreteValuesGenerator strColon01 = new ConcreteValuesGenerator(stringSpec, seed, owners, ":01");
 		
 		Combinator str08BadStringBadNumbers08Colon01Colon01 = 
-				new Combinator(stringSpec, seed, owner, str08, badString, badNumbers, str08, strColon01Colon01);
+				new Combinator(stringSpec, seed, owners, str08, badString, badNumbers, str08, strColon01Colon01);
 		
 		Combinator str08BadStringBadNumbers08Colon01 = 
-				new Combinator(stringSpec, seed, owner, str08, badString, badNumbers, str08, strColon01);
+				new Combinator(stringSpec, seed, owners, str08, badString, badNumbers, str08, strColon01);
 		
 		Combinator str08BadStringBadNumbers08 = 
-				new Combinator(stringSpec, seed, owner, str08, badString, badNumbers, str08);
+				new Combinator(stringSpec, seed, owners, str08, badString, badNumbers, str08);
 	
 		heuristics.add(str08BadStringBadNumbers08Colon01Colon01);
 		heuristics.add(str08BadStringBadNumbers08Colon01);

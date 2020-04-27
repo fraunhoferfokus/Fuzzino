@@ -13,7 +13,9 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
-import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import java.util.List;
+
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringEncoding;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringType;
@@ -24,21 +26,23 @@ public class BadUnicodeUtf8StringsGenerator extends ComposedStringGenerator {
 
 	public BadUnicodeUtf8StringsGenerator(StringSpecification stringSpec, long seed) {
 		super(stringSpec, seed);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
-	public BadUnicodeUtf8StringsGenerator(ComputableFuzzingHeuristic<?> owner, long seed, StringSpecification stringSpec) {
-		super(stringSpec, seed, owner);
+	public BadUnicodeUtf8StringsGenerator(List<FuzzingHeuristic> owners, long seed, StringSpecification stringSpec) {
+		super(stringSpec, seed, owners);
+		this.owners.add(this);
 		initHeuristics();
 	}
 	
 	private void initHeuristics() {
-		StringRepeater stringRepeater = new StringRepeater(stringSpec, owner, seed, new StringRepeater.Builder().string("\\x00;ef\\x00;83\\x00;b0")
+		StringRepeater stringRepeater = new StringRepeater(stringSpec, owners, seed, new StringRepeater.Builder().string("\\x00;ef\\x00;83\\x00;b0")
 				                                                                       .offset(2)
 				                                                                       .stepSize(2)
 				                                                                       .size(512));
 		heuristics.add(stringRepeater);
-		heuristics.add(new SpecialBadUtf8StringsGenerator(owner, seed, stringSpec));		
+		heuristics.add(new SpecialBadUtf8StringsGenerator(owners, seed, stringSpec));		
 	}
 
 	@Override

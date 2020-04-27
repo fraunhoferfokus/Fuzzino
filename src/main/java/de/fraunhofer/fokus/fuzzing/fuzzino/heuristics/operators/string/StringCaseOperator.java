@@ -18,6 +18,7 @@ import java.util.List;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComposedFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.SimpleFuzzingOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.StringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
@@ -35,14 +36,16 @@ public class StringCaseOperator extends ComposedFuzzingHeuristic<String> impleme
 
 	public StringCaseOperator(List<String> validValues, StringSpecification stringSpec, long seed) {
 		super(seed);
+		this.owners.add(this);
 		if (validValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");
 		}
 		initHeuristics(stringSpec, validValues);
 	}
 
-	public StringCaseOperator(List<String> listOfValidValues, StringSpecification stringSpec, long seed , ComputableFuzzingHeuristic<?> owner) {
-		super(seed, owner);
+	public StringCaseOperator(List<String> listOfValidValues, StringSpecification stringSpec, long seed , List<FuzzingHeuristic> owners) {
+		super(seed, owners);
+		this.owners.add(this);
 		if (listOfValidValues == null) {
 			throw new IllegalArgumentException("validValues must not be null");
 		}
@@ -54,7 +57,7 @@ public class StringCaseOperator extends ComposedFuzzingHeuristic<String> impleme
 			stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		}
 		for (String validValue : validValues) {
-			SimpleStringCaseOperator stringCaseOperator = new SimpleStringCaseOperator(validValue, stringSpec, seed, owner);
+			SimpleStringCaseOperator stringCaseOperator = new SimpleStringCaseOperator(validValue, stringSpec, seed, owners);
 			heuristics.add(stringCaseOperator);
 		}
 	}

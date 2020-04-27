@@ -16,24 +16,30 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.NoMatchingValuesException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.number.AscendingBigIntList.Builder;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.IntegerSpecification;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 public class AscendingBigIntListTest extends FuzzinoTest {
 
+	private static final long SEED = 4711;
+	private static final StringSpecification STRING_SPEC= RequestFactory.INSTANCE.createStringSpecification();
+	private static final SmallGenerator OWNER = new SmallGenerator(STRING_SPEC, SEED);
+	
 	@Test
 	public void test_makeBuilderMatchingSpecification_TestCase_1() throws NoMatchingValuesException {
 		IntegerSpecification numberSpec = RequestFactory.INSTANCE.createNumberSpecification();
 		numberSpec.setMin(0L);
 		Builder builder = new Builder(BigInteger.valueOf(-100), 200).stepSize(1);
-		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, null, 0, builder);
+		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, Arrays.asList(OWNER), 0, builder);
 		
 		Builder matchingBuilder = ail.makeBuilderMatchingSpecification(builder);
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);
@@ -45,7 +51,7 @@ public class AscendingBigIntListTest extends FuzzinoTest {
 		numberSpec.setMin(10L);
 		numberSpec.setMax(999L);
 		Builder builder = new Builder(BigInteger.ONE, 100).stepSize(3);
-		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, null, 0, builder);
+		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, Arrays.asList(OWNER), 0, builder);
 		
 		Builder matchingBuilder = ail.makeBuilderMatchingSpecification(builder);
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);
@@ -56,7 +62,7 @@ public class AscendingBigIntListTest extends FuzzinoTest {
 		StringSpecification stringSpec = RequestFactory.INSTANCE.createStringSpecification();
 		IntegerSpecification numberSpec = stringSpec.createPositiveNumberSpec();
 		Builder builder = new Builder(new BigInteger("-9223372036854775858"), 100).stepSize(1);
-		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, null, 0, builder);
+		AscendingBigIntList ail = new AscendingBigIntList(numberSpec, Arrays.asList(OWNER), 0, builder);
 		
 		Builder matchingBuilder = ail.makeBuilderMatchingSpecification(builder);
 		testMatchingBuilderAgainstBuilder(matchingBuilder, builder, numberSpec);
