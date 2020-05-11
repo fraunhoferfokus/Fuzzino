@@ -32,6 +32,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadLongU
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BigIntFromRangesAsStringTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.CombinatorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.ConcreteValuesGeneratorTest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.ForeignDigitsGeneratorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.IntegerFromRangesTests;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.LongStringsGeneratorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.MatchesStringLength;
@@ -79,6 +80,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoderTest;
 	MatchesStringLength.class,
 	Popular4DigitPinsTest.class,
 	StringRepeaterTest.class,
+	ForeignDigitsGeneratorTest.class,
 	// Operators
 	StringOperatorFactoryTest.class,
 	// Operators Number

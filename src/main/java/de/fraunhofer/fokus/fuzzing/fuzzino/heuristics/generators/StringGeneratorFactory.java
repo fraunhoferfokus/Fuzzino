@@ -33,6 +33,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadTimeG
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadUnicodeUtf8StringsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.CommandInjectionsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.DelimitersGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.ForeignDigitsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.FormatStringsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.LongStringsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.Popular4DigitPinsGenerator;
@@ -70,6 +71,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
  * <li>{@link CommandInjectionsGenerator CommandInjections}</li>
  * <li>{@link DelimitersGenerator Delimiters}</li>
  * <li>{@link FormatStringsGenerator FormatStrings}</li>
+ * <li>{@link ForeignDigitsGenerator ForeignDigits}</li>
  * <li>{@link LongStringsGenerator LongStrings}</li>
  * <li>{@link Popular4DigitPinsGenerator Popular4DigitPins}</li>
  * <li>{@link SmallGenerator SmallGenerator}</li>
@@ -166,6 +168,9 @@ public class StringGeneratorFactory {
 		if (canonicalName.equals("FormatStrings".toUpperCase())) {
 			return createFormatStrings(stringSpec, seed);
 		} else
+		if (canonicalName.equals("ForeignDigits".toUpperCase())) {
+			return createForeignDigits(stringSpec, seed);
+		} else
 		if (canonicalName.equals("LongStrings".toUpperCase())) {
 			return createLongStrings(stringSpec, seed);
 		} else
@@ -214,6 +219,7 @@ public class StringGeneratorFactory {
 		allStringGenerators.add(createCommandInjections(stringSpec, seed));
 		allStringGenerators.add(createDelimitersGenerator(stringSpec, seed));
 		allStringGenerators.add(createFormatStrings(stringSpec, seed));
+		allStringGenerators.add(createForeignDigits(stringSpec, seed));
 		allStringGenerators.add(createLongStrings(stringSpec, seed));
 		allStringGenerators.add(createPopular4DigitPinsGenerator(stringSpec, seed));
 		allStringGenerators.add(createSqlInjections(stringSpec, seed));
@@ -396,6 +402,17 @@ public class StringGeneratorFactory {
 	 */
 	public FormatStringsGenerator createFormatStrings(StringSpecification stringSpec, long seed) {
 		return new FormatStringsGenerator(stringSpec, seed);
+	}
+	
+	/**
+	 * Returns an instance of {@link ForeignDigitsGenerator}.
+	 * 
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link ForeignDigitsGenerator}.
+	 */
+	public ForeignDigitsGenerator createForeignDigits(StringSpecification stringSpec, long seed) {
+		return new ForeignDigitsGenerator(stringSpec, seed);
 	}
 	
 	/**
