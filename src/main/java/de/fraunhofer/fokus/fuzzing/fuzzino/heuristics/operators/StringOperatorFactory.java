@@ -20,6 +20,7 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.DelimiterOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.ForeignDigitsOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringCaseOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.RepeatStringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -89,12 +90,15 @@ public class StringOperatorFactory {
 		} else
 		if (canonicalName.equals("StringRepetition".toUpperCase())) {
 			return createStringRepetitionOperator(validValues, stringSpec, seed);
+		} else
+		if (canonicalName.equals("ForeignDigits".toUpperCase())) {
+			return createForeignDigitsOperator(validValues, param, stringSpec, seed);
 		} else {
 			throw new UnknownFuzzingHeuristicException(name);
 		}
 	}
-	
-	 /**
+
+	/**
 	  * A list of all StringOperators that can create values for {@code stringSpec}.
 	  * 
 	  * @param validValues
@@ -104,6 +108,7 @@ public class StringOperatorFactory {
 	  */
 	public List<StringOperator> createAll(List<String> validValues, StringSpecification stringSpec, long seed) {
 		List<StringOperator> allStringOperators = new ArrayList<>();
+		// TODO: Add ForeignDigitsOperator?
 		allStringOperators.add(createDelimiterOperator(validValues, stringSpec, seed));
 		allStringOperators.add(createStringCaseOperator(validValues, stringSpec, seed));
 		allStringOperators.add(createStringRepetitionOperator(validValues, stringSpec, seed));
@@ -130,4 +135,8 @@ public class StringOperatorFactory {
 		return new RepeatStringOperator(validValues, stringSpec, seed);
 	}
 
+	public ForeignDigitsOperator createForeignDigitsOperator(List<String> validValues, String param,
+			StringSpecification stringSpec, long seed) {
+		return new ForeignDigitsOperator(validValues, param, stringSpec, seed);
+	}
 }
