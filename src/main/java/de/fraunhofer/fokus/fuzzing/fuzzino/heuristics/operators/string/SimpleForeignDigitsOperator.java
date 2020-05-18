@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
 
 /**
  * Converts a number into different number systems.
@@ -73,118 +74,95 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 		SYSTEM_NAMES.put("CJK", NumberSystem.CJK);
 		SYSTEM_NAMES.put("SUZHOU", NumberSystem.SUZHOU);
 		DECIMAL_DIGITS = new HashMap<>();
-		DECIMAL_DIGITS.put(
-				NumberSystem.EASTERN_ARABIC,
-				Arrays.asList("٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩")
-		);
-		DECIMAL_DIGITS.put(
-				NumberSystem.PERSIAN,
-				Arrays.asList("۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹")
-		);
-		DECIMAL_DIGITS.put(
-				NumberSystem.NKO,
-				Arrays.asList("߀", "߁", "߂", "߃", "߄", "߅", "߆", "߇", "߈", "߉")
-		);
-		DECIMAL_DIGITS.put(
-				NumberSystem.DEVANAGARI,
-				Arrays.asList("०", "१", "२", "३", "४", "५", "६", "७", "८", "९")
-		);
+		DECIMAL_DIGITS.put(NumberSystem.EASTERN_ARABIC, unicodeRange(0x660, 0x669));
+		DECIMAL_DIGITS.put(NumberSystem.PERSIAN, unicodeRange(0x6f0, 0x6f9));
+		DECIMAL_DIGITS.put(NumberSystem.NKO, unicodeRange(0x7c0, 0x7c9));
+		DECIMAL_DIGITS.put(NumberSystem.DEVANAGARI, unicodeRange(0x966, 0x96f));
 		// Codepoints >= 0x10000 don't render well in editors, so generate them
 		// dynamically instead (also, they need 2 chars)
-		DECIMAL_DIGITS.put(
-				NumberSystem.OSMANYA,
-				IntStream.rangeClosed(0, 9)
-					.mapToObj(i -> new String(Character.toChars(0x104A0 + i)))
-					.collect(Collectors.toList())
-		);
-		DECIMAL_DIGITS.put(
-				NumberSystem.BRAHMI,
-				IntStream.rangeClosed(0, 9)
-					.mapToObj(i -> new String(Character.toChars(0x11066 + i)))
-					.collect(Collectors.toList())
-		);
-		DECIMAL_DIGITS.put(
-				NumberSystem.SORA_SOMPENG,
-				IntStream.rangeClosed(0, 9)
-					.mapToObj(i -> new String(Character.toChars(0x110F0 + i)))
-					.collect(Collectors.toList())
-		);
-		DECIMAL_DIGITS.put(
-				NumberSystem.CHAKMA,
-				IntStream.rangeClosed(0, 9)
-					.mapToObj(i -> new String(Character.toChars(0x11136 + i)))
-					.collect(Collectors.toList())
-		);
+		DECIMAL_DIGITS.put(NumberSystem.OSMANYA, unicodeRange(0x104a0, 0x104a9));
+		DECIMAL_DIGITS.put(NumberSystem.BRAHMI, unicodeRange(0x11066, 0x1106f));
+		DECIMAL_DIGITS.put(NumberSystem.SORA_SOMPENG, unicodeRange(0x110f0, 0x110f9));
+		DECIMAL_DIGITS.put(NumberSystem.CHAKMA, unicodeRange(0x11136, 0x1113f));
 		SUZHOU_DIGITS = Arrays.asList(
-				"〇", "〡", "〢", "〣", "〤", "〥", "〦", "〧", "〨", "〩"
+				"\u3007", "\u3021", "\u3022", "\u3023", "\u3024",
+				"\u3025", "\u3026", "\u3027", "\u3028", "\u3029"
 		);
 		CJK_DIGITS = Arrays.asList(
-				"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"
+				"\u96f6", "\u4e00", "\u4e8c", "\u4e09", "\u56db",
+				"\u4e94", "\u516d", "\u4e03", "\u516b", "\u4e5d"
 		);
 		CJK_POWERS_OF_TEN = Arrays.asList(
-				"十", "百", "千"
+				"\u5341", "\u767e", "\u5343"
 		);
 		CJK_MYRIADS = Arrays.asList(
-				"万", "亿", "兆", "京", "垓", "秭", "穰", "沟", "涧", "正", "载"
+				"\u4e07", "\u4ebf", "\u5146", "\u4eac", "\u5793",
+				"\u79ed", "\u7a70", "\u6c9f", "\u6da7", "\u6b63", "\u8f7d"
 		);
 		ABJAD_DIGITS = new TreeMap<>(Collections.reverseOrder());
-		ABJAD_DIGITS.put(1, "أ");
-		ABJAD_DIGITS.put(2, "ب");
-		ABJAD_DIGITS.put(3, "ج");
-		ABJAD_DIGITS.put(4, "د");
-		ABJAD_DIGITS.put(5, "ه");
-		ABJAD_DIGITS.put(6, "و");
-		ABJAD_DIGITS.put(7, "ز");
-		ABJAD_DIGITS.put(8, "ح");
-		ABJAD_DIGITS.put(9, "ط");
-		ABJAD_DIGITS.put(10, "ي");
-		ABJAD_DIGITS.put(20, "ك");
-		ABJAD_DIGITS.put(30, "ل");
-		ABJAD_DIGITS.put(40, "م");
-		ABJAD_DIGITS.put(50, "ن");
-		ABJAD_DIGITS.put(60, "س");
-		ABJAD_DIGITS.put(70, "ع");
-		ABJAD_DIGITS.put(80, "ف");
-		ABJAD_DIGITS.put(90, "ص");
-		ABJAD_DIGITS.put(100, "ق");
-		ABJAD_DIGITS.put(200, "ر");
-		ABJAD_DIGITS.put(300, "ش");
-		ABJAD_DIGITS.put(400, "ت");
-		ABJAD_DIGITS.put(500, "ث");
-		ABJAD_DIGITS.put(600, "خ");
-		ABJAD_DIGITS.put(700, "ذ");
-		ABJAD_DIGITS.put(800, "ض");
-		ABJAD_DIGITS.put(900, "ظ");
-		ABJAD_DIGITS.put(1000, "غ");
+		ABJAD_DIGITS.put(1, "\u0623");
+		ABJAD_DIGITS.put(2, "\u0628");
+		ABJAD_DIGITS.put(3, "\u062c");
+		ABJAD_DIGITS.put(4, "\u062f");
+		ABJAD_DIGITS.put(5, "\u0647");
+		ABJAD_DIGITS.put(6, "\u0648");
+		ABJAD_DIGITS.put(7, "\u0632");
+		ABJAD_DIGITS.put(8, "\u062d");
+		ABJAD_DIGITS.put(9, "\u0637");
+		ABJAD_DIGITS.put(10, "\u064a");
+		ABJAD_DIGITS.put(20, "\u0643");
+		ABJAD_DIGITS.put(30, "\u0644");
+		ABJAD_DIGITS.put(40, "\u0645");
+		ABJAD_DIGITS.put(50, "\u0646");
+		ABJAD_DIGITS.put(60, "\u0633");
+		ABJAD_DIGITS.put(70, "\u0639");
+		ABJAD_DIGITS.put(80, "\u0641");
+		ABJAD_DIGITS.put(90, "\u0635");
+		ABJAD_DIGITS.put(100, "\u0642");
+		ABJAD_DIGITS.put(200, "\u0631");
+		ABJAD_DIGITS.put(300, "\u0634");
+		ABJAD_DIGITS.put(400, "\u062a");
+		ABJAD_DIGITS.put(500, "\u062b");
+		ABJAD_DIGITS.put(600, "\u062e");
+		ABJAD_DIGITS.put(700, "\u0630");
+		ABJAD_DIGITS.put(800, "\u0636");
+		ABJAD_DIGITS.put(900, "\u0638");
+		ABJAD_DIGITS.put(1000, "\u063a");
 
 		GREEK_DIGITS = new TreeMap<>(Collections.reverseOrder());
-		GREEK_DIGITS.put(1, "Α");
-		GREEK_DIGITS.put(2, "Β");
-		GREEK_DIGITS.put(3, "Γ");
-		GREEK_DIGITS.put(4, "Δ");
-		GREEK_DIGITS.put(5, "Ε");
-		GREEK_DIGITS.put(6, "Ϛ");
-		GREEK_DIGITS.put(7, "Ζ");
-		GREEK_DIGITS.put(8, "Η");
-		GREEK_DIGITS.put(9, "Θ");
-		GREEK_DIGITS.put(10, "Ι");
-		GREEK_DIGITS.put(20, "Κ");
-		GREEK_DIGITS.put(30, "Λ");
-		GREEK_DIGITS.put(40, "Μ");
-		GREEK_DIGITS.put(50, "Ν");
-		GREEK_DIGITS.put(60, "Ξ");
-		GREEK_DIGITS.put(70, "Ο");
-		GREEK_DIGITS.put(80, "Π");
-		GREEK_DIGITS.put(90, "Ϙ");
-		GREEK_DIGITS.put(100, "Ρ");
-		GREEK_DIGITS.put(200, "Σ");
-		GREEK_DIGITS.put(300, "Τ");
-		GREEK_DIGITS.put(400, "Υ");
-		GREEK_DIGITS.put(500, "Φ");
-		GREEK_DIGITS.put(600, "Χ");
-		GREEK_DIGITS.put(700, "Ψ");
-		GREEK_DIGITS.put(800, "Ω");
-		GREEK_DIGITS.put(900, "Ͳ");
+		GREEK_DIGITS.put(1, "\u0391");
+		GREEK_DIGITS.put(2, "\u0392");
+		GREEK_DIGITS.put(3, "\u0393");
+		GREEK_DIGITS.put(4, "\u0394");
+		GREEK_DIGITS.put(5, "\u0395");
+		GREEK_DIGITS.put(6, "\u03da");
+		GREEK_DIGITS.put(7, "\u0396");
+		GREEK_DIGITS.put(8, "\u0397");
+		GREEK_DIGITS.put(9, "\u0398");
+		GREEK_DIGITS.put(10, "\u0399");
+		GREEK_DIGITS.put(20, "\u039a");
+		GREEK_DIGITS.put(30, "\u039b");
+		GREEK_DIGITS.put(40, "\u039c");
+		GREEK_DIGITS.put(50, "\u039d");
+		GREEK_DIGITS.put(60, "\u039e");
+		GREEK_DIGITS.put(70, "\u039f");
+		GREEK_DIGITS.put(80, "\u03a0");
+		GREEK_DIGITS.put(90, "\u03d8");
+		GREEK_DIGITS.put(100, "\u03a1");
+		GREEK_DIGITS.put(200, "\u03a3");
+		GREEK_DIGITS.put(300, "\u03a4");
+		GREEK_DIGITS.put(400, "\u03a5");
+		GREEK_DIGITS.put(500, "\u03a6");
+		GREEK_DIGITS.put(600, "\u03a7");
+		GREEK_DIGITS.put(700, "\u03a8");
+		GREEK_DIGITS.put(800, "\u03a9");
+		GREEK_DIGITS.put(900, "\u0372");
+	}
+	
+	private static final List<String> unicodeRange(int start, int end) {
+		return IntStream.rangeClosed(start, end)
+			.mapToObj(i -> new String(Character.toChars(i)))
+			.collect(Collectors.toList());
 	}
 
 	public SimpleForeignDigitsOperator(String validValue, String param, StringSpecification stringSpec, long seed,
@@ -238,6 +216,7 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 			}
 		}
 		
+		value = StringEncoder.encode(value);
 		return new FuzzedValue<String>(value, inputValue, owners);
 	}
 	
@@ -258,8 +237,6 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 
 		for (int i = 0; i < inputValue.length(); i++) {
 			int digit = inputValue.charAt(i) - '0';
-			// 〡〢 could be mistaken for 〣, so CJK ideographs (horizontal lines)
-			// are alternated with normal Suzhou characters sometimes
 			if (digit >= 1 && digit <= 3) {
 				if (last_was_vertical) {
 					sb.append(CJK_DIGITS.get(digit));
@@ -279,10 +256,10 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 	
 	private String cjkDigits() {
 		// Edge case: Zero
-		if (inputValue.equals("0")) return "零";
-		// Edge case: 10-19 don't have a leading 一
+		if (inputValue.equals("0")) return CJK_DIGITS.get(0);
+		// Edge case: 10-19 don't have a leading 1
 		if (inputValue.length() == 2 && inputValue.charAt(0) == '1') {
-			StringBuilder sb = new StringBuilder("十");
+			StringBuilder sb = new StringBuilder(CJK_POWERS_OF_TEN.get(0));
 			int second_digit = inputValue.charAt(1) - '0';
 			if (second_digit != 0) {
 				sb.append(CJK_DIGITS.get(second_digit));

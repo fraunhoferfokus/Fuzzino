@@ -13,74 +13,76 @@ import org.junit.Test;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.UnicodeDecoder;
 
 public class ForeignDigitsOperatorTest extends FuzzinoTest {
 	
 	private static Map<String, Integer> ABJAD;
 	private static Map<String, Integer> GREEK;
-	private static final String GREEK_KERAIA = "\u0374";
-	private static final String GREEK_THOUSANDS = "͵";
+	private static final String GREEK_KERAIA = "\\u0374";
+	private static final String GREEK_THOUSANDS = "\\u0375";
 
 	static {
 		ABJAD = new HashMap<>();
-		ABJAD.put("أ", 1);
-		ABJAD.put("ب", 2);
-		ABJAD.put("ج", 3);
-		ABJAD.put("د", 4);
-		ABJAD.put("ه", 5);
-		ABJAD.put("و", 6);
-		ABJAD.put("ز", 7);
-		ABJAD.put("ح", 8);
-		ABJAD.put("ط", 9);
-		ABJAD.put("ي", 10);
-		ABJAD.put("ك", 20);
-		ABJAD.put("ل", 30);
-		ABJAD.put("م", 40);
-		ABJAD.put("ن", 50);
-		ABJAD.put("س", 60);
-		ABJAD.put("ع", 70);
-		ABJAD.put("ف", 80);
-		ABJAD.put("ص", 90);
-		ABJAD.put("ق", 100);
-		ABJAD.put("ر", 200);
-		ABJAD.put("ش", 300);
-		ABJAD.put("ت", 400);
-		ABJAD.put("ث", 500);
-		ABJAD.put("خ", 600);
-		ABJAD.put("ذ", 700);
-		ABJAD.put("ض", 800);
-		ABJAD.put("ظ", 900);
-		ABJAD.put("غ", 1000);
+		ABJAD.put("\\u0623", 1);
+		ABJAD.put("\\u0628", 2);
+		ABJAD.put("\\u062c", 3);
+		ABJAD.put("\\u062f", 4);
+		ABJAD.put("\\u0647", 5);
+		ABJAD.put("\\u0648", 6);
+		ABJAD.put("\\u0632", 7);
+		ABJAD.put("\\u062d", 8);
+		ABJAD.put("\\u0637", 9);
+		ABJAD.put("\\u064a", 10);
+		ABJAD.put("\\u0643", 20);
+		ABJAD.put("\\u0644", 30);
+		ABJAD.put("\\u0645", 40);
+		ABJAD.put("\\u0646", 50);
+		ABJAD.put("\\u0633", 60);
+		ABJAD.put("\\u0639", 70);
+		ABJAD.put("\\u0641", 80);
+		ABJAD.put("\\u0635", 90);
+		ABJAD.put("\\u0642", 100);
+		ABJAD.put("\\u0631", 200);
+		ABJAD.put("\\u0634", 300);
+		ABJAD.put("\\u062a", 400);
+		ABJAD.put("\\u062b", 500);
+		ABJAD.put("\\u062e", 600);
+		ABJAD.put("\\u0630", 700);
+		ABJAD.put("\\u0636", 800);
+		ABJAD.put("\\u0638", 900);
+		ABJAD.put("\\u063a", 1000);
 
 		GREEK = new HashMap<>();
-		GREEK.put("Α", 1);
-		GREEK.put("Β", 2);
-		GREEK.put("Γ", 3);
-		GREEK.put("Δ", 4);
-		GREEK.put("Ε", 5);
-		GREEK.put("Ϛ", 6);
-		GREEK.put("Ζ", 7);
-		GREEK.put("Η", 8);
-		GREEK.put("Θ", 9);
-		GREEK.put("Ι", 10);
-		GREEK.put("Κ", 20);
-		GREEK.put("Λ", 30);
-		GREEK.put("Μ", 40);
-		GREEK.put("Ν", 50);
-		GREEK.put("Ξ", 60);
-		GREEK.put("Ο", 70);
-		GREEK.put("Π", 80);
-		GREEK.put("Ϙ", 90);
-		GREEK.put("Ρ", 100);
-		GREEK.put("Σ", 200);
-		GREEK.put("Τ", 300);
-		GREEK.put("Υ", 400);
-		GREEK.put("Φ", 500);
-		GREEK.put("Χ", 600);
-		GREEK.put("Ψ", 700);
-		GREEK.put("Ω", 800);
-		GREEK.put("Ͳ", 900);
+		GREEK.put("\\u0391", 1);
+		GREEK.put("\\u0392", 2);
+		GREEK.put("\\u0393", 3);
+		GREEK.put("\\u0394", 4);
+		GREEK.put("\\u0395", 5);
+		GREEK.put("\\u03da", 6);
+		GREEK.put("\\u0396", 7);
+		GREEK.put("\\u0397", 8);
+		GREEK.put("\\u0398", 9);
+		GREEK.put("\\u0399", 10);
+		GREEK.put("\\u039a", 20);
+		GREEK.put("\\u039b", 30);
+		GREEK.put("\\u039c", 40);
+		GREEK.put("\\u039d", 50);
+		GREEK.put("\\u039e", 60);
+		GREEK.put("\\u039f", 70);
+		GREEK.put("\\u03a0", 80);
+		GREEK.put("\\u03d8", 90);
+		GREEK.put("\\u03a1", 100);
+		GREEK.put("\\u03a3", 200);
+		GREEK.put("\\u03a4", 300);
+		GREEK.put("\\u03a5", 400);
+		GREEK.put("\\u03a6", 500);
+		GREEK.put("\\u03a7", 600);
+		GREEK.put("\\u03a8", 700);
+		GREEK.put("\\u03a9", 800);
+		GREEK.put("\\u0372", 900);
 	}
 	
 	public static final long SEED = 4711;
@@ -103,7 +105,11 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		testcase(
 				"eastern_arabic",
 				StringUtil.asList("42", "0", "1000000", "1234567890"),
-				StringUtil.asList("٤٢", "٠", "١٠٠٠٠٠٠", "١٢٣٤٥٦٧٨٩٠")
+				StringUtil.asList(
+						"\\u0664\\u0662", "\\u0660",
+						"\\u0661\\u0660\\u0660\\u0660\\u0660\\u0660\\u0660",
+						"\\u0661\\u0662\\u0663\\u0664\\u0665\\u0666\\u0667\\u0668\\u0669\\u0660"
+				)
 		);
 	}
 	
@@ -112,7 +118,11 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		testcase(
 				"persian",
 				StringUtil.asList("42", "0", "1000000", "1234567890"),
-				StringUtil.asList("۴۲", "۰", "۱۰۰۰۰۰۰", "۱۲۳۴۵۶۷۸۹۰")
+				StringUtil.asList(
+						"\\u06f4\\u06f2", "\\u06f0",
+						"\\u06f1\\u06f0\\u06f0\\u06f0\\u06f0\\u06f0\\u06f0",
+						"\\u06f1\\u06f2\\u06f3\\u06f4\\u06f5\\u06f6\\u06f7\\u06f8\\u06f9\\u06f0"
+				)
 		);
 	}
 	
@@ -121,14 +131,18 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		testcase(
 				"nko",
 				StringUtil.asList("42", "0", "1000000", "1234567890"),
-				StringUtil.asList("߄߂", "߀", "߁߀߀߀߀߀߀", "߁߂߃߄߅߆߇߈߉߀")
+				StringUtil.asList(
+						"\\u07c4\\u07c2", "\\u07c0",
+						"\\u07c1\\u07c0\\u07c0\\u07c0\\u07c0\\u07c0\\u07c0",
+						"\\u07c1\\u07c2\\u07c3\\u07c4\\u07c5\\u07c6\\u07c7\\u07c8\\u07c9\\u07c0"
+				)
 		);
 	}
 	
-	private String digitsToCodepoint(String orig, int base) {
+	private String digitsToUTF32(String orig, int base) {
 		StringBuilder sb = new StringBuilder();
 		for (char c : orig.toCharArray()) {
-			sb.append(Character.toChars(base + c - '0'));
+			sb.append(String.format("\\U%08x", base + c - '0'));
 		}
 		return sb.toString();
 	}
@@ -137,7 +151,7 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 	public void testOsmanya() {
 		List<String> data = StringUtil.asList("42", "0", "1000000", "1234567890");
 		List<String> expected = data.stream()
-				.map(s -> digitsToCodepoint(s, 0x104A0))
+				.map(s -> digitsToUTF32(s, 0x104A0))
 				.collect(Collectors.toList());
 		testcase("osmanya", data, expected);
 	}
@@ -146,7 +160,7 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 	public void testChakma() {
 		List<String> data = StringUtil.asList("42", "0", "1000000", "1234567890");
 		List<String> expected = data.stream()
-				.map(s -> digitsToCodepoint(s, 0x11136))
+				.map(s -> digitsToUTF32(s, 0x11136))
 				.collect(Collectors.toList());
 		testcase("chakma", data, expected);
 	}
@@ -156,7 +170,11 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		testcase(
 				"suzhou",
 				StringUtil.asList("42", "0", "1000000", "1425367890"),
-				StringUtil.asList("〤〢", "〇", "〡〇〇〇〇〇〇", "〡〤〢〥〣〦〧〨〩〇")
+				StringUtil.asList(
+						"\\u3024\\u3022", "\\u3007",
+						"\\u3021\\u3007\\u3007\\u3007\\u3007\\u3007\\u3007",
+						"\\u3021\\u3024\\u3022\\u3025\\u3023\\u3026\\u3027\\u3028\\u3029\\u3007"
+				)
 		);
 	}
 	
@@ -165,7 +183,11 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		testcase(
 				"suzhou",
 				StringUtil.asList("11111", "123321", "4022"),
-				StringUtil.asList("〡一〡一〡", "〡二〣三〢一", "〤〇〢二")
+				StringUtil.asList(
+						"\\u3021\\u4e00\\u3021\\u4e00\\u3021",
+						"\\u3021\\u4e8c\\u3023\\u4e09\\u3022\\u4e00",
+						"\\u3024\\u3007\\u3022\\u4e8c"
+				)
 		);
 	}
 	
@@ -174,7 +196,12 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		testcase(
 				"cjk",
 				StringUtil.asList("42", "0", "9876", "1235", "1111"),
-				StringUtil.asList("四十二", "零", "九千八百七十六", "一千二百三十五", "一千一百一十一")
+				StringUtil.asList(
+						"\\u56db\\u5341\\u4e8c", "\\u96f6",
+						"\\u4e5d\\u5343\\u516b\\u767e\\u4e03\\u5341\\u516d",
+						"\\u4e00\\u5343\\u4e8c\\u767e\\u4e09\\u5341\\u4e94",
+						"\\u4e00\\u5343\\u4e00\\u767e\\u4e00\\u5341\\u4e00"
+				)
 		);
 	}
 	
@@ -183,7 +210,10 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		testcase(
 				"cjk",
 				StringUtil.asList("101", "1001", "100", "1000"),
-				StringUtil.asList("一百零一", "一千零一", "一百", "一千")
+				StringUtil.asList(
+						"\\u4e00\\u767e\\u96f6\\u4e00", "\\u4e00\\u5343\\u96f6\\u4e00",
+						"\\u4e00\\u767e", "\\u4e00\\u5343"
+				)
 		);
 	}
 	
@@ -196,9 +226,11 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 						"12345678902345", "1234567890987654321"
 				),
 				StringUtil.asList(
-						"一万二千三百四十五", "二十万一千二百三十四", "一载",
-						"一十二兆三千四百五十六亿七千八百九十万二千三百四十五",
-						"一百二十三京四千五百六十七兆八千九百零九亿八千七百六十五万四千三百二十一"
+						"\\u4e00\\u4e07\\u4e8c\\u5343\\u4e09\\u767e\\u56db\\u5341\\u4e94",
+						"\\u4e8c\\u5341\\u4e07\\u4e00\\u5343\\u4e8c\\u767e\\u4e09\\u5341\\u56db",
+						"\\u4e00\\u8f7d",
+						"\\u4e00\\u5341\\u4e8c\\u5146\\u4e09\\u5343\\u56db\\u767e\\u4e94\\u5341\\u516d\\u4ebf\\u4e03\\u5343\\u516b\\u767e\\u4e5d\\u5341\\u4e07\\u4e8c\\u5343\\u4e09\\u767e\\u56db\\u5341\\u4e94",
+						"\\u4e00\\u767e\\u4e8c\\u5341\\u4e09\\u4eac\\u56db\\u5343\\u4e94\\u767e\\u516d\\u5341\\u4e03\\u5146\\u516b\\u5343\\u4e5d\\u767e\\u96f6\\u4e5d\\u4ebf\\u516b\\u5343\\u4e03\\u767e\\u516d\\u5341\\u4e94\\u4e07\\u56db\\u5343\\u4e09\\u767e\\u4e8c\\u5341\\u4e00"
 				)
 		);
 	}
@@ -208,14 +240,18 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		testcase(
 				"cjk",
 				StringUtil.asList("10", "11", "12", "19", "20"),
-				StringUtil.asList("十", "十一", "十二", "十九", "二十")
+				StringUtil.asList(
+						"\\u5341", "\\u5341\\u4e00", "\\u5341\\u4e8c",
+						"\\u5341\\u4e5d", "\\u4e8c\\u5341"
+				)
 		);
 	}
 	
 	private static int alphabeticToInt(String alphaNumber, Map<String, Integer> alphabet) {
 		int sum = 0;
+		alphaNumber = UnicodeDecoder.decode(alphaNumber);
 		for (int i = 0; i < alphaNumber.length(); i++) {
-			String c = Character.toString(alphaNumber.charAt(i));
+			String c = StringEncoder.encode(Character.toString(alphaNumber.charAt(i)));
 			sum += alphabet.get(c);
 		}
 		return sum;
@@ -225,7 +261,7 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 	public void testAbjad() {
 		List<String> numbers = Arrays.asList("42", "20000", "12356", "1", "777");
 		List<String> ret = operate("abjad", numbers);
-		assertTrue(ret.get(0).length() == 2);
+		assertEquals(2, UnicodeDecoder.decode(ret.get(0)).length());
 
 		List<Integer> expected = numbers.stream()
 				.map(Integer::valueOf)
@@ -243,22 +279,23 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 	
 	private static void checkKeraia(List<String> noKeraia, List<String> keraia) {
 		for (String s : keraia) {
-			assertTrue(s.indexOf(GREEK_KERAIA) == s.length() - 1);
+			assertTrue(s.indexOf(GREEK_KERAIA) == s.length() - GREEK_KERAIA.length());
 		}
 		assertEquals(
 				noKeraia,
 				keraia.stream()
-					.map(s -> s.substring(0, s.length() - 1))
+					.map(s -> s.substring(0, s.length() - GREEK_KERAIA.length()))
 					.collect(Collectors.toList())
 		);
 	}
 	
 	private static int greekToInt(String s) {
 		int sum = 0;
+		s = UnicodeDecoder.decode(s);
 		for (int i = 0; i < s.length(); i++) {
-			String c = Character.toString(s.charAt(i));
+			String c = StringEncoder.encode(Character.toString(s.charAt(i)));
 			if (c.equals(GREEK_THOUSANDS)) {
-				c = Character.toString(s.charAt(++i));
+				c = StringEncoder.encode(Character.toString(s.charAt(++i)));
 				sum += 1000 * GREEK.get(c);
 				continue;
 			}
@@ -271,7 +308,7 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 	public void testGreekSimple() {
 		List<String> numbers = Arrays.asList("42", "200", "1", "777");
 		List<String> ret = operate("greek", numbers);
-		assertTrue(ret.get(0).length() == 2);
+		assertEquals(2, UnicodeDecoder.decode(ret.get(0)).length());
 		List<String> retKeraia = operate("greek_keraia", numbers);
 		checkKeraia(ret, retKeraia);
 
