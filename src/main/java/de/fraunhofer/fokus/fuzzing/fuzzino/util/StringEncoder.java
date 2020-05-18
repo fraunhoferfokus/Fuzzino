@@ -19,7 +19,13 @@ public class StringEncoder {
 	
 	private static final int UTF16 = (int) Math.pow(2, 16);
 	private static final int ASCII8BIT = (int) Math.pow(2,8);
-	private static final int UTF32 = (int) Math.pow(2, 32);
+	private static final int UTF32 = (int) Math.pow(2, 20) + UTF16;
+	private static final int HIGH_SURROGATE_LOWER = 0xD800;
+	private static final int HIGH_SURROGATE_UPPER = 0xDBFF;
+	private static final int HIGH_SURROGATE_SHIFT = 10;
+	private static final int LOW_SURROGATE_LOWER = 0xDC00;
+	private static final int LOW_SURROGATE_UPPER = 0xDFFF;
+	private static final int SURROGATE_OFFSET = 0x10000;
 
 	public static int length(String str) {
 		if (str == null) {
@@ -65,7 +71,7 @@ public class StringEncoder {
 		return encodedString.toString();
 	}
 
-	public static String encodeChar(char c) {
+	public static String encodeChar(int c) {
 		if (c < ASCII8BIT) {
 			return "\\x" + (c < 0x10 ? "0" : "") + Integer.toHexString(c);
 		}
@@ -81,6 +87,19 @@ public class StringEncoder {
 	private static void encodeSubstring(String value, int startIndex, int endIndex, StringBuilder encodedString) {
 		for (int i=startIndex; i<endIndex; i++) {
 			char c = value.charAt(i);
+			if (c >= HIGH_SURROGATE_LOWER && c <= HIGH_SURROGATE_UPPER && i < endIndex - 1) {
+				int next = value.charAt(i+1);
+				if (next >= LOW_SURROGATE_LOWER && next <= LOW_SURROGATE_UPPER) {
+					// Ensure the next char is a low surrogate and we are not
+					// dealing with bad unicode
+					int codePoint = (c - HIGH_SURROGATE_LOWER) << HIGH_SURROGATE_SHIFT;
+					codePoint += next - LOW_SURROGATE_LOWER;
+					codePoint += SURROGATE_OFFSET;
+					encodedString.append(encodeChar(codePoint));
+					i++;
+					continue;
+				}
+			}
 			String encodedChar = encodeChar(c);
 			encodedString.append(encodedChar);
 		}

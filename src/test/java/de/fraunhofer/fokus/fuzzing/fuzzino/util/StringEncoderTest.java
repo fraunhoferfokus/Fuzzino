@@ -13,6 +13,7 @@
 //   limitations under the License.
 package de.fraunhofer.fokus.fuzzing.fuzzino.util;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -161,44 +162,61 @@ public class StringEncoderTest extends FuzzinoTest {
 				actualValue.equals(expectedValue));
 	}
 	
-//	@Test
-//	public void testWithUnicodeChar17bit() {
-//		String value = "" + new Character((char) 0x00010000);
-//		
-//		String actualValue = StringEncoder.encode(value); 
-//		String expectedValue = "\\U000" + Integer.toHexString(value.codePointAt(0));
-//		assertTrue("Wrong value: was '" + actualValue + "' instead of '" + expectedValue + "'",
-//				   actualValue.equals(expectedValue));
-//	}
-//
-//	@Test
-//	public void testWithUnicodeChar21bit() {
-//		String value = "" + new Character((char) 0x00100000);
-//		
-//		String actualValue = StringEncoder.encode(value); 
-//		String expectedValue = "\\U00" + Integer.toHexString(value.codePointAt(0));
-//		assertTrue("Wrong value: was '" + actualValue + "' instead of '" + expectedValue + "'",
-//				actualValue.equals(expectedValue));
-//	}
-//	
-//	@Test
-//	public void testWithUnicodeChar25bit() {
-//		String value = "" + new Character((char) 0x01000000);
-//		
-//		String actualValue = StringEncoder.encode(value); 
-//		String expectedValue = "\\U0" + Integer.toHexString(value.codePointAt(0));
-//		assertTrue("Wrong value: was '" + actualValue + "' instead of '" + expectedValue + "'",
-//				actualValue.equals(expectedValue));
-//	}
-//
-//	@Test
-//	public void testWithUnicodeChar29bit() {
-//		String value = "" + new Character((char) 0x10000000);
-//		
-//		String actualValue = StringEncoder.encode(value); 
-//		String expectedValue = "\\U" + Integer.toHexString(value.codePointAt(0));
-//		assertTrue("Wrong value: was '" + actualValue + "' instead of '" + expectedValue + "'",
-//				actualValue.equals(expectedValue));
-//	}
-//	
+	@Test
+	public void testWithUnicodeChar17bit() {
+		int codePoint = 0x00010000;
+		String value = new String(Character.toChars(codePoint));
+		
+		String actualValue = StringEncoder.encode(value); 
+		String expectedValue = "\\U000" + Integer.toHexString(codePoint);
+		assertTrue("Wrong value: was '" + actualValue + "' instead of '" + expectedValue + "'",
+				   actualValue.equals(expectedValue));
+	}
+
+	@Test
+	public void testWithUnicodeChar21bit() {
+		int codePoint = 0x00100000;
+		String value = new String(Character.toChars(codePoint));
+		
+		String actualValue = StringEncoder.encode(value); 
+		String expectedValue = "\\U00" + Integer.toHexString(codePoint);
+		assertTrue("Wrong value: was '" + actualValue + "' instead of '" + expectedValue + "'",
+				actualValue.equals(expectedValue));
+	}
+	
+	@Test
+	public void testWithOnlyHighSurrogate() {
+		String value = "\ud800";
+
+		String actualValue = StringEncoder.encode(value);
+		String expectedValue = "\\ud800";
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	@Test
+	public void testWithOnlyLowSurrogate() {
+		String value = "\udc00";
+
+		String actualValue = StringEncoder.encode(value);
+		String expectedValue = "\\udc00";
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	@Test
+	public void testWithSurrogatesSeparated() {
+		String value = "\ud800\\x42\udc00";
+		
+		String actualValue = StringEncoder.encode(value);
+		String expectedValue = "\\ud800\\x42\\udc00";
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	@Test
+	public void testWithWrongSurrogateOrder() {
+		String value = "\udc00\ud800";
+		
+		String actualValue = StringEncoder.encode(value);
+		String expectedValue = "\\udc00\\ud800";
+		assertEquals(expectedValue, actualValue);
+	}
 }
