@@ -117,6 +117,41 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 	}
 	
 	@Test
+	public void testNko() {
+		testcase(
+				"nko",
+				StringUtil.asList("42", "0", "1000000", "1234567890"),
+				StringUtil.asList("߄߂", "߀", "߁߀߀߀߀߀߀", "߁߂߃߄߅߆߇߈߉߀")
+		);
+	}
+	
+	private String digitsToCodepoint(String orig, int base) {
+		StringBuilder sb = new StringBuilder();
+		for (char c : orig.toCharArray()) {
+			sb.append(Character.toChars(base + c - '0'));
+		}
+		return sb.toString();
+	}
+	
+	@Test
+	public void testOsmanya() {
+		List<String> data = StringUtil.asList("42", "0", "1000000", "1234567890");
+		List<String> expected = data.stream()
+				.map(s -> digitsToCodepoint(s, 0x104A0))
+				.collect(Collectors.toList());
+		testcase("osmanya", data, expected);
+	}
+	
+	@Test
+	public void testChakma() {
+		List<String> data = StringUtil.asList("42", "0", "1000000", "1234567890");
+		List<String> expected = data.stream()
+				.map(s -> digitsToCodepoint(s, 0x11136))
+				.collect(Collectors.toList());
+		testcase("chakma", data, expected);
+	}
+	
+	@Test
 	public void testSuzhouSimple() {
 		testcase(
 				"suzhou",

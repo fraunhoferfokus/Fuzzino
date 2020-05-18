@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
@@ -20,6 +22,12 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
  * Possible values are (case-insensitive):
  *  - eastern_arabic
  *  - persian (same as eastern_arabic, but with the Persian variant of the characters)
+ *  - nko
+ *  - devanagari
+ *  - osmanya
+ *  - brahmi
+ *  - sora_sompeng
+ *  - chakma
  *  - abjad
  *  - greek
  *  - greek_keraia (same as greek, but with a keraia at the end)
@@ -33,11 +41,13 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 	
 	private static final long serialVersionUID = -7192971817019979803L;
 
-	enum NumberSystem {EASTERN_ARABIC, PERSIAN, ABJAD, GREEK, GREEK_KERAIA, CJK, SUZHOU};
+	enum NumberSystem {
+		EASTERN_ARABIC, PERSIAN, NKO, DEVANAGARI, OSMANYA, BRAHMI, SORA_SOMPENG,
+		CHAKMA, ABJAD, GREEK, GREEK_KERAIA, CJK, SUZHOU
+	};
 	private List<NumberSystem> enabledSystems;
 	private static final Map<String, NumberSystem> SYSTEM_NAMES;
-	private static final List<String> EASTERN_ARABIC_DIGITS;
-	private static final List<String> PERSIAN_DIGITS;
+	private static final Map<NumberSystem, List<String>> DECIMAL_DIGITS;
 	private static final List<String> SUZHOU_DIGITS;
 	private static final List<String> CJK_DIGITS;
 	private static final List<String> CJK_POWERS_OF_TEN;
@@ -51,16 +61,59 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 		SYSTEM_NAMES = new HashMap<>();
 		SYSTEM_NAMES.put("EASTERN_ARABIC", NumberSystem.EASTERN_ARABIC);
 		SYSTEM_NAMES.put("PERSIAN", NumberSystem.PERSIAN);
+		SYSTEM_NAMES.put("NKO", NumberSystem.NKO);
+		SYSTEM_NAMES.put("DEVANAGARI", NumberSystem.DEVANAGARI);
+		SYSTEM_NAMES.put("OSMANYA", NumberSystem.OSMANYA);
+		SYSTEM_NAMES.put("BRAHMI", NumberSystem.BRAHMI);
+		SYSTEM_NAMES.put("SORA_SOMPENG", NumberSystem.SORA_SOMPENG);
+		SYSTEM_NAMES.put("CHAKMA", NumberSystem.CHAKMA);
 		SYSTEM_NAMES.put("ABJAD", NumberSystem.ABJAD);
 		SYSTEM_NAMES.put("GREEK", NumberSystem.GREEK);
 		SYSTEM_NAMES.put("GREEK_KERAIA", NumberSystem.GREEK_KERAIA);
 		SYSTEM_NAMES.put("CJK", NumberSystem.CJK);
 		SYSTEM_NAMES.put("SUZHOU", NumberSystem.SUZHOU);
-		EASTERN_ARABIC_DIGITS = Arrays.asList(
-				"٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"
+		DECIMAL_DIGITS = new HashMap<>();
+		DECIMAL_DIGITS.put(
+				NumberSystem.EASTERN_ARABIC,
+				Arrays.asList("٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩")
 		);
-		PERSIAN_DIGITS = Arrays.asList(
-				"۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"
+		DECIMAL_DIGITS.put(
+				NumberSystem.PERSIAN,
+				Arrays.asList("۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹")
+		);
+		DECIMAL_DIGITS.put(
+				NumberSystem.NKO,
+				Arrays.asList("߀", "߁", "߂", "߃", "߄", "߅", "߆", "߇", "߈", "߉")
+		);
+		DECIMAL_DIGITS.put(
+				NumberSystem.DEVANAGARI,
+				Arrays.asList("०", "१", "२", "३", "४", "५", "६", "७", "८", "९")
+		);
+		// Codepoints >= 0x10000 don't render well in editors, so generate them
+		// dynamically instead (also, they need 2 chars)
+		DECIMAL_DIGITS.put(
+				NumberSystem.OSMANYA,
+				IntStream.rangeClosed(0, 9)
+					.mapToObj(i -> new String(Character.toChars(0x104A0 + i)))
+					.collect(Collectors.toList())
+		);
+		DECIMAL_DIGITS.put(
+				NumberSystem.BRAHMI,
+				IntStream.rangeClosed(0, 9)
+					.mapToObj(i -> new String(Character.toChars(0x11066 + i)))
+					.collect(Collectors.toList())
+		);
+		DECIMAL_DIGITS.put(
+				NumberSystem.SORA_SOMPENG,
+				IntStream.rangeClosed(0, 9)
+					.mapToObj(i -> new String(Character.toChars(0x110F0 + i)))
+					.collect(Collectors.toList())
+		);
+		DECIMAL_DIGITS.put(
+				NumberSystem.CHAKMA,
+				IntStream.rangeClosed(0, 9)
+					.mapToObj(i -> new String(Character.toChars(0x11136 + i)))
+					.collect(Collectors.toList())
 		);
 		SUZHOU_DIGITS = Arrays.asList(
 				"〇", "〡", "〢", "〣", "〤", "〥", "〦", "〧", "〨", "〩"
@@ -157,32 +210,32 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 	@Override
 	public FuzzedValue<String> computeElement(int index) {
 		String value;
-		switch (enabledSystems.get(index)) {
-		// Eastern Arabic/Persian are simply Arabic numbers with other characters
-		case EASTERN_ARABIC:
-			value = replaceDigits(EASTERN_ARABIC_DIGITS);
-			break;
-		case PERSIAN:
-			value = replaceDigits(PERSIAN_DIGITS);
-			break;
-		case ABJAD:
-			value = abjadString(ABJAD_DIGITS);
-			break;
-		case GREEK:
-			value = greekDigits();
-			break;
-		case GREEK_KERAIA:
-			value = greekDigits() + GREEK_KERAIA;
-			break;
-		case CJK:
-			value = cjkDigits();
-			break;
-		// Suzhou is almost Arabic with other characters, but it has an exception for consecutive 1/2/3
-		case SUZHOU:
-			value = suzhouDigits();
-			break;
-		default:
-			throw new RuntimeException();
+		NumberSystem system = enabledSystems.get(index);
+		List<String> decDigits = DECIMAL_DIGITS.get(system);
+
+		if (decDigits != null) {
+			value = replaceDigits(decDigits);
+		} else {
+			switch (system) {
+			case ABJAD:
+				value = abjadString(ABJAD_DIGITS);
+				break;
+			case GREEK:
+				value = greekDigits();
+				break;
+			case GREEK_KERAIA:
+				value = greekDigits() + GREEK_KERAIA;
+				break;
+			case CJK:
+				value = cjkDigits();
+				break;
+			// Suzhou is almost Arabic with other characters, but it has an exception for consecutive 1/2/3
+			case SUZHOU:
+				value = suzhouDigits();
+				break;
+			default:
+				throw new RuntimeException();
+			}
 		}
 		
 		return new FuzzedValue<String>(value, inputValue, owners);
