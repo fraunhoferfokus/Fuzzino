@@ -240,12 +240,6 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 	}
 	
 	/**
-	 * @return The name of this composed fuzzing heuristic.
-	 */
-	@Override
-	public abstract String getName();
-	
-	/**
 	 * @return A list of all incorporated fuzzing heuristics.
 	 */
 	public List<ComputableFuzzingHeuristic<T>> getAllFuzzingHeuristics() {
