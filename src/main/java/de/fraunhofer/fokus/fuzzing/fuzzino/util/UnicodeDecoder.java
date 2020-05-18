@@ -2,12 +2,19 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.util;
 
 public class UnicodeDecoder {
 	
-	public String decode(String value) {
+	public static String decode(String value) {
+		value = replaceUTF(value, "\\x", 2);
+		value = replaceUTF(value, "\\u", 4);
+		value = replaceUTF(value, "\\U", 8);
+	    return value;
+	}
+	
+	private static String replaceUTF(String value, String escapeBeginning, int hexDigitCount) {
 	    int indexOf = 0;
 	    while (indexOf >= 0) {
-	        indexOf = value.indexOf("\\x", indexOf);
+	        indexOf = value.indexOf(escapeBeginning, indexOf);
 	        if (indexOf >= 0) {
-	            String substring = value.substring(indexOf+2, indexOf+4);
+	            String substring = value.substring(indexOf+2, indexOf+2+hexDigitCount);
 	            int codePoint = -1;
 	            try {
 	                codePoint = Integer.parseInt(substring, 16);
@@ -15,12 +22,12 @@ public class UnicodeDecoder {
 	                codePoint = -1;
 	            }
 	            if (codePoint >= 0) {
-	                String encodedChar = Character.toString ((char) codePoint);
-	                value = value.replace("\\x" + substring, encodedChar);
+	                String encodedChar = new String(Character.toChars(codePoint));
+	                value = value.replace(escapeBeginning + substring, encodedChar);
 	                
 	                indexOf = 0;
 	            } else {
-	                indexOf += 4;
+	                indexOf += 2 + hexDigitCount;
 	            }
 	        }
 	    }
