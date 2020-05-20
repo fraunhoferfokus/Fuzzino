@@ -97,8 +97,6 @@ public class ForeignDigitsGeneratorTest extends FuzzinoTest {
 		for (List<String> digits : ALL_SYSTEMS) {
 			assertTrue(fuzzedValuesContainASubstring(foreignDigitsGenerator, digits));
 		}
-		
-		System.out.println("testHasNumbersFromAllSystems");
 	}
 	
 	@Test
