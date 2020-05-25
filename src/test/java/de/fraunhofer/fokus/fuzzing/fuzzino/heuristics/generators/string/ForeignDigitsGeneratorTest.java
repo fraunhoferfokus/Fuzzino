@@ -15,9 +15,11 @@ package de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Test;
 
@@ -26,52 +28,66 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.StringGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.RequestFactory;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.UnicodeDecoder;
 
 public class ForeignDigitsGeneratorTest extends FuzzinoTest {
 
 	public static final long SEED = 4711;
 	public static final StringSpecification STRING_SPEC;
 	public static final List<List<String>> ALL_SYSTEMS;
-	public static final List<String> EASTERN_ARABIC_DIGITS;
-	public static final List<String> PERSIAN_DIGITS;
-	public static final List<String> ABJAD_DIGITS;
-	public static final List<String> GREEK_DIGITS;
-	public static final List<String> CJK_DIGITS;
-	public static final List<String> SUZHOU_DIGITS;
 	public static final List<String> ALL_DIGITS;
 	
 	static {
 		STRING_SPEC = RequestFactory.INSTANCE.createStringSpecification();
-		EASTERN_ARABIC_DIGITS = Arrays.asList(
-				"٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"
+		List<String> suzhou = new ArrayList<>();
+		suzhou.add("\u3007");
+		suzhou.addAll(unicodeRange(0x3021, 0x3029));
+		List<String> cjk = Arrays.asList(
+				"\u96f6", "\u4e00", "\u4e8c", "\u4e09", "\u56db",
+				"\u4e94", "\u516d", "\u4e03", "\u516b", "\u4e5d",
+				"\u5341", "\u767e", "\u5343",
+				"\u4e07", "\u4ebf", "\u5146", "\u4eac", "\u5793",
+				"\u79ed", "\u7a70", "\u6c9f", "\u6da7", "\u6b63", "\u8f7d"
 		);
-		PERSIAN_DIGITS = Arrays.asList(
-				"۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"
+		List<String> abjad = Arrays.asList(
+				"\u0623", "\u0628", "\u062a", "\u062b", "\u062c",
+				"\u062d", "\u062e", "\u062f", "\u0630", "\u0631",
+				"\u0632", "\u0633", "\u0634", "\u0635", "\u0636",
+				"\u0637", "\u0638", "\u0639", "\u063a", "\u0641",
+				"\u0642", "\u0643", "\u0644", "\u0645", "\u0646",
+				"\u0647", "\u0648", "\u064a"
 		);
-		ABJAD_DIGITS = Arrays.asList(
-				"أ", "ب", "ج", "د", "ه", "و", "ز", "ح", "ط", "ي",
-				"ك", "ل", "م", "ن", "س", "ع", "ف", "ص", "ق", "ر",
-				"ش", "ت", "ث", "خ", "ذ", "ض", "ظ", "غ"
-		);
-		GREEK_DIGITS = Arrays.asList(
-				"Α", "Β", "Γ", "Δ", "Ε", "Ϛ", "Ζ", "Η", "Θ",
-				"Ι", "Κ", "Λ", "Μ", "Ν", "Ξ", "Ο", "Π", "Ϙ",
-				"Ρ", "Σ", "Τ", "Υ", "Φ", "Χ", "Ψ", "Ω", "Ͳ"
-		);
-		CJK_DIGITS = Arrays.asList(
-				"零", "一", "二", "三", "四", "五", "六", "七", "八", "九",
-				"十", "百", "千", "万", "亿", "萬", "億"
-		);
-		SUZHOU_DIGITS = Arrays.asList(
-				"〇", "〡", "〢", "〣", "〤", "〥", "〦", "〧", "〨", "〩"
+		List<String> greek = Arrays.asList(
+				"\u0391", "\u0392", "\u0393", "\u0394", "\u0395",
+				"\u03da", "\u0396", "\u0397", "\u0398", "\u0399",
+				"\u039a", "\u039b", "\u039c", "\u039d", "\u039e",
+				"\u039f", "\u03a0", "\u03d8", "\u03a1", "\u03a3",
+				"\u03a4", "\u03a5", "\u03a6", "\u03a7", "\u03a8",
+				"\u03a9", "\u0372"
 		);
 		ALL_SYSTEMS = Arrays.asList(
-				EASTERN_ARABIC_DIGITS, PERSIAN_DIGITS, ABJAD_DIGITS,
-				GREEK_DIGITS, CJK_DIGITS, SUZHOU_DIGITS
+				unicodeRange(0x660, 0x669), // Eastern Arabic
+				unicodeRange(0x6f0, 0x6f9), // Persian
+				unicodeRange(0x7c0, 0x7c9), // NKO
+				unicodeRange(0x966, 0x96f), // Devanagari
+				unicodeRange(0x104a0, 0x104a9), // Osmanya
+				unicodeRange(0x11066, 0x1106f), // Brahmi
+				unicodeRange(0x110f0, 0x110f9), // Sora Sompeng
+				unicodeRange(0x11136, 0x1113f), // Chakma
+				suzhou,
+				cjk,
+				abjad,
+				greek
 		);
 		ALL_DIGITS = ALL_SYSTEMS.parallelStream()
 				.flatMap(List::stream)
 				.collect(Collectors.toList());
+	}
+
+	private static final List<String> unicodeRange(int start, int end) {
+		return IntStream.rangeClosed(start, end)
+			.mapToObj(i -> new String(Character.toChars(i)))
+			.collect(Collectors.toList());
 	}
 	
 	private static boolean stringContainsASubstring(String s, List<String> substrings) {
@@ -82,7 +98,7 @@ public class ForeignDigitsGeneratorTest extends FuzzinoTest {
 			List<String> substrings) {
 		boolean ret = false;
 		for (FuzzedValue<String> fuzzedValue : gen) {
-			String value = fuzzedValue.getValue();
+			String value = UnicodeDecoder.decode(fuzzedValue.getValue());
 			if (stringContainsASubstring(value, substrings)) {
 				ret = true;
 				break;
@@ -97,23 +113,5 @@ public class ForeignDigitsGeneratorTest extends FuzzinoTest {
 		for (List<String> digits : ALL_SYSTEMS) {
 			assertTrue(fuzzedValuesContainASubstring(foreignDigitsGenerator, digits));
 		}
-	}
-	
-	@Test
-	public void testHasMixedNumbers() {
-		ForeignDigitsGenerator foreignDigitsGenerator = new ForeignDigitsGenerator(STRING_SPEC, SEED);
-		for (FuzzedValue<String> fuzzedValue : foreignDigitsGenerator) {
-			String value = fuzzedValue.getValue();
-			int systemsCount = 0;
-			for (List<String> digits : ALL_SYSTEMS) {
-				if (stringContainsASubstring(value, digits)) {
-					systemsCount++;
-				}
-			}
-			if (systemsCount > 1) {
-				return;
-			}
-		}
-		assertTrue(false);
 	}
 }

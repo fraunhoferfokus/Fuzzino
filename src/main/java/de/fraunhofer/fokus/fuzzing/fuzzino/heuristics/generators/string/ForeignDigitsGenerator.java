@@ -23,9 +23,6 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
  * A generator that generates combinations of non-Arabic numerals.
  * 
  * <p>
- * Note: The generated strings may not mean any actual numbers or mix systems.
- * </p>
- * <p>
  * Note: Some of the characters used in the generated strings may function as
  * both numerals and non-numeric characters.
  * </p>
