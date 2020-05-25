@@ -1,4 +1,4 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
+//   Copyright 2012-2020 Fraunhofer FOKUS
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -40,10 +40,13 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
  * <li>{@link DelimiterOperator Delimiter}</li>
  * <li>{@link StringCaseOperator StringCase}</li>
  * <li>{@link StringRepetitionOperator StringRepetition}</li>
+ * <li>{@link ForeignDigitsOperator ForeignDigits}</li>
+ * <li>{@link UnicodeNumeralsOperator UnicodeNumerals}</li>
  * </ul>
  * </p>
  * 
  * @author Martin Schneider (martin.schneider@fokus.fraunhofer.de)
+ * @author Jasper v. Blanckenburg (jasper.von.blanckenburg@fokus.fraunhofer.de)
  *
  */
 public class StringOperatorFactory {

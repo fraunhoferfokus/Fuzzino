@@ -1,4 +1,4 @@
-//   Copyright 2012-2013 Fraunhofer FOKUS
+//   Copyright 2012-2020 Fraunhofer FOKUS
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
