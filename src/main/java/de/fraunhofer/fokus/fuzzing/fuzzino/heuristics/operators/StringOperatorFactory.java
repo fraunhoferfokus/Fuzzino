@@ -22,6 +22,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.DelimiterOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.ForeignDigitsOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringCaseOperator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.UnicodeNumeralsOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.RepeatStringOperator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
@@ -93,6 +94,9 @@ public class StringOperatorFactory {
 		} else
 		if (canonicalName.equals("ForeignDigits".toUpperCase())) {
 			return createForeignDigitsOperator(validValues, param, stringSpec, seed);
+		} else
+		if (canonicalName.equals("UnicodeNumerals".toUpperCase())) {
+			return createUnicodeNumeralsOperator(validValues, param, stringSpec, seed);
 		} else {
 			throw new UnknownFuzzingHeuristicException(name);
 		}
@@ -108,7 +112,6 @@ public class StringOperatorFactory {
 	  */
 	public List<StringOperator> createAll(List<String> validValues, StringSpecification stringSpec, long seed) {
 		List<StringOperator> allStringOperators = new ArrayList<>();
-		// TODO: Add ForeignDigitsOperator?
 		allStringOperators.add(createDelimiterOperator(validValues, stringSpec, seed));
 		allStringOperators.add(createStringCaseOperator(validValues, stringSpec, seed));
 		allStringOperators.add(createStringRepetitionOperator(validValues, stringSpec, seed));
@@ -138,5 +141,10 @@ public class StringOperatorFactory {
 	public ForeignDigitsOperator createForeignDigitsOperator(List<String> validValues, String param,
 			StringSpecification stringSpec, long seed) {
 		return new ForeignDigitsOperator(validValues, param, stringSpec, seed);
+	}
+
+	private StringOperator createUnicodeNumeralsOperator(List<String> validValues, String param,
+			StringSpecification stringSpec, long seed) {
+		return new UnicodeNumeralsOperator(validValues, param, stringSpec, seed);
 	}
 }

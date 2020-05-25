@@ -43,6 +43,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.number.Numerical
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.ForeignDigitsOperatorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.RepeatStringOperatorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.StringCaseOperatorListTest;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.operators.string.UnicodeNumeralsOperatorTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoderTest;
 
 @RunWith(Suite.class)
@@ -89,7 +90,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoderTest;
 	// Operators String
 	StringCaseOperatorListTest.class,
 	RepeatStringOperatorTest.class,
-	ForeignDigitsOperatorTest.class
+	ForeignDigitsOperatorTest.class,
+	UnicodeNumeralsOperatorTest.class
 })
 
 public class AllTestsSuite {
