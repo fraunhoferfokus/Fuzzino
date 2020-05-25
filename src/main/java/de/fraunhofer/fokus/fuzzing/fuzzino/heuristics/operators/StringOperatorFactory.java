@@ -118,6 +118,8 @@ public class StringOperatorFactory {
 		allStringOperators.add(createDelimiterOperator(validValues, stringSpec, seed));
 		allStringOperators.add(createStringCaseOperator(validValues, stringSpec, seed));
 		allStringOperators.add(createStringRepetitionOperator(validValues, stringSpec, seed));
+		allStringOperators.add(createForeignDigitsOperator(validValues, null, stringSpec, seed));
+		allStringOperators.add(createUnicodeNumeralsOperator(validValues, null, stringSpec, seed));
 		
 		List<StringOperator> applicableOperators = new LinkedList<>();
 		for (StringOperator stringOperator : allStringOperators) {
