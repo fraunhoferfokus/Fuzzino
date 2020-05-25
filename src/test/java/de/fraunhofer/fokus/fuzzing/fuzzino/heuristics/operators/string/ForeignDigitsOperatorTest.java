@@ -364,4 +364,27 @@ public class ForeignDigitsOperatorTest extends FuzzinoTest {
 		operate("greek", Arrays.asList("10000"));
 	}
 	
+	@Test
+	public void testSkipsInvalidSystems() {
+		List<String> numbers = Arrays.asList("0", "100000", "10");
+		// 0 can't be converted to Abjad and Greek, 100000 can't be converted to Greek
+		// However, this should not throw an error and instead those conversions are dropped
+		List<String> ret = operate(null, numbers);
+		
+		assertTrue(ret.size() > 0);
+
+		// The 10 should still be converted to Abjad and Greek
+		boolean containsAbjad = false;
+		boolean containsGreek = false;
+		for (String r : ret) {
+			if (r.equals("\\u064a")) {
+				containsAbjad = true;
+			} else if (r.equals("\\u0399")) {
+				containsGreek = true;
+			}
+		}
+		assertTrue(containsAbjad);
+		assertTrue(containsGreek);
+	}
+	
 }

@@ -61,6 +61,7 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 	};
 	private List<NumberSystem> enabledSystems;
 	private static final Map<String, NumberSystem> SYSTEM_NAMES;
+	private static final Map<NumberSystem, List<Double>> SYSTEM_LIMITS;
 	private static final Map<NumberSystem, List<String>> DECIMAL_DIGITS;
 	private static final List<String> SUZHOU_DIGITS;
 	private static final List<String> CJK_DIGITS;
@@ -86,13 +87,15 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 		SYSTEM_NAMES.put("GREEK_KERAIA", NumberSystem.GREEK_KERAIA);
 		SYSTEM_NAMES.put("CJK", NumberSystem.CJK);
 		SYSTEM_NAMES.put("SUZHOU", NumberSystem.SUZHOU);
+		SYSTEM_LIMITS = new HashMap<>();
+		SYSTEM_LIMITS.put(NumberSystem.ABJAD, Arrays.asList(1., Double.POSITIVE_INFINITY));
+		SYSTEM_LIMITS.put(NumberSystem.GREEK, Arrays.asList(1., 1E4));
+		SYSTEM_LIMITS.put(NumberSystem.GREEK_KERAIA, Arrays.asList(1., 1E4));
 		DECIMAL_DIGITS = new HashMap<>();
 		DECIMAL_DIGITS.put(NumberSystem.EASTERN_ARABIC, unicodeRange(0x660, 0x669));
 		DECIMAL_DIGITS.put(NumberSystem.PERSIAN, unicodeRange(0x6f0, 0x6f9));
 		DECIMAL_DIGITS.put(NumberSystem.NKO, unicodeRange(0x7c0, 0x7c9));
 		DECIMAL_DIGITS.put(NumberSystem.DEVANAGARI, unicodeRange(0x966, 0x96f));
-		// Codepoints >= 0x10000 don't render well in editors, so generate them
-		// dynamically instead (also, they need 2 chars)
 		DECIMAL_DIGITS.put(NumberSystem.OSMANYA, unicodeRange(0x104a0, 0x104a9));
 		DECIMAL_DIGITS.put(NumberSystem.BRAHMI, unicodeRange(0x11066, 0x1106f));
 		DECIMAL_DIGITS.put(NumberSystem.SORA_SOMPENG, unicodeRange(0x110f0, 0x110f9));
@@ -183,7 +186,7 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 		super(validValue, stringSpec, seed, owners);
 
 		if (param == null || param == "") {
-			enabledSystems = Arrays.asList(NumberSystem.values());
+			enabledSystems = generateEnabledSystems();
 		} else {
 			String[] systems = param.split(";");
 			enabledSystems = new ArrayList<>(systems.length);
@@ -195,6 +198,16 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 				enabledSystems.add(ns);
 			}
 		}
+	}
+
+	private List<NumberSystem> generateEnabledSystems() {
+		double val = Double.valueOf(inputValue);
+		return Arrays.stream(NumberSystem.values())
+				.filter(ns -> {
+					List<Double> limits = SYSTEM_LIMITS.get(ns);
+					return limits == null || (val >= limits.get(0) && val <= limits.get(1));
+				})
+				.collect(Collectors.toList());
 	}
 
 	@Override
