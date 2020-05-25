@@ -88,7 +88,9 @@ public class SimpleForeignDigitsOperator extends SimpleStringOperator {
 		SYSTEM_NAMES.put("CJK", NumberSystem.CJK);
 		SYSTEM_NAMES.put("SUZHOU", NumberSystem.SUZHOU);
 		SYSTEM_LIMITS = new HashMap<>();
-		SYSTEM_LIMITS.put(NumberSystem.ABJAD, Arrays.asList(1., Double.POSITIVE_INFINITY));
+		// Technically, Abjad numbers can be arbitrarily large, but it doesn't make sense
+		// past a certain point
+		SYSTEM_LIMITS.put(NumberSystem.ABJAD, Arrays.asList(1., 1E4));
 		SYSTEM_LIMITS.put(NumberSystem.GREEK, Arrays.asList(1., 1E4));
 		SYSTEM_LIMITS.put(NumberSystem.GREEK_KERAIA, Arrays.asList(1., 1E4));
 		DECIMAL_DIGITS = new HashMap<>();
