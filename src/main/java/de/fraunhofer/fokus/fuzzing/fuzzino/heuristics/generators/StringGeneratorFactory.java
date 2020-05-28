@@ -41,6 +41,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SQLInjec
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SQLTimeBasedInjectionsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SmallGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.UnicodeBomStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.UnicodeNumeralsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XMLInjectionsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XSSBasicInputGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
@@ -78,6 +79,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
  * <li>{@link SQLInjectionsGenerator SQLInjections}</li>
  * <li>{@link SQLTimeBasedInjectionsGenerator SQLTimeBasedInjections}</li>
  * <li>{@link UnicodeBomStringsGenerator UnicodeBomStrings}</li>
+ * <li>{@link UnicodeNumeralsGenerator UnicodeNumerals}</li>
  * <li>{@link XMLInjectionsGenerator XMLInjections}</li>
  * <li>{@link XSSBasicInputGenerator XSSBasicInput}</li>
  * </ul>
@@ -189,6 +191,9 @@ public class StringGeneratorFactory {
 		if (canonicalName.equals("UnicodeBomStrings".toUpperCase())) {
 			return createUnicodeBomStringsGenerator(stringSpec, seed);
 		} else
+		if (canonicalName.equals("UnicodeNumerals".toUpperCase())) {
+			return createUnicodeNumeralsGenerator(stringSpec, seed);
+		} else
 		if (canonicalName.equals("XMLInjections".toUpperCase())) {
 			return createXmlInjections(stringSpec, seed);
 		} else
@@ -225,6 +230,7 @@ public class StringGeneratorFactory {
 		allStringGenerators.add(createSqlInjections(stringSpec, seed));
 		allStringGenerators.add(createSqlTimeBasedInjections(stringSpec, seed));
 		allStringGenerators.add(createUnicodeBomStringsGenerator(stringSpec, seed));
+		allStringGenerators.add(createUnicodeNumeralsGenerator(stringSpec, seed));
 		allStringGenerators.add(createXmlInjections(stringSpec, seed));
 		// TODO Add valid parameter for XSSBasicInputGenerator
 		allStringGenerators.add(createXSSBasicInput(stringSpec, seed, "attackerURL"));
@@ -479,6 +485,17 @@ public class StringGeneratorFactory {
 	 */
 	public UnicodeBomStringsGenerator createUnicodeBomStringsGenerator(StringSpecification stringSpec, long seed) {
 		return new UnicodeBomStringsGenerator(stringSpec, seed);
+	}
+
+	/**
+	 * Returns an instance of {@link UnicodeNumeralsGenerator}.
+	 * 
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link UnicodeNumeralsGenerator}.
+	 */
+	public UnicodeNumeralsGenerator createUnicodeNumeralsGenerator(StringSpecification stringSpec, long seed) {
+		return new UnicodeNumeralsGenerator(stringSpec, seed);
 	}
 	
 	/**
