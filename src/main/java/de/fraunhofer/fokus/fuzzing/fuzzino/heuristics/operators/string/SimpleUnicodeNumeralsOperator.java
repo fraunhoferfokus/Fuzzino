@@ -19,6 +19,7 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringEncoder;
 
 /**
  * Replaces digits (U+0030 through U+0039) with various unicode characters
@@ -185,7 +186,8 @@ public class SimpleUnicodeNumeralsOperator extends SimpleStringOperator {
 			sb.append(randomDigit(digit));
 		}
 		
-		return new FuzzedValue<String>(sb.toString(), inputValue, owners);
+		String value = StringEncoder.encode(sb.toString());
+		return new FuzzedValue<String>(value, inputValue, owners);
 	}
 	
 	protected String randomDigit(int digit) {

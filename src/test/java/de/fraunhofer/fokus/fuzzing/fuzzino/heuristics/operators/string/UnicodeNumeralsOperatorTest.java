@@ -33,6 +33,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzinoTest;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourcePath;
 import de.fraunhofer.fokus.fuzzing.fuzzino.util.ResourceResolver;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.UnicodeDecoder;
 
 public class UnicodeNumeralsOperatorTest extends FuzzinoTest {
 	
@@ -67,10 +68,11 @@ public class UnicodeNumeralsOperatorTest extends FuzzinoTest {
 	}
 
 	private static List<String> operate(String param, List<String> numbers) {
-		UnicodeNumeralsOperator foreignDigitsOperator = new UnicodeNumeralsOperator(
+		UnicodeNumeralsOperator operator = new UnicodeNumeralsOperator(
 				numbers, param, null, SEED);
-		return foreignDigitsOperator.stream()
+		return operator.stream()
 				.map(FuzzedValue::getValue)
+				.map(UnicodeDecoder::decode)
 				.collect(Collectors.toList());
 	}
 	
