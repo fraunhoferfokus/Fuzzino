@@ -29,6 +29,7 @@ public class SpecialBadIpAddresses extends StringContainer {
 		add("1.1");
 		add("1.1.1");
 		add("1.1.1.1.");
+		add("1.1.1.1.1");
 		add(".1");
 		add(".1.1.1");
 		add(".1.1.1.1");
