@@ -1,0 +1,28 @@
+stages:
+  - build
+  - test
+  - package
+
+compile code:
+  image: maven:3-openjdk-14
+  stage: build
+  script:
+    - mvn -B compile
+
+run tests:
+  image: maven:3-openjdk-14
+  stage: test
+  script:
+    - mvn -B test
+
+create jars:
+  only:
+    - tags
+  image: maven:3-openjdk-14
+  stage: package
+  script:
+    - mvn -B jar:jar
+  artifacts:
+    paths:
+      - target/de.fraunhofer.fokus.fuzzing.fuzzino-*.jar
+    expire_in: 42 yrs
