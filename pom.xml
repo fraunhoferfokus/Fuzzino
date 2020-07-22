@@ -18,8 +18,32 @@
       <artifactId>httpclient</artifactId>
       <version>4.5.5</version>
     </dependency>
+
+
+    <!--
+    This is a pretty old version, however, commit 163ac39 (in 2.3.0 onwards) changed
+    AbstractUnmarshallerImpl.unmarshal to return an IllegalArgumentException instead of
+    a FileNotFoundException, which makes RequestDispatcherTest.testInvalidXmlDocument
+    fail.
     
-  
+    TODO: A better solution is probably to use jakarta instead of javax, which looks like
+          it changed to a more sane behavior again
+    -->
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.2.12</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>2.3.3</version>
+    </dependency>
   </dependencies>
   
   <build>
@@ -40,7 +64,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
          <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.20.1</version>
+        <version>2.22.2</version>
         <configuration>
           <includes>
             <include>AllTestsSuite.java</include>
