@@ -10,6 +10,8 @@ compile code:
     - mvn -B compile
 
 run tests:
+  except:
+    - tags
   image: maven:3-openjdk-14
   stage: test
   script:
@@ -21,7 +23,7 @@ create jars:
   image: maven:3-openjdk-14
   stage: package
   script:
-    - mvn -B jar:jar
+    - mvn -B package
   artifacts:
     paths:
       - target/de.fraunhofer.fokus.fuzzing.fuzzino-*.jar
