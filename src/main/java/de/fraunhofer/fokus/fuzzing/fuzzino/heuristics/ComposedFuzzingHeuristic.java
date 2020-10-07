@@ -253,10 +253,7 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 
 	@Override
 	public String toString() {
-		return "[ComposedFuzzingHeuristic name:" + getName() + 
-			   " heuristics:" + (heuristics == null ? "0" : heuristics.size()) +
-			   " owner: " + owners +
-			   " seed:" + seed + "]";
+		return "";
 	}
 	
 }
