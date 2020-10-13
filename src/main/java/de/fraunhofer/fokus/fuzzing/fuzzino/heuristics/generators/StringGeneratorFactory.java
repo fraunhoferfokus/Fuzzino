@@ -20,6 +20,7 @@ import java.util.List;
 import de.fraunhofer.fokus.fuzzing.fuzzino.exceptions.UnknownFuzzingHeuristicException;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.AllBadStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.AllXSSGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadDateGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadFilenamesGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.BadHostnamesGenerator;
@@ -35,6 +36,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.CommandI
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.DelimitersGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.ForeignDigitsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.FormatStringsGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.HTMLFieldInputGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.LongStringsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.Popular4DigitPinsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.SQLInjectionsGenerator;
@@ -44,6 +46,8 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.UnicodeB
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.UnicodeNumeralsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XMLInjectionsGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XSSBasicInputGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XSSMultipleLinesInputGenerator;
+import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.generators.string.XSSOpenHTMLTagVarianceGenerator;
 import de.fraunhofer.fokus.fuzzing.fuzzino.request.StringSpecification;
 
 /**
@@ -128,6 +132,9 @@ public class StringGeneratorFactory {
 		if (canonicalName.equals("AllBadStrings".toUpperCase())) {
 			return createAllBadStrings(stringSpec, seed);
 		} else
+		if (canonicalName.equals("AllXSS".toUpperCase())) {
+			return createAllXSSGenerator(stringSpec, seed, param);
+		} else
 		if (canonicalName.equals("BadDate".toUpperCase())) {
 			return createBadDateGenerator(stringSpec, seed);
 		} else
@@ -173,6 +180,9 @@ public class StringGeneratorFactory {
 		if (canonicalName.equals("ForeignDigits".toUpperCase())) {
 			return createForeignDigits(stringSpec, seed);
 		} else
+		if (canonicalName.equals("HTMLFieldInput".toUpperCase())) {
+			return createHTMLFieldInputGenerator(stringSpec, seed, param);
+		} else
 		if (canonicalName.equals("LongStrings".toUpperCase())) {
 			return createLongStrings(stringSpec, seed);
 		} else
@@ -199,12 +209,18 @@ public class StringGeneratorFactory {
 		} else
 		if (canonicalName.equals("XSSBasicInput".toUpperCase())) {
 			return createXSSBasicInput(stringSpec, seed, param);
-		} 
+		} else
+		if (canonicalName.equals("XSSMultipleLinesInput".toUpperCase())) {
+			return createXSSMultipleLinesInput(stringSpec, seed);
+		} else
+		if (canonicalName.equals("XSSOpenHTMLTagVariance".toUpperCase())) {
+			return createXSSOpenHTMLTagVariance(stringSpec, seed);
+		}
 		else {
 			throw new UnknownFuzzingHeuristicException(name);
 		}
 	}
-	
+
 	/**
 	 * A list of all string generators that can create values for {@code stringSpec}.
 	 * 
@@ -254,6 +270,17 @@ public class StringGeneratorFactory {
 	 */
 	public AllBadStringsGenerator createAllBadStrings(StringSpecification stringSpec, long seed) {
 		return new AllBadStringsGenerator(stringSpec, seed);
+	}
+
+	/**
+	 * Returns an instance of {@link AllXSSGenerator}.
+	 *
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link AllXSSGenerator}
+	 */
+	public AllXSSGenerator createAllXSSGenerator(StringSpecification stringSpec, long seed, String attackerURL) {
+		return new AllXSSGenerator(stringSpec, seed, attackerURL);
 	}
 	
 	/**
@@ -420,6 +447,17 @@ public class StringGeneratorFactory {
 	public ForeignDigitsGenerator createForeignDigits(StringSpecification stringSpec, long seed) {
 		return new ForeignDigitsGenerator(stringSpec, seed);
 	}
+
+	/**
+	 * Returns an instance of {@link HTMLFieldInputGenerator}.
+	 *
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link HTMLFieldInputGenerator}
+	 */
+	public HTMLFieldInputGenerator createHTMLFieldInputGenerator(StringSpecification stringSpec, long seed, String attackerURL) {
+		return new HTMLFieldInputGenerator(stringSpec, seed, attackerURL);
+	}
 	
 	/**
 	 * Returns an instance of {@link LongStringsGenerator}.
@@ -518,6 +556,28 @@ public class StringGeneratorFactory {
 	 */
 	public XSSBasicInputGenerator createXSSBasicInput(StringSpecification stringSpec, long seed, String attackerURL) {
 		return new XSSBasicInputGenerator(stringSpec, seed, attackerURL);
+	}
+
+	/**
+	 * Returns an instance of {@link XSSMultipleLinesInputGenerator}.
+	 *
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link XSSMultipleLinesInputGenerator}
+	 */
+	public XSSMultipleLinesInputGenerator createXSSMultipleLinesInput(StringSpecification stringSpec, long seed) {
+		return new XSSMultipleLinesInputGenerator(stringSpec, seed);
+	}
+
+	/**
+	 * Returns an instance of {@link XSSOpenHTMLTagVarianceGenerator}.
+	 *
+	 * @param stringSpec The string specification that describes the type the generator shall generator values for.
+	 * @param seed The seed to be used for random-based fuzzing heuristics.
+	 * @return an instance of {@link XSSOpenHTMLTagVarianceGenerator}
+	 */
+	private XSSOpenHTMLTagVarianceGenerator createXSSOpenHTMLTagVariance(StringSpecification stringSpec, long seed) {
+		return new XSSOpenHTMLTagVarianceGenerator(stringSpec, seed);
 	}
 	
 }
