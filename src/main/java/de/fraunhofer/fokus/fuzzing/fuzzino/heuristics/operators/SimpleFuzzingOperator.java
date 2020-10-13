@@ -21,6 +21,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 /**
  * A fuzzing operator that fuzzes a single value.
@@ -89,9 +90,14 @@ public abstract class SimpleFuzzingOperator<T> extends ComputableListImpl<Fuzzed
 		return seed;
 	}
 	
+	public String ownersString() {
+		return StringUtil.joinListWithSelf(owners, this);
+	}
+
 	@Override
 	public String toString() {
-		return "[SimpleFuzzingOperator name:" + getName() + " owner:" + owners.toString() + " inputValue:" + inputValue + " seed:" + seed + "]";
+		return "[SimpleFuzzingOperator name:" + getName() + " owner:" + ownersString()
+			+ " inputValue:" + inputValue + " seed:" + seed + "]";
 	}
 
 }

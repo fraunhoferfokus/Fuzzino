@@ -65,4 +65,28 @@ public class StringUtil {
 		return str.length();
 	}
 	
+	/**
+	 * Join a list into a string, replacing occurrences of {@code self} with "self".
+	 * 
+	 * If {@code self == el2}, then the list {@code [el1, el2, el3, el2]} will yield
+	 * a string like {@code "[el1.toString(), self, el3.toString(), self]"}.
+	 */
+	public static <T> String joinListWithSelf(List<T> list, T self) {
+		StringBuilder sb = new StringBuilder("[");
+		for (int i = 0; i < list.size(); i++) {
+			T obj = list.get(i);
+			if (obj == self) {
+				sb.append("self");
+			} else {
+				sb.append(obj.toString());
+			}
+
+			if (i != list.size() - 1) {
+				sb.append(", ");
+			}
+		}
+		sb.append("]");
+		return sb.toString();
+	}
+
 }

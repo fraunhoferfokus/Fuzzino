@@ -114,7 +114,7 @@ public class Combinator extends ComposedStringGenerator {
 
 	@Override
 	public String getName() {
-		return owners.toString();
+		return ownersString();
 	}
 
 }

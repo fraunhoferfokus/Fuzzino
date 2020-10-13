@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 /**
  * This fuzzing heuristic incorporates a bunch of fuzzing heuristics and returns values of each
@@ -251,11 +252,15 @@ public abstract class ComposedFuzzingHeuristic<T> extends ComputableListImpl<Fuz
 		return seed;
 	}
 
+	public String ownersString() {
+		return StringUtil.joinListWithSelf(owners, this);
+	}
+
 	@Override
 	public String toString() {
-		return "[ComposedFuzzingHeuristic name:" + getName() + 
+		return "[ComposedFuzzingHeuristic name:" + getName() +
 			   " heuristics:" + (heuristics == null ? "0" : heuristics.size()) +
-			   " owner: " + owners +
+			   " owner: " + ownersString() +
 			   " seed:" + seed + "]";
 	}
 	

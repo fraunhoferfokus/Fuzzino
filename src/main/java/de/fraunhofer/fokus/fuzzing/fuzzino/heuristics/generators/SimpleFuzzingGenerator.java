@@ -21,6 +21,7 @@ import de.fraunhofer.fokus.fuzzing.fuzzino.FuzzedValue;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableFuzzingHeuristic;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.ComputableListImpl;
 import de.fraunhofer.fokus.fuzzing.fuzzino.heuristics.FuzzingHeuristic;
+import de.fraunhofer.fokus.fuzzing.fuzzino.util.StringUtil;
 
 /**
  * A fuzzing generator that simply returns values of a list.
@@ -90,9 +91,14 @@ public abstract class SimpleFuzzingGenerator<T> extends ComputableListImpl<Fuzze
 	 */
 	public abstract List<T> getFuzzValues();
 	
+	public String ownersString() {
+		return StringUtil.joinListWithSelf(owners, this);
+	}
+
 	@Override
 	public String toString() {
-		return "[SimpleFuzzingGenerator name:" + getName() + " owners:" + owners + " seed:" + seed + "]";
+		return "[SimpleFuzzingGenerator name:" + getName() + " owners:" + ownersString() + " seed:"
+			+ seed + "]";
 	}
 	
 }
